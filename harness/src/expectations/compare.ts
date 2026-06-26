@@ -9,7 +9,7 @@ export interface Comparison {
 }
 
 // Strip the scenario suffix (" default" / " strict mode") to get the file path.
-function filePathOf(id: string): string {
+export function filePathOf(id: string): string {
   return id.replace(/ (default|strict mode)$/, "");
 }
 
@@ -42,11 +42,13 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
   };
   for (const r of results) {
     c.counts.total++;
-    const expected = expectedForEntries(entries, filePathOf(r.id));
-    if (expected === "skip") {
+    const globExpected = expectedForEntries(entries, filePathOf(r.id));
+    if (globExpected === "skip") {
       c.counts.skip++;
       continue;
     }
+    const expected: ExpectedStatus =
+      globExpected === "fail" || exp.ratchet.has(r.id) ? "fail" : "pass";
     if (r.status === "pass") {
       c.counts.pass++;
       if (expected === "fail") c.newPasses.push(r);
