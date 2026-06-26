@@ -24,9 +24,13 @@ function compile(exp: Expectations): CompiledEntry[] {
     .sort((a, b) => b.glob.length - a.glob.length);
 }
 
-function expectedFor(entries: CompiledEntry[], filePath: string): ExpectedStatus {
+function expectedForEntries(entries: CompiledEntry[], filePath: string): ExpectedStatus {
   for (const e of entries) if (e.isMatch(filePath)) return e.expected;
   return "pass";
+}
+
+export function expectedFor(exp: Expectations, filePath: string): ExpectedStatus {
+  return expectedForEntries(compile(exp), filePath);
 }
 
 export function compare(results: TestResult[], exp: Expectations): Comparison {
@@ -38,7 +42,7 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
   };
   for (const r of results) {
     c.counts.total++;
-    const expected = expectedFor(entries, filePathOf(r.id));
+    const expected = expectedForEntries(entries, filePathOf(r.id));
     if (expected === "skip") {
       c.counts.skip++;
       continue;

@@ -43,11 +43,14 @@ test("skip glob overrides status to skip", () => {
 
 test("most specific glob wins", () => {
   const exp2 = parseExpectations(`
-[fail]
+[skip]
 "built-ins/**" = "broad"
+[fail]
 "built-ins/Array/specific.js" = "narrow"
 `);
-  // narrow entry is the longer glob -> still a [fail]; passing => new pass
+  // narrow ([fail]) is the longer glob and must win over broad ([skip]).
+  // A passing result then classifies as a new pass, NOT a skip.
   const c = compare([mk("built-ins/Array/specific.js default", "pass")], exp2);
   expect(c.newPasses).toHaveLength(1);
+  expect(c.counts.skip).toBe(0);
 });
