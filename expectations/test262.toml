@@ -1,0 +1,6 @@
+# Test262 expectations baseline. A run is green iff there are no regressions.
+# [skip] entries are excluded from execution. [fail] entries are expected failures.
+# Keys are picomatch globs over the test file path (no scenario suffix).
+[skip]
+
+[fail]
