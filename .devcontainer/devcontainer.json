@@ -1,0 +1,15 @@
+{
+  "name": "elide-compliance-harness",
+  "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "git submodule update --init --depth 1 && cd harness && bun install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["oven.bun-vscode", "tamasfe.even-better-toml"]
+    }
+  }
+}
