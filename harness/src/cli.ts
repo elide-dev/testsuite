@@ -12,6 +12,7 @@ import type { Adapter } from "./adapters/types";
 import type { Result, RunMeta, TestResult } from "./results/schema";
 import { renderSuiteReport, renderRunIndex } from "./report/render";
 import { writeSummaryJson, rebuildTopIndex, buildIndexJson } from "./report/index";
+import { Database } from "bun:sqlite";
 import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
 import { ingestAll } from "./db/ingest";
@@ -226,13 +227,24 @@ if (import.meta.main) {
     }
     case "query": {
       const sql = argv[1] ?? "";
+      // Fast, friendly rejection of obvious writes...
       if (!/^\s*(select|with)\b/i.test(sql)) {
         console.error("query: only read-only SELECT/WITH statements are allowed");
         code = 2; break;
       }
-      const db = openDb(DB_PATH);
-      await ingestAll(db, resolve("reports"));
-      console.log(JSON.stringify(db.query(sql).all(), null, 2));
+      // ...but the real guard is SQLite itself: ingest with a writable handle,
+      // then run the user's SQL on a READ-ONLY connection so any write is
+      // rejected at the engine level regardless of statement shape (defeats
+      // multi-statement / `WITH ... DELETE` allowlist escapes).
+      const wdb = openDb(DB_PATH);
+      await ingestAll(wdb, resolve("reports"));
+      wdb.close();
+      const ro = new Database(DB_PATH, { readonly: true });
+      try {
+        console.log(JSON.stringify(ro.query(sql).all(), null, 2));
+      } finally {
+        ro.close();
+      }
       break;
     }
     default:
