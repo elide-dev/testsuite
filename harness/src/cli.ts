@@ -11,7 +11,7 @@ import { test262Adapter } from "./adapters/test262";
 import type { Adapter } from "./adapters/types";
 import type { Result, RunMeta, TestResult } from "./results/schema";
 import { renderSuiteReport, renderRunIndex } from "./report/render";
-import { writeSummaryJson, rebuildTopIndex } from "./report/index";
+import { writeSummaryJson, rebuildTopIndex, buildIndexJson } from "./report/index";
 import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
 import { ingestAll } from "./db/ingest";
@@ -136,6 +136,7 @@ export async function main(o: CliOptions): Promise<number> {
   await Bun.write(join(outDir, `${wl.id}.md`), renderSuiteReport(meta, comparison));
   await Bun.write(join(outDir, "index.md"), renderRunIndex(meta, comparison));
   await Bun.write(join(o.reportsDir, "index.md"), await rebuildTopIndex(o.reportsDir));
+  await Bun.write(join(o.reportsDir, "index.json"), JSON.stringify(await buildIndexJson(o.reportsDir), null, 2));
 
   // Per-version changelog vs the previous run of this workload.
   const prevDir = await findPreviousRunDir(o.reportsDir, wl.id, identity);
@@ -221,6 +222,17 @@ if (import.meta.main) {
         features: r.features ? r.features.split(",") : [],
       }));
       console.log(renderImpactMd(computeImpact(failRows)));
+      break;
+    }
+    case "query": {
+      const sql = argv[1] ?? "";
+      if (!/^\s*(select|with)\b/i.test(sql)) {
+        console.error("query: only read-only SELECT/WITH statements are allowed");
+        code = 2; break;
+      }
+      const db = openDb(DB_PATH);
+      await ingestAll(db, resolve("reports"));
+      console.log(JSON.stringify(db.query(sql).all(), null, 2));
       break;
     }
     default:

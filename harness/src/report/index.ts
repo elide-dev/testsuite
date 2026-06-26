@@ -14,6 +14,40 @@ export async function writeSummaryJson(dir: string, meta: RunMeta, c: Comparison
   await Bun.write(join(dir, "summary.json"), JSON.stringify(summary, null, 2));
 }
 
+export interface IndexEntry {
+  workload: string; semver: string; digest: string;
+  pass: number; total: number; regressions: number;
+  finishedAt: string; reportDir: string;
+}
+
+export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexEntry[] }> {
+  const runs: IndexEntry[] = [];
+  if (existsSync(reportsDir)) {
+    for (const semver of readdirSync(reportsDir)) {
+      const verDir = join(reportsDir, semver);
+      let digests: string[] = [];
+      try { digests = readdirSync(verDir); } catch { continue; }
+      for (const digest of digests) {
+        const sp = join(verDir, digest, "summary.json");
+        if (!existsSync(sp)) continue;
+        const s = JSON.parse(await Bun.file(sp).text());
+        runs.push({
+          workload: s.meta.workload,
+          semver: s.meta.elide.semver,
+          digest,
+          pass: s.counts.pass,
+          total: s.counts.total,
+          regressions: s.regressions.length,
+          finishedAt: s.meta.finishedAt,
+          reportDir: `${semver}/${digest}`,
+        });
+      }
+    }
+  }
+  runs.sort((a, b) => b.finishedAt.localeCompare(a.finishedAt));
+  return { runs };
+}
+
 // Walk reports/<semver>/<digest>/summary.json, keep the newest run per workload.
 export async function rebuildTopIndex(reportsDir: string): Promise<string> {
   const latest = new Map<string, RunSummary & { finishedAt: string }>();
