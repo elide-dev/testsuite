@@ -4,7 +4,8 @@ import { loadRegistry } from "./registry";
 import { resolveIdentity } from "./elide";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import { compare } from "./expectations/compare";
-import { writeResults } from "./results/store";
+import { writeResults, readResults } from "./results/store";
+import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
 import { test262Adapter } from "./adapters/test262";
 import type { Adapter } from "./adapters/types";
 import type { Result, RunMeta, TestResult } from "./results/schema";
@@ -122,6 +123,15 @@ export async function main(o: CliOptions): Promise<number> {
   await Bun.write(join(outDir, "index.md"), renderRunIndex(meta, cmp));
   await Bun.write(join(o.reportsDir, "index.md"), await rebuildTopIndex(o.reportsDir));
 
+  // Per-version changelog vs the previous run of this workload.
+  const prevDir = await findPreviousRunDir(o.reportsDir, wl.id, identity);
+  if (prevDir) {
+    const prev = toRunResults(await readResults(prevDir));
+    const diff = diffRuns(prev, toRunResults({ meta, results }));
+    await Bun.write(join(outDir, "changes.json"), JSON.stringify(diff, null, 2));
+    await Bun.write(join(outDir, "changes.md"), renderDiffMd(diff));
+  }
+
   const green = cmp.regressions.length === 0;
   console.log(
     `${wl.id} @ ${identity.semver}: ${cmp.counts.pass}/${cmp.counts.total} pass, ` +
@@ -146,6 +156,24 @@ if (import.meta.main) {
         code = await dbBuild();
       }
       break;
+    case "diff": {
+      const reportsDir = resolve("reports");
+      const db = openDb(DB_PATH);
+      await ingestAll(db, reportsDir);
+      const workload = "test262";
+      const rows = db
+        .query(`SELECT id, semver, digest FROM runs WHERE workload = ? ORDER BY finished_at DESC`)
+        .all(workload) as { id: number; semver: string; digest: string }[];
+      const pick = (ref?: string) =>
+        ref ? rows.find((r) => r.semver === ref || `${r.semver}/${r.digest}` === ref) : undefined;
+      const b = pick(argv[1]) ?? rows[0];
+      const a = pick(argv[2]) ?? rows[1];
+      if (!a || !b) { console.error("need two runs to diff (run `db build` first)"); code = 2; break; }
+      const ra = loadRunResultsFromDb(db, a.id, { semver: a.semver, digest: a.digest });
+      const rb = loadRunResultsFromDb(db, b.id, { semver: b.semver, digest: b.digest });
+      console.log(renderDiffMd(diffRuns(ra, rb)));
+      break;
+    }
     default:
       console.error("usage: cli.ts <run|db build|diff|impact|query> …");
       code = 2;
