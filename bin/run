@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+ROOT="$PWD"
+
+ELIDE_REF="ghcr.io/elide-dev/elide:nightly"
+SUITE="test262"
+THREADS="${THREADS:-1}"
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --elide) ELIDE_REF="$2"; shift 2;;
+    --suite) SUITE="$2"; shift 2;;
+    --threads) THREADS="$2"; shift 2;;
+    *) echo "unknown arg: $1" >&2; exit 2;;
+  esac
+done
+
+IMG="elide-harness:$(echo "$ELIDE_REF" | tr '/:@' '___')"
+DIGEST="local"
+
+if [[ -f "$ELIDE_REF" ]]; then
+  # local binary mode
+  rm -rf .elide-bin && mkdir -p .elide-bin
+  cp "$ELIDE_REF" .elide-bin/elide
+  DIGEST="$(shasum -a 256 .elide-bin/elide | cut -d' ' -f1)"
+  docker build -f docker/harness.local.Dockerfile -t "$IMG" .
+  rm -rf .elide-bin
+else
+  # image mode: a bare tag (no '/' and no '@') is shorthand for the canonical image.
+  if [[ "$ELIDE_REF" != *"/"* && "$ELIDE_REF" != *"@"* ]]; then
+    FULL_REF="ghcr.io/elide-dev/elide:$ELIDE_REF"
+  else
+    FULL_REF="$ELIDE_REF"
+  fi
+  docker build -f docker/harness.Dockerfile --build-arg "ELIDE_REF=$FULL_REF" -t "$IMG" .
+  DIGEST="$(docker inspect --format '{{index .RepoDigests 0}}' "$FULL_REF" 2>/dev/null | sed 's/.*@sha256://')"
+  [[ -z "$DIGEST" ]] && DIGEST="$(echo "$FULL_REF" | sed 's/.*@sha256://')"
+fi
+
+mkdir -p "$ROOT/reports"
+docker run --rm \
+  -v "$ROOT/suites:/work/suites:ro" \
+  -v "$ROOT/expectations:/work/expectations:ro" \
+  -v "$ROOT/reports:/work/reports" \
+  -v "$ROOT/registry.toml:/work/registry.toml:ro" \
+  "$IMG" \
+  run "$SUITE" \
+  --elide-path /opt/elide/bin/elide \
+  --digest "$DIGEST" \
+  --suite-root /work/suites \
+  --reports /work/reports \
+  --expectations /work/expectations \
+  --threads "$THREADS"
