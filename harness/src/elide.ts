@@ -16,6 +16,11 @@ export async function resolveIdentity(
     stderr: "pipe",
   });
   const out = await new Response(proc.stdout).text();
-  await proc.exited;
-  return { semver: parseElideVersion(out), digest };
+  const err = await new Response(proc.stderr).text();
+  const code = await proc.exited;
+  const semver = parseElideVersion(out);
+  if (code !== 0 || semver === "unknown") {
+    throw new Error(`elide --version failed (exit ${code}): ${(err || out).trim()}`);
+  }
+  return { semver, digest };
 }

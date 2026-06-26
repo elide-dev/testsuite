@@ -15,10 +15,15 @@ type Record = z.infer<typeof RecordZ>;
 
 export function mapRecord(raw: unknown): TestResult {
   const r = RecordZ.parse(raw) as Record;
+  const status: TestResult["status"] = r.result.pass
+    ? "pass"
+    : !r.result.message || /^Test262Error\b/.test(r.result.message)
+      ? "fail"
+      : "error";
   return {
     kind: "test",
     id: `${r.file} ${r.scenario}`,
-    status: r.result.pass ? "pass" : "fail",
+    status,
     message: r.result.message || undefined,
     meta: {
       features: r.attrs?.features ?? [],

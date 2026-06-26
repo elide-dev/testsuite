@@ -22,6 +22,7 @@ export interface CliOptions {
   threads: number;
   log: boolean;
   include?: string; // comma-separated glob override (else registry settings.include)
+  suiteVersion?: string;
 }
 
 const ADAPTERS: Record<string, Adapter> = { test262: test262Adapter };
@@ -43,6 +44,7 @@ export function parseArgs(argv: string[]): CliOptions {
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
     include: get("--include", "") || undefined,
+    suiteVersion: get("--suite-version", "") || undefined,
   };
 }
 
@@ -95,6 +97,7 @@ export async function main(o: CliOptions): Promise<number> {
     elide: identity,
     startedAt,
     finishedAt,
+    suiteVersion: o.suiteVersion,
   };
 
   const shortDigest = identity.digest.slice(0, 12) || "local";

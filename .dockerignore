@@ -13,5 +13,5 @@ docs
 .superpowers
 *.log
 .DS_Store
-# NOTE: .elide-bin is intentionally NOT ignored — harness.local.Dockerfile
-# copies .elide-bin/elide from the build context.
+# NOTE: .elide-install is intentionally NOT ignored — harness.local.Dockerfile
+# copies .elide-install from the build context.

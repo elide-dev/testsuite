@@ -41,8 +41,15 @@ jobs:
           git config user.name "elide-ci"
           git config user.email "ci@elide.dev"
           git add reports
-          git commit -m "ci: compliance report ${ELIDE_REF}" || echo "no changes"
-          git push || echo "push skipped"
+          git commit -m "ci: compliance report ${ELIDE_REF}" || { echo "no changes to commit"; exit 0; }
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin "$branch" && git push origin "$branch"; then
+              exit 0
+            fi
+            echo "push attempt $i failed; retrying in 5s"; sleep 5
+          done
+          echo "push failed after 5 attempts" >&2; exit 1
 
   pages:
     needs: run

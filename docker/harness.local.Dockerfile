@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
-# Build context must contain ./.elide-bin/elide (staged by bin/run).
+# Build context must contain ./.elide-install (an Elide install dir staged by bin/run).
 # node:25-trixie (Debian 13, glibc 2.41) — Elide's binary requires GLIBC >= 2.39.
 FROM node:25-trixie
 RUN npm install -g bun@1
-COPY .elide-bin/elide /opt/elide/bin/elide
+COPY .elide-install /opt/elide
 RUN chmod +x /opt/elide/bin/elide
 ENV PATH=/opt/elide/bin:$PATH
 

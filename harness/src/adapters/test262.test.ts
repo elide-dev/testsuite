@@ -7,7 +7,7 @@ const records = JSON.parse(
 
 test("maps reporter records to normalized TestResults", () => {
   const out = mapRecords(records);
-  expect(out).toHaveLength(2);
+  expect(out).toHaveLength(3);
   expect(out[0]).toMatchObject({
     kind: "test",
     id: "test/built-ins/Array/length.js default",
@@ -19,4 +19,9 @@ test("maps reporter records to normalized TestResults", () => {
     message: "Test262Error: nope",
   });
   expect(out[0].meta).toMatchObject({ features: ["Array"] });
+  expect(out[2]).toMatchObject({
+    id: "test/built-ins/x.js default",
+    status: "error",
+    message: "ReferenceError: print is not defined",
+  });
 });

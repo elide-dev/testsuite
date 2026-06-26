@@ -4,5 +4,8 @@
     "result": { "pass": true, "message": "" } },
   { "file": "test/language/types/x.js", "scenario": "strict mode",
     "attrs": { "features": [], "flags": {} },
-    "result": { "pass": false, "message": "Test262Error: nope" } }
+    "result": { "pass": false, "message": "Test262Error: nope" } },
+  { "file": "test/built-ins/x.js", "scenario": "default",
+    "attrs": { "features": [], "flags": {} },
+    "result": { "pass": false, "message": "ReferenceError: print is not defined" } }
 ]
