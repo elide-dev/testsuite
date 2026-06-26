@@ -30,7 +30,7 @@ registry.toml                       # workload registry — Task 1
 expectations/test262.toml           # baseline — Task 4 (seeded Task 12)
 harness/
   package.json tsconfig.json bun.lockb
-  patches/eshost@*.patch            # Task 5
+  patches/eshost@9.0.0.patch            # Task 5
   fixtures/test262/                 # spike fixtures + sample harness json — Tasks 5,6
   src/
     cli.ts                          # Task 8
@@ -95,9 +95,9 @@ harness/.bun/
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "test262-harness": "^11.0.0",
-    "smol-toml": "^1.3.1",
-    "picomatch": "^4.0.2",
+    "test262-harness": "^10.0.0",
+    "smol-toml": "^1.7.0",
+    "picomatch": "^4.0.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -766,7 +766,7 @@ bun patch eshost                 # makes node_modules/eshost editable, prints th
 ./scripts/install-elide-host.sh  # copy our two files into the editable copy
 bun patch --commit node_modules/eshost   # writes harness/patches/eshost@<ver>.patch + updates package.json
 ```
-Expected: `harness/patches/eshost@*.patch` exists and `package.json` gains a `patchedDependencies` entry for eshost.
+Expected: `harness/patches/eshost@9.0.0.patch` exists and `package.json` gains a `patchedDependencies` entry for eshost.
 
 - [ ] **Step 5: Verify the patch reapplies cleanly**
 
