@@ -14,6 +14,7 @@ import { writeSummaryJson, rebuildTopIndex } from "./report/index";
 import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
 import { ingestAll } from "./db/ingest";
+import { computeImpact, renderImpactMd } from "./analyze/impact";
 
 export interface CliOptions {
   command: string;
@@ -132,6 +133,19 @@ export async function main(o: CliOptions): Promise<number> {
     await Bun.write(join(outDir, "changes.md"), renderDiffMd(diff));
   }
 
+  // Impact-ordered failure clustering for this run.
+  const failRows = tests
+    .filter((t) => t.status === "fail" || t.status === "error")
+    .map((t) => ({
+      id: t.id,
+      status: t.status,
+      message: t.message,
+      features: (t.meta?.features as string[]) ?? [],
+    }));
+  const impact = computeImpact(failRows);
+  await Bun.write(join(outDir, "impact.json"), JSON.stringify(impact, null, 2));
+  await Bun.write(join(outDir, "impact.md"), renderImpactMd(impact));
+
   const green = cmp.regressions.length === 0;
   console.log(
     `${wl.id} @ ${identity.semver}: ${cmp.counts.pass}/${cmp.counts.total} pass, ` +
@@ -172,6 +186,28 @@ if (import.meta.main) {
       const ra = loadRunResultsFromDb(db, a.id, { semver: a.semver, digest: a.digest });
       const rb = loadRunResultsFromDb(db, b.id, { semver: b.semver, digest: b.digest });
       console.log(renderDiffMd(diffRuns(ra, rb)));
+      break;
+    }
+    case "impact": {
+      const db = openDb(DB_PATH);
+      await ingestAll(db, resolve("reports"));
+      const where = argv[1]
+        ? "WHERE workload = 'test262' AND semver = ?" + (argv[2] ? " AND digest LIKE ?||'%'" : "")
+        : "WHERE workload = 'test262'";
+      const params = argv[1] ? (argv[2] ? [argv[1], argv[2]] : [argv[1]]) : [];
+      const run = db
+        .query(`SELECT id FROM runs ${where} ORDER BY finished_at DESC LIMIT 1`)
+        .get(...params) as { id: number } | undefined;
+      if (!run) { console.error("no matching run (run `db build` first)"); code = 2; break; }
+      const rows = db
+        .query("SELECT test_id, status, message, features FROM results WHERE run_id = ? AND status IN ('fail','error')")
+        .all(run.id) as { test_id: string; status: string; message: string | null; features: string | null }[];
+      const failRows = rows.map((r) => ({
+        id: r.test_id, status: r.status,
+        message: r.message ?? undefined,
+        features: r.features ? r.features.split(",") : [],
+      }));
+      console.log(renderImpactMd(computeImpact(failRows)));
       break;
     }
     default:
