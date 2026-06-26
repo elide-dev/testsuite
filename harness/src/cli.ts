@@ -21,6 +21,7 @@ export interface CliOptions {
   expectationsDir: string;
   threads: number;
   log: boolean;
+  include?: string; // comma-separated glob override (else registry settings.include)
 }
 
 const ADAPTERS: Record<string, Adapter> = { test262: test262Adapter };
@@ -41,6 +42,7 @@ export function parseArgs(argv: string[]): CliOptions {
     expectationsDir: get("--expectations", resolve("expectations")),
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
+    include: get("--include", "") || undefined,
   };
 }
 
@@ -66,7 +68,9 @@ export async function main(o: CliOptions): Promise<number> {
     elide: identity,
     elidePath: o.elidePath,
     suitePath: join(o.suiteRoot, wl.id.replace(/^.*\//, "")),
-    include: (wl.settings.include as string[]) ?? ["test/**/*.js"],
+    include: o.include
+      ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
+      : (wl.settings.include as string[]) ?? ["test/**/*.js"],
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
   };

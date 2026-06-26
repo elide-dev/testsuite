@@ -7,12 +7,14 @@ ELIDE_REF="ghcr.io/elide-dev/elide:nightly"
 SUITE="test262"
 THREADS="${THREADS:-1}"
 LOG=()
+INCLUDE=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --elide) ELIDE_REF="$2"; shift 2;;
     --suite) SUITE="$2"; shift 2;;
     --threads) THREADS="$2"; shift 2;;
     --log) LOG=(--log); shift;;
+    --include) INCLUDE=(--include "$2"); shift 2;;
     *) echo "unknown arg: $1" >&2; exit 2;;
   esac
 done
@@ -53,4 +55,5 @@ docker run --rm \
   --reports /work/reports \
   --expectations /work/expectations \
   --threads "$THREADS" \
-  ${LOG[@]+"${LOG[@]}"}
+  ${LOG[@]+"${LOG[@]}"} \
+  ${INCLUDE[@]+"${INCLUDE[@]}"}
