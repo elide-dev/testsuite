@@ -63,8 +63,13 @@ else
     log "docker build FAILED (FROM $FULL_REF). On amd64 confirm the ref has a linux/amd64 manifest: docker manifest inspect $FULL_REF"
     exit 2
   fi
-  DIGEST="$(docker inspect --format '{{index .RepoDigests 0}}' "$FULL_REF" 2>/dev/null | sed 's/.*@sha256://' || true)"
-  [[ -z "$DIGEST" ]] && DIGEST="$(echo "$FULL_REF" | sed 's/.*@sha256://')"
+  # Resolve to a bare hex sha. Prefer the repo digest; fall back to the image
+  # config id if the image has no repo digest (e.g. built/loaded locally).
+  DIGEST="$(docker inspect --format '{{index .RepoDigests 0}}' "$FULL_REF" 2>/dev/null | sed -n 's/.*@sha256:\([0-9a-f]\{12,\}\).*/\1/p' | head -1 || true)"
+  if [[ -z "$DIGEST" ]]; then
+    DIGEST="$(docker inspect --format '{{.Id}}' "$FULL_REF" 2>/dev/null | sed -n 's/^sha256:\([0-9a-f]\{12,\}\)$/\1/p' || true)"
+  fi
+  [[ -z "$DIGEST" ]] && DIGEST="unknown"
 fi
 log "image built. resolved digest: $DIGEST"
 

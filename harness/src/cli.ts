@@ -129,7 +129,8 @@ export async function main(o: CliOptions): Promise<number> {
     suiteVersion: o.suiteVersion,
   };
 
-  const shortDigest = identity.digest.slice(0, 12) || "local";
+  // Keep the digest path component safe (no '/' or ':' from a stray tag ref).
+  const shortDigest = identity.digest.replace(/[^0-9a-zA-Z]/g, "").slice(0, 12) || "local";
   const outDir = join(o.reportsDir, identity.semver, shortDigest);
   mkdirSync(outDir, { recursive: true });
   await writeResults(outDir, meta, results);

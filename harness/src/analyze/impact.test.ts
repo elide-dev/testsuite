@@ -16,6 +16,19 @@ test("clusters by normalized signature, ranked by blast radius", () => {
   expect(imp.bySignature[1].count).toBe(1);
 });
 
+test("keeps distinct raw messages per cluster (so module names survive)", () => {
+  const imp = computeImpact(rows);
+  // the two 'Cannot load module' rows collapse to one signature but retain
+  // both concrete messages, so 'vm' and 'fs' are visible.
+  expect(imp.bySignature[0].samples).toEqual([
+    "TypeError: Cannot load module: 'vm'",
+    "TypeError: Cannot load module: 'fs'",
+  ]);
+  const md = renderImpactMd(imp);
+  expect(md).toContain("'vm'");
+  expect(md).toContain("'fs'");
+});
+
 test("rolls up by feature, ignoring non-failing rows", () => {
   const imp = computeImpact(rows);
   expect(imp.byFeature).toEqual([{ feature: "modules", count: 2 }]);
