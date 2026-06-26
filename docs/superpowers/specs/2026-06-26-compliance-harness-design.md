@@ -317,16 +317,18 @@ so behavior matches.
 
 ## 13. Upstream Elide asks (optional; file, ship, consume)
 
-None block Test262 with the custom host, but each improves robustness/coverage:
+None block Test262 with the custom host, but each improves robustness/coverage.
+All three filed in `elide-dev/WHIPLASH` (related to meta #1172 and Test262 #1173):
 
 1. **Native `print()`** (d8/Graal-style: args space-joined + newline to stdout).
-   Lets us drop the `console.log` shim. *Minor.*
+   Lets us drop the `console.log` shim. *Minor.* — **WHIPLASH#1182**
 2. **Scriptable error mode** — uncaught errors to **stderr** as plain
    `Name: message` (+ stack), decorative box suppressed (e.g. behind a flag/env).
-   Lets us drop stdout box-parsing in `normalizeResult`. *Quality/robustness.*
+   Lets us drop stdout box-parsing in `normalizeResult`. *Quality/robustness.* —
+   **WHIPLASH#1183**
 3. **`$262` / Realm host hooks** (`createRealm`, `evalScript`, `detachArrayBuffer`)
    and **Atomics/agents** support — to un-`skip` the realm and SharedArrayBuffer
-   slices of Test262. *Coverage expanders, later.*
+   slices of Test262. *Coverage expanders, later.* — **WHIPLASH#1184**
 
 ## 14. Build order
 

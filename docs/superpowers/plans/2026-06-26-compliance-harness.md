@@ -1616,11 +1616,11 @@ Move whole-feature unsupported areas into `[skip]` with reasons; move individual
 ```toml
 [skip]
 "intl402/**" = "Intl 402 not supported yet"
-"built-ins/Atomics/**" = "SharedArrayBuffer/agents unsupported"
+"built-ins/Atomics/**" = "SharedArrayBuffer/agents unsupported (WHIPLASH#1184)"
 "**/*FIXTURE.js" = "fixture support files, not tests"
 
 [fail]
-"built-ins/RegExp/property-escapes/**" = "partial Unicode property escapes (elide-dev/elide#TODO)"
+"built-ins/RegExp/property-escapes/**" = "partial Unicode property escapes (WHIPLASH#NNN)"
 ```
 
 - [ ] **Step 4: Commit the baseline + first report**
@@ -1630,9 +1630,14 @@ git add expectations/test262.toml reports
 git commit -m "chore: seed test262 baseline + first nightly report"
 ```
 
-- [ ] **Step 5: File the upstream Elide issues from spec §13**
+- [ ] **Step 5: Upstream Elide issues (already filed)**
 
-Open issues for: native `print()`, scriptable errors-to-stderr mode, and `$262`/Realm + Atomics host hooks. Reference the skipped areas from Step 3. (Tracking only — no code change here.)
+The three spec §13 asks are filed in `elide-dev/WHIPLASH` (related to meta #1172, Test262 #1173):
+- **WHIPLASH#1182** — native `print()` global
+- **WHIPLASH#1183** — scriptable errors-to-stderr mode
+- **WHIPLASH#1184** — `$262`/Realm host hooks + Atomics/agents
+
+Cross-link the skipped areas from Step 3 to these issues in the baseline reasons (see the example in Step 3). No code change here.
 
 ---
 
