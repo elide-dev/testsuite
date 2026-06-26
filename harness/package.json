@@ -15,5 +15,8 @@
   "devDependencies": {
     "typescript": "^5.5.0",
     "@types/picomatch": "^3.0.1"
+  },
+  "patchedDependencies": {
+    "eshost@9.0.0": "patches/eshost@9.0.0.patch"
   }
 }
