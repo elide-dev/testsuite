@@ -10,6 +10,9 @@ import type { Adapter } from "./adapters/types";
 import type { Result, RunMeta, TestResult } from "./results/schema";
 import { renderSuiteReport, renderRunIndex } from "./report/render";
 import { writeSummaryJson, rebuildTopIndex } from "./report/index";
+import { openDb } from "./db/open";
+import { resetDb } from "./db/schema";
+import { ingestAll } from "./db/ingest";
 
 export interface CliOptions {
   command: string;
@@ -46,6 +49,16 @@ export function parseArgs(argv: string[]): CliOptions {
     include: get("--include", "") || undefined,
     suiteVersion: get("--suite-version", "") || undefined,
   };
+}
+
+const DB_PATH = resolve(".harness/results.sqlite");
+
+export async function dbBuild(reportsDir = resolve("reports")): Promise<number> {
+  const db = openDb(DB_PATH);
+  resetDb(db);
+  const n = await ingestAll(db, reportsDir, { force: true });
+  console.log(`db build: ingested ${n} run(s) into ${DB_PATH}`);
+  return 0;
 }
 
 const MARK: Record<string, string> = {
@@ -118,10 +131,24 @@ export async function main(o: CliOptions): Promise<number> {
 }
 
 if (import.meta.main) {
-  const o = parseArgs(Bun.argv.slice(2));
-  if (o.command !== "run") {
-    console.error("usage: cli.ts run <workload> [options]");
-    process.exit(2);
+  const argv = Bun.argv.slice(2);
+  const command = argv[0];
+  let code = 0;
+  switch (command) {
+    case "run":
+      code = await main(parseArgs(argv));
+      break;
+    case "db":
+      if (argv[1] !== "build") {
+        console.error("usage: cli.ts db build");
+        code = 2;
+      } else {
+        code = await dbBuild();
+      }
+      break;
+    default:
+      console.error("usage: cli.ts <run|db build|diff|impact|query> …");
+      code = 2;
   }
-  process.exit(await main(o));
+  process.exit(code);
 }
