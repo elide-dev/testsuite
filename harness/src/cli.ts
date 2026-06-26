@@ -20,6 +20,7 @@ export interface CliOptions {
   reportsDir: string;
   expectationsDir: string;
   threads: number;
+  log: boolean;
 }
 
 const ADAPTERS: Record<string, Adapter> = { test262: test262Adapter };
@@ -39,8 +40,16 @@ export function parseArgs(argv: string[]): CliOptions {
     reportsDir: get("--reports", resolve("reports")),
     expectationsDir: get("--expectations", resolve("expectations")),
     threads: parseInt(get("--threads", "1"), 10),
+    log: rest.includes("--log"),
   };
 }
+
+const MARK: Record<string, string> = {
+  pass: "✅",
+  fail: "❌",
+  error: "🛑",
+  skip: "⊘",
+};
 
 export async function main(o: CliOptions): Promise<number> {
   const registry = loadRegistry(resolve("registry.toml"));
@@ -63,7 +72,14 @@ export async function main(o: CliOptions): Promise<number> {
   };
 
   const results: Result[] = [];
-  for await (const r of adapter.run(ctx)) results.push(r);
+  for await (const r of adapter.run(ctx)) {
+    results.push(r);
+    if (o.log && r.kind === "test") {
+      // Live per-test marks go to stderr so stdout stays clean for the summary.
+      const tail = r.status === "fail" || r.status === "error" ? `  — ${r.message ?? ""}` : "";
+      process.stderr.write(`${MARK[r.status] ?? "?"} ${r.id}${tail}\n`);
+    }
+  }
   const finishedAt = new Date().toISOString();
 
   const tests = results.filter((r): r is TestResult => r.kind === "test");

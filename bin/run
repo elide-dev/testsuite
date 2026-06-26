@@ -6,11 +6,13 @@ ROOT="$PWD"
 ELIDE_REF="ghcr.io/elide-dev/elide:nightly"
 SUITE="test262"
 THREADS="${THREADS:-1}"
+LOG=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --elide) ELIDE_REF="$2"; shift 2;;
     --suite) SUITE="$2"; shift 2;;
     --threads) THREADS="$2"; shift 2;;
+    --log) LOG=(--log); shift;;
     *) echo "unknown arg: $1" >&2; exit 2;;
   esac
 done
@@ -50,4 +52,5 @@ docker run --rm \
   --suite-root /work/suites \
   --reports /work/reports \
   --expectations /work/expectations \
-  --threads "$THREADS"
+  --threads "$THREADS" \
+  ${LOG[@]+"${LOG[@]}"}

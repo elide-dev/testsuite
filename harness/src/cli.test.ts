@@ -19,4 +19,9 @@ test("defaults threads to 1 and digest to 'local'", () => {
   const o = parseArgs(["run", "test262"]);
   expect(o.threads).toBe(1);
   expect(o.digest).toBe("local");
+  expect(o.log).toBe(false);
+});
+
+test("parses the --log flag", () => {
+  expect(parseArgs(["run", "test262", "--log"]).log).toBe(true);
 });
