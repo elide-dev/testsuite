@@ -1,0 +1,10 @@
+# Registry of workloads run by the harness. kind = "test" | "benchmark".
+[[workload]]
+id = "test262"
+kind = "test"
+adapter = "test262"
+path = "suites/test262"
+
+  [workload.settings]
+  # Globs (relative to path) to execute. Skip globs live in expectations/.
+  include = ["test/language/**/*.js", "test/built-ins/**/*.js"]
