@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
+# Launcher: resolve --elide -> build the harness image -> run the suite.
+# Exit codes: 0 = GREEN (no regressions); 1 = RED (regressions); 2 = harness or
+# setup error (image/elide/infra). Anything else is the raw docker exit code.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 
+log() { printf '[bin/run] %s\n' "$*" >&2; }
+trap 'log "ERROR: unexpected failure (exit $?). See messages above."' ERR
+
 ELIDE_REF="ghcr.io/elide-dev/elide:nightly"
 SUITE="test262"
 THREADS="${THREADS:-1}"
+PLATFORM="${PLATFORM:-}"          # e.g. linux/amd64 ; empty = Docker default (native)
 LOG=()
 INCLUDE=()
 RATCHET=()
@@ -14,46 +21,81 @@ while [[ $# -gt 0 ]]; do
     --elide) ELIDE_REF="$2"; shift 2;;
     --suite) SUITE="$2"; shift 2;;
     --threads) THREADS="$2"; shift 2;;
+    --platform) PLATFORM="$2"; shift 2;;
     --log) LOG=(--log); shift;;
     --include) INCLUDE=(--include "$2"); shift 2;;
     --ratchet) RATCHET=(--ratchet); shift;;
-    *) echo "unknown arg: $1" >&2; exit 2;;
+    *) log "unknown arg: $1"; exit 2;;
   esac
 done
+
+PLAT=()
+[[ -n "$PLATFORM" ]] && PLAT=(--platform "$PLATFORM")
+
+command -v docker >/dev/null 2>&1 || { log "docker not found on PATH"; exit 2; }
 
 IMG="elide-harness:$(echo "$ELIDE_REF" | tr '/:@' '___')"
 DIGEST="local"
 
+log "elide ref: $ELIDE_REF   suite: $SUITE   threads: $THREADS   platform: ${PLATFORM:-<native>}"
+
+# ---- build the harness image -------------------------------------------------
 if [[ -d "$ELIDE_REF" && -x "$ELIDE_REF/bin/elide" ]]; then
-  # local install-directory mode (dir containing bin/elide + lib/)
+  log "mode: local install dir"
   rm -rf .elide-install && cp -R "$ELIDE_REF" .elide-install
   DIGEST="$(shasum -a 256 .elide-install/bin/elide | cut -d' ' -f1)"
-  docker build -f docker/harness.local.Dockerfile -t "$IMG" .
+  log "building image $IMG (local install dir)…"
+  if ! docker build ${PLAT[@]+"${PLAT[@]}"} -f docker/harness.local.Dockerfile -t "$IMG" .; then
+    rm -rf .elide-install; log "docker build FAILED"; exit 2
+  fi
   rm -rf .elide-install
 elif [[ -e "$ELIDE_REF" ]]; then
-  echo "error: --elide local path must be an Elide install directory containing bin/elide and lib/, not a bare file: $ELIDE_REF" >&2
+  log "error: --elide local path must be an Elide install directory (with bin/elide and lib/), not a bare file: $ELIDE_REF"
   exit 2
 else
-  # image mode: a bare tag (no '/' and no '@') is shorthand for the canonical image.
   if [[ "$ELIDE_REF" != *"/"* && "$ELIDE_REF" != *"@"* ]]; then
     FULL_REF="ghcr.io/elide-dev/elide:$ELIDE_REF"
   else
     FULL_REF="$ELIDE_REF"
   fi
-  docker build -f docker/harness.Dockerfile --build-arg "ELIDE_REF=$FULL_REF" -t "$IMG" .
-  DIGEST="$(docker inspect --format '{{index .RepoDigests 0}}' "$FULL_REF" 2>/dev/null | sed 's/.*@sha256://')"
+  log "building image $IMG (FROM $FULL_REF)…"
+  if ! docker build ${PLAT[@]+"${PLAT[@]}"} -f docker/harness.Dockerfile --build-arg "ELIDE_REF=$FULL_REF" -t "$IMG" .; then
+    log "docker build FAILED (FROM $FULL_REF). On amd64 confirm the ref has a linux/amd64 manifest: docker manifest inspect $FULL_REF"
+    exit 2
+  fi
+  DIGEST="$(docker inspect --format '{{index .RepoDigests 0}}' "$FULL_REF" 2>/dev/null | sed 's/.*@sha256://' || true)"
   [[ -z "$DIGEST" ]] && DIGEST="$(echo "$FULL_REF" | sed 's/.*@sha256://')"
 fi
+log "image built. resolved digest: $DIGEST"
 
+# ---- preflight: prove Elide actually runs in the image -----------------------
+# This is the fast, decisive check for "exits right after build": if the Elide
+# binary can't run (arch/glibc mismatch, etc.) it surfaces here, not as an
+# opaque exit code three hours into a suite.
+log "preflight: elide --version"
+set +e
+PREFLIGHT="$(docker run --rm ${PLAT[@]+"${PLAT[@]}"} --entrypoint /opt/elide/bin/elide "$IMG" --version 2>&1)"
+prc=$?
+set -e
+if [[ $prc -ne 0 ]]; then
+  log "PREFLIGHT FAILED (exit $prc): elide could not run inside the image:"
+  printf '%s\n' "$PREFLIGHT" | sed 's/^/[elide] /' >&2
+  log "if this is an arch issue, retry with: PLATFORM=linux/amd64 $0 …"
+  exit 2
+fi
+log "preflight ok: elide $(printf '%s' "$PREFLIGHT" | head -1)"
+
+# ---- run the suite -----------------------------------------------------------
 SUITE_VERSION="$(git -C "$ROOT/suites/$SUITE" rev-parse HEAD 2>/dev/null || echo unknown)"
-
 # --ratchet writes expectations/<suite>.ratchet.toml back to the host, so the
 # expectations mount must be writable for ratchet runs (read-only otherwise).
 EXP_MODE=ro
 [[ ${#RATCHET[@]} -gt 0 ]] && EXP_MODE=rw
 
 mkdir -p "$ROOT/reports"
-docker run --rm \
+log "running suite '$SUITE' (suite version ${SUITE_VERSION:0:12})…"
+set +e
+docker run --rm ${PLAT[@]+"${PLAT[@]}"} \
   -v "$ROOT/suites:/work/suites:ro" \
   -v "$ROOT/expectations:/work/expectations:$EXP_MODE" \
   -v "$ROOT/reports:/work/reports" \
@@ -70,3 +112,13 @@ docker run --rm \
   ${LOG[@]+"${LOG[@]}"} \
   ${INCLUDE[@]+"${INCLUDE[@]}"} \
   ${RATCHET[@]+"${RATCHET[@]}"}
+rc=$?
+set -e
+
+case $rc in
+  0) log "DONE: GREEN (no regressions). reports/ updated." ;;
+  1) log "DONE: RED — regressions found (see the summary above and reports/). exit 1." ;;
+  2) log "harness ERROR (exit 2): the run did not complete; see the error above." ;;
+  *) log "docker run exited with code $rc (infra/interrupt)." ;;
+esac
+exit $rc

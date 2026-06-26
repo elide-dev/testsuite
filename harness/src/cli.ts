@@ -173,6 +173,7 @@ if (import.meta.main) {
   const argv = Bun.argv.slice(2);
   const command = argv[0];
   let code = 0;
+  try {
   switch (command) {
     case "run":
       code = await main(parseArgs(argv));
@@ -250,6 +251,13 @@ if (import.meta.main) {
     default:
       console.error("usage: cli.ts <run|db build|diff|impact|query> …");
       code = 2;
+  }
+  } catch (err) {
+    // Distinct from exit 1 (regressions): a thrown setup/runtime error.
+    console.error(
+      `harness error: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`,
+    );
+    code = 2;
   }
   process.exit(code);
 }
