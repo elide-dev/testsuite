@@ -85,17 +85,11 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   CI: "true"
 
-permissions:
-  contents: read
-
 jobs:
   compliance:
     name: "Compliance"
     runs-on: ${{ fromJSON(inputs.runner) }}
     timeout-minutes: 720
-    permissions:
-      contents: write
-      pull-requests: write
     env:
       ELIDE_REF: ${{ inputs.elide_ref }}
       ELIDE_TARBALL_URL: ${{ inputs.elide_tarball_url }}
