@@ -25,6 +25,7 @@ test("suite report includes pass rate, regressions, new passes", () => {
   expect(md).toContain("test262");
   expect(md).toContain("1.3.5+abc");
   expect(md).toContain("90/100");
+  expect(md).toContain("pass-rate.svg");
   expect(md).toContain("language/r.js default");
   expect(md).toContain("built-ins/n.js default");
 });
@@ -53,5 +54,6 @@ test("top index renders a version matrix with a checkmark when no regressions", 
     { workload: "test262", semver: "1.3.5", digest: "abcd12", passRate: 1, regressions: 0 },
   ]);
   expect(md).toContain("test262");
+  expect(md).toContain("pass-rate.svg");
   expect(md).toContain("✅");
 });

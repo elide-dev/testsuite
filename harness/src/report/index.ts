@@ -70,22 +70,25 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
   return { runs };
 }
 
+export function latestRunSummariesFromIndex(index: { runs: IndexEntry[] }): RunSummary[] {
+  const latest = new Map<string, RunSummary & { finishedAt: string }>();
+  for (const run of index.runs) {
+    const total = run.total || 1;
+    const cur: RunSummary & { finishedAt: string } = {
+      workload: run.workload,
+      semver: run.semver,
+      digest: run.digest.slice(0, 12),
+      passRate: run.pass / total,
+      regressions: run.regressions,
+      finishedAt: run.finishedAt,
+    };
+    const prev = latest.get(run.workload);
+    if (!prev || cur.finishedAt > prev.finishedAt) latest.set(run.workload, cur);
+  }
+  return [...latest.values()].sort((a, b) => a.workload.localeCompare(b.workload));
+}
+
 // Walk reports/<semver>/<short-digest>/<workload>/summary.json, keep the newest run per workload.
 export async function rebuildTopIndex(reportsDir: string): Promise<string> {
-  const latest = new Map<string, RunSummary & { finishedAt: string }>();
-  for (const run of findReportRunDirs(reportsDir)) {
-    const s = JSON.parse(await Bun.file(run.summaryPath).text());
-    const total = s.counts.total || 1;
-    const cur: RunSummary & { finishedAt: string } = {
-      workload: s.meta.workload,
-      semver: s.meta.elide.semver,
-      digest: run.digest.slice(0, 12),
-      passRate: s.counts.pass / total,
-      regressions: s.regressions.length,
-      finishedAt: s.meta.finishedAt,
-    };
-    const prev = latest.get(s.meta.workload);
-    if (!prev || cur.finishedAt > prev.finishedAt) latest.set(s.meta.workload, cur);
-  }
-  return renderTopIndex([...latest.values()]);
+  return renderTopIndex(latestRunSummariesFromIndex(await buildIndexJson(reportsDir)));
 }

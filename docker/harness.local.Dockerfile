@@ -24,6 +24,7 @@ RUN case "${TARGETARCH}" in \
 ARG JTREG_VERSION=8.2.1+1
 RUN curl -fsSL "https://builds.shipilev.net/jtreg/jtreg-${JTREG_VERSION}.zip" -o /tmp/jtreg.zip \
  && unzip -q /tmp/jtreg.zip -d /opt \
+ && chmod -R a+rX /opt/jtreg \
  && rm /tmp/jtreg.zip
 COPY .elide-install /opt/elide
 RUN chmod +x /opt/elide/bin/elide

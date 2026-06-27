@@ -2,7 +2,7 @@ import { test, expect } from "bun:test";
 import { mkdtempSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { buildIndexJson } from "./index";
+import { buildIndexJson, latestRunSummariesFromIndex } from "./index";
 
 test("buildIndexJson lists workload-scoped runs with counts and paths", async () => {
   const root = mkdtempSync(join(tmpdir(), "idx-"));
@@ -20,4 +20,40 @@ test("buildIndexJson lists workload-scoped runs with counts and paths", async ()
     pass: 90, total: 100, regressions: 0,
     reportDir: "1.3.5/abcd1234ef56/test262",
   });
+});
+
+test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
+  const latest = latestRunSummariesFromIndex({
+    runs: [
+      {
+        workload: "alpha",
+        semver: "1.1.0",
+        digest: "bbbbbbbbbbbb",
+        pass: 8,
+        total: 10,
+        regressions: 1,
+        finishedAt: "2026-01-02T00:00:00.000Z",
+        reportDir: "1.1.0/bbbbbbbbbbbb/alpha",
+      },
+      {
+        workload: "alpha",
+        semver: "1.0.0",
+        digest: "aaaaaaaaaaaa",
+        pass: 1,
+        total: 10,
+        regressions: 9,
+        finishedAt: "2026-01-01T00:00:00.000Z",
+        reportDir: "1.0.0/aaaaaaaaaaaa/alpha",
+      },
+    ],
+  });
+
+  expect(latest).toEqual([
+    expect.objectContaining({
+      workload: "alpha",
+      semver: "1.1.0",
+      passRate: 0.8,
+      regressions: 1,
+    }),
+  ]);
 });

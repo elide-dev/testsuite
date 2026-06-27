@@ -9,7 +9,7 @@ Next suites are added in this order:
 
 1. `wpt-wintertc` - a sparse Web Platform Tests subset for WinterTC / ECMA-429 pure in-process APIs.
 2. `cpython-core` - CPython 3.12 pure-core language and standard-library tests.
-3. `javac-jtreg` - OpenJDK langtools javac tests through jtreg, compiling with Elide and initially running generated programs with a regular JDK.
+3. `javac-jtreg` - broad OpenJDK langtools javac coverage through jtreg, compiling with Elide and initially running generated programs with a regular JDK. Annotation processing and modules are intentionally excluded from the default manifest for now.
 
 Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev/WHIPLASH/issues/1172),
 [Test262 (WHIPLASH#1173)](https://github.com/elide-dev/WHIPLASH/issues/1173).
@@ -58,6 +58,15 @@ THREADS=8 ./bin/run --elide nightly --suite test262 --log
 ./bin/run --elide nightly --suite cpython-core --threads 8 --log
 ./bin/run --elide nightly --suite javac-jtreg --threads 4 --log
 
+# Run every registered suite after building the harness image once.
+./bin/run --elide nightly --all-suites --threads 8 --log
+
+# Run a subset with a comma-separated suite list.
+./bin/run --elide nightly --suite wpt-wintertc,cpython-core --threads 8 --log
+
+# Update reports plus the generated README compatibility summary.
+./bin/run --elide nightly --all-suites --threads 8 --log --update-summaries
+
 # Pin a specific build: image tag, digest, or a local Elide install directory
 ./bin/run --elide ghcr.io/elide-dev/elide@sha256:…
 ./bin/run --elide /path/to/elide-install      # dir containing bin/elide + lib/
@@ -78,10 +87,16 @@ Committed under `reports/<elide-version>/<short-digest>/<workload>/`:
 | `changes.md` / `changes.json` | diff vs the previous run (fixed / regressed / added / removed) |
 | `summary.json` | counts + regression/new-pass ids (machine) |
 | `results.json.gz` | every test's status (machine, for cross-version diffs) |
+| `pass-rate.svg` | static pass/fail/error/skip chart for the run |
 
-`reports/index.md` (+ `index.json`) is the top-level matrix of the latest run
-per suite. Machine-readable index entries point at the workload-scoped report
-directory. Published via GitHub Pages.
+`reports/index.md` (+ `index.json` + `pass-rate.svg`) is the top-level matrix
+of the latest run per suite. Machine-readable index entries point at the
+workload-scoped report directory. Published via GitHub Pages.
+
+Passing `--update-summaries` also refreshes the generated compatibility block in
+this README from the latest report index. This is intended for mainline bot runs:
+run all suites, commit the changed `reports/`, `expectations/*.ratchet.toml` if
+ratcheting, and README summary content, then push.
 
 ## Expectations & the ratchet
 

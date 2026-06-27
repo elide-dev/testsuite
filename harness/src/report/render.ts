@@ -18,6 +18,7 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
   lines.push(`- Suite version: \`${meta.suiteVersion ?? "unknown"}\``);
   lines.push(`- Ran: ${meta.startedAt} → ${meta.finishedAt}`, "");
   lines.push(`## Summary`, "");
+  lines.push("![Pass-rate chart](./pass-rate.svg)", "");
   lines.push(`**Pass rate: ${pass}/${total} (${rate}%)**`, "");
   lines.push(`| pass | fail | error | skip | regressions | new passes |`);
   lines.push(`|---:|---:|---:|---:|---:|---:|`);
@@ -63,7 +64,14 @@ export function renderRunIndex(meta: RunMeta, c: Comparison): string {
 }
 
 export function renderTopIndex(runs: RunSummary[]): string {
-  const lines: string[] = ["# Elide compliance reports", "", "| Suite | Version | Digest | Pass rate | Status |", "|---|---|---|---:|:--:|"];
+  const lines: string[] = [
+    "# Elide compliance reports",
+    "",
+    "![Latest compatibility pass rates](./pass-rate.svg)",
+    "",
+    "| Suite | Version | Digest | Pass rate | Status |",
+    "|---|---|---|---:|:--:|",
+  ];
   for (const r of runs) {
     const mark = r.regressions === 0 ? "✅" : "❌";
     const pct = (r.passRate * 100).toFixed(1);

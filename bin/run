@@ -10,34 +10,46 @@ log() { printf '[bin/run] %s\n' "$*" >&2; }
 trap 'log "ERROR: unexpected failure (exit $?). See messages above."' ERR
 
 ELIDE_REF="ghcr.io/elide-dev/elide:nightly"
-SUITE="test262"
+SUITES=()
+ALL_SUITES=0
 THREADS="${THREADS:-1}"
 PLATFORM="${PLATFORM:-}"          # e.g. linux/amd64 ; empty = Docker default (native)
 LOG=()
 INCLUDE=()
 RATCHET=()
+UPDATE_SUMMARIES=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --elide) ELIDE_REF="$2"; shift 2;;
-    --suite) SUITE="$2"; shift 2;;
+    --suite)
+      IFS=',' read -r -a parsed_suites <<< "$2"
+      SUITES+=("${parsed_suites[@]}")
+      shift 2
+      ;;
+    --all-suites) ALL_SUITES=1; shift;;
     --threads) THREADS="$2"; shift 2;;
     --platform) PLATFORM="$2"; shift 2;;
     --log) LOG=(--log); shift;;
     --include) INCLUDE=(--include "$2"); shift 2;;
     --ratchet) RATCHET=(--ratchet); shift;;
+    --update-summaries) UPDATE_SUMMARIES=(--update-summaries); shift;;
     *) log "unknown arg: $1"; exit 2;;
   esac
 done
 
 PLAT=()
 [[ -n "$PLATFORM" ]] && PLAT=(--platform "$PLATFORM")
+HOST_UID="$(id -u)"
+HOST_GID="$(id -g)"
+CONTAINER_PATH="/opt/jtreg/bin:/opt/graalvm-jdk-25.0.3/bin:/opt/elide/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+USER_ARGS=(--user "$HOST_UID:$HOST_GID" -e "HOME=/work/.harness" -e "PATH=$CONTAINER_PATH")
 
 command -v docker >/dev/null 2>&1 || { log "docker not found on PATH"; exit 2; }
 
 IMG="elide-harness:$(echo "$ELIDE_REF" | tr '/:@' '___')"
 DIGEST="local"
 
-log "elide ref: $ELIDE_REF   suite: $SUITE   threads: $THREADS   platform: ${PLATFORM:-<native>}"
+log "elide ref: $ELIDE_REF   threads: $THREADS   platform: ${PLATFORM:-<native>}"
 
 # ---- build the harness image -------------------------------------------------
 if [[ -d "$ELIDE_REF" && -x "$ELIDE_REF/bin/elide" ]]; then
@@ -79,7 +91,7 @@ log "image built. resolved digest: $DIGEST"
 # opaque exit code three hours into a suite.
 log "preflight: elide --version"
 set +e
-PREFLIGHT="$(docker run --rm ${PLAT[@]+"${PLAT[@]}"} --entrypoint /opt/elide/bin/elide "$IMG" --version 2>&1)"
+PREFLIGHT="$(docker run --rm ${PLAT[@]+"${PLAT[@]}"} "${USER_ARGS[@]}" --entrypoint /opt/elide/bin/elide "$IMG" --version 2>&1)"
 prc=$?
 set -e
 if [[ $prc -ne 0 ]]; then
@@ -91,6 +103,29 @@ fi
 log "preflight ok: elide $(printf '%s' "$PREFLIGHT" | head -1)"
 
 # ---- run the suite -----------------------------------------------------------
+list_workloads() {
+  local registry_path="$1"
+  awk '
+    /^\[\[workload\]\]/ {
+      if (in_block && id != "") print id
+      in_block = 1
+      id = ""
+      next
+    }
+    !in_block { next }
+    /^[[:space:]]*id[[:space:]]*=/ {
+      value = $0
+      sub(/^[^"]*"/, "", value)
+      sub(/".*$/, "", value)
+      id = value
+      next
+    }
+    END {
+      if (in_block && id != "") print id
+    }
+  ' "$registry_path"
+}
+
 resolve_suite_checkout() {
   local registry_path="$1"
   local workload_id="$2"
@@ -127,47 +162,91 @@ resolve_suite_checkout() {
   ' "$registry_path"
 }
 
-SUITE_CHECKOUT="$(resolve_suite_checkout "$ROOT/registry.toml" "$SUITE" | head -1)"
-if [[ -n "$SUITE_CHECKOUT" && ( -d "$ROOT/$SUITE_CHECKOUT/.git" || -f "$ROOT/$SUITE_CHECKOUT/.git" ) ]]; then
-  SUITE_VERSION="$(git -C "$ROOT/$SUITE_CHECKOUT" rev-parse HEAD 2>/dev/null || echo unknown)"
-else
-  SUITE_VERSION="unknown"
-fi
 # --ratchet writes expectations/<suite>.ratchet.toml back to the host, so the
 # expectations mount must be writable for ratchet runs (read-only otherwise).
 EXP_MODE=ro
 [[ ${#RATCHET[@]} -gt 0 ]] && EXP_MODE=rw
+README_MODE=ro
+[[ ${#UPDATE_SUMMARIES[@]} -gt 0 ]] && README_MODE=rw
 
-mkdir -p "$ROOT/reports"
-log "running suite '$SUITE' (suite version ${SUITE_VERSION:0:12})…"
-set +e
-docker run --rm ${PLAT[@]+"${PLAT[@]}"} \
-  -v "$ROOT/suites:/work/suites:ro" \
-  -v "$ROOT/manifests:/work/manifests:ro" \
-  -v "$ROOT/expectations:/work/expectations:$EXP_MODE" \
-  -v "$ROOT/reports:/work/reports" \
-  -v "$ROOT/registry.toml:/work/registry.toml:ro" \
-  "$IMG" \
-  run "$SUITE" \
-  --registry /work/registry.toml \
-  --repo-root /work \
-  --elide-path /opt/elide/bin/elide \
-  --digest "$DIGEST" \
-  --suite-root /work/suites \
-  --reports /work/reports \
-  --expectations /work/expectations \
-  --threads "$THREADS" \
-  --suite-version "$SUITE_VERSION" \
-  ${LOG[@]+"${LOG[@]}"} \
-  ${INCLUDE[@]+"${INCLUDE[@]}"} \
-  ${RATCHET[@]+"${RATCHET[@]}"}
-rc=$?
-set -e
+if [[ $ALL_SUITES -eq 1 && ${#SUITES[@]} -eq 0 ]]; then
+  mapfile -t SUITES < <(list_workloads "$ROOT/registry.toml")
+fi
+if [[ ${#SUITES[@]} -eq 0 ]]; then
+  SUITES=(test262)
+fi
 
-case $rc in
-  0) log "DONE: GREEN (no regressions). reports/ updated." ;;
-  1) log "DONE: RED — regressions found (see the summary above and reports/). exit 1." ;;
-  2) log "harness ERROR (exit 2): the run did not complete; see the error above." ;;
-  *) log "docker run exited with code $rc (infra/interrupt)." ;;
+mkdir -p "$ROOT/reports" "$ROOT/expectations" "$ROOT/.harness"
+touch "$ROOT/README.md"
+
+fix_host_ownership() {
+  docker run --rm ${PLAT[@]+"${PLAT[@]}"} \
+    --entrypoint chown \
+    -v "$ROOT/reports:/target/reports" \
+    -v "$ROOT/expectations:/target/expectations" \
+    -v "$ROOT/.harness:/target/.harness" \
+    -v "$ROOT/README.md:/target/README.md" \
+    "$IMG" \
+    -R "$HOST_UID:$HOST_GID" /target/reports /target/expectations /target/.harness /target/README.md >/dev/null 2>&1 || true
+}
+
+fix_host_ownership
+
+overall=0
+for SUITE in "${SUITES[@]}"; do
+  SUITE_CHECKOUT="$(resolve_suite_checkout "$ROOT/registry.toml" "$SUITE" | head -1)"
+  if [[ -n "$SUITE_CHECKOUT" && ( -d "$ROOT/$SUITE_CHECKOUT/.git" || -f "$ROOT/$SUITE_CHECKOUT/.git" ) ]]; then
+    SUITE_VERSION="$(git -C "$ROOT/$SUITE_CHECKOUT" rev-parse HEAD 2>/dev/null || echo unknown)"
+  else
+    SUITE_VERSION="unknown"
+  fi
+
+  log "running suite '$SUITE' (suite version ${SUITE_VERSION:0:12})…"
+  set +e
+  docker run --rm ${PLAT[@]+"${PLAT[@]}"} "${USER_ARGS[@]}" \
+    -v "$ROOT/suites:/work/suites:ro" \
+    -v "$ROOT/manifests:/work/manifests:ro" \
+    -v "$ROOT/expectations:/work/expectations:$EXP_MODE" \
+    -v "$ROOT/reports:/work/reports" \
+    -v "$ROOT/.harness:/work/.harness" \
+    -v "$ROOT/README.md:/work/README.md:$README_MODE" \
+    -v "$ROOT/registry.toml:/work/registry.toml:ro" \
+    "$IMG" \
+    run "$SUITE" \
+    --registry /work/registry.toml \
+    --repo-root /work \
+    --elide-path /opt/elide/bin/elide \
+    --digest "$DIGEST" \
+    --suite-root /work/suites \
+    --reports /work/reports \
+    --expectations /work/expectations \
+    --threads "$THREADS" \
+    --suite-version "$SUITE_VERSION" \
+    ${LOG[@]+"${LOG[@]}"} \
+    ${INCLUDE[@]+"${INCLUDE[@]}"} \
+    ${RATCHET[@]+"${RATCHET[@]}"} \
+    ${UPDATE_SUMMARIES[@]+"${UPDATE_SUMMARIES[@]}"}
+  rc=$?
+  set -e
+
+  case $rc in
+    0) log "DONE: $SUITE GREEN (no regressions). reports/ updated." ;;
+    1) log "DONE: $SUITE RED — regressions found (see the summary above and reports/)." ;;
+    2) log "harness ERROR for $SUITE (exit 2): the run did not complete; see the error above." ;;
+    *) log "docker run for $SUITE exited with code $rc (infra/interrupt)." ;;
+  esac
+  if [[ $rc -eq 2 || $rc -gt 2 ]]; then
+    overall=2
+  elif [[ $rc -eq 1 && $overall -eq 0 ]]; then
+    overall=1
+  fi
+done
+
+fix_host_ownership
+
+case $overall in
+  0) log "DONE: all selected suites GREEN." ;;
+  1) log "DONE: selected suites completed with regressions. exit 1." ;;
+  2) log "DONE: one or more selected suites had a harness/infra error. exit 2." ;;
 esac
-exit $rc
+exit $overall

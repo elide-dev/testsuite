@@ -11,8 +11,10 @@ import { ratchetCandidates, writeRatchet, ratchetPath } from "./expectations/rat
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
 import type { Result, RunMeta, TestResult } from "./results/schema";
-import { renderSuiteReport, renderRunIndex } from "./report/render";
-import { writeSummaryJson, rebuildTopIndex, buildIndexJson } from "./report/index";
+import { renderSuiteReport, renderRunIndex, renderTopIndex } from "./report/render";
+import { writeSummaryJson, buildIndexJson, latestRunSummariesFromIndex } from "./report/index";
+import { renderSuitePassRateSvg, renderTopPassRateSvg } from "./report/charts";
+import { updateReadmeCompatSummary } from "./report/readme";
 import { Database } from "bun:sqlite";
 import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
@@ -34,6 +36,7 @@ export interface CliOptions {
   include?: string; // comma-separated glob override (else registry settings.include)
   suiteVersion?: string;
   ratchet: boolean;
+  updateSummaries: boolean;
 }
 
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
@@ -62,6 +65,7 @@ export function parseArgs(argv: string[]): CliOptions {
     include: get("--include", "") || undefined,
     suiteVersion: get("--suite-version", "") || undefined,
     ratchet: rest.includes("--ratchet"),
+    updateSummaries: rest.includes("--update-summaries"),
   };
 }
 
@@ -187,7 +191,7 @@ export async function main(o: CliOptions): Promise<number> {
   const exp = loadExpectations(join(o.expectationsDir, `${wl.id}.toml`));
   const startedAt = new Date().toISOString();
 
-  const workspacePath = resolve(WORK_DIR, wl.id);
+  const workspacePath = resolve(o.repoRoot, ".harness/work", wl.id);
   mkdirSync(workspacePath, { recursive: true });
   const ctx = buildAdapterContext(o, wl, identity, exp, workspacePath);
 
@@ -233,10 +237,17 @@ export async function main(o: CliOptions): Promise<number> {
   mkdirSync(outDir, { recursive: true });
   await writeResults(outDir, meta, results);
   await writeSummaryJson(outDir, meta, comparison);
+  await Bun.write(join(outDir, "pass-rate.svg"), renderSuitePassRateSvg(wl.id, comparison));
   await Bun.write(join(outDir, `${wl.id}.md`), renderSuiteReport(meta, comparison));
   await Bun.write(join(outDir, "index.md"), renderRunIndex(meta, comparison));
-  await Bun.write(join(o.reportsDir, "index.md"), await rebuildTopIndex(o.reportsDir));
-  await Bun.write(join(o.reportsDir, "index.json"), JSON.stringify(await buildIndexJson(o.reportsDir), null, 2));
+  const index = await buildIndexJson(o.reportsDir);
+  const latest = latestRunSummariesFromIndex(index);
+  await Bun.write(join(o.reportsDir, "pass-rate.svg"), renderTopPassRateSvg(latest));
+  await Bun.write(join(o.reportsDir, "index.md"), renderTopIndex(latest));
+  await Bun.write(join(o.reportsDir, "index.json"), JSON.stringify(index, null, 2));
+  if (o.updateSummaries) {
+    await updateReadmeCompatSummary(join(o.repoRoot, "README.md"), index);
+  }
 
   // Per-version changelog vs the previous run of this workload.
   const prevDir = await findPreviousRunDir(o.reportsDir, wl.id, identity);

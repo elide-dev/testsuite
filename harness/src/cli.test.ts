@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { buildAdapterContext, main, parseArgs, REGISTRY_PATH, REPO_ROOT, runAdHocDiff, runAdHocImpact, WORK_DIR } from "./cli";
@@ -35,6 +35,10 @@ test("defaults threads to 1 and digest to 'local'", () => {
 
 test("parses the --log flag", () => {
   expect(parseArgs(["run", "test262", "--log"]).log).toBe(true);
+});
+
+test("parses the --update-summaries flag", () => {
+  expect(parseArgs(["run", "test262", "--update-summaries"]).updateSummaries).toBe(true);
 });
 
 test("parses an explicit registry path override", () => {
@@ -220,6 +224,57 @@ test("stores reports below semver, short digest, and workload to avoid collision
 
     expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "alpha", "summary.json"))).toBe(true);
     expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "beta", "summary.json"))).toBe(true);
+    expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "alpha", "pass-rate.svg"))).toBe(true);
+    expect(existsSync(join(root, "reports", "pass-rate.svg"))).toBe(true);
+  } finally {
+    delete ADAPTERS[adapterId];
+  }
+});
+
+test("updates README compatibility summary only when requested", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-readme-summary-"));
+  const adapterId = "fixture-readme-summary";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "test", id: "case default", status: "pass" };
+    },
+  };
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["alpha"]);
+    writeFileSync(join(root, "README.md"), "# fixture\n");
+
+    const code = await main({
+      ...parseArgs([
+        "run",
+        "alpha",
+        "--registry",
+        join(root, "registry.toml"),
+        "--repo-root",
+        root,
+        "--elide-path",
+        join(root, "elide"),
+        "--digest",
+        "abcdef1234567890",
+        "--suite-root",
+        join(root, "suites"),
+        "--reports",
+        join(root, "reports"),
+        "--expectations",
+        join(root, "expectations"),
+        "--update-summaries",
+      ]),
+      log: false,
+    });
+
+    expect(code).toBe(0);
+    const readme = readFileSync(join(root, "README.md"), "utf8");
+    expect(readme).toContain("<!-- compat-summary:start -->");
+    expect(readme).toContain("alpha");
+    expect(readme).toContain("reports/pass-rate.svg");
   } finally {
     delete ADAPTERS[adapterId];
   }
