@@ -248,6 +248,9 @@ export function createSparseLangtoolsRoot(ctx: AdapterContext, runRoot: string, 
   copyTestRootWithoutGroups(join(sourceLangtoolsRoot, "TEST.ROOT"), join(patchedLangtoolsRoot, "TEST.ROOT"));
   symlinkIfPresent(join(sourceLangtoolsRoot, "ProblemList.txt"), join(patchedLangtoolsRoot, "ProblemList.txt"));
   copySelectedLangtoolsPaths(sourceLangtoolsRoot, patchedLangtoolsRoot, tests);
+  symlinkIfPresent(join(sourceLangtoolsRoot, "lib"), join(patchedLangtoolsRoot, "lib"));
+  symlinkIfPresent(join(sourceLangtoolsRoot, "tools/lib"), join(patchedLangtoolsRoot, "tools/lib"));
+  symlinkIfPresent(join(sourceLangtoolsRoot, "tools/javac/lib"), join(patchedLangtoolsRoot, "tools/javac/lib"));
   symlinkIfPresent(join(ctx.suitePath, "test/lib"), join(patchedTestRoot, "lib"));
   symlinkIfPresent(join(ctx.suitePath, "test/jtreg-ext"), join(patchedTestRoot, "jtreg-ext"));
 
@@ -419,7 +422,14 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
       for (const parsed of parseJtregSummary(line)) {
         if (emitted.has(parsed.id)) continue;
         emitted.add(parsed.id);
-        yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
+        const live = {
+          ...parsed,
+          meta: {
+            ...parsed.meta,
+            transient: true,
+          },
+        };
+        yield skip.some((match) => match(String(live.meta?.upstreamPath))) ? { ...live, status: "skip" } : live;
       }
     }
 
@@ -461,8 +471,16 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   }
 
   for (const parsed of parsedSummary) {
-    if (emitted.has(parsed.id)) continue;
-    yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
+    const finalResult = emitted.has(parsed.id)
+      ? {
+          ...parsed,
+          meta: {
+            ...parsed.meta,
+            quiet: true,
+          },
+        }
+      : parsed;
+    yield skip.some((match) => match(String(finalResult.meta?.upstreamPath))) ? { ...finalResult, status: "skip" } : finalResult;
   }
 
   if (isJtregRunnerFailure(result)) {

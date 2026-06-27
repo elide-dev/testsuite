@@ -35,6 +35,7 @@ interface Options {
   include?: string;
   ratchet: boolean;
   updateSummaries: boolean;
+  prepareSuites: boolean;
   repairOwnership: boolean;
   failureOutput: "show" | "hide";
 }
@@ -185,6 +186,7 @@ function parseArgs(argv: string[]): Options {
     verbose: false,
     ratchet: false,
     updateSummaries: false,
+    prepareSuites: process.env.PREPARE_SUITES === "1",
     repairOwnership: process.env.REPAIR_OWNERSHIP === "1",
     failureOutput: "show",
   };
@@ -244,6 +246,9 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--update-summaries":
         options.updateSummaries = true;
+        break;
+      case "--prepare-suites":
+        options.prepareSuites = true;
         break;
       case "--repair-ownership":
         options.repairOwnership = true;
@@ -651,6 +656,19 @@ async function main(): Promise<number> {
   const hostUid = (await $`id -u`.text()).trim();
   const hostGid = (await $`id -g`.text()).trim();
   const user = userArgs(hostUid, hostGid);
+  const registryPath = resolve(ROOT, "registry.toml");
+  const workloads = parseRegistry(registryPath);
+  const suites = options.allSuites && options.suites.length === 0
+    ? workloads.map((workload) => workload.id)
+    : options.suites.length ? options.suites : ["test262"];
+
+  if (options.prepareSuites) {
+    const rc = await runWithHeartbeat(
+      ["bun", "./bin/setup.ts", "--skip-install", "--suite", suites.join(",")],
+      `preparing suite submodules for ${suites.join(", ")}`,
+    );
+    if (rc !== 0) return 2;
+  }
 
   await requireDocker();
 
@@ -660,11 +678,6 @@ async function main(): Promise<number> {
   log(`image built. resolved digest: ${digest}`);
   await preflight(image, plat, user);
 
-  const registryPath = resolve(ROOT, "registry.toml");
-  const workloads = parseRegistry(registryPath);
-  const suites = options.allSuites && options.suites.length === 0
-    ? workloads.map((workload) => workload.id)
-    : options.suites.length ? options.suites : ["test262"];
   const concurrency = planConcurrency(options, suites.length);
   log(
     `concurrency: cpus=${concurrency.cpuCount} multiplier=${options.concurrencyMultiplier} budget=${concurrency.totalBudget} ` +

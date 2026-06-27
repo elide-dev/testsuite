@@ -7,4 +7,9 @@ for arg in "$@"; do
     *) args+=("$arg") ;;
   esac
 done
-exec "${ELIDE_JAVAC:-/opt/elide/bin/elide}" javac -- "${args[@]}"
+set +e
+"${ELIDE_JAVAC:-/opt/elide/bin/elide}" javac -- "${args[@]}" \
+  2> >(sed -E '/^(\\u2705|\\u274c|✅|❌)[[:space:]]+/d' >&2)
+status=$?
+set -e
+exit "$status"

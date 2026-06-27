@@ -9,5 +9,5 @@
     "target": "ESNext",
     "types": ["bun-types", "node"]
   },
-  "include": ["bin/run.ts"]
+  "include": ["bin/*.ts"]
 }

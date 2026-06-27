@@ -158,6 +158,14 @@ const MARK: Record<string, string> = {
   skip: "⊘",
 };
 
+function isTransientResult(result: Result): boolean {
+  return result.kind === "test" && result.meta?.transient === true;
+}
+
+function shouldSuppressLog(result: Result): boolean {
+  return result.kind === "test" && result.meta?.quiet === true;
+}
+
 export function suitePathForWorkload(repoRoot: string, suiteRoot: string, workloadPath: string): string {
   const suiteBase = resolve(repoRoot, "suites");
   const absWorkloadPath = isAbsolute(workloadPath) ? workloadPath : resolve(repoRoot, workloadPath);
@@ -211,7 +219,7 @@ export async function main(o: CliOptions): Promise<number> {
   const results: Result[] = [];
   for await (const r of adapter.run(ctx)) {
     results.push(r);
-    if (o.log && r.kind === "test") {
+    if (o.log && r.kind === "test" && !shouldSuppressLog(r)) {
       // Live per-test marks go to stderr so stdout stays clean for the summary.
       const shouldPrintFailureOutput = o.failureOutput === "show" && (r.status === "fail" || r.status === "error");
       const tail = shouldPrintFailureOutput ? `  — ${r.message ?? ""}` : "";
@@ -219,8 +227,9 @@ export async function main(o: CliOptions): Promise<number> {
     }
   }
   const finishedAt = new Date().toISOString();
+  const reportableResults = results.filter((r) => !isTransientResult(r));
 
-  const tests = results.filter((r): r is TestResult => r.kind === "test");
+  const tests = reportableResults.filter((r): r is TestResult => r.kind === "test");
   if (tests.length === 0) {
     throw new Error(`no test results emitted for workload '${wl.id}'`);
   }
@@ -249,7 +258,7 @@ export async function main(o: CliOptions): Promise<number> {
   const shortDigest = identity.digest.replace(/[^0-9a-zA-Z]/g, "").slice(0, 12) || "local";
   const outDir = join(o.reportsDir, identity.semver, shortDigest, wl.id);
   mkdirSync(outDir, { recursive: true });
-  await writeResults(outDir, meta, results);
+  await writeResults(outDir, meta, reportableResults);
   await writeSummaryJson(outDir, meta, comparison);
   await Bun.write(join(outDir, "pass-rate.svg"), renderSuitePassRateSvg(wl.id, comparison));
   await Bun.write(join(outDir, `${wl.id}.md`), renderSuiteReport(meta, comparison));
@@ -267,7 +276,7 @@ export async function main(o: CliOptions): Promise<number> {
   const prevDir = await findPreviousRunDir(o.reportsDir, wl.id, identity);
   if (prevDir) {
     const prev = toRunResults(await readResults(prevDir));
-    const diff = diffRuns(prev, toRunResults({ meta, results }));
+    const diff = diffRuns(prev, toRunResults({ meta, results: reportableResults }));
     await Bun.write(join(outDir, "changes.json"), JSON.stringify(diff, null, 2));
     await Bun.write(join(outDir, "changes.md"), renderDiffMd(diff));
   }

@@ -291,11 +291,25 @@ test("streams jtreg summary results before the process exits", async () => {
     value: expect.objectContaining({
       id: "tools/javac/diags/ExamplePass.java",
       status: "pass",
+      meta: expect.objectContaining({
+        transient: true,
+      }),
     }),
     done: false,
   });
 
   writeFileSync(logs.continueFile, "");
+
+  await expect(iterator.next()).resolves.toMatchObject({
+    value: expect.objectContaining({
+      id: "tools/javac/diags/ExamplePass.java",
+      status: "pass",
+      meta: expect.objectContaining({
+        quiet: true,
+      }),
+    }),
+    done: false,
+  });
 
   await expect(iterator.next()).resolves.toEqual({ value: undefined, done: true });
 });

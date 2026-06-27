@@ -3,7 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "setup": "bun ./bin/setup.ts",
+    "setup:suites": "bun ./bin/setup.ts --skip-install",
     "testsuite": "bun ./bin/run.ts",
+    "testsuite:ready": "bun ./bin/run.ts --prepare-suites",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "typecheck:harness": "bun --cwd harness run typecheck",
     "test:harness": "bun --cwd harness test"
