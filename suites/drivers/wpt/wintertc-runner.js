@@ -46,6 +46,7 @@ const source = readFileSync(join(suite, test), "utf8");
 const out = join(mkdtempSync(join(tmpdir(), "wpt-elide-")), "case.js");
 
 writeFileSync(out, `
+globalThis.self ??= globalThis;
 ${harness}
 const TEST_STATUS = ${JSON.stringify(TEST_STATUS)};
 ${bridgeStatus.toString()}
