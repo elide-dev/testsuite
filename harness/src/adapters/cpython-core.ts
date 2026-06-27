@@ -3,7 +3,6 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
-import { runProcess } from "./process";
 
 interface CpythonRecord {
   module: string;
@@ -54,6 +53,35 @@ export function filterIncludedModules(modules: string[], includeGlobs: string[])
   return modules.filter((module) => matchers.some((match) => match(module)));
 }
 
+function runnerErrorResult(message: string, durationMs = 0): TestResult {
+  return {
+    kind: "test",
+    id: "cpython-core::<runner>",
+    status: "error",
+    message,
+    durationMs,
+    meta: {
+      suite: "cpython-core",
+      upstreamPath: "<runner>",
+      category: "runner",
+      runner: "regrtest",
+      subtest: "<runner>",
+    },
+  };
+}
+
+async function readCappedText(stream: ReadableStream<Uint8Array>, cap: number): Promise<string> {
+  const decoder = new TextDecoder();
+  let output = "";
+  for await (const chunk of stream) {
+    const text = decoder.decode(chunk, { stream: true });
+    if (output.length < cap) output += text.slice(0, cap - output.length);
+  }
+  const rest = decoder.decode();
+  if (output.length < cap) output += rest.slice(0, cap - output.length);
+  return output;
+}
+
 export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
@@ -62,64 +90,66 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
   const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
   if (modules.length === 0) {
-    yield {
-      kind: "test",
-      id: "cpython-core::<runner>",
-      status: "error",
-      message: "cpython-core selected no modules",
-      meta: {
-        suite: "cpython-core",
-        upstreamPath: "<runner>",
-        category: "runner",
-        runner: "regrtest",
-        subtest: "<runner>",
-      },
-    };
-    return;
-  }
-  const result = await runProcess(
-    [ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...modules],
-    { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 120_000) },
-  );
-
-  if (result.timedOut) {
-    yield {
-      kind: "test",
-      id: "cpython-core::<runner>",
-      status: "error",
-      message: "CPython driver timed out",
-      durationMs: result.durationMs,
-      meta: {
-        suite: "cpython-core",
-        upstreamPath: "<runner>",
-        category: "runner",
-        runner: "regrtest",
-        subtest: "<runner>",
-      },
-    };
+    yield runnerErrorResult("cpython-core selected no modules");
     return;
   }
 
-  const parsed = parseCpythonLines(result.stdout);
-  if (result.exitCode !== 0 && parsed.length === 0) {
-    yield {
-      kind: "test",
-      id: "cpython-core::<runner>",
-      status: "error",
-      message: result.stderr || result.stdout,
-      durationMs: result.durationMs,
-      meta: {
-        suite: "cpython-core",
-        upstreamPath: "<runner>",
-        category: "runner",
-        runner: "regrtest",
-        subtest: "<runner>",
-      },
-    };
+  const started = performance.now();
+  const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
+  const proc = Bun.spawn([ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...modules], {
+    cwd: ctx.repoRoot,
+    env: process.env,
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000);
+
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    proc.kill("SIGKILL");
+  }, timeoutMs);
+
+  let parsedCount = 0;
+  let stdout = "";
+  let pending = "";
+  const decoder = new TextDecoder();
+  const emitLine = function* (line: string): Iterable<TestResult> {
+    const parsed = parseCpythonLine(line);
+    if (!parsed) return;
+    parsedCount++;
+    yield remapCpythonSkip(parsed, skip);
+  };
+
+  for await (const chunk of proc.stdout as ReadableStream<Uint8Array>) {
+    const text = decoder.decode(chunk, { stream: true });
+    if (stdout.length < 1_000_000) stdout += text.slice(0, 1_000_000 - stdout.length);
+    pending += text;
+    let newline = pending.search(/\r?\n/);
+    while (newline >= 0) {
+      const line = pending.slice(0, newline);
+      pending = pending.slice(pending[newline] === "\r" && pending[newline + 1] === "\n" ? newline + 2 : newline + 1);
+      yield* emitLine(line);
+      newline = pending.search(/\r?\n/);
+    }
+  }
+  const rest = decoder.decode();
+  if (rest) {
+    if (stdout.length < 1_000_000) stdout += rest.slice(0, 1_000_000 - stdout.length);
+    pending += rest;
+  }
+  if (pending.trim()) yield* emitLine(pending);
+
+  const [exitCode, stderrText] = await Promise.all([proc.exited, stderr]);
+  clearTimeout(timer);
+  const durationMs = Math.round(performance.now() - started);
+  if (timedOut) {
+    yield runnerErrorResult("CPython driver timed out", durationMs);
     return;
   }
-
-  for (const r of parsed) yield remapCpythonSkip(r, skip);
+  if (exitCode !== 0 && parsedCount === 0) {
+    yield runnerErrorResult(stderrText || stdout, durationMs);
+  }
 }
 
 export const cpythonCoreAdapter: Adapter = {

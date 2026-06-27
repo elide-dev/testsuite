@@ -139,3 +139,52 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   expect(args).toContain("test_re\n");
   expect(args).not.toContain("test_json\n");
 });
+
+test("streams CPython results before the driver exits", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  const continueFile = join(root, "continue");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+printf '{"module":"test_re","case":"test_re.Streaming.test_first","status":"pass"}\\n'
+while [[ ! -f ${JSON.stringify(continueFile)} ]]; do sleep 0.05; done
+printf '{"module":"test_re","case":"test_re.Streaming.test_second","status":"pass"}\\n'
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  const iterator = runCpythonCore(ctx)[Symbol.asyncIterator]();
+  await expect(iterator.next()).resolves.toMatchObject({
+    value: expect.objectContaining({
+      id: "test_re.Streaming.test_first",
+      status: "pass",
+    }),
+    done: false,
+  });
+
+  writeFileSync(continueFile, "");
+
+  await expect(iterator.next()).resolves.toMatchObject({
+    value: expect.objectContaining({
+      id: "test_re.Streaming.test_second",
+      status: "pass",
+    }),
+    done: false,
+  });
+  await expect(iterator.next()).resolves.toEqual({ value: undefined, done: true });
+});
