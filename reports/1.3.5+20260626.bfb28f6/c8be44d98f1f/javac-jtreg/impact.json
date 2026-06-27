@@ -4,11 +4,11 @@
       "signature": "(no message)",
       "count": 1357,
       "exampleIds": [
-        "tools/javac/analyzer/AnalyzerMandatoryWarnings.java",
         "tools/javac/analyzer/Diamond.java",
-        "tools/javac/analyzer/AnalyzerNotQuiteSpeculative.java",
+        "tools/javac/analyzer/DiamondFields.java",
+        "tools/javac/analyzer/AnalyzerMandatoryWarnings.java",
         "tools/javac/analyzer/AnalyzersCheckSourceLevel.java",
-        "tools/javac/analyzer/DiamondFields.java"
+        "tools/javac/analyzer/AnalyzerNotQuiteSpeculative.java"
       ],
       "samples": []
     }

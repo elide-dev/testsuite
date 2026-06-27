@@ -6,8 +6,8 @@
       "semver": "1.3.5+20260626.bfb28f6",
       "digest": "c8be44d98f1f086fee340d19c5e6d66e4c88f5d593213d47783361b87bcaf657"
     },
-    "startedAt": "2026-06-27T18:44:10.419Z",
-    "finishedAt": "2026-06-27T18:48:49.064Z",
+    "startedAt": "2026-06-27T19:15:25.510Z",
+    "finishedAt": "2026-06-27T19:18:40.795Z",
     "suiteVersion": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
   },
   "counts": {
@@ -17,8 +17,6 @@
     "error": 330,
     "total": 2937
   },
-  "regressions": [
-    "tools/javac/file/zip/T6836682.java"
-  ],
+  "regressions": [],
   "newPasses": []
 }

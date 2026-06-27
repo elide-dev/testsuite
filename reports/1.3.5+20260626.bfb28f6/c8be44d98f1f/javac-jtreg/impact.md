@@ -4,4 +4,4 @@
 
 ### 1357 × `(no message)`
 
-example test: `tools/javac/analyzer/AnalyzerMandatoryWarnings.java`
+example test: `tools/javac/analyzer/Diamond.java`

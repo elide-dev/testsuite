@@ -8,5 +8,5 @@
   <rect x="40.00" y="84" width="344.30" height="28" fill="#198754"><title>pass: 1580</title></rect>
   <rect x="384.30" y="84" width="223.79" height="28" fill="#dc3545"><title>fail: 1027</title></rect>
   <rect x="608.09" y="84" width="71.91" height="28" fill="#6f42c1"><title>error: 330</title></rect>
-  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 1027 · error 330 · skip 0 · regressions 1</text>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 1027 · error 330 · skip 0 · regressions 0</text>
 </svg>
