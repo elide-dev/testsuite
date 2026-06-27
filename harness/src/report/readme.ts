@@ -33,11 +33,22 @@ export async function updateReadmeCompatSummary(readmePath: string, index: { run
   const replacement = renderReadmeCompatSummary(index);
   const start = current.indexOf(START);
   const end = current.indexOf(END);
+  let base = current;
   if (start >= 0 && end > start) {
-    const next = `${current.slice(0, start)}${replacement}${current.slice(end + END.length)}`;
-    await Bun.write(readmePath, next);
+    const headingStart = current.lastIndexOf("## Latest compatibility", start);
+    const removeStart = headingStart >= 0 ? headingStart : start;
+    base = `${current.slice(0, removeStart)}${current.slice(end + END.length)}`;
+  }
+
+  const section = `## Latest compatibility\n\n${replacement}`;
+  const howItWorks = base.indexOf("## How it works");
+  if (howItWorks >= 0) {
+    const prefix = base.slice(0, howItWorks).trimEnd();
+    const suffix = base.slice(howItWorks).trimStart();
+    await Bun.write(readmePath, `${prefix}\n\n${section}\n${suffix.endsWith("\n") ? suffix : `${suffix}\n`}`);
     return;
   }
-  const suffix = current.endsWith("\n") ? "" : "\n";
-  await Bun.write(readmePath, `${current}${suffix}\n## Latest compatibility\n\n${replacement}`);
+
+  const suffix = base.endsWith("\n") ? "" : "\n";
+  await Bun.write(readmePath, `${base}${suffix}\n${section}`);
 }
