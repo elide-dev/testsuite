@@ -203,7 +203,7 @@ async function main(): Promise<number> {
 
   if (!options.skipInstall) {
     await run(["bun", "install"], "installing root Bun dependencies");
-    await run(["bun", "--cwd", "harness", "install"], "installing harness Bun dependencies");
+    await run(["bun", "install", "--cwd", "harness"], "installing harness Bun dependencies");
   }
 
   if (options.check) {
