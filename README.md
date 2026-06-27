@@ -41,36 +41,39 @@ regressions.
 
 ```bash
 # Full suite against the current Elide nightly, with a live ✅/❌ test log
-THREADS=8 ./bin/run --elide nightly --suite test262 --log
+THREADS=8 bun run testsuite --elide nightly --suite test262 --log
 
 # A quick slice (finishes in seconds) — scope to any glob
-./bin/run --elide nightly --log --include 'test/language/types/boolean/**/*.js'
+bun run testsuite --elide nightly --log --include 'test/language/types/boolean/**/*.js'
 
 # Current broad-suite smoke commands. These may be RED until expectations are
 # ratcheted, but they should emit upstream case/subtest results instead of
 # runner setup failures.
-./bin/run --elide nightly --suite wpt-wintertc --include 'url/urlsearchparams-constructor.any.js' --log
-./bin/run --elide nightly --suite cpython-core --include 'test_json' --log
-./bin/run --elide nightly --suite javac-jtreg --include 'tools/javac/IllDefinedOrderOfInit.java' --log
+bun run testsuite --elide nightly --suite wpt-wintertc --include 'url/urlsearchparams-constructor.any.js' --log
+bun run testsuite --elide nightly --suite cpython-core --include 'test_json' --log
+bun run testsuite --elide nightly --suite javac-jtreg --include 'tools/javac/IllDefinedOrderOfInit.java' --log
 
 # Broader slices after the smoke path is stable.
-./bin/run --elide nightly --suite wpt-wintertc --threads 8 --log
-./bin/run --elide nightly --suite cpython-core --threads 8 --log
-./bin/run --elide nightly --suite javac-jtreg --threads 4 --log
+bun run testsuite --elide nightly --suite wpt-wintertc --threads 8 --log
+bun run testsuite --elide nightly --suite cpython-core --threads 8 --log
+bun run testsuite --elide nightly --suite javac-jtreg --threads 4 --log
 
 # Run every registered suite after building the harness image once.
-./bin/run --elide nightly --all-suites --threads 8 --log
+bun run testsuite --elide nightly --all-suites --threads 8 --log
 
 # Run a subset with a comma-separated suite list.
-./bin/run --elide nightly --suite wpt-wintertc,cpython-core --threads 8 --log
+bun run testsuite --elide nightly --suite wpt-wintertc,cpython-core --threads 8 --log
 
 # Update reports plus the generated README compatibility summary.
-./bin/run --elide nightly --all-suites --threads 8 --log --update-summaries
+bun run testsuite --elide nightly --all-suites --threads 8 --log --update-summaries
 
 # Pin a specific build: image tag, digest, or a local Elide install directory
-./bin/run --elide ghcr.io/elide-dev/elide@sha256:…
-./bin/run --elide /path/to/elide-install      # dir containing bin/elide + lib/
+bun run testsuite --elide ghcr.io/elide-dev/elide@sha256:…
+bun run testsuite --elide /path/to/elide-install      # dir containing bin/elide + lib/
 ```
+
+`./bin/run ...` remains as a direct executable alias for the same Bun/TypeScript
+launcher.
 
 `--log` streams a mark per test to stderr (`✅` pass · `❌` fail · `🛑` error ·
 `⊘` skip); the summary line goes to stdout. The exit code is non-zero on any
@@ -115,7 +118,7 @@ baseline). To accept the current failure set as the baseline (so only *new*
 breakage fails CI):
 
 ```bash
-./bin/run --elide nightly --ratchet
+bun run testsuite --elide nightly --ratchet
 ```
 
 This regenerates the machine-owned `expectations/<workload>.ratchet.toml`
@@ -148,7 +151,8 @@ expectations/          workload baselines + machine ratchets
 reports/               committed per-version reports + top-level index
 harness/               the Bun/TypeScript harness (src/, fixtures/, patches/)
 docker/                harness images (image-ref + local install dir)
-bin/run                launcher: resolve --elide → docker build → docker run
+bin/run.ts             Bun/TypeScript launcher: resolve --elide → docker build → docker run
+bin/run                executable alias for bin/run.ts
 .devcontainer/         Codespaces dev environment
 .github/workflows/     nightly + on-demand compliance runs, Pages publish
 docs/superpowers/      design specs and implementation plans
@@ -157,6 +161,8 @@ docs/superpowers/      design specs and implementation plans
 ## Development
 
 ```bash
+bun install            # installs root TypeScript/Bun types for bin/run.ts
+bun run typecheck      # type-check the host launcher
 cd harness
 bun install            # applies the eshost `elide` host patch
 bun test               # unit tests

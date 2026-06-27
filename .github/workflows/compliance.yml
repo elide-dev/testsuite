@@ -52,7 +52,7 @@ jobs:
               ;;
           esac
       - name: Run suite
-        run: ./bin/run --elide "$ELIDE_REF" --suite "$SUITE"
+        run: bun run testsuite --elide "$ELIDE_REF" --suite "$SUITE"
         env:
           THREADS: "8"
       - name: Upload full results
