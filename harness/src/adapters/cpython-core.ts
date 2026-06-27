@@ -7,7 +7,7 @@ import { loadManifest } from "../manifest";
 interface CpythonRecord {
   module: string;
   case: string;
-  status: TestResult["status"];
+  status: TestResult["status"] | "running";
   message?: string;
   durationMs?: number;
 }
@@ -24,8 +24,8 @@ export function parseCpythonLine(line: string): TestResult | null {
   return {
     kind: "test",
     id: r.case || r.module,
-    status: r.status,
-    message: r.message,
+    status: r.status === "running" ? "skip" : r.status,
+    message: r.status === "running" ? "running" : r.message,
     durationMs: r.durationMs,
     meta: {
       suite: "cpython-core",

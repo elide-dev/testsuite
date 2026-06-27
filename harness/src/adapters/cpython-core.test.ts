@@ -41,6 +41,16 @@ test("ignores non-JSON CPython output lines", () => {
   ]);
 });
 
+test("maps CPython running records to progress skips", () => {
+  expect(parseCpythonLines('{"module":"test_re","case":"test_re.Case.test_slow","status":"running"}\n')).toEqual([
+    expect.objectContaining({
+      id: "test_re.Case.test_slow",
+      status: "skip",
+      message: "running",
+    }),
+  ]);
+});
+
 test("remaps CPython skips from either module names or case ids", () => {
   const out = parseCpythonLines(fixture);
   const moduleSkip = remapCpythonSkip(out[0], [picomatch("test_re")]);

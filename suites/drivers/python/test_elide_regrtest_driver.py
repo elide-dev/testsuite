@@ -39,6 +39,19 @@ class DriverNormalizationTests(unittest.TestCase):
 
         self.assertEqual(records, [{"module": "test_re", "case": "test_re.ReTests.test_basic_re_sub", "status": "pass"}])
 
+    def test_json_result_emits_running_record_before_case_body(self):
+        stream = io.StringIO()
+        result = driver.JsonResult(stream=stream, descriptions=False, verbosity=0)
+        records = []
+        original_emit = driver.emit
+        driver.emit = records.append
+        try:
+            result.startTest(FakeTest())
+        finally:
+            driver.emit = original_emit
+
+        self.assertEqual(records, [{"module": "test_re", "case": "test_re.ReTests.test_basic_re_sub", "status": "running"}])
+
 
 if __name__ == "__main__":
     unittest.main()

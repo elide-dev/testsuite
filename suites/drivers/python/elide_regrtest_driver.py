@@ -28,6 +28,10 @@ class JsonResult(unittest.TextTestResult):
             record["message"] = message
         emit(record)
 
+    def startTest(self, test):
+        self._emit(test, "running")
+        super().startTest(test)
+
     def addSuccess(self, test):
         super().addSuccess(test)
         self._emit(test, "pass")
