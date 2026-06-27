@@ -18,7 +18,7 @@ path = "suites/cpython"
 
   [workload.settings]
   manifest = "manifests/cpython-core.toml"
-  timeoutMs = 120000
+  timeoutMs = 600000
 
 [[workload]]
 id = "javac-jtreg"

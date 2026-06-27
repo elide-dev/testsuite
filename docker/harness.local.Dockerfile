@@ -12,15 +12,14 @@ RUN apt-get update \
       unzip \
  && rm -rf /var/lib/apt/lists/*
 ARG TARGETARCH
-ARG JDK26_BASE_URL=https://download.java.net/java/GA/jdk26/c3cc523845074aa0af4f5e1e1ed4151d/35/GPL
 RUN case "${TARGETARCH}" in \
-      amd64) JDK_ARCH=x64 ;; \
-      arm64) JDK_ARCH=aarch64 ;; \
+      amd64) JDK_URL=https://download.oracle.com/graalvm/25/archive/graalvm-jdk-25.0.3_linux-x64_bin.tar.gz ;; \
+      arm64) JDK_URL=https://download.oracle.com/graalvm/25/archive/graalvm-jdk-25.0.3_linux-aarch64_bin.tar.gz ;; \
       *) echo "unsupported TARGETARCH=${TARGETARCH}" >&2; exit 1 ;; \
     esac \
- && curl -fsSL "${JDK26_BASE_URL}/openjdk-26_linux-${JDK_ARCH}_bin.tar.gz" -o /tmp/jdk.tar.gz \
- && mkdir -p /opt/jdk-26 \
- && tar -xzf /tmp/jdk.tar.gz -C /opt/jdk-26 --strip-components=1 \
+ && curl -fsSL "${JDK_URL}" -o /tmp/jdk.tar.gz \
+ && mkdir -p /opt/graalvm-jdk-25.0.3 \
+ && tar -xzf /tmp/jdk.tar.gz -C /opt/graalvm-jdk-25.0.3 --strip-components=1 \
  && rm /tmp/jdk.tar.gz
 ARG JTREG_VERSION=8.2.1+1
 RUN curl -fsSL "https://builds.shipilev.net/jtreg/jtreg-${JTREG_VERSION}.zip" -o /tmp/jtreg.zip \
@@ -28,9 +27,9 @@ RUN curl -fsSL "https://builds.shipilev.net/jtreg/jtreg-${JTREG_VERSION}.zip" -o
  && rm /tmp/jtreg.zip
 COPY .elide-install /opt/elide
 RUN chmod +x /opt/elide/bin/elide
-ENV JAVA_HOME=/opt/jdk-26
+ENV JAVA_HOME=/opt/graalvm-jdk-25.0.3
 ENV JTREG_HOME=/opt/jtreg
-ENV PATH=/opt/jtreg/bin:/opt/jdk-26/bin:/opt/elide/bin:$PATH
+ENV PATH=/opt/jtreg/bin:/opt/graalvm-jdk-25.0.3/bin:/opt/elide/bin:$PATH
 
 WORKDIR /opt/harness
 COPY harness/package.json harness/bun.lock ./
