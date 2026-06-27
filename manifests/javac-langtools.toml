@@ -1,18 +1,183 @@
-# Initial javac langtools slice. Paths are relative to OpenJDK test/langtools.
+# Broad javac langtools subset. Paths are relative to OpenJDK test/langtools.
+#
+# Keep annotation processing and modules out of the default suite for now:
+# - tools/javac/processing depends on annotation processing behavior not expected to work yet.
+# - tools/javac/modules is outside the current embedded compiler compliance target.
 
 [[group]]
-id = "javac-diags"
-include = ["tools/javac/diags"]
+id = "javac-diagnostics"
+include = [
+  "tools/javac/diags",
+  "tools/javac/Diagnostics",
+  "tools/javac/rawDiags",
+]
 tags = ["javac", "diagnostics"]
 
 [[group]]
-id = "javac-compile-run-smoke"
-include = ["tools/javac/IllDefinedOrderOfInit.java"]
-tags = ["javac", "execution", "compile-run"]
-reason = "Smoke slice that compiles a langtools test and then runs the compiled program"
+id = "javac-core-language"
+include = [
+  "tools/javac/DefiniteAssignment",
+  "tools/javac/ClassCycle",
+  "tools/javac/ClassLiterals",
+  "tools/javac/ForwardReference",
+  "tools/javac/ImportCycle",
+  "tools/javac/SuperInit",
+  "tools/javac/TryWithResources",
+  "tools/javac/abstract",
+  "tools/javac/assert",
+  "tools/javac/attr",
+  "tools/javac/boxing",
+  "tools/javac/capture",
+  "tools/javac/cast",
+  "tools/javac/conditional",
+  "tools/javac/cycle",
+  "tools/javac/declaration",
+  "tools/javac/enum",
+  "tools/javac/expression",
+  "tools/javac/flow",
+  "tools/javac/foreach",
+  "tools/javac/generics",
+  "tools/javac/implicitThis",
+  "tools/javac/literals",
+  "tools/javac/meth",
+  "tools/javac/multicatch",
+  "tools/javac/nested",
+  "tools/javac/overload",
+  "tools/javac/parser",
+  "tools/javac/recovery",
+  "tools/javac/resolve",
+  "tools/javac/scope",
+  "tools/javac/staticImport",
+  "tools/javac/types",
+  "tools/javac/unicode",
+  "tools/javac/varargs",
+]
+tags = ["javac", "language", "types"]
 
 [[group]]
-id = "javac-generics-compile-smoke"
-include = ["tools/javac/generics/GenericOverride.java"]
-tags = ["javac", "generics", "compile"]
-reason = "Small compile-only jtreg smoke that is green under the current Elide javac wrapper"
+id = "javac-modern-language"
+include = [
+  "tools/javac/ImplicitClass",
+  "tools/javac/StringConcat",
+  "tools/javac/StringsInSwitch",
+  "tools/javac/annotations",
+  "tools/javac/defaultMethods",
+  "tools/javac/expswitch",
+  "tools/javac/lambda",
+  "tools/javac/lambdaShapes",
+  "tools/javac/lvti",
+  "tools/javac/patterns",
+  "tools/javac/preview",
+  "tools/javac/records",
+  "tools/javac/sealed",
+  "tools/javac/switchexpr",
+  "tools/javac/switchextra",
+  "tools/javac/switchnull",
+  "tools/javac/var_implicit_lambda",
+]
+tags = ["javac", "language", "modern"]
+
+[[group]]
+id = "javac-classfile-jvm"
+include = [
+  "tools/javac/AccessMethods",
+  "tools/javac/ClassFileModifiers",
+  "tools/javac/ClassModifiers",
+  "tools/javac/ConstantValues",
+  "tools/javac/InnerClassesAttribute",
+  "tools/javac/MethodParameters",
+  "tools/javac/classfiles",
+  "tools/javac/classreader",
+  "tools/javac/classwriter",
+  "tools/javac/code",
+  "tools/javac/innerClassFile",
+  "tools/javac/jvm",
+  "tools/javac/linenumbers",
+  "tools/javac/nestmates",
+  "tools/javac/positions",
+  "tools/javac/stackmap",
+]
+tags = ["javac", "classfile", "jvm"]
+
+[[group]]
+id = "javac-compiler-behavior"
+include = [
+  "tools/javac/BadOptimization",
+  "tools/javac/ImportPackagePrivateInner",
+  "tools/javac/ImportUnnamed",
+  "tools/javac/NameClash",
+  "tools/javac/OverrideChecks",
+  "tools/javac/PackageClassAmbiguity",
+  "tools/javac/PackageClassClash",
+  "tools/javac/Paths",
+  "tools/javac/ProtectedInnerClass",
+  "tools/javac/QualifiedAccess",
+  "tools/javac/RequiredParameterFlags",
+  "tools/javac/analyzer",
+  "tools/javac/binaryCompat",
+  "tools/javac/ClassPathTest",
+  "tools/javac/completionDeps",
+  "tools/javac/depOverrides",
+  "tools/javac/desugar",
+  "tools/javac/failover",
+  "tools/javac/file",
+  "tools/javac/importChecks",
+  "tools/javac/importContext",
+  "tools/javac/importOnDemand",
+  "tools/javac/importscope",
+  "tools/javac/inference_context_min",
+  "tools/javac/inference_non_determinism",
+  "tools/javac/inheritAccess",
+  "tools/javac/inheritedAccess",
+  "tools/javac/limits",
+  "tools/javac/miranda",
+  "tools/javac/missingClass",
+  "tools/javac/missingSuperRecovery",
+  "tools/javac/outerThisNull",
+  "tools/javac/protectedAccess",
+  "tools/javac/protectedInner",
+  "tools/javac/sourcePath",
+  "tools/javac/sourcePath2",
+  "tools/javac/staticQualifiedNew",
+  "tools/javac/synthesize",
+  "tools/javac/typeDeclarationInsideExpression",
+  "tools/javac/typeVariableCast",
+]
+tags = ["javac", "compiler"]
+
+[[group]]
+id = "javac-options-warnings"
+include = [
+  "tools/javac/ExtDirs",
+  "tools/javac/launcher",
+  "tools/javac/lint",
+  "tools/javac/main",
+  "tools/javac/mandatoryWarnings",
+  "tools/javac/mixedTarget",
+  "tools/javac/options",
+  "tools/javac/platform",
+  "tools/javac/profiles",
+  "tools/javac/versions",
+  "tools/javac/warnings",
+]
+tags = ["javac", "options", "warnings"]
+
+[[group]]
+id = "javac-api-tooling"
+include = [
+  "tools/javac/api",
+  "tools/javac/doctree",
+  "tools/javac/plugin",
+  "tools/javac/tree",
+  "tools/javac/toolsapi",
+  "tools/javac/util",
+]
+tags = ["javac", "api", "tooling"]
+
+[[group]]
+id = "javac-smoke-files"
+include = [
+  "tools/javac/IllDefinedOrderOfInit.java",
+]
+tags = ["javac", "smoke"]
+reason = "Explicit smoke files retained for stable quick include examples"

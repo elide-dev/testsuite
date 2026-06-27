@@ -47,12 +47,18 @@ test("rejects absolute manifest paths", () => {
   expect(() => loadManifest(file)).toThrow("manifest include must be relative: /abs/test.js");
 });
 
-test("javac langtools smoke manifest includes a true compile-then-run slice", () => {
+test("javac langtools manifest defaults to broad compiler coverage without unsupported areas", () => {
   const manifest = loadManifest(`${import.meta.dir}/../../manifests/javac-langtools.toml`);
   const include = manifest.groups.flatMap((group) => group.include);
 
   expect(include).toContain("tools/javac/diags");
+  expect(include).toContain("tools/javac/generics");
+  expect(include).toContain("tools/javac/lambda");
+  expect(include).toContain("tools/javac/api");
+  expect(include).toContain("tools/javac/records");
   expect(include).toContain("tools/javac/IllDefinedOrderOfInit.java");
+  expect(include).not.toContain("tools/javac/processing");
+  expect(include).not.toContain("tools/javac/modules");
 });
 
 test("wintertc WPT manifest includes checked-out paths when the suite exists", () => {
