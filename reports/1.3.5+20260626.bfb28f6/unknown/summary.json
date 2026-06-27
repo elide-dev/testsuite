@@ -4,10 +4,10 @@
     "kind": "test",
     "elide": {
       "semver": "1.3.5+20260626.bfb28f6",
-      "digest": "ghcr.io/elide-dev/elide:nightly"
+      "digest": "unknown"
     },
-    "startedAt": "2026-06-26T23:19:22.650Z",
-    "finishedAt": "2026-06-26T23:26:15.468Z",
+    "startedAt": "2026-06-27T00:28:50.504Z",
+    "finishedAt": "2026-06-27T00:35:48.565Z",
     "suiteVersion": "de8e621cdba4f40cff3cf244e6cfb8cb48746b4a"
   },
   "counts": {

@@ -1,8 +1,8 @@
 # test262 — `1.3.5+20260626.bfb28f6`
 
-- Image digest: `ghcr.io/elide-dev/elide:nightly`
+- Image digest: `unknown`
 - Suite version: `de8e621cdba4f40cff3cf244e6cfb8cb48746b4a`
-- Ran: 2026-06-26T23:19:22.650Z → 2026-06-26T23:26:15.468Z
+- Ran: 2026-06-27T00:28:50.504Z → 2026-06-27T00:35:48.565Z
 
 ## Summary
 
