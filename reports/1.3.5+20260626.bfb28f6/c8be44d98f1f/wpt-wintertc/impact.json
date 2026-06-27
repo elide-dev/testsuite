@@ -1,0 +1,55 @@
+{
+  "bySignature": [
+    {
+      "signature": "assert_equals: expected (string) <str> but got (object) null",
+      "count": 4,
+      "exampleIds": [
+        "url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, object.",
+        "url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, FormData.",
+        "url/urlsearchparams-constructor.any.js :: Parse %00",
+        "url/urlsearchparams-constructor.any.js :: Custom [Symbol.iterator]"
+      ],
+      "samples": [
+        "assert_equals: expected (string) \"b\" but got (object) null",
+        "assert_equals: expected (string) \"b\\0c\" but got (object) null"
+      ]
+    },
+    {
+      "signature": "assert_array_equals: expected property <n> to be <str> but got <str> (expected array [<str>, <str>] got [<str>, <str>])",
+      "count": 3,
+      "exampleIds": [
+        "url/urlsearchparams-constructor.any.js :: Construct with 2 unpaired surrogates (no trailing)",
+        "url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)",
+        "url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys"
+      ],
+      "samples": [
+        "assert_array_equals: expected property 0 to be \"\\ufffdx\" but got \"?x\" (expected array [\"\\ufffdx\", \"3\"] got [\"?x\", \"1\"])",
+        "assert_array_equals: expected property 0 to be \"x\\ufffd\" but got \"x?\" (expected array [\"x\\ufffd\", \"3\"] got [\"x?\", \"1\"])",
+        "assert_array_equals: expected property 0 to be \"a\\0b\" but got \"a\" (expected array [\"a\\0b\", \"42\"] got [\"a\", \"42\"])"
+      ]
+    },
+    {
+      "signature": "assert_equals: expected <str> but got <str>",
+      "count": 2,
+      "exampleIds": [
+        "url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction",
+        "url/urlsearchparams-constructor.any.js :: Parse \\0"
+      ],
+      "samples": [
+        "assert_equals: expected \"a=b\" but got \"\"",
+        "assert_equals: expected \"b\\0c\" but got \"b\""
+      ]
+    },
+    {
+      "signature": "assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function <str> did not throw",
+      "count": 1,
+      "exampleIds": [
+        "url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, DOMException as argument"
+      ],
+      "samples": [
+        "assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function \"() => new URLSearchParams(DOMException.prototype)\" did not throw"
+      ]
+    }
+  ],
+  "byFeature": []
+}

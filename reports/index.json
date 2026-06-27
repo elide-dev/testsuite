@@ -1,3 +1,54 @@
 {
-  "runs": []
+  "runs": [
+    {
+      "workload": "javac-jtreg",
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "c8be44d98f1f",
+      "pass": 1,
+      "total": 1,
+      "regressions": 0,
+      "finishedAt": "2026-06-27T15:53:39.097Z",
+      "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/javac-jtreg"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "c8be44d98f1f",
+      "pass": 162,
+      "total": 182,
+      "regressions": 19,
+      "finishedAt": "2026-06-27T15:35:13.808Z",
+      "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "c8be44d98f1f",
+      "pass": 17,
+      "total": 27,
+      "regressions": 10,
+      "finishedAt": "2026-06-27T15:34:41.384Z",
+      "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/wpt-wintertc"
+    },
+    {
+      "workload": "test262",
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "c8be44d98f1f",
+      "pass": 2,
+      "total": 2,
+      "regressions": 0,
+      "finishedAt": "2026-06-27T15:34:38.921Z",
+      "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/test262"
+    },
+    {
+      "workload": "test262",
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "ghcr.io",
+      "pass": 84685,
+      "total": 92276,
+      "regressions": 0,
+      "finishedAt": "2026-06-26T23:26:15.468Z",
+      "reportDir": "1.3.5+20260626.bfb28f6/ghcr.io/elid"
+    }
+  ]
 }

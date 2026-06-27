@@ -1,0 +1,186 @@
+{
+  "bySignature": [
+    {
+      "signature": "FileNotFoundError: [Errno <n>] No such file or directory: <str>",
+      "count": 2,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_ensure_ascii_default",
+        "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
+      ],
+      "samples": [
+        "FileNotFoundError: [Errno 2] No such file or directory: '@test_26_tmpæ.out'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_broken_pipe_error proc = subprocess.Popen(cmd, ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_broken_pipe_error"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 226, in test_broken_pipe_error\n    proc = subprocess.Popen(cmd,\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_compact process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_compact"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 197, in test_compact\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_ensure_ascii_default assert_python_ok(<str>, <str>, infile, outfile) File <str>, line <n>, in a",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_ensure_ascii_default"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 216, in test_ensure_ascii_default\n    assert_python_ok('-m', 'json.tool', infile, outfile)\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_help_flag rc, out, err = assert_python_ok(<str>, <str>, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_help_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 151, in test_help_flag\n    rc, out, err = assert_python_ok('-m', 'json.tool', '-h')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_indent process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_indent"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 173, in test_indent\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_outfile rc, out, err = assert_python_ok(<str>, <str>, infile, outfile) ^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_infile_outfile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 127, in test_infile_outfile\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile, outfile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_stdout rc, out, err = assert_python_ok(<str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_infile_stdout"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 104, in test_infile_stdout\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_jsonlines process = subprocess.run(args, input=<loc>onlines_raw, capture_output=True, text=True",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_jsonlines"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 146, in test_jsonlines\n    process = subprocess.run(args, input=self.jsonlines_raw, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_ensure_ascii_flag assert_python_ok(<str>, <str>, <str>, infile, outfile) File <str>, line <n",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 205, in test_no_ensure_ascii_flag\n    assert_python_ok('-m', 'json.tool', '--no-ensure-ascii', infile, outfile)\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_indent process = subprocess.run(args, input=input_, capture_output=True, text=True, check=Tr",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_no_indent"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 181, in test_no_indent\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_non_ascii_infile rc, out, err = assert_python_ok(<str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_non_ascii_infile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 118, in test_non_ascii_infile\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_scanstring self.assertEqual( AssertionError: Tuples differ: (<str>, <n>) != (<str>, <n>) First ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_scanstring.TestCScanstring.test_scanstring"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 8, in test_scanstring\n    self.assertEqual(\nAssertionError: Tuples differ: ('z𝄠x', 6) != ('z𝄠x', 5)\n\nFirst differing element 1:\n6\n5\n\n- ('z𝄠x', 6)\n?         ^\n\n+ ('z𝄠x', 5)\n?         ^"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_sort_keys_flag rc, out, err = assert_python_ok(<str>, <str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_sort_keys_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 158, in test_sort_keys_flag\n    rc, out, err = assert_python_ok('-m', 'json.tool', '--sort-keys', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_stdin_stdout process = subprocess.run(args, input=self.data, capture_output=True, text=True, ch",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_stdin_stdout"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 91, in test_stdin_stdout\n    process = subprocess.run(args, input=self.data, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_surrogates assertScan(<str>, <str>) File <str>, line <n>, in assertScan self.assertEqual(scanst",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_scanstring.TestCScanstring.test_surrogates"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 98, in test_surrogates\n    assertScan('\"z\\\\ud834\\udd20x12345\"', 'z\\ud834\\udd20x12345')\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 91, in assertScan\n    self.assertEqual(scanstring(given, 1, True),\nAssertionError: Tuples differ: ('z𝄠x12345', 16) != ('z\\ud834\\udd20x12345', 16)\n\nFirst differing element 0:\n'z𝄠x12345'\n'z\\ud834\\udd20x12345'\n\n- ('z𝄠x12345', 16)\n+ ('z\\ud834\\udd20x12345', 16)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_tab process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True) ^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_tab"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 189, in test_tab\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_writing_in_place rc, out, err = assert_python_ok(<str>, <str>, infile, infile) ^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_writing_in_place"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 137, in test_writing_in_place\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile, infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    }
+  ],
+  "byFeature": []
+}
