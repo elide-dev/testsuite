@@ -3,6 +3,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { shardItems, mergeAsyncIterables } from "./pool";
 
 interface CpythonRecord {
   module: string;
@@ -82,21 +83,15 @@ async function readCappedText(stream: ReadableStream<Uint8Array>, cap: number): 
   return output;
 }
 
-export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
-  const manifestPath = String(ctx.settings.manifest ?? "");
-  if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
-  const manifest = loadManifest(manifestPath);
-  const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
-  const skip = ctx.skipGlobs.map((g) => picomatch(g));
-  const driverSkipArgs = ctx.skipGlobs.flatMap((glob) => ["--skip", glob]);
-  const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
-  if (modules.length === 0) {
-    yield runnerErrorResult("cpython-core selected no modules");
-    return;
-  }
-
+async function* runCpythonShard(
+  ctx: AdapterContext,
+  driver: string,
+  modules: string[],
+  driverSkipArgs: string[],
+  skip: Array<(value: string) => boolean>,
+  timeoutMs: number,
+): AsyncIterable<TestResult> {
   const started = performance.now();
-  const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
   const proc = Bun.spawn([ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...driverSkipArgs, ...modules], {
     cwd: ctx.repoRoot,
     env: process.env,
@@ -151,6 +146,26 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   if (exitCode !== 0 && parsedCount === 0) {
     yield runnerErrorResult(stderrText || stdout, durationMs);
   }
+}
+
+export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
+  const manifestPath = String(ctx.settings.manifest ?? "");
+  if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
+  const manifest = loadManifest(manifestPath);
+  const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
+  const skip = ctx.skipGlobs.map((g) => picomatch(g));
+  const driverSkipArgs = ctx.skipGlobs.flatMap((glob) => ["--skip", glob]);
+  const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
+  if (modules.length === 0) {
+    yield runnerErrorResult("cpython-core selected no modules");
+    return;
+  }
+
+  const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
+  const shards = shardItems(modules, ctx.threads);
+  yield* mergeAsyncIterables(
+    shards.map((shard) => runCpythonShard(ctx, driver, shard, driverSkipArgs, skip, timeoutMs)),
+  );
 }
 
 export const cpythonCoreAdapter: Adapter = {

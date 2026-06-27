@@ -1,5 +1,9 @@
 import { test, expect } from "bun:test";
-import { filterIncludedPaths, parseWptLine, parseWptLines } from "./wpt-wintertc";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import type { AdapterContext } from "./types";
+import { filterIncludedPaths, parseWptLine, parseWptLines, runWptWintertc } from "./wpt-wintertc";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/wpt-wintertc.ndjson`).text();
 
@@ -39,4 +43,59 @@ test("filters manifest paths by include globs", () => {
       ["encoding/**", "streams/**"],
     ),
   ).toEqual(["encoding/textdecoder.any.js", "streams/readable-streams/general.any.js"]);
+});
+
+function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
+  return Array.fromAsync(items);
+}
+
+test("runs selected WPT files through the worker pool", async () => {
+  const root = mkdtempSync(join(tmpdir(), "wpt-wintertc-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "wpt");
+  const runnerDir = join(root, "suites/drivers/wpt");
+  const runnerLog = join(root, "runner.log");
+  mkdirSync(suitePath, { recursive: true });
+  mkdirSync(runnerDir, { recursive: true });
+  writeFileSync(
+    manifest,
+    [
+      '[[group]]',
+      'id = "url"',
+      'include = ["url/a.any.js", "url/b.any.js", "encoding/c.any.js"]',
+      "",
+    ].join("\n"),
+  );
+  writeFileSync(
+    join(runnerDir, "wintertc-runner.js"),
+    `const fs = require("node:fs");
+function arg(name) {
+  const index = process.argv.indexOf(name);
+  return index >= 0 ? process.argv[index + 1] : "";
+}
+const test = arg("--test");
+const category = arg("--category");
+fs.appendFileSync(${JSON.stringify(runnerLog)}, test + "\\n");
+console.log(JSON.stringify({ path: test, subtest: "file", status: "PASS", category }));
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath: "/fake/elide",
+    repoRoot: root,
+    suitePath,
+    include: ["url/**"],
+    skipGlobs: [],
+    threads: 2,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  const results = await collect(runWptWintertc(ctx));
+
+  expect(results.map((result) => result.id).sort()).toEqual([
+    "url/a.any.js :: file",
+    "url/b.any.js :: file",
+  ]);
+  expect(readFileSync(runnerLog, "utf8").trim().split(/\n/).sort()).toEqual(["url/a.any.js", "url/b.any.js"]);
 });

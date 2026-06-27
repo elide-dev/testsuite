@@ -64,8 +64,12 @@ bun run testsuite --elide nightly --all-suites --threads 8 --log
 # Run a subset with a comma-separated suite list.
 bun run testsuite --elide nightly --suite wpt-wintertc,cpython-core --threads 8 --log
 
+# Run multiple selected suites at once. --threads is per suite; --suite-workers
+# controls how many suite containers run concurrently.
+bun run testsuite --elide nightly --all-suites --suite-workers 2 --threads 4 --log
+
 # Update reports plus the generated README compatibility summary.
-bun run testsuite --elide nightly --all-suites --threads 8 --log --update-summaries
+bun run testsuite --elide nightly --all-suites --suite-workers 2 --threads 4 --log --update-summaries
 
 # Pin a specific build: image tag, digest, or a local Elide install directory
 bun run testsuite --elide ghcr.io/elide-dev/elide@sha256:…
@@ -74,6 +78,13 @@ bun run testsuite --elide /path/to/elide-install      # dir containing bin/elide
 
 `./bin/run ...` remains as a direct executable alias for the same Bun/TypeScript
 launcher.
+
+`--threads N` controls parallelism inside each suite adapter: Test262 forwards it
+to `test262-harness`, `wpt-wintertc` runs multiple WPT files at once,
+`cpython-core` splits selected modules across worker processes, and
+`javac-jtreg` forwards it to jtreg's native `-concurrency:N`. `--suite-workers N`
+runs multiple selected suites concurrently after a single image build; keep this
+lower than your CPU count because each suite may also use `--threads`.
 
 `--log` streams one normalized mark per completed test to stderr (`✅` pass ·
 `❌` fail · `🛑` error · `⊘` skip); the summary line goes to stdout. Add

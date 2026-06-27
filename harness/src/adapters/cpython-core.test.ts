@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import picomatch from "picomatch";
@@ -203,4 +203,53 @@ printf '{"module":"test_re","case":"test_re.Streaming.test_second","status":"pas
     done: false,
   });
   await expect(iterator.next()).resolves.toEqual({ value: undefined, done: true });
+});
+
+test("shards CPython modules across worker processes", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_a", "test_b", "test_c"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+modules=()
+for arg in "$@"; do
+  case "$arg" in
+    test_*) modules+=("$arg") ;;
+  esac
+done
+printf '%s\\n' "\${modules[@]}" > ${JSON.stringify(root)}/shard-$$.args
+for module in "\${modules[@]}"; do
+  printf '{"module":"%s","case":"%s.Case.test","status":"pass"}\\n' "$module" "$module"
+done
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 2,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  const results = await collect(runCpythonCore(ctx));
+
+  expect(results.map((result) => result.id).sort()).toEqual([
+    "test_a.Case.test",
+    "test_b.Case.test",
+    "test_c.Case.test",
+  ]);
+  const shardLogs = readdirSync(root).filter((entry) => /^shard-\d+\.args$/.test(entry));
+  expect(shardLogs).toHaveLength(2);
+  const shardModules = shardLogs
+    .flatMap((entry) => readFileSync(join(root, entry), "utf8").trim().split(/\n/).filter(Boolean))
+    .sort();
+  expect(shardModules).toEqual(["test_a", "test_b", "test_c"]);
 });

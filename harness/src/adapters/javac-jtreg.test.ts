@@ -273,6 +273,15 @@ test("uses jtreg summary output when adapter logging is enabled", async () => {
   expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-verbose:summary\n");
 });
 
+test("passes adapter threads through to jtreg concurrency", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  ctx.threads = 3;
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-concurrency:3\n");
+});
+
 test("streams jtreg summary results before the process exits", async () => {
   const { ctx, logs } = setupJtregFixture("streaming");
   ctx.log = true;

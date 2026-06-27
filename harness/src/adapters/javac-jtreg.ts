@@ -375,9 +375,11 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const { runRoot, workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
+  const concurrency = Math.max(1, Math.trunc(ctx.threads) || 1);
   const argv = [
     jtreg,
     "-verbose:summary",
+    `-concurrency:${concurrency}`,
     "-retain:fail,error",
     `-jdk:${wrapperJdk}`,
     `-w:${workDir}`,

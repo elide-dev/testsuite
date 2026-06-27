@@ -13,6 +13,7 @@ interface Options {
   suites: string[];
   allSuites: boolean;
   threads: string;
+  suiteWorkers: number;
   platform: string;
   log: boolean;
   verbose: boolean;
@@ -43,7 +44,7 @@ const CONTAINER_PATH = [
   "/sbin",
   "/bin",
 ].join(":");
-let activeProcess: ReturnType<typeof Bun.spawn> | undefined;
+const activeProcesses = new Set<ReturnType<typeof Bun.spawn>>();
 let handlingSignal = false;
 
 function log(message: string): void {
@@ -73,10 +74,12 @@ function interrupt(signal: NodeJS.Signals): never {
   if (handlingSignal) process.exit(130);
   handlingSignal = true;
   log(`received ${signal}; stopping active command and cleaning up containers`);
-  try {
-    activeProcess?.kill("SIGINT");
-  } catch {
-    // Best effort: labelled containers are forcibly removed below.
+  for (const proc of activeProcesses) {
+    try {
+      proc.kill("SIGINT");
+    } catch {
+      // Best effort: labelled containers are forcibly removed below.
+    }
   }
   cleanupContainersSync();
   process.exit(signal === "SIGTERM" ? 143 : 130);
@@ -91,6 +94,7 @@ function parseArgs(argv: string[]): Options {
     suites: [],
     allSuites: false,
     threads: process.env.THREADS || "1",
+    suiteWorkers: Math.max(1, parseInt(process.env.SUITE_WORKERS || "1", 10) || 1),
     platform: process.env.PLATFORM || "",
     log: false,
     verbose: false,
@@ -118,6 +122,9 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--threads":
         options.threads = value(arg);
+        break;
+      case "--suite-workers":
+        options.suiteWorkers = Math.max(1, parseInt(value(arg), 10) || 1);
         break;
       case "--platform":
         options.platform = value(arg);
@@ -173,11 +180,11 @@ async function run(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv
     stdout: "inherit",
     stderr: "inherit",
   });
-  activeProcess = proc;
+  activeProcesses.add(proc);
   try {
     return await proc.exited;
   } finally {
-    if (activeProcess === proc) activeProcess = undefined;
+    activeProcesses.delete(proc);
   }
 }
 
@@ -192,7 +199,7 @@ async function capture(args: string[], opts: { cwd?: string; env?: NodeJS.Proces
     stdout: "pipe",
     stderr: "pipe",
   });
-  activeProcess = proc;
+  activeProcesses.add(proc);
   try {
     const [stdout, stderr, exitCode] = await Promise.all([
       new Response(proc.stdout).text(),
@@ -201,7 +208,7 @@ async function capture(args: string[], opts: { cwd?: string; env?: NodeJS.Proces
     ]);
     return { exitCode, stdout, stderr };
   } finally {
-    if (activeProcess === proc) activeProcess = undefined;
+    activeProcesses.delete(proc);
   }
 }
 
@@ -366,7 +373,7 @@ async function main(): Promise<number> {
   await requireDocker();
 
   const image = dockerImageName(options.elideRef);
-  log(`elide ref: ${options.elideRef}   threads: ${options.threads}   platform: ${options.platform || "<native>"}`);
+  log(`elide ref: ${options.elideRef}   threads: ${options.threads}   suite-workers: ${options.suiteWorkers}   platform: ${options.platform || "<native>"}`);
   const digest = await buildHarnessImage(options, image, plat);
   log(`image built. resolved digest: ${digest}`);
   await preflight(image, plat, user);
@@ -384,11 +391,10 @@ async function main(): Promise<number> {
 
   await fixHostOwnership(image, plat, hostUid, hostGid);
 
-  let overall = 0;
   const expMode = options.ratchet ? "rw" : "ro";
   const readmeMode = options.updateSummaries ? "rw" : "ro";
 
-  for (const suite of suites) {
+  const runSuite = async (suite: string): Promise<number> => {
     const workload = workloads.find((entry) => entry.id === suite) ?? { id: suite };
     const version = await suiteVersion(workload);
     log(`running suite '${suite}' (suite version ${version.slice(0, 12)})...`);
@@ -457,6 +463,25 @@ async function main(): Promise<number> {
       default:
         log(`docker run for ${suite} exited with code ${rc} (infra/interrupt).`);
     }
+    return rc;
+  };
+
+  const suiteWorkerCount = Math.max(1, Math.min(options.suiteWorkers, suites.length));
+  if (suiteWorkerCount > 1) log(`running ${suites.length} suite(s) with ${suiteWorkerCount} suite workers`);
+  const suiteExitCodes = new Array<number>(suites.length).fill(0);
+  let nextSuite = 0;
+  await Promise.all(
+    Array.from({ length: suiteWorkerCount }, async () => {
+      for (;;) {
+        const index = nextSuite++;
+        if (index >= suites.length) return;
+        suiteExitCodes[index] = await runSuite(suites[index]);
+      }
+    }),
+  );
+
+  let overall = 0;
+  for (const rc of suiteExitCodes) {
     if (rc === 2 || rc > 2) overall = 2;
     else if (rc === 1 && overall === 0) overall = 1;
   }
