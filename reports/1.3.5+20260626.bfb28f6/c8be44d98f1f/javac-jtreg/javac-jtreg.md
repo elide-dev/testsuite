@@ -2,218 +2,422 @@
 
 - Image digest: `c8be44d98f1f086fee340d19c5e6d66e4c88f5d593213d47783361b87bcaf657`
 - Suite version: `6c48f4ed707bf0b15f9b6098de30db8aae6fa40f`
-- Ran: 2026-06-27T19:15:25.510Z → 2026-06-27T19:18:40.795Z
+- Ran: 2026-06-27T19:56:17.686Z → 2026-06-27T20:00:44.865Z
 
 ## Summary
 
 ![Pass-rate chart](./pass-rate.svg)
 
-**Pass rate: 1580/2937 (53.80%)**
+**Pass rate: 2902/2937 (98.81%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 1580 | 1027 | 330 | 0 | 0 | 0 |
+| 2902 | 3 | 32 | 0 | 0 | 1322 |
 
 ## Observed cases (2937)
 
-- `tools/javac/abstract/T1.java` — pass
-- `tools/javac/abstract/T4717181a.java` — pass
-- `tools/javac/abstract/U1.java` — pass
-- `tools/javac/AccessMethods/UplevelPrivateConstants.java` — pass
-- `tools/javac/AccessMethods/LateAddition.java` — pass
-- `tools/javac/abstract/T4717181b.java` — pass
-- `tools/javac/analyzer/Diamond.java` — error
-- `tools/javac/AccessMethods/BitwiseAssignment.java` — pass
-- `tools/javac/analyzer/DiamondFields.java` — fail
-- `tools/javac/analyzer/AnonymousInAnonymous.java` — pass
-- `tools/javac/analyzer/AnalyzerMandatoryWarnings.java` — fail
-- `tools/javac/analyzer/AnalyzersCheckSourceLevel.java` — fail
-- `tools/javac/analyzer/AnalyzerNotQuiteSpeculative.java` — fail
 - `tools/javac/AccessMethods/AccessMethodsLHS.java` — pass
-- `tools/javac/IllDefinedOrderOfInit.java` — pass
+- `tools/javac/AccessMethods/BitwiseAssignment.java` — pass
+- `tools/javac/AccessMethods/ChainedAssignment.java` — pass
 - `tools/javac/AccessMethods/ConstructorAccess.java` — pass
 - `tools/javac/AccessMethods/InternalHandshake.java` — pass
-- `tools/javac/AccessMethods/ChainedAssignment.java` — pass
-- `tools/javac/analyzer/LambdaWithMethod.java` — fail
-- `tools/javac/annotations/8218152/MalformedAnnotationProcessorTests.java` — error
-- `tools/javac/annotations/6359949/T6359949.java` — pass
-- `tools/javac/annotations/6359949/T6359949a.java` — fail
-- `tools/javac/annotations/crash_empty_enum_const/CrashEmptyEnumConstructorTest.java` — error
-- `tools/javac/analyzer/StuckLambdas.java` — fail
-- `tools/javac/annotations/6881115/T6881115.java` — fail
-- `tools/javac/annotations/8254023/T8254023.java` — pass
-- `tools/javac/annotations/8145489/T8145489.java` — pass
-- `tools/javac/annotations/clinit/AnnoWithClinitFail.java` — fail
-- `tools/javac/annotations/8261088/T8261088.java` — pass
-- `tools/javac/annotations/clinit/AnnoWithClinit1.java` — pass
-- `tools/javac/annotations/neg/8022765/ErroneousAnnotations.java` — fail
-- `tools/javac/annotations/crashOnUnknownAttr/CrashOnUnknownTargetTypeTest.java` — fail
-- `tools/javac/annotations/neg/DeprecatedAnnotationTest/package-info.java` — fail
-- `tools/javac/annotations/6214965/T6214965.java` — fail
-- `tools/javac/annotations/neg/AnnComma.java` — fail
-- `tools/javac/annotations/default/A.java` — fail
-- `tools/javac/annotations/neg/8171322/TypeVariableAsAnnotationTest.java` — error
-- `tools/javac/annotations/neg/AnonSubclass.java` — fail
-- `tools/javac/annotations/neg/Constant.java` — fail
-- `tools/javac/annotations/neg/Cycle1.java` — fail
-- `tools/javac/annotations/neg/ArrayLit.java` — fail
-- `tools/javac/annotations/neg/pkg/package-info.java` — fail
-- `tools/javac/annotations/neg/Cycle2.java` — fail
-- `tools/javac/annotations/neg/Cycle3.java` — fail
-- `tools/javac/annotations/neg/Dep.java` — fail
-- `tools/javac/annotations/neg/Dup.java` — fail
-- `tools/javac/annotations/neg/MemberOver.java` — fail
-- `tools/javac/annotations/neg/DupTarget.java` — fail
-- `tools/javac/annotations/neg/InvalidPackageAnno.java` — fail
-- `tools/javac/annotations/neg/NoAnnotationMethods.java` — fail
-- `tools/javac/annotations/6365854/T6365854.java` — fail
-- `tools/javac/annotations/neg/NoClone.java` — fail
-- `tools/javac/annotations/neg/NoDefault.java` — fail
-- `tools/javac/annotations/neg/NoObjectMethods.java` — fail
-- `tools/javac/annotations/neg/NoStatic.java` — fail
-- `tools/javac/annotations/neg/NoDefaultAbstract.java` — fail
-- `tools/javac/annotations/neg/NoStaticAbstract.java` — fail
-- `tools/javac/annotations/neg/ObjectMembers.java` — fail
-- `tools/javac/annotations/neg/OverrideNo.java` — fail
-- `tools/javac/annotations/neg/Recovery1.java` — fail
-- `tools/javac/annotations/neg/Recovery.java` — fail
-- `tools/javac/annotations/neg/Package.java` — fail
-- `tools/javac/annotations/neg/Syntax1.java` — fail
-- `tools/javac/annotations/neg/Scope.java` — fail
-- `tools/javac/annotations/neg/WrongTarget.java` — fail
-- `tools/javac/annotations/neg/WrongValue.java` — fail
-- `tools/javac/annotations/neg/WrongTarget2.java` — fail
-- `tools/javac/annotations/neg/Z1.java` — fail
-- `tools/javac/annotations/neg/Z10.java` — fail
-- `tools/javac/annotations/neg/Z12.java` — fail
-- `tools/javac/annotations/neg/Z11.java` — fail
-- `tools/javac/annotations/neg/Z13.java` — fail
-- `tools/javac/annotations/neg/Z14.java` — fail
-- `tools/javac/annotations/neg/Z15.java` — fail
-- `tools/javac/annotations/parameter/ParameterAnnotations.java` — error
-- `tools/javac/annotations/neg/Z16.java` — fail
-- `tools/javac/annotations/neg/Z2.java` — fail
-- `tools/javac/annotations/neg/Z4.java` — fail
-- `tools/javac/analyzer/DoNoRunAnalyzersWhenException.java` — pass
-- `tools/javac/annotations/neg/Z3.java` — fail
-- `tools/javac/annotations/neg/Z8.java` — fail
-- `tools/javac/annotations/neg/Z9.java` — fail
-- `tools/javac/annotations/neg/Z5.java` — fail
-- `tools/javac/annotations/pos/Dep.java` — pass
-- `tools/javac/annotations/pos/AnnotationMethods.java` — pass
-- `tools/javac/annotations/pos/Local.java` — pass
-- `tools/javac/annotations/pos/AnnoteElideBraces.java` — pass
-- `tools/javac/annotations/pos/Enum1.java` — pass
-- `tools/javac/annotations/pos/Members.java` — pass
-- `tools/javac/annotations/pos/OverrideCheck.java` — pass
-- `tools/javac/annotations/pos/ClassA.java` — pass
-- `tools/javac/annotations/pos/NType.java` — pass
-- `tools/javac/annotations/pos/package-info.java` — pass
-- `tools/javac/annotations/pos/OverrideOK.java` — pass
-- `tools/javac/annotations/pos/Parameter.java` — pass
-- `tools/javac/annotations/pos/TrailingComma.java` — pass
-- `tools/javac/annotations/pos/Z4.java` — pass
-- `tools/javac/annotations/pos/Z2.java` — pass
-- `tools/javac/annotations/pos/RightTarget.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/8029017/TypeUseTargetNeg.java` — fail
-- `tools/javac/annotations/pos/Z3.java` — pass
-- `tools/javac/annotations/pos/Z1.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/8029017/TypeUseTarget.java` — pass
-- `tools/javac/annotations/pos/Primitives.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/brokenTypeAnnoContainer/BrokenTypeAnnoContainer.java` — fail
-- `tools/javac/annotations/neg/8022765/T8022765.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/BaseAnnoAsContainerAnno.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/generatedInRepeating/GeneratedInRepeating.java` — error
-- `tools/javac/annotations/repeatingAnnotations/CheckTargets.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/CompletionErrorOnRepeatingAnnosTest.java` — error
-- `tools/javac/annotations/repeatingAnnotations/ContainerHasRepeatedContained.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/ClassReaderDefault.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/CyclicAnnotation.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/BasicRepeatingAnnotations.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/DefaultCasePresent.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/DefaultTargetTypeParameter.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/DefaultTarget.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/DefaultTargetTypeUse.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/DocumentedContainerAnno.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/DelayRepeatedContainer.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/DuplicateErrors.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/InheritedContainerAnno.java` — fail
-- `tools/javac/annotations/6550655/T6550655.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/InvalidClsTypeParamTarget.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/InvalidMethodTypeParamTarget.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/InvalidMethodTypeUse.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/InvalidRepAnnoOnCast.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/InvalidTarget.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/MissingContainer.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/MissingDefaultCase1.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/MissingDefaultCase2.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/MissingValueMethod.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/MultiLevelRepeatableAnno.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/NoRepeatableAnno.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/MultipleAnnoMixedOrder.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/combo/InheritedAnnoCombo.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/combo/DocumentedAnnoCombo.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/NoTargetOnContainer.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/combo/DeprecatedAnnoCombo.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/NoTargetOnContainer2.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/RepeatingAndContainerPresent.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/RepeatingTargetNotAllowed.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/RepSelfMemberAnno.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/RepMemberAnno.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/NestedContainers.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/SingleRepeatingAndContainer.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/UseWrongRepeatable.java` — fail
-- `tools/javac/annotations/repeatingAnnotations/WrongReturnTypeForValue.java` — fail
-- `tools/javac/annotations/testCrashNestedAnnos/TestCrashNestedAnnos.java` — fail
-- `tools/javac/annotations/typeAnnotations/8236490/T8236490.java` — error
-- `tools/javac/annotations/typeAnnotations/6967002/T6967002.java` — fail
-- `tools/javac/annotations/typeAnnotations/8013180/QualifiedName.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/WrongVersion.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/SelfRepeatingAnnotations.java` — pass
-- `tools/javac/annotations/typeAnnotations/8047024/T8047024.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/AnnotatedExtendsTest.java` — error
-- `tools/javac/annotations/typeAnnotations/classfile/AnonymousClassTest.java` — error
-- `tools/javac/annotations/typeAnnotations/classfile/BridgeShouldHaveNoInteriorAnnotationsTest.java` — error
-- `tools/javac/annotations/typeAnnotations/attribution/Scopes.java` — pass
-- `tools/javac/annotations/T8154270/EraseClassInfoAnnotationValueTest.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/AnonymousExtendsTest.java` — pass
-- `tools/javac/annotations/typeAnnotations/api/ArrayPositionConsistency.java` — pass
-- `tools/javac/annotations/typeAnnotations/api/ArrayCreationTree.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/NestedLambdasCastedTest.java` — error
-- `tools/javac/annotations/repeatingAnnotations/combo/RetentionAnnoCombo.java` — pass
-- `tools/javac/annotations/typeAnnotations/api/AnnotatedArrayOrder.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/Patterns.java` — error
-- `tools/javac/annotations/typeAnnotations/classfile/DeadCode.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/InstanceInitializer.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/NoTargetAnnotations.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/SyntheticParameters.java` — error
-- `tools/javac/annotations/typeAnnotations/classfile/NewTypeArguments.java` — pass
-- `tools/javac/annotations/repeatingAnnotations/combo/BasicSyntaxCombo.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/Scopes.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/StaticInitializer.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/T8008762.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/T8010015.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/T8008769.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/TypeAnnotationPropagationTest.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/TypeCasts.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/TestNewCastArray.java` — pass
-- `tools/javac/annotations/typeAnnotations/classfile/Wildcards.java` — pass
-- `tools/javac/annotations/typeAnnotations/failures/common/arrays/DeclarationAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/arrays/DuplicateAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/arrays/DuplicateTypeAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/arrays/InvalidLocation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/arrays/MissingAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/innertypeparams/DuplicateAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/innertypeparams/DuplicateTypeAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/innertypeparams/MissingAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/innertypeparams/InvalidLocation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/newarray/DuplicateTypeAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/newarray/DuplicateAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/newarray/InvalidLocation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/newarray/MissingAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/parambounds/DuplicateAnnotationValue.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/parambounds/BrokenAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/parambounds/DuplicateTypeAnnotation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/parambounds/InvalidLocation.java` — fail
-- `tools/javac/annotations/typeAnnotations/failures/common/parambounds/MissingAnnotationValue.java` — fail
+- `tools/javac/AccessMethods/LateAddition.java` — pass
+- `tools/javac/AccessMethods/UplevelPrivateConstants.java` — pass
+- `tools/javac/BadOptimization/DeadCode1.java` — pass
+- `tools/javac/BadOptimization/DeadCode2.java` — pass
+- `tools/javac/BadOptimization/DeadCode3.java` — pass
+- `tools/javac/BadOptimization/DeadCode4.java` — pass
+- `tools/javac/BadOptimization/DeadCode5.java` — pass
+- `tools/javac/BadOptimization/DeadCode6.java` — pass
+- `tools/javac/BadOptimization/Switch1.java` — pass
+- `tools/javac/BadOptimization/Switch2.java` — pass
+- `tools/javac/ClassCycle/ClassCycle1a.java` — pass
+- `tools/javac/ClassCycle/ClassCycle2a.java` — pass
+- `tools/javac/ClassCycle/ClassCycle3a.java` — pass
+- `tools/javac/ClassCycle/ClassCycle4.java` — pass
+- `tools/javac/ClassFileModifiers/ClassModifiers.java` — pass
+- `tools/javac/ClassFileModifiers/MemberModifiers.java` — pass
+- `tools/javac/ClassLiterals/ClassLiteralHelperContext.java` — pass
+- `tools/javac/ClassLiterals/InitializeOuter.java` — pass
+- `tools/javac/ClassLiterals/InitializeTarget.java` — pass
+- `tools/javac/ClassLiterals/evalinit/ClassLiteralEvalInit.java` — pass
+- `tools/javac/ClassModifiers/InterfaceAndInnerClsCtor.java` — pass
+- `tools/javac/ClassPathTest/ClassPathTest.java` — fail — Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=1
+- `tools/javac/ConstantValues/ConstValInit.java` — pass
+- `tools/javac/ConstantValues/ConstValInlining.java` — pass
+- `tools/javac/DefiniteAssignment/7003744/T7003744a.java` — pass
+- `tools/javac/DefiniteAssignment/7003744/T7003744b.java` — pass
+- `tools/javac/DefiniteAssignment/8156180/T8156180.java` — pass
+- `tools/javac/DefiniteAssignment/DABlock.java` — pass
+- `tools/javac/DefiniteAssignment/DALoop1.java` — pass
+- `tools/javac/DefiniteAssignment/DASwitch.java` — pass
+- `tools/javac/DefiniteAssignment/DA_DUConstructors.java` — pass
+- `tools/javac/DefiniteAssignment/DUAssert.java` — pass
+- `tools/javac/DefiniteAssignment/DUBeforeDefined1.java` — pass
+- `tools/javac/DefiniteAssignment/DUBeforeDefined2.java` — pass
+- `tools/javac/DefiniteAssignment/DUParam1.java` — pass
+- `tools/javac/DefiniteAssignment/DUParam2.java` — pass
+- `tools/javac/DefiniteAssignment/DUSwitch.java` — pass
+- `tools/javac/DefiniteAssignment/DUSwitch2.java` — pass
+- `tools/javac/DefiniteAssignment/DUTry.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterIf_1.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterIf_2.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterThis_1.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterThis_2.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry1.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry2.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry3.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_1.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_10.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_11.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_12.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_13.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_14.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_2.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_3.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_4.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_5.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_6.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_7.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_8.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignBoolean_9.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignCond.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignBoolean/DefAssignConstantBoolean.java` — pass
+- `tools/javac/DefiniteAssignment/DefAssignNestedArg.java` — pass
+- `tools/javac/DefiniteAssignment/StaticFinalInit.java` — pass
+- `tools/javac/DefiniteAssignment/StaticFinalNestedClass.java` — pass
+- `tools/javac/DefiniteAssignment/T4704365.java` — pass
+- `tools/javac/DefiniteAssignment/T4717164.java` — pass
+- `tools/javac/DefiniteAssignment/T4717165.java` — pass
+- `tools/javac/DefiniteAssignment/T4718134.java` — pass
+- `tools/javac/DefiniteAssignment/T4718142.java` — pass
+- `tools/javac/DefiniteAssignment/T4718142a.java` — pass
+- `tools/javac/DefiniteAssignment/T4718708.java` — pass
+- `tools/javac/DefiniteAssignment/T4720379.java` — pass
+- `tools/javac/DefiniteAssignment/T4720751.java` — pass
+- `tools/javac/DefiniteAssignment/T4721062a.java` — pass
+- `tools/javac/DefiniteAssignment/T4721062b.java` — pass
+- `tools/javac/DefiniteAssignment/T4721076.java` — pass
+- `tools/javac/DefiniteAssignment/T4721998.java` — pass
+- `tools/javac/DefiniteAssignment/T4725725.java` — pass
+- `tools/javac/DefiniteAssignment/T7181578.java` — pass
+- `tools/javac/DefiniteAssignment/T8039026.java` — pass
+- `tools/javac/DefiniteAssignment/T8204610.java` — pass
+- `tools/javac/DefiniteAssignment/ThrowBeforeTryFinally.java` — pass
+- `tools/javac/DefiniteAssignment/UncaughtException.java` — pass
+- `tools/javac/Diagnostics/6722234/T6722234a.java` — pass
+- `tools/javac/Diagnostics/6722234/T6722234b.java` — pass
+- `tools/javac/Diagnostics/6722234/T6722234c.java` — pass
+- `tools/javac/Diagnostics/6722234/T6722234d.java` — pass
+- `tools/javac/Diagnostics/6769027/T6769027.java` — pass
+- `tools/javac/Diagnostics/6799605/T6799605.java` — pass
+- `tools/javac/Diagnostics/6860795/T6860795.java` — pass
+- `tools/javac/Diagnostics/6862608/T6862608a.java` — pass
+- `tools/javac/Diagnostics/6862608/T6862608b.java` — pass
+- `tools/javac/Diagnostics/6864382/T6864382.java` — pass
+- `tools/javac/Diagnostics/7010608/Test.java` — pass
+- `tools/javac/Diagnostics/7039014/T7039014.java` — pass
+- `tools/javac/Diagnostics/7116676/T7116676.java` — pass
+- `tools/javac/Diagnostics/8010387/T8010387.java` — pass
+- `tools/javac/Diagnostics/8043251/T8043251.java` — pass
+- `tools/javac/Diagnostics/8295024/T8295024.java` — pass
+- `tools/javac/Diagnostics/compressed/8067883/T8067883.java` — pass
+- `tools/javac/Diagnostics/compressed/T8012003a.java` — pass
+- `tools/javac/Diagnostics/compressed/T8012003b.java` — pass
+- `tools/javac/Diagnostics/compressed/T8012003c.java` — pass
+- `tools/javac/Diagnostics/compressed/T8020286.java` — pass
+- `tools/javac/ExtDirs/ExtDirTest.java` — pass
+- `tools/javac/ForwardReference/ForwardReference_2.java` — pass
+- `tools/javac/ForwardReference/ForwardReference_4.java` — pass
+- `tools/javac/ForwardReference/ForwardReference_5.java` — pass
+- `tools/javac/ForwardReference/T6676362a.java` — pass
+- `tools/javac/ForwardReference/T6676362b.java` — pass
+- `tools/javac/ForwardReference/UseBeforeDeclaration.java` — pass
+- `tools/javac/IllDefinedOrderOfInit.java` — pass
+- `tools/javac/ImplicitClass/ErrorRecovery.java` — pass
+- `tools/javac/ImplicitClass/ImplicitClassRecovery.java` — pass
+- `tools/javac/ImplicitClass/ImplicitImports.java` — pass
+- `tools/javac/ImplicitClass/NestedClasses.java` — pass
+- `tools/javac/ImplicitClass/NestedEnum.java` — pass
+- `tools/javac/ImplicitClass/SourceLevelErrorPosition.java` — pass
+- `tools/javac/ImplicitClass/TestImplicitClass.java` — pass
+- `tools/javac/ImportCycle/Dummy.java` — pass
+- `tools/javac/ImportPackagePrivateInner/Dummy.java` — pass
+- `tools/javac/ImportUnnamed/Dummy.java` — pass
+- `tools/javac/InnerClassesAttribute/Test.java` — pass
+- `tools/javac/MethodParameters/AnnotationTest.java` — pass
+- `tools/javac/MethodParameters/AnonymousClass.java` — pass
+- `tools/javac/MethodParameters/CaptureTest.java` — pass
+- `tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java` — error — system error (exit code 3)
+- `tools/javac/MethodParameters/Constructors.java` — pass
+- `tools/javac/MethodParameters/DefaultParamNames.java` — pass
+- `tools/javac/MethodParameters/EnumTest.java` — pass
+- `tools/javac/MethodParameters/InstanceMethods.java` — pass
+- `tools/javac/MethodParameters/LambdaTest.java` — pass
+- `tools/javac/MethodParameters/LegacyOutputTest/LegacyOutputTest.java` — pass
+- `tools/javac/MethodParameters/LocalClassTest.java` — pass
+- `tools/javac/MethodParameters/MemberClassTest.java` — pass
+- `tools/javac/MethodParameters/StaticMethods.java` — pass
+- `tools/javac/MethodParameters/UncommonParamNames.java` — pass
+- `tools/javac/NameClash/NameClashTest.java` — pass
+- `tools/javac/NameClash/One.java` — pass
+- `tools/javac/OverrideChecks/6199153/T6199153.java` — pass
+- `tools/javac/OverrideChecks/6400189/T6400189a.java` — pass
+- `tools/javac/OverrideChecks/6400189/T6400189b.java` — pass
+- `tools/javac/OverrideChecks/6400189/T6400189c.java` — pass
+- `tools/javac/OverrideChecks/6400189/T6400189d.java` — pass
+- `tools/javac/OverrideChecks/6738538/T6738538a.java` — pass
+- `tools/javac/OverrideChecks/6738538/T6738538b.java` — pass
+- `tools/javac/OverrideChecks/IncompleteMessageOverride.java` — pass
+- `tools/javac/OverrideChecks/InconsistentReturn.java` — pass
+- `tools/javac/OverrideChecks/InterfaceImplements.java` — pass
+- `tools/javac/OverrideChecks/InterfaceOverride.java` — pass
+- `tools/javac/OverrideChecks/Private.java` — pass
+- `tools/javac/OverrideChecks/StaticOverride.java` — pass
+- `tools/javac/OverrideChecks/T4720356a.java` — pass
+- `tools/javac/OverrideChecks/T4720359a.java` — pass
+- `tools/javac/OverrideChecks/T4721069.java` — pass
+- `tools/javac/OverrideChecks/T6326485.java` — pass
+- `tools/javac/OverrideChecks/T6399361.java` — pass
+- `tools/javac/OverrideChecks/T8139255.java` — pass
+- `tools/javac/OverrideChecks/ThrowsConflict.java` — pass
+- `tools/javac/PackageClassAmbiguity/Bad.java` — pass
+- `tools/javac/PackageClassAmbiguity/util.java` — pass
+- `tools/javac/Paths/6638501/JarFromManifestFailure.java` — pass
+- `tools/javac/Paths/AbsolutePathTest.java` — error — Test ignored: 8055768 ToolBox does not close opened files
+- `tools/javac/Paths/ClassPath.java` — pass
+- `tools/javac/Paths/ClassPath2.java` — pass
+- `tools/javac/Paths/Diagnostics.java` — pass
+- `tools/javac/Paths/Help.java` — pass
+- `tools/javac/Paths/MineField.java` — pass
+- `tools/javac/Paths/TestCompileJARInClassPath.java` — pass
+- `tools/javac/Paths/WildcardMineField.java` — pass
+- `tools/javac/ProtectedInnerClass/ProtectedInnerClassesTest.java` — pass
+- `tools/javac/QualifiedAccess/QualifiedAccess_1.java` — pass
+- `tools/javac/QualifiedAccess/QualifiedAccess_2.java` — pass
+- `tools/javac/QualifiedAccess/QualifiedAccess_3.java` — pass
+- `tools/javac/QualifiedAccess/QualifiedAccess_4.java` — pass
+- `tools/javac/RequiredParameterFlags/ImplicitParameters.java` — pass
+- `tools/javac/StringConcat/StringAppendEvaluatesInOrder.java` — pass
+- `tools/javac/StringConcat/StringConcatWithAssignments.java` — pass
+- `tools/javac/StringConcat/TestIndyStringConcat.java` — pass
+- `tools/javac/StringConcat/WellKnownTypeSignatures.java` — pass
+- `tools/javac/StringConcat/WellKnownTypes.java` — pass
+- `tools/javac/StringConcat/access/Test.java` — pass
+- `tools/javac/StringsInSwitch/7181320/BinOpInCaseLabel.java` — pass
+- `tools/javac/StringsInSwitch/7181320/CastInCaseLabel.java` — pass
+- `tools/javac/StringsInSwitch/7181320/CondExprInCaseLabel.java` — pass
+- `tools/javac/StringsInSwitch/7181320/CondExprInCaseLabel1.java` — pass
+- `tools/javac/StringsInSwitch/7181320/CondExprInCaseLabel2.java` — pass
+- `tools/javac/StringsInSwitch/BadlyTypedLabel1.java` — pass
+- `tools/javac/StringsInSwitch/BadlyTypedLabel2.java` — pass
+- `tools/javac/StringsInSwitch/NonConstantLabel.java` — pass
+- `tools/javac/StringsInSwitch/OneCaseSwitches.java` — pass
+- `tools/javac/StringsInSwitch/RepeatedStringCaseLabels1.java` — pass
+- `tools/javac/StringsInSwitch/RepeatedStringCaseLabels2.java` — pass
+- `tools/javac/StringsInSwitch/StringSwitches.java` — pass
 - …and 2737 more
+
+## 🟢 New passes (1322) — consider advancing the baseline
+
+- `tools/javac/ClassCycle/ClassCycle1a.java`
+- `tools/javac/ClassCycle/ClassCycle2a.java`
+- `tools/javac/ClassCycle/ClassCycle3a.java`
+- `tools/javac/ClassCycle/ClassCycle4.java`
+- `tools/javac/ClassFileModifiers/ClassModifiers.java`
+- `tools/javac/ClassFileModifiers/MemberModifiers.java`
+- `tools/javac/DefiniteAssignment/8156180/T8156180.java`
+- `tools/javac/DefiniteAssignment/DASwitch.java`
+- `tools/javac/DefiniteAssignment/DA_DUConstructors.java`
+- `tools/javac/DefiniteAssignment/DUParam1.java`
+- `tools/javac/DefiniteAssignment/DUParam2.java`
+- `tools/javac/DefiniteAssignment/DefAssignAfterThis_1.java`
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry1.java`
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry2.java`
+- `tools/javac/DefiniteAssignment/DefAssignAfterTry3.java`
+- `tools/javac/DefiniteAssignment/StaticFinalInit.java`
+- `tools/javac/DefiniteAssignment/T4704365.java`
+- `tools/javac/DefiniteAssignment/T4717164.java`
+- `tools/javac/DefiniteAssignment/T4717165.java`
+- `tools/javac/DefiniteAssignment/T4718142.java`
+- `tools/javac/DefiniteAssignment/T4718142a.java`
+- `tools/javac/DefiniteAssignment/T4718708.java`
+- `tools/javac/DefiniteAssignment/T4721062a.java`
+- `tools/javac/DefiniteAssignment/T4721062b.java`
+- `tools/javac/DefiniteAssignment/T4725725.java`
+- `tools/javac/DefiniteAssignment/T8039026.java`
+- `tools/javac/DefiniteAssignment/T8204610.java`
+- `tools/javac/DefiniteAssignment/UncaughtException.java`
+- `tools/javac/Diagnostics/6722234/T6722234a.java`
+- `tools/javac/Diagnostics/6722234/T6722234b.java`
+- `tools/javac/Diagnostics/6722234/T6722234c.java`
+- `tools/javac/Diagnostics/6722234/T6722234d.java`
+- `tools/javac/Diagnostics/6799605/T6799605.java`
+- `tools/javac/Diagnostics/6860795/T6860795.java`
+- `tools/javac/Diagnostics/6862608/T6862608a.java`
+- `tools/javac/Diagnostics/6862608/T6862608b.java`
+- `tools/javac/Diagnostics/6864382/T6864382.java`
+- `tools/javac/Diagnostics/7039014/T7039014.java`
+- `tools/javac/Diagnostics/8010387/T8010387.java`
+- `tools/javac/Diagnostics/8043251/T8043251.java`
+- `tools/javac/Diagnostics/compressed/8067883/T8067883.java`
+- `tools/javac/Diagnostics/compressed/T8012003a.java`
+- `tools/javac/Diagnostics/compressed/T8012003b.java`
+- `tools/javac/Diagnostics/compressed/T8012003c.java`
+- `tools/javac/Diagnostics/compressed/T8020286.java`
+- `tools/javac/ExtDirs/ExtDirTest.java`
+- `tools/javac/ImplicitClass/ErrorRecovery.java`
+- `tools/javac/ImplicitClass/ImplicitClassRecovery.java`
+- `tools/javac/ImplicitClass/ImplicitImports.java`
+- `tools/javac/ImplicitClass/NestedClasses.java`
+- `tools/javac/ImplicitClass/SourceLevelErrorPosition.java`
+- `tools/javac/ImportUnnamed/Dummy.java`
+- `tools/javac/OverrideChecks/6199153/T6199153.java`
+- `tools/javac/OverrideChecks/6400189/T6400189a.java`
+- `tools/javac/OverrideChecks/6400189/T6400189b.java`
+- `tools/javac/OverrideChecks/IncompleteMessageOverride.java`
+- `tools/javac/OverrideChecks/InconsistentReturn.java`
+- `tools/javac/OverrideChecks/Private.java`
+- `tools/javac/OverrideChecks/StaticOverride.java`
+- `tools/javac/OverrideChecks/T4720356a.java`
+- `tools/javac/OverrideChecks/T4720359a.java`
+- `tools/javac/OverrideChecks/T4721069.java`
+- `tools/javac/OverrideChecks/T8139255.java`
+- `tools/javac/OverrideChecks/ThrowsConflict.java`
+- `tools/javac/PackageClassAmbiguity/Bad.java`
+- `tools/javac/PackageClassAmbiguity/util.java`
+- `tools/javac/Paths/ClassPath.java`
+- `tools/javac/Paths/ClassPath2.java`
+- `tools/javac/Paths/Diagnostics.java`
+- `tools/javac/Paths/MineField.java`
+- `tools/javac/Paths/WildcardMineField.java`
+- `tools/javac/ProtectedInnerClass/ProtectedInnerClassesTest.java`
+- `tools/javac/QualifiedAccess/QualifiedAccess_1.java`
+- `tools/javac/QualifiedAccess/QualifiedAccess_2.java`
+- `tools/javac/QualifiedAccess/QualifiedAccess_3.java`
+- `tools/javac/QualifiedAccess/QualifiedAccess_4.java`
+- `tools/javac/RequiredParameterFlags/ImplicitParameters.java`
+- `tools/javac/StringConcat/TestIndyStringConcat.java`
+- `tools/javac/StringsInSwitch/BadlyTypedLabel1.java`
+- `tools/javac/StringsInSwitch/BadlyTypedLabel2.java`
+- `tools/javac/StringsInSwitch/NonConstantLabel.java`
+- `tools/javac/StringsInSwitch/RepeatedStringCaseLabels1.java`
+- `tools/javac/StringsInSwitch/RepeatedStringCaseLabels2.java`
+- `tools/javac/SuperInit/EarlyAssignmentNoPreview1.java`
+- `tools/javac/SuperInit/EarlyAssignmentNoPreview2.java`
+- `tools/javac/SuperInit/EarlyAssignmentNoPreview3.java`
+- `tools/javac/SuperInit/EarlyAssignments.java`
+- `tools/javac/SuperInit/EarlyIndirectOuterCapture.java`
+- `tools/javac/SuperInit/EarlyInnerAccessErrorMessageTest.java`
+- `tools/javac/SuperInit/EarlyLocalClass.java`
+- `tools/javac/SuperInit/SuperInitFails.java`
+- `tools/javac/TryWithResources/BadTwr.java`
+- `tools/javac/TryWithResources/BadTwrSyntax.java`
+- `tools/javac/TryWithResources/DuplicateResourceDecl.java`
+- `tools/javac/TryWithResources/ImplicitFinal.java`
+- `tools/javac/TryWithResources/PlainTry.java`
+- `tools/javac/TryWithResources/ResDeclOutsideTry.java`
+- `tools/javac/TryWithResources/ResourceInterface.java`
+- `tools/javac/TryWithResources/ResourceNameConflict.java`
+- `tools/javac/TryWithResources/ResourceOutsideTry.java`
+- `tools/javac/TryWithResources/ResourceRedecl.java`
+- `tools/javac/TryWithResources/T7022711.java`
+- `tools/javac/TryWithResources/TwrAndLambda.java`
+- `tools/javac/TryWithResources/TwrAndTypeVariables.java`
+- `tools/javac/TryWithResources/TwrAvoidNullCheck.java`
+- `tools/javac/TryWithResources/TwrClose.java`
+- `tools/javac/TryWithResources/TwrFlow.java`
+- `tools/javac/TryWithResources/TwrForVariable1.java`
+- `tools/javac/TryWithResources/TwrForVariable2.java`
+- `tools/javac/TryWithResources/TwrForVariable3.java`
+- `tools/javac/TryWithResources/TwrForVariable4.java`
+- `tools/javac/TryWithResources/TwrLint.java`
+- `tools/javac/TryWithResources/TwrOnNonResource.java`
+- `tools/javac/TryWithResources/TwrSimpleClose.java`
+- `tools/javac/TryWithResources/TwrVarKinds.java`
+- `tools/javac/TryWithResources/TwrVarRedeclaration.java`
+- `tools/javac/analyzer/AnalyzerMandatoryWarnings.java`
+- `tools/javac/analyzer/AnalyzerNotQuiteSpeculative.java`
+- `tools/javac/analyzer/AnalyzersCheckSourceLevel.java`
+- `tools/javac/analyzer/Diamond.java`
+- `tools/javac/analyzer/DiamondFields.java`
+- `tools/javac/analyzer/LambdaWithMethod.java`
+- `tools/javac/analyzer/StuckLambdas.java`
+- `tools/javac/annotations/6214965/T6214965.java`
+- `tools/javac/annotations/6359949/T6359949a.java`
+- `tools/javac/annotations/6365854/T6365854.java`
+- `tools/javac/annotations/6881115/T6881115.java`
+- `tools/javac/annotations/8218152/MalformedAnnotationProcessorTests.java`
+- `tools/javac/annotations/AnnotationTypeElementModifiers.java`
+- `tools/javac/annotations/ApplicableAnnotationsOnRecords.java`
+- `tools/javac/annotations/AtNonAnnotationTypeTest.java`
+- `tools/javac/annotations/CrashDuplicateAnnotationDeclarationTest.java`
+- `tools/javac/annotations/DeprecationWarningTest.java`
+- `tools/javac/annotations/FinalReceiverTest.java`
+- `tools/javac/annotations/MissingAnnotationClassFile.java`
+- `tools/javac/annotations/ParameterArrayLimit.java`
+- `tools/javac/annotations/ReadingMethodWithTypeAnno.java`
+- `tools/javac/annotations/SyntheticParameters.java`
+- `tools/javac/annotations/TestAnnotationValuesResolved.java`
+- `tools/javac/annotations/TestParameterAnnotationOnReceiverType.java`
+- `tools/javac/annotations/clinit/AnnoWithClinitFail.java`
+- `tools/javac/annotations/crashOnUnknownAttr/CrashOnUnknownTargetTypeTest.java`
+- `tools/javac/annotations/crash_empty_enum_const/CrashEmptyEnumConstructorTest.java`
+- `tools/javac/annotations/default/A.java`
+- `tools/javac/annotations/neg/8022765/ErroneousAnnotations.java`
+- `tools/javac/annotations/neg/8022765/T8022765.java`
+- `tools/javac/annotations/neg/AnnComma.java`
+- `tools/javac/annotations/neg/AnonSubclass.java`
+- `tools/javac/annotations/neg/ArrayLit.java`
+- `tools/javac/annotations/neg/Constant.java`
+- `tools/javac/annotations/neg/Cycle1.java`
+- `tools/javac/annotations/neg/Cycle2.java`
+- `tools/javac/annotations/neg/Cycle3.java`
+- `tools/javac/annotations/neg/Dep.java`
+- `tools/javac/annotations/neg/DeprecatedAnnotationTest/package-info.java`
+- `tools/javac/annotations/neg/Dup.java`
+- `tools/javac/annotations/neg/DupTarget.java`
+- `tools/javac/annotations/neg/InvalidPackageAnno.java`
+- `tools/javac/annotations/neg/MemberOver.java`
+- `tools/javac/annotations/neg/NoAnnotationMethods.java`
+- `tools/javac/annotations/neg/NoClone.java`
+- `tools/javac/annotations/neg/NoDefault.java`
+- `tools/javac/annotations/neg/NoDefaultAbstract.java`
+- `tools/javac/annotations/neg/NoObjectMethods.java`
+- `tools/javac/annotations/neg/NoStatic.java`
+- `tools/javac/annotations/neg/NoStaticAbstract.java`
+- `tools/javac/annotations/neg/ObjectMembers.java`
+- `tools/javac/annotations/neg/OverrideNo.java`
+- `tools/javac/annotations/neg/Package.java`
+- `tools/javac/annotations/neg/Recovery.java`
+- `tools/javac/annotations/neg/Recovery1.java`
+- `tools/javac/annotations/neg/Scope.java`
+- `tools/javac/annotations/neg/Syntax1.java`
+- `tools/javac/annotations/neg/WrongTarget.java`
+- `tools/javac/annotations/neg/WrongTarget2.java`
+- `tools/javac/annotations/neg/WrongValue.java`
+- `tools/javac/annotations/neg/Z1.java`
+- `tools/javac/annotations/neg/Z10.java`
+- `tools/javac/annotations/neg/Z11.java`
+- `tools/javac/annotations/neg/Z12.java`
+- `tools/javac/annotations/neg/Z13.java`
+- `tools/javac/annotations/neg/Z14.java`
+- `tools/javac/annotations/neg/Z15.java`
+- `tools/javac/annotations/neg/Z16.java`
+- `tools/javac/annotations/neg/Z2.java`
+- `tools/javac/annotations/neg/Z3.java`
+- `tools/javac/annotations/neg/Z4.java`
+- `tools/javac/annotations/neg/Z5.java`
+- `tools/javac/annotations/neg/Z8.java`
+- `tools/javac/annotations/neg/Z9.java`
+- `tools/javac/annotations/neg/pkg/package-info.java`
+- `tools/javac/annotations/parameter/ParameterAnnotations.java`
+- `tools/javac/annotations/repeatingAnnotations/8029017/TypeUseTargetNeg.java`
+- `tools/javac/annotations/repeatingAnnotations/BaseAnnoAsContainerAnno.java`
+- `tools/javac/annotations/repeatingAnnotations/CompletionErrorOnRepeatingAnnosTest.java`
+- `tools/javac/annotations/repeatingAnnotations/CyclicAnnotation.java`
+- `tools/javac/annotations/repeatingAnnotations/DefaultTargetTypeParameter.java`
+- `tools/javac/annotations/repeatingAnnotations/DefaultTargetTypeUse.java`
+- `tools/javac/annotations/repeatingAnnotations/DocumentedContainerAnno.java`
+- `tools/javac/annotations/repeatingAnnotations/DuplicateErrors.java`
+- …and 1122 more
