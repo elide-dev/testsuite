@@ -37,6 +37,12 @@ export function parseCpythonLines(text: string): TestResult[] {
   return text.split(/\r?\n/).map(parseCpythonLine).filter((r): r is TestResult => r !== null);
 }
 
+export function remapCpythonSkip(result: TestResult, skipGlobs: Array<(value: string) => boolean>): TestResult {
+  const upstreamPath = String(result.meta?.upstreamPath ?? "");
+  const caseId = String(result.id);
+  return skipGlobs.some((match) => match(upstreamPath) || match(caseId)) ? { ...result, status: "skip" } : result;
+}
+
 async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
@@ -86,9 +92,7 @@ async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
     return;
   }
 
-  for (const r of parsed) {
-    yield skip.some((m) => m(String(r.meta?.upstreamPath))) ? { ...r, status: "skip" } : r;
-  }
+  for (const r of parsed) yield remapCpythonSkip(r, skip);
 }
 
 export const cpythonCoreAdapter: Adapter = {

@@ -1,5 +1,6 @@
 import { test, expect } from "bun:test";
-import { parseCpythonLines } from "./cpython-core";
+import picomatch from "picomatch";
+import { parseCpythonLines, remapCpythonSkip } from "./cpython-core";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/cpython-core.ndjson`).text();
 
@@ -25,4 +26,13 @@ test("maps CPython driver JSON lines to TestResult records", () => {
   });
   expect(out[2].status).toBe("error");
   expect(out[3].status).toBe("skip");
+});
+
+test("remaps CPython skips from either module names or case ids", () => {
+  const out = parseCpythonLines(fixture);
+  const moduleSkip = remapCpythonSkip(out[0], [picomatch("test_re")]);
+  const caseSkip = remapCpythonSkip(out[1], [picomatch("test_json.TestDecode.test_failures")]);
+
+  expect(moduleSkip.status).toBe("skip");
+  expect(caseSkip.status).toBe("skip");
 });
