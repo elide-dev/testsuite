@@ -98,6 +98,12 @@ function validateJdkHome(jdkHome: string): string {
   if (!existsSync(realBin) || !statSync(realBin).isDirectory()) {
     throw new Error(`javac-jtreg JDK home is missing bin/: ${resolved}`);
   }
+  for (const tool of ["java", "javac", "jar"]) {
+    const toolPath = join(realBin, tool);
+    if (!existsSync(toolPath) || !statSync(toolPath).isFile()) {
+      throw new Error(`javac-jtreg JDK home is missing bin/${tool}: ${resolved}`);
+    }
+  }
   return resolved;
 }
 
@@ -233,6 +239,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const langtoolsRoot = join(ctx.suitePath, "test/langtools");
   const tests = manifest.groups.flatMap((group) => expandManifestIncludePaths(langtoolsRoot, group.include, ctx.include));
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
+  if (tests.length === 0) return;
   const javaExecution = await resolveJavaExecution(ctx.settings, process.env, ctx.repoRoot);
   const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");

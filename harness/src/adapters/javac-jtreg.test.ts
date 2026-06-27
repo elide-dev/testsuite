@@ -1,4 +1,4 @@
-import { chmodSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { expect, test } from "bun:test";
@@ -257,6 +257,16 @@ test("passes only included manifest paths to jtreg", async () => {
   expect(args).not.toContain("tools/javac/launcher/BasicSourceLauncherTests.java");
 });
 
+test("returns no results and does not invoke jtreg when include globs match no javac tests", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  ctx.include = ["tools/javac/does-not-exist/**/*.java"];
+
+  const results = await collect(runJavacJtreg(ctx));
+
+  expect(results).toEqual([]);
+  expect(existsSync(logs.jtregArgsLog)).toBe(false);
+});
+
 test("keeps directory manifest entries unchanged when include globs are empty", () => {
   expect(
     expandManifestIncludePaths(
@@ -270,6 +280,15 @@ test("keeps directory manifest entries unchanged when include globs are empty", 
 test("resolves jdkHome from explicit settings first", async () => {
   const { ctx } = setupJtregFixture();
   expect(await resolveJdkHome(ctx.settings, {}, ctx.repoRoot)).toBe(String(ctx.settings.jdkHome));
+});
+
+test("rejects explicit jdkHome values missing javac before wrapper construction", async () => {
+  const { ctx } = setupJtregFixture();
+  rmSync(join(String(ctx.settings.jdkHome), "bin", "javac"));
+
+  await expect(resolveJdkHome(ctx.settings, {}, ctx.repoRoot)).rejects.toThrow(
+    `javac-jtreg JDK home is missing bin/javac: ${String(ctx.settings.jdkHome)}`,
+  );
 });
 
 test("derives jdkHome from the configured javaRunner when explicit settings are absent", async () => {
@@ -287,6 +306,18 @@ test("falls back to JAVA_HOME when javaRunner discovery is unavailable", async (
 
   expect(await resolveJdkHome(ctx.settings, { JAVA_HOME: join(dirname(missingRunner), "fake-jdk") }, ctx.repoRoot)).toMatch(
     /fake-jdk$/,
+  );
+});
+
+test("rejects JAVA_HOME fallbacks missing jar before wrapper construction", async () => {
+  const { ctx } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+  const fakeJdk = join(dirname(String(ctx.settings.javaRunner)), "fake-jdk");
+  ctx.settings.javaRunner = join(dirname(String(ctx.settings.javaRunner)), "missing-java");
+  rmSync(join(fakeJdk, "bin", "jar"));
+
+  await expect(resolveJdkHome(ctx.settings, { JAVA_HOME: fakeJdk }, ctx.repoRoot)).rejects.toThrow(
+    `javac-jtreg JDK home is missing bin/jar: ${fakeJdk}`,
   );
 });
 

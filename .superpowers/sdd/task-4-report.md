@@ -228,3 +228,32 @@ Results:
 - Test262 adapter/CLI/registry tests: `12 pass`, `0 fail`
 - Controller full harness suite: `70 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
+
+## Task 4 fifth fix
+
+- Updated `harness/src/adapters/javac-jtreg.ts` so `runJavacJtreg()` returns immediately when manifest/include filtering selects zero tests, matching the existing empty-workload behavior instead of spawning `jtreg` with no test operands.
+- Tightened `validateJdkHome()` to reject partial JDK/JRE layouts before wrapper construction unless `bin/java`, `bin/javac`, and `bin/jar` all exist under the resolved home.
+- Extended `harness/src/adapters/javac-jtreg.test.ts` with:
+  - a non-matching `ctx.include` case proving `runJavacJtreg()` returns `[]` and never invokes the fake `jtreg` runner
+  - explicit `jdkHome` validation failure for missing `bin/javac`
+  - `JAVA_HOME` fallback validation failure for missing `bin/jar`
+
+### Verification after fifth fix
+
+Commands:
+
+```bash
+cd harness
+bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+bun run typecheck
+bun test src/adapters/test262.test.ts src/cli.test.ts src/registry.test.ts
+bun test
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `27 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Cheap cross-check (`test262` adapter + CLI + registry): `12 pass`, `0 fail`
+- Full harness suite: `73 pass`, `0 fail`
+- Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
