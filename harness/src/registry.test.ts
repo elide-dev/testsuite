@@ -12,3 +12,13 @@ test("loads test262 workload from registry.toml", () => {
     include: ["test/language/**/*.js", "test/built-ins/**/*.js"],
   });
 });
+
+test("loads wpt-wintertc workload from registry.toml", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  const wpt = ws.find((w) => w.id === "wpt-wintertc");
+  expect(wpt).toBeDefined();
+  expect(wpt!.kind).toBe("test");
+  expect(wpt!.adapter).toBe("wpt-wintertc");
+  expect(wpt!.path).toBe("suites/wpt");
+  expect(wpt!.settings.manifest).toBe("manifests/wintertc-wpt-2025.toml");
+});

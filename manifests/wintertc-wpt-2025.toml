@@ -1,0 +1,12 @@
+# Initial pure in-process WinterTC API slice. Fetch-related APIs are added after
+# the WPT bridge is stable.
+
+[[group]]
+id = "url"
+include = ["url/urlsearchparams.any.js"]
+tags = ["wintertc", "pure-api"]
+
+[[group]]
+id = "encoding"
+include = ["encoding/textdecoder.any.js", "encoding/textencoder.any.js"]
+tags = ["wintertc", "pure-api"]

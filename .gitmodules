@@ -1,3 +1,6 @@
 [submodule "suites/test262"]
 	path = suites/test262
 	url = https://github.com/tc39/test262.git
+[submodule "suites/wpt"]
+	path = suites/wpt
+	url = https://github.com/web-platform-tests/wpt

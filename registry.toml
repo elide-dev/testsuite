@@ -8,3 +8,13 @@ path = "suites/test262"
   [workload.settings]
   # Globs (relative to path) to execute. Skip globs live in expectations/.
   include = ["test/language/**/*.js", "test/built-ins/**/*.js"]
+
+[[workload]]
+id = "wpt-wintertc"
+kind = "test"
+adapter = "wpt-wintertc"
+path = "suites/wpt"
+
+  [workload.settings]
+  manifest = "manifests/wintertc-wpt-2025.toml"
+  timeoutMs = 60000
