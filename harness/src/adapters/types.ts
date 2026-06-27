@@ -11,6 +11,7 @@ export interface AdapterContext {
   threads: number;
   log?: boolean;
   verbose?: boolean;
+  logPrefix?: string;
   settings: Record<string, unknown>;
   workspacePath: string;
 }

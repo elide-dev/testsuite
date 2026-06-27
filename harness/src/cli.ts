@@ -34,6 +34,7 @@ export interface CliOptions {
   threads: number;
   log: boolean;
   verbose: boolean;
+  logPrefix: string;
   failureOutput: "show" | "hide";
   include?: string; // comma-separated glob override (else registry settings.include)
   suiteVersion?: string;
@@ -69,6 +70,7 @@ export function parseArgs(argv: string[]): CliOptions {
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
     verbose: rest.includes("--verbose"),
+    logPrefix: get("--log-prefix", ""),
     failureOutput: rest.includes("--show-failure-output") ? "show" : failureOutputValue,
     include: get("--include", "") || undefined,
     suiteVersion: get("--suite-version", "") || undefined,
@@ -185,6 +187,7 @@ export function buildAdapterContext(
     threads: o.threads,
     log: o.log,
     verbose: o.verbose,
+    logPrefix: o.logPrefix,
     settings,
     workspacePath,
   };
@@ -212,7 +215,7 @@ export async function main(o: CliOptions): Promise<number> {
       // Live per-test marks go to stderr so stdout stays clean for the summary.
       const shouldPrintFailureOutput = o.failureOutput === "show" && (r.status === "fail" || r.status === "error");
       const tail = shouldPrintFailureOutput ? `  — ${r.message ?? ""}` : "";
-      process.stderr.write(`${MARK[r.status] ?? "?"} ${r.id}${tail}\n`);
+      process.stderr.write(`${o.logPrefix}${MARK[r.status] ?? "?"} ${r.id}${tail}\n`);
     }
   }
   const finishedAt = new Date().toISOString();

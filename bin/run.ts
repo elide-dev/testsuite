@@ -172,59 +172,36 @@ function userArgs(uid: string, gid: string): string[] {
   return ["--user", `${uid}:${gid}`, "-e", "HOME=/work/.harness", "-e", `PATH=${CONTAINER_PATH}`];
 }
 
-async function writeStream(
-  stream: ReadableStream<Uint8Array>,
-  sink: NodeJS.WriteStream,
-  prefix = "",
-): Promise<void> {
-  const decoder = new TextDecoder();
-  let pending = "";
-  const writeLine = (line: string): void => {
-    sink.write(prefix ? `${prefix}${line}\n` : `${line}\n`);
-  };
-
-  for await (const chunk of stream) {
-    pending += decoder.decode(chunk, { stream: true });
-    let newline = pending.search(/\r?\n/);
-    while (newline >= 0) {
-      const line = pending.slice(0, newline);
-      pending = pending.slice(pending[newline] === "\r" && pending[newline + 1] === "\n" ? newline + 2 : newline + 1);
-      writeLine(line);
-      newline = pending.search(/\r?\n/);
-    }
-  }
-  pending += decoder.decode();
-  if (pending) {
-    sink.write(prefix ? `${prefix}${pending}` : pending);
-    if (!pending.endsWith("\n")) sink.write("\n");
-  }
-}
-
-async function run(
-  args: string[],
-  opts: { cwd?: string; env?: NodeJS.ProcessEnv; prefix?: string } = {},
-): Promise<number> {
-  const piped = opts.prefix !== undefined;
+async function run(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<number> {
   const proc = Bun.spawn(args, {
     cwd: opts.cwd ?? ROOT,
     env: opts.env ?? process.env,
     stdin: "inherit",
-    stdout: piped ? "pipe" : "inherit",
-    stderr: piped ? "pipe" : "inherit",
+    stdout: "inherit",
+    stderr: "inherit",
   });
   activeProcesses.add(proc);
   try {
-    const output = piped
-      ? Promise.all([
-          writeStream(proc.stdout as ReadableStream<Uint8Array>, process.stdout, opts.prefix),
-          writeStream(proc.stderr as ReadableStream<Uint8Array>, process.stderr, opts.prefix),
-        ])
-      : Promise.resolve();
-    const rc = await proc.exited;
-    await output;
-    return rc;
+    return await proc.exited;
   } finally {
     activeProcesses.delete(proc);
+  }
+}
+
+async function runWithHeartbeat(args: string[], label: string, opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<number> {
+  log(`${label}...`);
+  const started = performance.now();
+  const timer = setInterval(() => {
+    const seconds = Math.round((performance.now() - started) / 1000);
+    log(`${label} still running (${seconds}s)...`);
+  }, 5_000);
+  try {
+    const rc = await run(args, opts);
+    const seconds = Math.round((performance.now() - started) / 1000);
+    log(`${label} ${rc === 0 ? "done" : `exited ${rc}`} (${seconds}s).`);
+    return rc;
+  } finally {
+    clearInterval(timer);
   }
 }
 
@@ -374,8 +351,8 @@ async function suiteVersion(workload: WorkloadInfo): Promise<string> {
   return result.exitCode === 0 ? result.stdout.trim() : "unknown";
 }
 
-async function fixHostOwnership(image: string, plat: string[], uid: string, gid: string): Promise<void> {
-  await run([
+async function fixHostOwnership(image: string, plat: string[], uid: string, gid: string, label: string): Promise<void> {
+  await runWithHeartbeat([
     "docker",
     "run",
     "--rm",
@@ -399,7 +376,7 @@ async function fixHostOwnership(image: string, plat: string[], uid: string, gid:
     "/target/expectations",
     "/target/.harness",
     "/target/README.md",
-  ]);
+  ], label);
 }
 
 async function main(): Promise<number> {
@@ -429,7 +406,7 @@ async function main(): Promise<number> {
   mkdirSync(resolve(ROOT, ".harness"), { recursive: true });
   closeSync(openSync(resolve(ROOT, "README.md"), "a"));
 
-  await fixHostOwnership(image, plat, hostUid, hostGid);
+  await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership before suite runs");
 
   const expMode = options.ratchet ? "rw" : "ro";
   const readmeMode = options.updateSummaries ? "rw" : "ro";
@@ -481,6 +458,8 @@ async function main(): Promise<number> {
       options.threads,
       "--suite-version",
       version,
+      "--log-prefix",
+      `[${suite}] `,
       ...(options.log ? ["--log"] : []),
       ...(options.verbose ? ["--verbose"] : []),
       ...(options.include ? ["--include", options.include] : []),
@@ -489,7 +468,7 @@ async function main(): Promise<number> {
       "--failure-output",
       options.failureOutput,
     ];
-    const rc = await run(args, { prefix: `[${suite}] ` });
+    const rc = await run(args);
     switch (rc) {
       case 0:
         log(`DONE: ${suite} GREEN (no regressions). reports/ updated.`);
@@ -526,7 +505,7 @@ async function main(): Promise<number> {
     else if (rc === 1 && overall === 0) overall = 1;
   }
 
-  await fixHostOwnership(image, plat, hostUid, hostGid);
+  await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership after suite runs");
 
   if (overall === 0) log("DONE: all selected suites GREEN.");
   if (overall === 1) log("DONE: selected suites completed with regressions. exit 1.");

@@ -61,10 +61,10 @@ function progressEnabled(ctx: AdapterContext): boolean {
 function startProgress(ctx: AdapterContext, label: string): () => void {
   if (!progressEnabled(ctx)) return () => {};
   const started = performance.now();
-  process.stderr.write(`progress: start ${label}\n`);
+  process.stderr.write(`${ctx.logPrefix ?? ""}progress: start ${label}\n`);
   const interval = setInterval(() => {
     const seconds = Math.round((performance.now() - started) / 1000);
-    process.stderr.write(`progress: still running ${label} (${seconds}s)\n`);
+    process.stderr.write(`${ctx.logPrefix ?? ""}progress: still running ${label} (${seconds}s)\n`);
   }, Number(ctx.settings.progressIntervalMs ?? 10_000));
   return () => clearInterval(interval);
 }
@@ -151,7 +151,7 @@ async function* runCpythonShard(
   const stopProgress = startProgress(ctx, `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`);
   const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
     ? (line) => {
-        if (line.startsWith("progress: ") || ctx.verbose) process.stderr.write(`${line}\n`);
+        if (line.startsWith("progress: ") || ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
       }
     : undefined);
 
