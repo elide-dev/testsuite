@@ -29,3 +29,15 @@ path = "suites/cpython"
   [workload.settings]
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 120000
+
+[[workload]]
+id = "javac-jtreg"
+kind = "test"
+adapter = "javac-jtreg"
+path = "suites/openjdk"
+
+  [workload.settings]
+  manifest = "manifests/javac-langtools.toml"
+  timeoutMs = 300000
+  jtregPath = "jtreg"
+  javaRunner = "java"

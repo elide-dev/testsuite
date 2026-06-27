@@ -1,0 +1,6 @@
+# Initial javac langtools slice. Paths are relative to OpenJDK test/langtools.
+
+[[group]]
+id = "javac-diags"
+include = ["tools/javac/diags"]
+tags = ["javac", "diagnostics"]

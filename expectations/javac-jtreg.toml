@@ -1,0 +1,6 @@
+# javac / jtreg expectations baseline.
+# Keys are picomatch globs over jtreg test paths such as tools/javac/diags/**.
+
+[skip]
+
+[fail]

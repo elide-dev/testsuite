@@ -33,3 +33,14 @@ test("loads cpython-core workload from registry.toml", () => {
   expect(py!.path).toBe("suites/cpython");
   expect(py!.settings.manifest).toBe("manifests/cpython-core.toml");
 });
+
+test("loads javac-jtreg workload from registry.toml", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  const javac = ws.find((w) => w.id === "javac-jtreg");
+  expect(javac).toBeDefined();
+  expect(javac!.kind).toBe("test");
+  expect(javac!.adapter).toBe("javac-jtreg");
+  expect(javac!.path).toBe("suites/openjdk");
+  expect(javac!.settings.manifest).toBe("manifests/javac-langtools.toml");
+  expect(javac!.settings.javaRunner).toBe("java");
+});

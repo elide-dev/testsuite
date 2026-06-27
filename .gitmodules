@@ -8,3 +8,6 @@
 	path = suites/cpython
 	url = https://github.com/python/cpython.git
 	branch = 3.12
+[submodule "suites/openjdk"]
+	path = suites/openjdk
+	url = https://github.com/openjdk/jdk
