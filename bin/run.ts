@@ -5,6 +5,7 @@
 import { $ } from "bun";
 import { createHash, randomUUID } from "node:crypto";
 import { chmodSync, cpSync, existsSync, mkdirSync, rmSync, statSync, openSync, closeSync, readFileSync } from "node:fs";
+import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,8 +13,9 @@ interface Options {
   elideRef: string;
   suites: string[];
   allSuites: boolean;
-  threads: string;
-  suiteWorkers: number;
+  threads?: number;
+  suiteWorkers?: number;
+  concurrencyMultiplier: number;
   platform: string;
   log: boolean;
   verbose: boolean;
@@ -56,6 +58,36 @@ function usageError(message: string): never {
   process.exit(2);
 }
 
+function parsePositiveInt(value: string | undefined, name: string): number | undefined {
+  if (value === undefined || value === "") return undefined;
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed) || parsed < 1) usageError(`${name} must be a positive integer`);
+  return parsed;
+}
+
+function cpuCount(): number {
+  try {
+    return Math.max(1, availableParallelism());
+  } catch {
+    return 1;
+  }
+}
+
+interface ConcurrencyPlan {
+  cpuCount: number;
+  totalBudget: number;
+  suiteWorkers: number;
+  threads: number;
+}
+
+function planConcurrency(options: Options, suiteCount: number): ConcurrencyPlan {
+  const cpus = cpuCount();
+  const totalBudget = Math.max(1, cpus * options.concurrencyMultiplier);
+  const suiteWorkers = Math.max(1, Math.min(options.suiteWorkers ?? totalBudget, Math.max(1, suiteCount)));
+  const threads = options.threads ?? Math.max(1, Math.ceil(totalBudget / suiteWorkers));
+  return { cpuCount: cpus, totalBudget, suiteWorkers, threads };
+}
+
 function cleanupContainersSync(): void {
   const listed = Bun.spawnSync(["docker", "ps", "-aq", "--filter", `label=${RUN_LABEL}`], {
     stdout: "pipe",
@@ -93,8 +125,9 @@ function parseArgs(argv: string[]): Options {
     elideRef: DEFAULT_ELIDE_REF,
     suites: [],
     allSuites: false,
-    threads: process.env.THREADS || "1",
-    suiteWorkers: Math.max(1, parseInt(process.env.SUITE_WORKERS || "1", 10) || 1),
+    threads: parsePositiveInt(process.env.THREADS, "THREADS"),
+    suiteWorkers: parsePositiveInt(process.env.SUITE_WORKERS, "SUITE_WORKERS"),
+    concurrencyMultiplier: parsePositiveInt(process.env.CONCURRENCY_MULTIPLIER, "CONCURRENCY_MULTIPLIER") ?? 2,
     platform: process.env.PLATFORM || "",
     log: false,
     verbose: false,
@@ -121,10 +154,13 @@ function parseArgs(argv: string[]): Options {
         options.allSuites = true;
         break;
       case "--threads":
-        options.threads = value(arg);
+        options.threads = parsePositiveInt(value(arg), arg);
         break;
       case "--suite-workers":
-        options.suiteWorkers = Math.max(1, parseInt(value(arg), 10) || 1);
+        options.suiteWorkers = parsePositiveInt(value(arg), arg);
+        break;
+      case "--concurrency-multiplier":
+        options.concurrencyMultiplier = parsePositiveInt(value(arg), arg) ?? 2;
         break;
       case "--platform":
         options.platform = value(arg);
@@ -390,7 +426,7 @@ async function main(): Promise<number> {
   await requireDocker();
 
   const image = dockerImageName(options.elideRef);
-  log(`elide ref: ${options.elideRef}   threads: ${options.threads}   suite-workers: ${options.suiteWorkers}   platform: ${options.platform || "<native>"}`);
+  log(`elide ref: ${options.elideRef}   platform: ${options.platform || "<native>"}`);
   const digest = await buildHarnessImage(options, image, plat);
   log(`image built. resolved digest: ${digest}`);
   await preflight(image, plat, user);
@@ -400,6 +436,12 @@ async function main(): Promise<number> {
   const suites = options.allSuites && options.suites.length === 0
     ? workloads.map((workload) => workload.id)
     : options.suites.length ? options.suites : ["test262"];
+  const concurrency = planConcurrency(options, suites.length);
+  log(
+    `concurrency: cpus=${concurrency.cpuCount} multiplier=${options.concurrencyMultiplier} budget=${concurrency.totalBudget} ` +
+      `suite-workers=${concurrency.suiteWorkers}${options.suiteWorkers ? "" : " (default)"} ` +
+      `threads=${concurrency.threads}${options.threads ? "" : " (default)"}`,
+  );
 
   mkdirSync(resolve(ROOT, "reports"), { recursive: true });
   mkdirSync(resolve(ROOT, "expectations"), { recursive: true });
@@ -455,7 +497,7 @@ async function main(): Promise<number> {
       "--expectations",
       "/work/expectations",
       "--threads",
-      options.threads,
+      String(concurrency.threads),
       "--suite-version",
       version,
       "--log-prefix",
@@ -485,7 +527,7 @@ async function main(): Promise<number> {
     return rc;
   };
 
-  const suiteWorkerCount = Math.max(1, Math.min(options.suiteWorkers, suites.length));
+  const suiteWorkerCount = concurrency.suiteWorkers;
   if (suiteWorkerCount > 1) log(`running ${suites.length} suite(s) with ${suiteWorkerCount} suite workers`);
   const suiteExitCodes = new Array<number>(suites.length).fill(0);
   let nextSuite = 0;
