@@ -4,7 +4,7 @@
 
 import { $ } from "bun";
 import { createHash, randomUUID } from "node:crypto";
-import { chmodSync, cpSync, existsSync, mkdirSync, rmSync, statSync, openSync, closeSync, readFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdirSync, rmSync, statSync, openSync, closeSync, readFileSync, writeFileSync, unlinkSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,6 +22,7 @@ interface Options {
   include?: string;
   ratchet: boolean;
   updateSummaries: boolean;
+  repairOwnership: boolean;
   failureOutput: "show" | "hide";
 }
 
@@ -133,6 +134,7 @@ function parseArgs(argv: string[]): Options {
     verbose: false,
     ratchet: false,
     updateSummaries: false,
+    repairOwnership: process.env.REPAIR_OWNERSHIP === "1",
     failureOutput: "show",
   };
 
@@ -191,6 +193,9 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--update-summaries":
         options.updateSummaries = true;
+        break;
+      case "--repair-ownership":
+        options.repairOwnership = true;
         break;
       default:
         usageError(`unknown arg: ${arg}`);
@@ -415,6 +420,30 @@ async function fixHostOwnership(image: string, plat: string[], uid: string, gid:
   ], label);
 }
 
+function assertWritableMountSources(): void {
+  for (const dir of ["reports", "expectations", ".harness"]) {
+    const target = resolve(ROOT, dir, `.write-test-${process.pid}`);
+    try {
+      writeFileSync(target, "");
+      unlinkSync(target);
+    } catch (err) {
+      usageError(
+        `${dir}/ is not writable by the current user (${err instanceof Error ? err.message : String(err)}). ` +
+          "Run once with --repair-ownership to fix stale root-owned files.",
+      );
+    }
+  }
+
+  try {
+    closeSync(openSync(resolve(ROOT, "README.md"), "a"));
+  } catch (err) {
+    usageError(
+      `README.md is not writable by the current user (${err instanceof Error ? err.message : String(err)}). ` +
+        "Run once with --repair-ownership to fix stale ownership.",
+    );
+  }
+}
+
 async function main(): Promise<number> {
   process.chdir(ROOT);
   const options = parseArgs(Bun.argv.slice(2));
@@ -446,9 +475,13 @@ async function main(): Promise<number> {
   mkdirSync(resolve(ROOT, "reports"), { recursive: true });
   mkdirSync(resolve(ROOT, "expectations"), { recursive: true });
   mkdirSync(resolve(ROOT, ".harness"), { recursive: true });
-  closeSync(openSync(resolve(ROOT, "README.md"), "a"));
+  if (!existsSync(resolve(ROOT, "README.md"))) closeSync(openSync(resolve(ROOT, "README.md"), "a"));
 
-  await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership before suite runs");
+  if (options.repairOwnership) {
+    await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership before suite runs");
+  } else {
+    assertWritableMountSources();
+  }
 
   const expMode = options.ratchet ? "rw" : "ro";
   const readmeMode = options.updateSummaries ? "rw" : "ro";
@@ -546,8 +579,6 @@ async function main(): Promise<number> {
     if (rc === 2 || rc > 2) overall = 2;
     else if (rc === 1 && overall === 0) overall = 1;
   }
-
-  await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership after suite runs");
 
   if (overall === 0) log("DONE: all selected suites GREEN.");
   if (overall === 1) log("DONE: selected suites completed with regressions. exit 1.");
