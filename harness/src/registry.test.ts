@@ -13,6 +13,16 @@ test("loads test262 workload from registry.toml", () => {
   });
 });
 
+test("preserves binding-required workload order from registry.toml", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  expect(ws.map((w) => w.id)).toEqual([
+    "wpt-wintertc",
+    "cpython-core",
+    "javac-jtreg",
+    "test262",
+  ]);
+});
+
 test("loads wpt-wintertc workload from registry.toml", () => {
   const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
   const wpt = ws.find((w) => w.id === "wpt-wintertc");

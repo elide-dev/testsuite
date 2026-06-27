@@ -257,3 +257,29 @@ Results:
 - Cheap cross-check (`test262` adapter + CLI + registry): `12 pass`, `0 fail`
 - Full harness suite: `73 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
+
+## Task 4 sixth fix
+
+- Reordered `registry.toml` to satisfy the binding-required suite order consumed by `loadRegistry()`: `wpt-wintertc`, `cpython-core`, `javac-jtreg`, then `test262`.
+- Added an explicit registry order assertion in `harness/src/registry.test.ts` so future edits cannot silently break that requirement while keeping the existing per-workload coverage intact.
+- Identified the extra-cert warning source as an exported empty `NODE_EXTRA_CA_CERTS` environment variable and re-ran verification with that variable unset, without changing production code.
+
+### Clean-env verification after sixth fix
+
+Command form used to suppress the warning cleanly:
+
+```bash
+cd harness
+env -u NODE_EXTRA_CA_CERTS bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+env -u NODE_EXTRA_CA_CERTS bun run typecheck
+env -u NODE_EXTRA_CA_CERTS bun test src/adapters/test262.test.ts src/cli.test.ts src/registry.test.ts
+env -u NODE_EXTRA_CA_CERTS bun test
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `28 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Cheap cross-check (`test262` adapter + CLI + registry): `13 pass`, `0 fail`
+- Full harness suite: `74 pass`, `0 fail`
+- Output was warning-free with `NODE_EXTRA_CA_CERTS` unset.

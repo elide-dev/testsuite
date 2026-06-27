@@ -1,15 +1,5 @@
 # Registry of workloads run by the harness. kind = "test" | "benchmark".
 [[workload]]
-id = "test262"
-kind = "test"
-adapter = "test262"
-path = "suites/test262"
-
-  [workload.settings]
-  # Globs (relative to path) to execute. Skip globs live in expectations/.
-  include = ["test/language/**/*.js", "test/built-ins/**/*.js"]
-
-[[workload]]
 id = "wpt-wintertc"
 kind = "test"
 adapter = "wpt-wintertc"
@@ -44,3 +34,13 @@ path = "suites/openjdk"
   # If omitted, the adapter derives java.home from javaRunner and only falls back to JAVA_HOME for compatibility.
   # jdkHome = "/path/to/jdk"
   javaRunner = "java"
+
+[[workload]]
+id = "test262"
+kind = "test"
+adapter = "test262"
+path = "suites/test262"
+
+  [workload.settings]
+  # Globs (relative to path) to execute. Skip globs live in expectations/.
+  include = ["test/language/**/*.js", "test/built-ins/**/*.js"]
