@@ -225,4 +225,6 @@ Results:
 
 - Focused javac/manifest/registry tests: `24 pass`, `0 fail`
 - Typecheck: exit code `0`
+- Test262 adapter/CLI/registry tests: `12 pass`, `0 fail`
+- Controller full harness suite: `70 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
