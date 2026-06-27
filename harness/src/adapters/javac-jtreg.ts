@@ -422,7 +422,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
       for (const parsed of parseJtregSummary(line)) {
         if (emitted.has(parsed.id)) continue;
         emitted.add(parsed.id);
-        const live = {
+        const live: TestResult = {
           ...parsed,
           meta: {
             ...parsed.meta,
@@ -471,7 +471,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   }
 
   for (const parsed of parsedSummary) {
-    const finalResult = emitted.has(parsed.id)
+    const finalResult: TestResult = emitted.has(parsed.id)
       ? {
           ...parsed,
           meta: {

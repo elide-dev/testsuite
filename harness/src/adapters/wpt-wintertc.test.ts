@@ -36,6 +36,15 @@ test("ignores blank WPT lines", () => {
   expect(parseWptLine("")).toBeNull();
 });
 
+test("ignores non-JSON WPT output lines", () => {
+  expect(parseWptLines("╭─ Script Error ─╮\n{\"path\":\"url/a.any.js\",\"subtest\":\"file\",\"status\":\"PASS\"}\n")).toEqual([
+    expect.objectContaining({
+      id: "url/a.any.js :: file",
+      status: "pass",
+    }),
+  ]);
+});
+
 test("filters manifest paths by include globs", () => {
   expect(
     filterIncludedPaths(

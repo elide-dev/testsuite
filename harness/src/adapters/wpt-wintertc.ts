@@ -55,7 +55,12 @@ export function filterIncludedPaths(paths: string[], includeGlobs: string[]): st
 export function parseWptLine(line: string): TestResult | null {
   const s = line.trim();
   if (!s) return null;
-  const r = JSON.parse(s) as WptBridgeRecord;
+  let r: WptBridgeRecord;
+  try {
+    r = JSON.parse(s) as WptBridgeRecord;
+  } catch {
+    return null;
+  }
   const subtest = r.subtest ?? "<file>";
   return {
     kind: "test",

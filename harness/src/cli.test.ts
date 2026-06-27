@@ -9,7 +9,7 @@ import { loadRegistry } from "./registry";
 import { expandManifestIncludePaths } from "./adapters/javac-jtreg";
 import type { Adapter } from "./adapters/types";
 import type { Result, TestResult } from "./results/schema";
-import { writeResults } from "./results/store";
+import { readResults, writeResults } from "./results/store";
 import { openDb } from "./db/open";
 
 test("parses run subcommand and options", () => {
@@ -263,6 +263,39 @@ test("prints pass percentage in the run summary", async () => {
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0%)"));
   } finally {
     logSpy.mockRestore();
+    delete ADAPTERS[adapterId];
+  }
+});
+
+test("does not persist or count transient progress results", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-transient-results-"));
+  const adapterId = "fixture-transient-results";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "test", id: "case default", status: "skip", message: "running", meta: { transient: true } };
+      yield { kind: "test", id: "case default", status: "pass" };
+    },
+  };
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["alpha"]);
+
+    expect(await runFixtureWorkload(root, "alpha", adapterId)).toBe(0);
+
+    const reportDir = join(root, "reports", "1.2.3", "abcdef123456", "alpha");
+    const summary = JSON.parse(readFileSync(join(reportDir, "summary.json"), "utf8"));
+    const stored = await readResults(reportDir);
+    expect(summary.counts).toMatchObject({ pass: 1, skip: 0, total: 1 });
+    expect(stored.results).toEqual([
+      expect.objectContaining({
+        id: "case default",
+        status: "pass",
+      }),
+    ]);
+  } finally {
     delete ADAPTERS[adapterId];
   }
 });

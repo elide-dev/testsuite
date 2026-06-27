@@ -34,6 +34,7 @@ export function parseCpythonLine(line: string): TestResult | null {
       category: r.module,
       runner: "regrtest",
       subtest: r.case || r.module,
+      ...(r.status === "running" ? { transient: true } : {}),
     },
   };
 }
