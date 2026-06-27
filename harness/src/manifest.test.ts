@@ -46,3 +46,11 @@ test("rejects absolute manifest paths", () => {
   writeFileSync(file, `[[group]]\nid = "bad"\ninclude = ["/abs/test.js"]\n`);
   expect(() => loadManifest(file)).toThrow("manifest include must be relative: /abs/test.js");
 });
+
+test("javac langtools smoke manifest includes an execution-oriented launcher slice", () => {
+  const manifest = loadManifest(`${import.meta.dir}/../../manifests/javac-langtools.toml`);
+  const include = manifest.groups.flatMap((group) => group.include);
+
+  expect(include).toContain("tools/javac/diags");
+  expect(include).toContain("tools/javac/launcher/BasicSourceLauncherTests.java");
+});

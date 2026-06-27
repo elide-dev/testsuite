@@ -41,17 +41,17 @@ function compileIncludeFilters(globs: string[]): Array<(path: string) => boolean
   return globs.map((glob) => picomatch(glob));
 }
 
+function matchesIncludedDescendant(path: string, includeGlobs: string[]): boolean {
+  return includeGlobs.some((glob) => glob === path || glob.startsWith(`${path}/`));
+}
+
 export function filterIncludedPaths(paths: string[], includeGlobs: string[]): string[] {
   if (!includeGlobs.length) return paths;
   const matchers = compileIncludeFilters(includeGlobs);
-  return paths.filter((path) => matchers.some((match) => match(path)));
+  return paths.filter((path) => matchers.some((match) => match(path)) || matchesIncludedDescendant(path, includeGlobs));
 }
 
-export function resolveJdkHome(settings: Record<string, unknown>, env: NodeJS.ProcessEnv = process.env): string {
-  const jdkHome = String(settings.jdkHome ?? env.JAVA_HOME ?? "").trim();
-  if (!jdkHome) {
-    throw new Error("javac-jtreg requires settings.jdkHome or JAVA_HOME to point to a real JDK home");
-  }
+function validateJdkHome(jdkHome: string): string {
   const resolved = resolve(jdkHome);
   if (!existsSync(resolved) || !statSync(resolved).isDirectory()) {
     throw new Error(`javac-jtreg JDK home does not exist or is not a directory: ${resolved}`);
@@ -61,6 +61,47 @@ export function resolveJdkHome(settings: Record<string, unknown>, env: NodeJS.Pr
     throw new Error(`javac-jtreg JDK home is missing bin/: ${resolved}`);
   }
   return resolved;
+}
+
+function parseJavaHome(output: string): string | undefined {
+  const match = output.match(/^\s*java\.home = (.+)$/m);
+  return match?.[1]?.trim();
+}
+
+export async function resolveJdkHome(
+  settings: Record<string, unknown>,
+  env: NodeJS.ProcessEnv = process.env,
+  cwd = process.cwd(),
+): Promise<string> {
+  const explicitJdkHome = String(settings.jdkHome ?? "").trim();
+  const envJdkHome = String(env.JAVA_HOME ?? "").trim();
+  if (explicitJdkHome) {
+    return validateJdkHome(explicitJdkHome);
+  }
+
+  const javaRunner = String(settings.javaRunner ?? "java").trim();
+  if (javaRunner) {
+    try {
+      const result = await runProcess([javaRunner, "-XshowSettings:properties", "-version"], {
+        cwd,
+        env,
+        timeoutMs: Number(settings.timeoutMs ?? 300_000),
+        maxOutputBytes: 200_000,
+      });
+      const derived = parseJavaHome(`${result.stdout}\n${result.stderr}`);
+      if (derived) {
+        return validateJdkHome(derived);
+      }
+    } catch {
+      // Compatibility fallback below handles missing or non-executable javaRunner values.
+    }
+  }
+
+  if (envJdkHome) {
+    return validateJdkHome(envJdkHome);
+  }
+
+  throw new Error("javac-jtreg could not determine a real JDK home from settings.jdkHome, javaRunner, or JAVA_HOME");
 }
 
 function symlinkChildren(sourceDir: string, targetDir: string, skip = new Set<string>()): void {
@@ -90,7 +131,7 @@ export function buildWrapperJdk(wrapperJdk: string, realJdkHome: string, repoRoo
   chmodSync(join(wrapperBin, "java"), 0o755);
 }
 
-export function createJtregRunLayout(ctx: AdapterContext): JtregRunLayout {
+export async function createJtregRunLayout(ctx: AdapterContext): Promise<JtregRunLayout> {
   mkdirSync(ctx.workspacePath, { recursive: true });
   const runRoot = mkdtempSync(join(ctx.workspacePath, "jtreg-run-"));
   const workDir = join(runRoot, "JTwork");
@@ -98,7 +139,7 @@ export function createJtregRunLayout(ctx: AdapterContext): JtregRunLayout {
   const wrapperJdk = join(runRoot, "wrapper-jdk");
   mkdirSync(workDir, { recursive: true });
   mkdirSync(reportDir, { recursive: true });
-  buildWrapperJdk(wrapperJdk, resolveJdkHome(ctx.settings), ctx.repoRoot);
+  buildWrapperJdk(wrapperJdk, await resolveJdkHome(ctx.settings, process.env, ctx.repoRoot), ctx.repoRoot);
 
   return { runRoot, workDir, reportDir, wrapperJdk };
 }
@@ -131,7 +172,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const manifest = loadManifest(resolve(manifestPath));
   const tests = manifest.groups.flatMap((group) => filterIncludedPaths(group.include, ctx.include));
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
-  const { workDir, reportDir, wrapperJdk } = createJtregRunLayout(ctx);
+  const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
 
   const result = await runProcess(

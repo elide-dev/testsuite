@@ -40,6 +40,7 @@ path = "suites/openjdk"
   manifest = "manifests/javac-langtools.toml"
   timeoutMs = 300000
   jtregPath = "jtreg"
-  # Optional explicit real JDK home for the jtreg wrapper layout; defaults to JAVA_HOME.
+  # Optional explicit real JDK home for the jtreg wrapper layout.
+  # If omitted, the adapter derives java.home from javaRunner and only falls back to JAVA_HOME for compatibility.
   # jdkHome = "/path/to/jdk"
   javaRunner = "java"

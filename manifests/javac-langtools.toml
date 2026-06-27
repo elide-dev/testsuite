@@ -4,3 +4,9 @@
 id = "javac-diags"
 include = ["tools/javac/diags"]
 tags = ["javac", "diagnostics"]
+
+[[group]]
+id = "javac-launcher-smoke"
+include = ["tools/javac/launcher/BasicSourceLauncherTests.java"]
+tags = ["javac", "execution", "launcher"]
+reason = "Smoke slice that exercises javac source-launcher execution"

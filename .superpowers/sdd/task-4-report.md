@@ -175,3 +175,29 @@ Results:
 - Test262 adapter/CLI/registry tests: `12 pass`, `0 fail`
 - Full harness suite: `59 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
+
+## Task 4 third fix
+
+- Expanded `manifests/javac-langtools.toml` beyond the diagnostics directory by adding a small execution-oriented OpenJDK slice: `tools/javac/launcher/BasicSourceLauncherTests.java`.
+- Updated `harness/src/adapters/javac-jtreg.ts` so `settings.jdkHome` still wins, but absent that the adapter now derives `java.home` by running the configured `javaRunner` with `-XshowSettings:properties -version` and parsing the reported property before falling back to `JAVA_HOME`.
+- Made include filtering directory-aware so a manifest directory entry such as `tools/javac/diags` is retained when `--include` targets descendant files like `tools/javac/diags/Example*.java`.
+- Clarified the default registry behavior in `registry.toml`: `javaRunner` is the primary discovery path for the real JDK home and `JAVA_HOME` is compatibility fallback only.
+- Extended tests to cover the manifest smoke slice, directory-entry include forwarding, explicit-vs-derived JDK home resolution, and fallback/error cases around `javaRunner` discovery.
+
+### Verification after third fix
+
+Commands:
+
+```bash
+cd harness
+bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+bun run typecheck
+bun test src/adapters/test262.test.ts src/cli.test.ts src/registry.test.ts
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `18 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Cheap cross-check (`test262` adapter + CLI + registry): `12 pass`, `0 fail`
+- Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
