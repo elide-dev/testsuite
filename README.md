@@ -11,9 +11,6 @@ Next suites are added in this order:
 2. `cpython-core` - CPython 3.12 pure-core language and standard-library tests.
 3. `javac-jtreg` - broad OpenJDK langtools javac coverage through jtreg, compiling with Elide and initially running generated programs with a regular JDK. Annotation processing and modules are intentionally excluded from the default manifest for now.
 
-Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev/WHIPLASH/issues/1172),
-[Test262 (WHIPLASH#1173)](https://github.com/elide-dev/WHIPLASH/issues/1173).
-
 ## Latest compatibility
 
 <!-- compat-summary:start -->
@@ -42,9 +39,6 @@ executes inside a combined Docker image (a pinned Elide + Node + Bun), so every
 `elide run` is a fast local subprocess. Results are compared against a
 checked-in **expectations baseline** — a run is green iff there are no
 regressions.
-
-> **Note:** Elide's binary requires **glibc ≥ 2.39**, so the harness image is
-> built `FROM node:25-trixie`. See WHIPLASH#1186.
 
 ## Prerequisites
 
@@ -151,7 +145,7 @@ ratcheting, and README summary content, then push.
 [skip]   # excluded from the run, with a reason
 "test/intl402/**" = "Intl 402 not supported yet"
 [fail]   # expected failures (link an issue)
-"test/built-ins/RegExp/property-escapes/**" = "partial (WHIPLASH#…)"
+"test/built-ins/RegExp/property-escapes/**" = "partial (…)"
 ```
 
 A run is **green iff actual matches expected**: new failures are **regressions**
