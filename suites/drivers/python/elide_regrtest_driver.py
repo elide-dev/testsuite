@@ -11,6 +11,10 @@ def emit(record):
     print(json.dumps(record, sort_keys=True), flush=True)
 
 
+def emit_progress(message):
+    print("progress: " + message, file=sys.stderr, flush=True)
+
+
 def normalize_unittest_id(value):
     value = str(value)
     return value[5:] if value.startswith("test.") else value
@@ -93,6 +97,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cpython-root", required=True)
     parser.add_argument("--skip", action="append", default=[])
+    parser.add_argument("--progress-stderr", action="store_true")
     parser.add_argument("modules", nargs="+")
     args = parser.parse_args()
     sys.path.insert(0, args.cpython_root + "/Lib")
@@ -101,6 +106,8 @@ def main():
     for module_name in args.modules:
         started = time.monotonic()
         try:
+            if args.progress_stderr:
+                emit_progress("start " + module_name)
             module = importlib.import_module("test." + module_name)
             suite = unittest.defaultTestLoader.loadTestsFromModule(module)
             suite, _ = filter_suite(suite, args.skip)

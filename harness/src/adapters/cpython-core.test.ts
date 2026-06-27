@@ -1,4 +1,4 @@
-import { test, expect } from "bun:test";
+import { test, expect, spyOn } from "bun:test";
 import { chmodSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -154,6 +154,50 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   const args = readFileSync(argsLog, "utf8");
   expect(args).toContain("test_re\n");
   expect(args).not.toContain("test_json\n");
+});
+
+test("passes CPython progress flag and forwards progress stderr under --log", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const argsLog = join(root, "elide.args");
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
+printf 'progress: start test_re\\n' >&2
+sleep 0.08
+printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    log: true,
+    settings: { manifest, timeoutMs: 5_000, progressIntervalMs: 20 },
+    workspacePath: join(root, "workspace"),
+  };
+  const stderr = spyOn(process.stderr, "write").mockImplementation(() => true);
+  let writes = "";
+  try {
+    await collect(runCpythonCore(ctx));
+    writes = stderr.mock.calls.map((call) => String(call[0])).join("");
+  } finally {
+    stderr.mockRestore();
+  }
+
+  const argv = readFileSync(argsLog, "utf8").trim().split("\n");
+  expect(argv).toContain("--progress-stderr");
+  expect(writes).toContain("progress: start test_re");
+  expect(writes).toContain("progress: still running CPython shard");
 });
 
 test("streams CPython results before the driver exits", async () => {

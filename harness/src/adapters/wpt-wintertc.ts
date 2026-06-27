@@ -27,6 +27,21 @@ interface WptTask {
   rel: string;
 }
 
+function progressEnabled(ctx: AdapterContext): boolean {
+  return Boolean(ctx.log || ctx.verbose);
+}
+
+function startProgress(ctx: AdapterContext, label: string): () => void {
+  if (!progressEnabled(ctx)) return () => {};
+  const started = performance.now();
+  process.stderr.write(`progress: start ${label}\n`);
+  const interval = setInterval(() => {
+    const seconds = Math.round((performance.now() - started) / 1000);
+    process.stderr.write(`progress: still running ${label} (${seconds}s)\n`);
+  }, Number(ctx.settings.progressIntervalMs ?? 10_000));
+  return () => clearInterval(interval);
+}
+
 function compileIncludeFilters(globs: string[]): Array<(path: string) => boolean> {
   return globs.map((glob) => picomatch(glob));
 }
@@ -68,10 +83,16 @@ async function runWptTask(
   skip: Array<(path: string) => boolean>,
   task: WptTask,
 ): Promise<TestResult[]> {
-  const result = await runProcess(
-    ["node", runner, "--suite", ctx.suitePath, "--test", task.rel, "--category", task.category, "--elide", ctx.elidePath],
-    { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },
-  );
+  const stopProgress = startProgress(ctx, task.rel);
+  let result;
+  try {
+    result = await runProcess(
+      ["node", runner, "--suite", ctx.suitePath, "--test", task.rel, "--category", task.category, "--elide", ctx.elidePath],
+      { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },
+    );
+  } finally {
+    stopProgress();
+  }
   if (result.timedOut || result.exitCode !== 0) {
     return [{
       kind: "test",

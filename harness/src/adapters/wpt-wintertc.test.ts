@@ -1,4 +1,4 @@
-import { test, expect } from "bun:test";
+import { test, expect, spyOn } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -98,4 +98,49 @@ console.log(JSON.stringify({ path: test, subtest: "file", status: "PASS", catego
     "url/b.any.js :: file",
   ]);
   expect(readFileSync(runnerLog, "utf8").trim().split(/\n/).sort()).toEqual(["url/a.any.js", "url/b.any.js"]);
+});
+
+test("emits WPT progress lines while files are running under --log", async () => {
+  const root = mkdtempSync(join(tmpdir(), "wpt-wintertc-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "wpt");
+  const runnerDir = join(root, "suites/drivers/wpt");
+  mkdirSync(suitePath, { recursive: true });
+  mkdirSync(runnerDir, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "url"\ninclude = ["url/a.any.js"]\n');
+  writeFileSync(
+    join(runnerDir, "wintertc-runner.js"),
+    `function arg(name) {
+  const index = process.argv.indexOf(name);
+  return index >= 0 ? process.argv[index + 1] : "";
+}
+const test = arg("--test");
+setTimeout(() => {
+  console.log(JSON.stringify({ path: test, subtest: "file", status: "PASS", category: "url" }));
+}, 80);
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath: "/fake/elide",
+    repoRoot: root,
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    log: true,
+    settings: { manifest, timeoutMs: 5_000, progressIntervalMs: 20 },
+    workspacePath: join(root, "workspace"),
+  };
+  const stderr = spyOn(process.stderr, "write").mockImplementation(() => true);
+  let writes = "";
+  try {
+    await collect(runWptWintertc(ctx));
+    writes = stderr.mock.calls.map((call) => String(call[0])).join("");
+  } finally {
+    stderr.mockRestore();
+  }
+
+  expect(writes).toContain("progress: start url/a.any.js");
+  expect(writes).toContain("progress: still running url/a.any.js");
 });

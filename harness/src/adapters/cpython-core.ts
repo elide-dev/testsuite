@@ -54,6 +54,21 @@ export function filterIncludedModules(modules: string[], includeGlobs: string[])
   return modules.filter((module) => matchers.some((match) => match(module)));
 }
 
+function progressEnabled(ctx: AdapterContext): boolean {
+  return Boolean(ctx.log || ctx.verbose);
+}
+
+function startProgress(ctx: AdapterContext, label: string): () => void {
+  if (!progressEnabled(ctx)) return () => {};
+  const started = performance.now();
+  process.stderr.write(`progress: start ${label}\n`);
+  const interval = setInterval(() => {
+    const seconds = Math.round((performance.now() - started) / 1000);
+    process.stderr.write(`progress: still running ${label} (${seconds}s)\n`);
+  }, Number(ctx.settings.progressIntervalMs ?? 10_000));
+  return () => clearInterval(interval);
+}
+
 function runnerErrorResult(message: string, durationMs = 0): TestResult {
   return {
     kind: "test",
@@ -71,14 +86,38 @@ function runnerErrorResult(message: string, durationMs = 0): TestResult {
   };
 }
 
-async function readCappedText(stream: ReadableStream<Uint8Array>, cap: number): Promise<string> {
+async function readCappedText(
+  stream: ReadableStream<Uint8Array>,
+  cap: number,
+  onLine?: (line: string) => void,
+): Promise<string> {
   const decoder = new TextDecoder();
   let output = "";
+  let pending = "";
+  const emitLines = (text: string, flush = false): void => {
+    if (!onLine) return;
+    pending += text;
+    let newline = pending.search(/\r?\n/);
+    while (newline >= 0) {
+      const line = pending.slice(0, newline);
+      pending = pending.slice(pending[newline] === "\r" && pending[newline + 1] === "\n" ? newline + 2 : newline + 1);
+      onLine(line);
+      newline = pending.search(/\r?\n/);
+    }
+    if (flush && pending) {
+      onLine(pending);
+      pending = "";
+    }
+  };
+
   for await (const chunk of stream) {
     const text = decoder.decode(chunk, { stream: true });
+    emitLines(text);
     if (output.length < cap) output += text.slice(0, cap - output.length);
   }
   const rest = decoder.decode();
+  if (rest) emitLines(rest);
+  emitLines("", true);
   if (output.length < cap) output += rest.slice(0, cap - output.length);
   return output;
 }
@@ -92,13 +131,29 @@ async function* runCpythonShard(
   timeoutMs: number,
 ): AsyncIterable<TestResult> {
   const started = performance.now();
-  const proc = Bun.spawn([ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...driverSkipArgs, ...modules], {
+  const progress = progressEnabled(ctx);
+  const proc = Bun.spawn([
+    ctx.elidePath,
+    "run",
+    driver,
+    "--",
+    "--cpython-root",
+    ctx.suitePath,
+    ...(progress ? ["--progress-stderr"] : []),
+    ...driverSkipArgs,
+    ...modules,
+  ], {
     cwd: ctx.repoRoot,
     env: process.env,
     stdout: "pipe",
     stderr: "pipe",
   });
-  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000);
+  const stopProgress = startProgress(ctx, `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`);
+  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
+    ? (line) => {
+        if (line.startsWith("progress: ") || ctx.verbose) process.stderr.write(`${line}\n`);
+      }
+    : undefined);
 
   let timedOut = false;
   const timer = setTimeout(() => {
@@ -138,6 +193,7 @@ async function* runCpythonShard(
 
   const [exitCode, stderrText] = await Promise.all([proc.exited, stderr]);
   clearTimeout(timer);
+  stopProgress();
   const durationMs = Math.round(performance.now() - started);
   if (timedOut) {
     yield runnerErrorResult("CPython driver timed out", durationMs);
