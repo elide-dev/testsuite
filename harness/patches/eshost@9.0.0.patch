@@ -1,0 +1,99 @@
+diff --git a/node_modules/eshost/.bun-tag-326e1ab90ca35730 b/.bun-tag-326e1ab90ca35730
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/eshost/lib/agents/elide.js b/lib/agents/elide.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..8c9a0b26f26ae31c133c2467a686d1a8fbda6a0c
+--- /dev/null
++++ b/lib/agents/elide.js
+@@ -0,0 +1,46 @@
++"use strict";
++const fs = require("fs");
++const runtimePath = require("../runtime-path");
++const ConsoleAgent = require("../ConsoleAgent");
++
++// Box-drawing chars Elide uses to frame errors on stdout.
++const BOX = /[─-╿]/;
++// "SyntaxError: ...", "ReferenceError: ...", "Error: ..." after de-boxing.
++const ERR = /^([A-Za-z][A-Za-z0-9]*Error)(?::\s*([\s\S]*?))?$/m;
++
++class ElideAgent extends ConsoleAgent {
++  constructor(options) {
++    super(options);
++    // hostPath is the elide binary; produce `elide run --quiet <file>`.
++    this.args.unshift("run", "--quiet");
++  }
++
++  // Elide prints errors as a box on stdout; eshost expects errors on stderr.
++  normalizeResult(result) {
++    if (!BOX.test(result.stdout)) return result;
++    const kept = [];
++    const deboxed = [];
++    for (const line of result.stdout.split(/\r?\n/)) {
++      if (BOX.test(line)) {
++        const s = line.replace(/[─-╿]/g, " ").trim();
++        if (s) deboxed.push(s);
++      } else {
++        kept.push(line);
++      }
++    }
++    const joined = deboxed.join("\n");
++    const m = joined.match(ERR);
++    result.stderr = m ? (m[2] ? `${m[1]}: ${m[2]}` : m[1]) : joined;
++    result.stdout = kept.join("\n");
++    return result;
++  }
++
++  parseError(str) {
++    const m = str.match(ERR);
++    if (!m) return null;
++    return { name: m[1], message: (m[2] || "").trim(), stack: [] };
++  }
++}
++
++ElideAgent.runtime = fs.readFileSync(runtimePath.for("elide"), "utf8");
++module.exports = ElideAgent;
+diff --git a/node_modules/eshost/runtimes/elide.js b/runtimes/elide.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..859ff877556cb6f2b7b8d94ec11ef21e8cb30b58
+--- /dev/null
++++ b/runtimes/elide.js
+@@ -0,0 +1,38 @@
++// eshost runtime for the Elide host. Prepended to every compiled test.
++// Provides print() (Elide lacks it) and a minimal $262.
++if (typeof globalThis.print !== "function") {
++  globalThis.print = function () {
++    console.log(Array.prototype.join.call(arguments, " "));
++  };
++}
++var $262 = {
++  global: globalThis,
++  destroy: function () {},
++  evalScript: function (code) {
++    try {
++      (0, eval)(code);
++      return { type: "normal", value: undefined };
++    } catch (e) {
++      return { type: "throw", value: e };
++    }
++  },
++  getGlobal: function (name) {
++    return this.global[name];
++  },
++  setGlobal: function (name, value) {
++    this.global[name] = value;
++  },
++  IsHTMLDDA: function () {
++    return {};
++  },
++  source: $SOURCE,
++  createRealm: function () {
++    throw new Error("$262.createRealm not supported by the Elide host");
++  },
++  detachArrayBuffer: function () {
++    throw new Error("$262.detachArrayBuffer not supported by the Elide host");
++  },
++  gc: function () {
++    throw new Error("$262.gc not supported by the Elide host");
++  },
++};

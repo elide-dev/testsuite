@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="198" viewBox="0 0 760 198" role="img" aria-labelledby="title desc">
+  <title id="title">Elide compatibility pass rates</title>
+  <desc id="desc">Latest pass rate by compliance suite.</desc>
+  <rect width="760" height="198" fill="#ffffff"/>
+  <text x="32" y="32" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">Latest compatibility</text>
+  <text x="32" y="69" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">cpython-core</text>
+  <rect x="210" y="54" width="430" height="18" rx="3" fill="#eaeef2"/>
+  <rect x="210" y="54" width="193.65" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="68" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">45.0%</text>
+  <text x="32" y="103" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">javac-jtreg</text>
+  <rect x="210" y="88" width="430" height="18" rx="3" fill="#eaeef2"/>
+  <rect x="210" y="88" width="424.88" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="102" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">98.8%</text>
+  <text x="32" y="137" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">test262</text>
+  <rect x="210" y="122" width="430" height="18" rx="3" fill="#eaeef2"/>
+  <rect x="210" y="122" width="394.63" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">91.8%</text>
+  <text x="32" y="171" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">wpt-wintertc</text>
+  <rect x="210" y="156" width="430" height="18" rx="3" fill="#eaeef2"/>
+  <rect x="210" y="156" width="356.09" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="170" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">82.8%</text>
+</svg>

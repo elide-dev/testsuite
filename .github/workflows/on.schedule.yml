@@ -1,0 +1,49 @@
+name: "Scheduled - Compliance"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "Runner"
+        required: false
+        default: '["self-hosted","linux"]'
+        type: string
+      elide_ref:
+        description: "Elide Ref"
+        required: false
+        default: "nightly"
+        type: string
+      update_branch:
+        description: "Update Branch"
+        required: false
+        default: "sync/compliance"
+        type: string
+  schedule:
+    - cron: "0 8 * * *"
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "scheduled-compliance"
+  cancel-in-progress: false
+
+jobs:
+  compliance:
+    name: "Compliance"
+    uses: ./.github/workflows/check.compliance.yml
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      runner: ${{ inputs.runner || '["self-hosted","linux"]' }}
+      elide_ref: ${{ inputs.elide_ref || 'nightly' }}
+      suite_test262: true
+      suite_wpt_wintertc: true
+      suite_cpython_core: true
+      suite_javac_jtreg: true
+      update_branch: ${{ inputs.update_branch || 'sync/compliance' }}
+      options: '{"log":true,"failure_output":"hide","update_summaries":true,"ratchet":false,"apply_updates":true,"create_pr":true}'

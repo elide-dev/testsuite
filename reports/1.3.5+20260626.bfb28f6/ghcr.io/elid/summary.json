@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "test262",
+    "kind": "test",
+    "elide": {
+      "semver": "1.3.5+20260626.bfb28f6",
+      "digest": "ghcr.io/elide-dev/elide:nightly"
+    },
+    "startedAt": "2026-06-26T23:19:22.650Z",
+    "finishedAt": "2026-06-26T23:26:15.468Z",
+    "suiteVersion": "de8e621cdba4f40cff3cf244e6cfb8cb48746b4a"
+  },
+  "counts": {
+    "pass": 84685,
+    "fail": 202,
+    "skip": 780,
+    "error": 6609,
+    "total": 92276
+  },
+  "regressions": [],
+  "newPasses": []
+}

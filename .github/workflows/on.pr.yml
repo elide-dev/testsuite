@@ -1,0 +1,33 @@
+name: "PR"
+
+"on":
+  pull_request:
+    branches:
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "pr-${{ github.event.number }}"
+  cancel-in-progress: true
+
+jobs:
+  compliance:
+    name: "Compliance"
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    uses: ./.github/workflows/check.compliance.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    with:
+      runner: '["self-hosted","linux"]'
+      elide_ref: "nightly"
+      suite_test262: true
+      suite_wpt_wintertc: true
+      suite_cpython_core: true
+      suite_javac_jtreg: true
+      options: '{"log":true,"failure_output":"hide","update_summaries":false,"ratchet":false,"apply_updates":false}'

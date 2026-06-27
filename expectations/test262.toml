@@ -1,0 +1,17 @@
+# Test262 expectations baseline. A run is green iff there are no regressions.
+# [skip] entries are excluded from the comparison (counted as skip); [fail]
+# entries are expected failures. Keys are picomatch globs over the test path
+# relative to the suite root (e.g. "test/built-ins/Atomics/**"), with the
+# scenario suffix (" default" / " strict mode") stripped before matching.
+#
+# Per-test [fail] entries are seeded from the first authoritative full run
+# (the nightly CI job); this file currently carries only structural skips for
+# whole areas Elide does not yet support.
+
+[skip]
+"test/intl402/**" = "Intl 402 not supported yet"
+"test/built-ins/Atomics/**" = "SharedArrayBuffer / agents unsupported (WHIPLASH#1184)"
+"test/staging/**" = "staging area, not stable conformance"
+"test/**/*_FIXTURE.js" = "fixture support files, not standalone tests"
+
+[fail]

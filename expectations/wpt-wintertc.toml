@@ -1,0 +1,6 @@
+# WinterTC / WPT expectations baseline.
+# Keys are picomatch globs over WPT-relative test paths, without the subtest suffix.
+
+[skip]
+
+[fail]

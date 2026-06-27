@@ -1,0 +1,46 @@
+# Registry of workloads run by the harness. kind = "test" | "benchmark".
+[[workload]]
+id = "wpt-wintertc"
+kind = "test"
+adapter = "wpt-wintertc"
+path = "suites/wpt"
+
+  [workload.settings]
+  include = ["**/*"]
+  manifest = "manifests/wintertc-wpt-2025.toml"
+  timeoutMs = 60000
+
+[[workload]]
+id = "cpython-core"
+kind = "test"
+adapter = "cpython-core"
+path = "suites/cpython"
+
+  [workload.settings]
+  manifest = "manifests/cpython-core.toml"
+  timeoutMs = 600000
+
+[[workload]]
+id = "javac-jtreg"
+kind = "test"
+adapter = "javac-jtreg"
+path = "suites/openjdk"
+
+  [workload.settings]
+  manifest = "manifests/javac-langtools.toml"
+  timeoutMs = 300000
+  jtregPath = "jtreg"
+  # Optional explicit real JDK home for the jtreg wrapper layout.
+  # If omitted, the adapter derives java.home from javaRunner and only falls back to JAVA_HOME for compatibility.
+  # jdkHome = "/path/to/jdk"
+  javaRunner = "java"
+
+[[workload]]
+id = "test262"
+kind = "test"
+adapter = "test262"
+path = "suites/test262"
+
+  [workload.settings]
+  # Globs (relative to path) to execute. Skip globs live in expectations/.
+  include = ["test/language/**/*.js", "test/built-ins/**/*.js"]

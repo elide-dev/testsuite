@@ -1,0 +1,4 @@
+Passed: tools/javac/diags/ExamplePass.java
+Failed: tools/javac/generics/ExampleFail.java
+Error: tools/javac/patterns/ExampleError.java
+Not run: tools/javac/modules/ExampleSkip.java

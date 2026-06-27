@@ -1,0 +1,4 @@
+{"module":"test_re","case":"test_re.ReTests.test_basic_re_sub","status":"pass","durationMs":4}
+{"module":"test_json","case":"test_json.TestDecode.test_failures","status":"fail","message":"AssertionError: bad decode","durationMs":7}
+{"module":"test_ast","case":"test_ast.AST_Tests.test_snippets","status":"error","message":"RuntimeError: compiler crashed","durationMs":3}
+{"module":"test_decimal","case":"test_decimal","status":"skip","message":"resource disabled","durationMs":0}

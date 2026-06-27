@@ -1,0 +1,7 @@
+# CPython 3.12 pure-core expectations baseline.
+# Keys are picomatch globs over CPython module names or unittest case ids.
+
+[skip]
+"test_re.ReTests.test_look_behind_overflow" = "Pathological large fixed-width lookbehind test is too slow under Elide Python"
+
+[fail]

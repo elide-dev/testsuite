@@ -1,0 +1,19 @@
+{
+  "name": "elide-testsuite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "bun ./bin/setup.ts",
+    "setup:suites": "bun ./bin/setup.ts --skip-install",
+    "testsuite": "bun ./bin/run.ts",
+    "testsuite:ready": "bun ./bin/run.ts --prepare-suites",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck:harness": "bun --cwd harness typecheck",
+    "test:harness": "bun --cwd harness test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "bun-types": "^1.3.14",
+    "typescript": "^5.9.3"
+  }
+}
