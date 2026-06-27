@@ -26,6 +26,7 @@ regressions.
 - Docker (the runner pulls/builds the Elide image)
 - For local development without Docker: Bun (`harness/` is a Bun project)
 - The Test262 submodule: `git submodule update --init --depth 1`
+- The WPT submodule slice used by `wpt-wintertc`: `./bin/init-wpt`
 
 ## Running
 

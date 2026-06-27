@@ -4,6 +4,29 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
+const TEST_STATUS = {
+  PASS: 0,
+  FAIL: 1,
+  TIMEOUT: 2,
+  NOTRUN: 3,
+  PRECONDITION_FAILED: 4,
+};
+
+function bridgeStatus(status) {
+  switch (status) {
+    case TEST_STATUS.PASS:
+      return "PASS";
+    case TEST_STATUS.FAIL:
+      return "FAIL";
+    case TEST_STATUS.NOTRUN:
+    case TEST_STATUS.PRECONDITION_FAILED:
+      return "SKIP";
+    case TEST_STATUS.TIMEOUT:
+    default:
+      return "ERROR";
+  }
+}
+
 function arg(name, fallback = "") {
   const i = process.argv.indexOf(name);
   return i >= 0 ? process.argv[i + 1] : fallback;
@@ -24,13 +47,15 @@ const out = join(mkdtempSync(join(tmpdir(), "wpt-elide-")), "case.js");
 
 writeFileSync(out, `
 ${harness}
+const TEST_STATUS = ${JSON.stringify(TEST_STATUS)};
+${bridgeStatus.toString()}
 setup({ explicit_done: true });
 add_completion_callback((tests) => {
   for (const t of tests) {
     const rec = {
       path: ${JSON.stringify(test)},
       subtest: t.name,
-      status: t.status === 0 ? "PASS" : "FAIL",
+      status: bridgeStatus(t.status),
       message: t.message || undefined,
       category: ${JSON.stringify(category)}
     };

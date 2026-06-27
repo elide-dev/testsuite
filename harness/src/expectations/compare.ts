@@ -8,8 +8,10 @@ export interface Comparison {
   counts: { pass: number; fail: number; skip: number; error: number; total: number };
 }
 
-// Strip the scenario suffix (" default" / " strict mode") to get the file path.
+// Normalize result ids to the path segment used by expectation globs.
 export function filePathOf(id: string): string {
+  const wptSep = id.indexOf(" :: ");
+  if (wptSep >= 0) return id.slice(0, wptSep);
   return id.replace(/ (default|strict mode)$/, "");
 }
 

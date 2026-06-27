@@ -73,3 +73,64 @@ Verification phase:
 ## Concerns
 
 - The initial `git submodule add --depth 1 https://github.com/web-platform-tests/wpt suites/wpt` invocation stalled after printing `Cloning into '/Users/sam/workspace/labs/testsuite/suites/wpt'...`. The repository contents were present but the submodule registration had not completed, so I re-ran `git submodule add ...` to register the existing repo, then re-materialized the new submodule cleanly with `git submodule update --init --depth 1 suites/wpt` before reapplying sparse-checkout. Final submodule state is clean.
+
+## Review fix follow-up
+
+Fixed the WPT expectation matching gap by teaching `filePathOf()` to strip the ` :: subtest` suffix used by WPT result ids before glob comparison, while preserving the existing Test262 scenario stripping. Added a focused regression test in `harness/src/expectations/compare.test.ts` that proves a WPT id like `url/urlsearchparams.any.js :: URLSearchParams constructor` matches a `url/**` expectation glob.
+
+Fixed `suites/drivers/wpt/wintertc-runner.js` to preserve testharness semantics instead of collapsing every nonzero subtest status into `FAIL`. The bridge now maps `PASS -> PASS`, `FAIL -> FAIL`, `TIMEOUT` and unknown harness problems -> `ERROR`, and `NOTRUN` / `PRECONDITION_FAILED` -> `SKIP`.
+
+Added `bin/init-wpt` as the minimal reproducible sparse-checkout artifact for the WPT submodule. It runs submodule init/update for `suites/wpt` and reapplies sparse-checkout for `resources`, `url`, and `encoding`. Added the command to `README.md` so the repository advertises the supported rehydration path.
+
+### Verification rerun
+
+Focused tests run from `harness/`:
+
+```bash
+bun test src/adapters/wpt-wintertc.test.ts src/manifest.test.ts src/registry.test.ts src/expectations/compare.test.ts
+```
+
+Result:
+
+```text
+bun test v1.3.14 (0d9b296a)
+warn: ignoring extra certs from /workspace/elide/apps/buildless/app/base/pki/root-ecc.crt, load failed: error:10000002:SSL routines:OPENSSL_internal:system library
+
+src/manifest.test.ts:
+(pass) loads grouped manifest entries [2.88ms]
+(pass) rejects absolute manifest paths [1.00ms]
+
+src/registry.test.ts:
+(pass) loads test262 workload from registry.toml [1.16ms]
+(pass) loads wpt-wintertc workload from registry.toml [0.12ms]
+
+src/expectations/compare.test.ts:
+(pass) regression: expected pass, actual fail [1.08ms]
+(pass) expected fail that fails is not a regression [0.05ms]
+(pass) new pass: expected fail, actual pass [0.05ms]
+(pass) skip glob overrides status to skip [0.04ms]
+(pass) most specific glob wins [0.06ms]
+(pass) WPT expectation globs match result ids without subtest suffixes [0.07ms]
+
+src/adapters/wpt-wintertc.test.ts:
+(pass) maps WPT bridge JSON lines to TestResult records [0.56ms]
+(pass) ignores blank WPT lines [0.11ms]
+
+ 12 pass
+ 0 fail
+ 30 expect() calls
+Ran 12 tests across 4 files. [86.00ms]
+```
+
+Typecheck run from `harness/`:
+
+```bash
+bun run typecheck
+```
+
+Result:
+
+```text
+$ tsc --noEmit
+Warning: Ignoring extra certs from `/workspace/elide/apps/buildless/app/base/pki/root-ecc.crt`, load failed: error:80000002:system library::No such file or directory
+```

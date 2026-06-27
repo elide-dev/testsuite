@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+git submodule update --init --depth 1 suites/wpt
+git -C suites/wpt sparse-checkout init --cone
+git -C suites/wpt sparse-checkout set resources url encoding

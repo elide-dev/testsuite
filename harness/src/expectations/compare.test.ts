@@ -54,3 +54,13 @@ test("most specific glob wins", () => {
   expect(c.newPasses).toHaveLength(1);
   expect(c.counts.skip).toBe(0);
 });
+
+test("WPT expectation globs match result ids without subtest suffixes", () => {
+  const exp2 = parseExpectations(`
+[fail]
+"url/**" = "tracked"
+`);
+  const c = compare([mk("url/urlsearchparams.any.js :: URLSearchParams constructor", "fail")], exp2);
+  expect(c.regressions).toHaveLength(0);
+  expect(c.counts.fail).toBe(1);
+});
