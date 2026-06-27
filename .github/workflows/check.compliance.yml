@@ -150,10 +150,10 @@ jobs:
           echo "csv=$csv" >> "$GITHUB_OUTPUT"
           echo "Selected suites: $csv"
 
-      - name: "Setup: Dependencies and Submodules"
+      - name: "Setup: Suite Submodules"
         env:
           SELECTED_SUITES: ${{ steps.suites.outputs.csv }}
-        run: bun run setup --suite "$SELECTED_SUITES"
+        run: bun run setup:suites --suite "$SELECTED_SUITES"
 
       - name: "Setup: Elide Tarball"
         id: elide
