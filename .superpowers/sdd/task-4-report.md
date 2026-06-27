@@ -200,4 +200,5 @@ Results:
 - Focused javac/manifest/registry tests: `18 pass`, `0 fail`
 - Typecheck: exit code `0`
 - Cheap cross-check (`test262` adapter + CLI + registry): `12 pass`, `0 fail`
+- Controller full harness suite: `64 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
