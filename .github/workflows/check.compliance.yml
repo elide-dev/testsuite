@@ -4,81 +4,106 @@ name: "Check - Compliance"
   workflow_call:
     inputs:
       runner:
-        description: "Runner JSON, e.g. [\"self-hosted\",\"linux\"] or \"ubuntu-latest\""
+        description: "Runner"
         required: false
         default: '["self-hosted","linux"]'
         type: string
       elide_ref:
-        description: "Elide image tag/digest/ref; ignored when elide_tarball_url is set"
+        description: "Elide Ref"
         required: false
         default: "nightly"
         type: string
       elide_tarball_url:
-        description: "Optional URL to a tarball containing bin/elide"
+        description: "Elide Tarball"
         required: false
         default: ""
         type: string
       suite_test262:
+        description: "Test262"
         required: false
         default: true
         type: boolean
       suite_wpt_wintertc:
+        description: "WinterTC"
         required: false
         default: true
         type: boolean
       suite_cpython_core:
+        description: "CPython"
         required: false
         default: true
         type: boolean
       suite_javac_jtreg:
+        description: "javac jtreg"
         required: false
         default: true
         type: boolean
       include:
-        description: "Optional include glob passed to every selected suite"
+        description: "Include"
         required: false
         default: ""
         type: string
-      threads:
-        required: false
-        default: ""
-        type: string
-      suite_workers:
-        required: false
-        default: ""
-        type: string
-      concurrency_multiplier:
-        required: false
-        default: "2"
-        type: string
-      log:
-        required: false
-        default: true
-        type: boolean
-      failure_output:
-        required: false
-        default: "hide"
-        type: string
-      ratchet:
-        required: false
-        default: false
-        type: boolean
-      update_summaries:
-        required: false
-        default: false
-        type: boolean
-      apply_updates:
-        description: "Commit generated reports/ratchets/README updates to a branch"
-        required: false
-        default: false
-        type: boolean
       update_branch:
+        description: "Update Branch"
         required: false
         default: "sync/compliance"
         type: string
-      create_pr:
+      options:
+        description: "Options"
+        required: false
+        default: "{}"
+        type: string
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "Runner"
+        required: false
+        default: '["self-hosted","linux"]'
+        type: string
+      elide_ref:
+        description: "Elide Ref"
+        required: false
+        default: "nightly"
+        type: string
+      elide_tarball_url:
+        description: "Elide Tarball"
+        required: false
+        default: ""
+        type: string
+      suite_test262:
+        description: "Test262"
         required: false
         default: true
+        type: boolean
+      suite_wpt_wintertc:
+        description: "WinterTC"
+        required: false
+        default: true
+        type: boolean
+      suite_cpython_core:
+        description: "CPython"
+        required: false
+        default: true
+        type: boolean
+      suite_javac_jtreg:
+        description: "javac jtreg"
+        required: false
+        default: true
+        type: boolean
+      include:
+        description: "Include"
+        required: false
+        default: ""
+        type: string
+      log:
+        description: "Log"
+        required: false
+        default: true
+        type: boolean
+      ratchet:
+        description: "Ratchet"
+        required: false
+        default: false
         type: boolean
 
 env:
@@ -94,11 +119,7 @@ jobs:
       ELIDE_REF: ${{ inputs.elide_ref }}
       ELIDE_TARBALL_URL: ${{ inputs.elide_tarball_url }}
       INCLUDE: ${{ inputs.include }}
-      THREADS: ${{ inputs.threads }}
-      SUITE_WORKERS: ${{ inputs.suite_workers }}
-      CONCURRENCY_MULTIPLIER: ${{ inputs.concurrency_multiplier }}
-      FAILURE_OUTPUT: ${{ inputs.failure_output }}
-      UPDATE_BRANCH: ${{ inputs.update_branch }}
+      UPDATE_BRANCH: ${{ inputs.update_branch || 'sync/compliance' }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: "Setup: Harden Runner"
@@ -126,6 +147,46 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/bun-install-cache"
           echo "BUN_INSTALL_CACHE_DIR=$RUNNER_TEMP/bun-install-cache" >> "$GITHUB_ENV"
+
+      - name: "Setup: Resolve Options"
+        id: options
+        shell: bash
+        env:
+          OPTIONS_JSON: ${{ inputs.options || '{}' }}
+          DIRECT_LOG: ${{ inputs.log }}
+          DIRECT_RATCHET: ${{ inputs.ratchet }}
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/resolve-options.mjs" <<'JS'
+            const raw = process.env.OPTIONS_JSON || "{}";
+            let options = {};
+            try {
+              options = JSON.parse(raw);
+            } catch (err) {
+              console.error(`Invalid options JSON: ${err instanceof Error ? err.message : String(err)}`);
+              process.exit(2);
+            }
+            const directBool = (name) => {
+              const value = process.env[name];
+              return value === "" || value == null ? undefined : value === "true";
+            };
+            const resolved = {
+              threads: String(options.threads ?? ""),
+              suite_workers: String(options.suite_workers ?? ""),
+              concurrency_multiplier: String(options.concurrency_multiplier ?? "2"),
+              log: Boolean(directBool("DIRECT_LOG") ?? options.log ?? true),
+              failure_output: String(options.failure_output ?? "hide"),
+              ratchet: Boolean(directBool("DIRECT_RATCHET") ?? options.ratchet ?? false),
+              update_summaries: Boolean(options.update_summaries ?? false),
+              apply_updates: Boolean(options.apply_updates ?? false),
+              create_pr: Boolean(options.create_pr ?? true),
+            };
+            const out = Object.entries(resolved)
+              .map(([key, value]) => `${key}=${typeof value === "boolean" ? String(value) : value}`)
+              .join("\n") + "\n";
+            await Bun.write(process.env.GITHUB_OUTPUT, out, { append: true });
+          JS
+          bun "$RUNNER_TEMP/resolve-options.mjs"
 
       - name: "Setup: Select Suites"
         id: suites
@@ -183,6 +244,10 @@ jobs:
         env:
           ELIDE_TARGET: ${{ steps.elide.outputs.target }}
           SELECTED_SUITES: ${{ steps.suites.outputs.csv }}
+          THREADS: ${{ steps.options.outputs.threads }}
+          SUITE_WORKERS: ${{ steps.options.outputs.suite_workers }}
+          CONCURRENCY_MULTIPLIER: ${{ steps.options.outputs.concurrency_multiplier }}
+          FAILURE_OUTPUT: ${{ steps.options.outputs.failure_output }}
         run: |
           set -euo pipefail
           args=(
@@ -192,9 +257,9 @@ jobs:
             --concurrency-multiplier "$CONCURRENCY_MULTIPLIER"
             --failure-output "$FAILURE_OUTPUT"
           )
-          [[ "${{ inputs.log }}" == "true" ]] && args+=(--log)
-          [[ "${{ inputs.ratchet }}" == "true" ]] && args+=(--ratchet)
-          [[ "${{ inputs.update_summaries }}" == "true" ]] && args+=(--update-summaries)
+          [[ "${{ steps.options.outputs.log }}" == "true" ]] && args+=(--log)
+          [[ "${{ steps.options.outputs.ratchet }}" == "true" ]] && args+=(--ratchet)
+          [[ "${{ steps.options.outputs.update_summaries }}" == "true" ]] && args+=(--update-summaries)
           [[ -n "$INCLUDE" ]] && args+=(--include "$INCLUDE")
           [[ -n "$THREADS" ]] && args+=(--threads "$THREADS")
           [[ -n "$SUITE_WORKERS" ]] && args+=(--suite-workers "$SUITE_WORKERS")
@@ -212,7 +277,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: "Update: Commit Generated Reports"
-        if: ${{ always() && inputs.apply_updates }}
+        if: ${{ always() && steps.options.outputs.apply_updates == 'true' }}
         id: update
         shell: bash
         run: |
@@ -234,7 +299,7 @@ jobs:
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
       - name: "Update: Open Pull Request"
-        if: ${{ always() && inputs.apply_updates && inputs.create_pr && steps.update.outputs.changed == 'true' }}
+        if: ${{ always() && steps.options.outputs.apply_updates == 'true' && steps.options.outputs.create_pr == 'true' && steps.update.outputs.changed == 'true' }}
         shell: bash
         env:
           BRANCH: ${{ steps.update.outputs.branch }}

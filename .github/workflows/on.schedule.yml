@@ -4,17 +4,17 @@ name: "Scheduled - Compliance"
   workflow_dispatch:
     inputs:
       runner:
-        description: "Runner JSON"
+        description: "Runner"
         required: false
         default: '["self-hosted","linux"]'
         type: string
       elide_ref:
-        description: "Elide image tag/digest/ref"
+        description: "Elide Ref"
         required: false
         default: "nightly"
         type: string
       update_branch:
-        description: "Branch for generated report updates"
+        description: "Update Branch"
         required: false
         default: "sync/compliance"
         type: string
@@ -45,10 +45,5 @@ jobs:
       suite_wpt_wintertc: true
       suite_cpython_core: true
       suite_javac_jtreg: true
-      log: true
-      failure_output: "hide"
-      update_summaries: true
-      ratchet: false
-      apply_updates: true
       update_branch: ${{ inputs.update_branch || 'sync/compliance' }}
-      create_pr: true
+      options: '{"log":true,"failure_output":"hide","update_summaries":true,"ratchet":false,"apply_updates":true,"create_pr":true}'

@@ -30,8 +30,4 @@ jobs:
       suite_wpt_wintertc: true
       suite_cpython_core: true
       suite_javac_jtreg: true
-      log: true
-      failure_output: "hide"
-      update_summaries: false
-      ratchet: false
-      apply_updates: false
+      options: '{"log":true,"failure_output":"hide","update_summaries":false,"ratchet":false,"apply_updates":false}'

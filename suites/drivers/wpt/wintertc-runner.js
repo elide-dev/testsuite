@@ -29,17 +29,18 @@ function bridgeStatus(status) {
 
 function arg(name, fallback = "") {
   const i = process.argv.indexOf(name);
-  return i >= 0 ? process.argv[i + 1] : fallback;
+  const value = i >= 0 ? process.argv[i + 1] : undefined;
+  return value && !value.startsWith("--") ? value : fallback;
 }
 
 const suite = arg("--suite");
 const test = arg("--test");
-const category = arg("--category", test.split("/")[0]);
 const elide = arg("--elide", "/opt/elide/bin/elide");
 if (!suite || !test) {
   console.error("usage: wintertc-runner.js --suite <wpt> --test <path> --category <id> --elide <path>");
   process.exit(2);
 }
+const category = arg("--category", test.split("/")[0]);
 
 const harness = readFileSync(join(suite, "resources/testharness.js"), "utf8");
 const source = readFileSync(join(suite, test), "utf8");

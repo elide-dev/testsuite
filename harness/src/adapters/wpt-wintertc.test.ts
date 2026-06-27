@@ -54,6 +54,17 @@ test("filters manifest paths by include globs", () => {
   ).toEqual(["encoding/textdecoder.any.js", "streams/readable-streams/general.any.js"]);
 });
 
+test("WPT bridge rejects missing --test values with usage", () => {
+  const runner = join(import.meta.dir, "../../..", "suites/drivers/wpt/wintertc-runner.js");
+  const proc = Bun.spawnSync([process.execPath, runner, "--suite", "/tmp/wpt", "--test", "--category", "url"], {
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+
+  expect(proc.exitCode).toBe(2);
+  expect(new TextDecoder().decode(proc.stderr)).toContain("usage: wintertc-runner.js");
+});
+
 function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
   return Array.fromAsync(items);
 }

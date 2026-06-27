@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { readdirSync, existsSync } from "node:fs";
 import type { RunMeta } from "../results/schema";
 import type { Comparison } from "../expectations/compare";
@@ -51,6 +51,11 @@ export function findReportRunDirs(reportsDir: string): ReportRunDir[] {
   return runs;
 }
 
+function shortDigest(digest: unknown, fallback: string): string {
+  const value = String(digest || fallback);
+  return value.slice(0, 12);
+}
+
 export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexEntry[] }> {
   const runs: IndexEntry[] = [];
   for (const run of findReportRunDirs(reportsDir)) {
@@ -58,12 +63,12 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
     runs.push({
       workload: s.meta.workload,
       semver: s.meta.elide.semver,
-      digest: run.digest,
+      digest: shortDigest(s.meta.elide.digest, run.digest),
       pass: s.counts.pass,
       total: s.counts.total,
       regressions: s.regressions.length,
       finishedAt: s.meta.finishedAt,
-      reportDir: `${run.semver}/${run.digest}/${run.workload}`,
+      reportDir: relative(reportsDir, run.dir),
     });
   }
   runs.sort((a, b) => b.finishedAt.localeCompare(a.finishedAt));

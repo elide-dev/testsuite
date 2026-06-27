@@ -22,11 +22,12 @@ export function parseCpythonLine(line: string): TestResult | null {
   } catch {
     return null;
   }
+  if (r.status === "running") return null;
   return {
     kind: "test",
     id: r.case || r.module,
-    status: r.status === "running" ? "skip" : r.status,
-    message: r.status === "running" ? "running" : r.message,
+    status: r.status,
+    message: r.message,
     durationMs: r.durationMs,
     meta: {
       suite: "cpython-core",
@@ -34,7 +35,6 @@ export function parseCpythonLine(line: string): TestResult | null {
       category: r.module,
       runner: "regrtest",
       subtest: r.case || r.module,
-      ...(r.status === "running" ? { transient: true } : {}),
     },
   };
 }

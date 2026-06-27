@@ -22,6 +22,24 @@ test("buildIndexJson lists workload-scoped runs with counts and paths", async ()
   });
 });
 
+test("buildIndexJson reads digest from summary metadata", async () => {
+  const root = mkdtempSync(join(tmpdir(), "idx-"));
+  const dir = join(root, "1.3.5", "ghcr.io", "elid");
+  mkdirSync(dir, { recursive: true });
+  await Bun.write(join(dir, "summary.json"), JSON.stringify({
+    meta: { workload: "test262", elide: { semver: "1.3.5", digest: "ghcr.io/elide-dev/elide:nightly" }, finishedAt: "2026-06-26T00:00:00Z" },
+    counts: { pass: 90, fail: 10, skip: 0, error: 0, total: 100 },
+    regressions: [], newPasses: [],
+  }));
+
+  const idx = await buildIndexJson(root) as any;
+
+  expect(idx.runs[0]).toMatchObject({
+    digest: "ghcr.io/elid",
+    reportDir: "1.3.5/ghcr.io/elid",
+  });
+});
+
 test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
   const latest = latestRunSummariesFromIndex({
     runs: [

@@ -41,17 +41,8 @@ test("ignores non-JSON CPython output lines", () => {
   ]);
 });
 
-test("maps CPython running records to transient progress skips", () => {
-  expect(parseCpythonLines('{"module":"test_re","case":"test_re.Case.test_slow","status":"running"}\n')).toEqual([
-    expect.objectContaining({
-      id: "test_re.Case.test_slow",
-      status: "skip",
-      message: "running",
-      meta: expect.objectContaining({
-        transient: true,
-      }),
-    }),
-  ]);
+test("ignores CPython running records", () => {
+  expect(parseCpythonLines('{"module":"test_re","case":"test_re.Case.test_slow","status":"running"}\n')).toEqual([]);
 });
 
 test("remaps CPython skips from either module names or case ids", () => {
