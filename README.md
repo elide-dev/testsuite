@@ -33,6 +33,9 @@ regressions.
 - For local development without Docker: Bun (`harness/` is a Bun project)
 - The Test262 submodule: `git submodule update --init --depth 1`
 - The WPT submodule slice used by `wpt-wintertc`: `./bin/init-wpt`
+- The CPython 3.12 submodule for `cpython-core`: `git submodule update --init --depth 1 --recommend-shallow suites/cpython`
+- The OpenJDK langtools slice for `javac-jtreg`:
+  `git submodule update --init --depth 1 --recommend-shallow --filter=blob:none suites/openjdk && git -C suites/openjdk sparse-checkout init --cone && git -C suites/openjdk sparse-checkout set test/langtools/tools/javac`
 
 ## Running
 
@@ -62,7 +65,7 @@ Committed under `reports/<elide-version>/<short-digest>/<workload>/`:
 
 | file | purpose |
 |---|---|
-| `test262.md` | human rollup: pass-rate, regressions, new passes |
+| `<workload>.md` | human rollup: pass-rate, regressions, new passes |
 | `impact.md` / `impact.json` | failures clustered by root-cause signature, ranked by blast radius |
 | `changes.md` / `changes.json` | diff vs the previous run (fixed / regressed / added / removed) |
 | `summary.json` | counts + regression/new-pass ids (machine) |
@@ -92,9 +95,10 @@ breakage fails CI):
 ./bin/run --elide nightly --ratchet
 ```
 
-This regenerates the machine-owned `expectations/test262.ratchet.toml` (exact
-test ids) from the current failures. `compare` treats a test as expected-fail if
-it matches a `[fail]` glob **or** is in the ratchet set; `[skip]` always wins.
+This regenerates the machine-owned `expectations/<workload>.ratchet.toml`
+(exact test ids) from the current failures. `compare` treats a test as
+expected-fail if it matches a `[fail]` glob **or** is in the ratchet set;
+`[skip]` always wins.
 
 ## Analysis CLI
 
@@ -103,8 +107,8 @@ ingesting the committed `results.json.gz` files, and powers ad-hoc queries:
 
 ```bash
 bun run harness/src/cli.ts db build              # (re)build the DB from committed runs
-bun run harness/src/cli.ts impact [semver]       # impact-ordered failures for a run
-bun run harness/src/cli.ts diff [A] [B]          # version diff (default: two most recent)
+bun run harness/src/cli.ts impact <workload> [semver] [digest]  # impact-ordered failures for a run
+bun run harness/src/cli.ts diff <workload> [A] [B]              # version diff (default: two most recent)
 bun run harness/src/cli.ts query "SELECT …"      # read-only SQL over the results
 ```
 
@@ -117,7 +121,7 @@ static web UI; the SQLite DB is a disposable local index.
 suites/test262/        Test262 (git submodule)
 manifests/             curated suite slices for WPT, CPython, and jtreg
 suites/drivers/        small bridge/wrapper programs used by external suites
-expectations/          baseline (test262.toml) + machine ratchet (test262.ratchet.toml)
+expectations/          workload baselines + machine ratchets
 reports/               committed per-version reports + top-level index
 harness/               the Bun/TypeScript harness (src/, fixtures/, patches/)
 docker/                harness images (image-ref + local install dir)

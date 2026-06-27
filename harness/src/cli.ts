@@ -75,6 +75,68 @@ export async function dbBuild(reportsDir = REPORTS_DIR): Promise<number> {
   return 0;
 }
 
+interface RunRow {
+  id: number;
+  semver: string;
+  digest: string;
+}
+
+function knownWorkloads(db: Database): Set<string> {
+  const rows = db.query("SELECT DISTINCT workload FROM runs").all() as { workload: string }[];
+  return new Set(rows.map((row) => row.workload));
+}
+
+function resolveAdHocWorkload(db: Database, args: string[], fallback = "test262"): { workload: string; refs: string[] } {
+  const workloads = knownWorkloads(db);
+  const [first, ...rest] = args;
+  if (!first) return { workload: fallback, refs: [] };
+  if (workloads.has(first)) return { workload: first, refs: rest };
+  if (workloads.has(fallback)) return { workload: fallback, refs: args };
+  return { workload: first, refs: rest };
+}
+
+function pickRun(rows: RunRow[], ref?: string): RunRow | undefined {
+  if (!ref) return undefined;
+  return rows.find((row) => row.semver === ref || `${row.semver}/${row.digest}` === ref || row.digest.startsWith(ref));
+}
+
+export async function runAdHocDiff(db: Database, reportsDir: string, args: string[]): Promise<string> {
+  await ingestAll(db, reportsDir);
+  const { workload, refs } = resolveAdHocWorkload(db, args);
+  const rows = db
+    .query(`SELECT id, semver, digest FROM runs WHERE workload = ? ORDER BY finished_at DESC`)
+    .all(workload) as RunRow[];
+  const b = pickRun(rows, refs[0]) ?? rows[0];
+  const a = pickRun(rows, refs[1]) ?? rows[1];
+  if (!a || !b) throw new Error(`need two ${workload} runs to diff (run \`db build\` first)`);
+  const ra = loadRunResultsFromDb(db, a.id, { semver: a.semver, digest: a.digest });
+  const rb = loadRunResultsFromDb(db, b.id, { semver: b.semver, digest: b.digest });
+  return renderDiffMd(diffRuns(ra, rb));
+}
+
+export async function runAdHocImpact(db: Database, reportsDir: string, args: string[]): Promise<string> {
+  await ingestAll(db, reportsDir);
+  const { workload, refs } = resolveAdHocWorkload(db, args);
+  const where = refs[0]
+    ? "WHERE workload = ? AND semver = ?" + (refs[1] ? " AND digest LIKE ?||'%'" : "")
+    : "WHERE workload = ?";
+  const params = refs[0] ? (refs[1] ? [workload, refs[0], refs[1]] : [workload, refs[0]]) : [workload];
+  const run = db
+    .query(`SELECT id FROM runs ${where} ORDER BY finished_at DESC LIMIT 1`)
+    .get(...params) as { id: number } | undefined;
+  if (!run) throw new Error(`no matching ${workload} run (run \`db build\` first)`);
+  const rows = db
+    .query("SELECT test_id, status, message, features FROM results WHERE run_id = ? AND status IN ('fail','error')")
+    .all(run.id) as { test_id: string; status: string; message: string | null; features: string | null }[];
+  const failRows = rows.map((row) => ({
+    id: row.test_id,
+    status: row.status,
+    message: row.message ?? undefined,
+    features: row.features ? row.features.split(",") : [],
+  }));
+  return renderImpactMd(computeImpact(failRows));
+}
+
 const MARK: Record<string, string> = {
   pass: "✅",
   fail: "❌",
@@ -224,43 +286,13 @@ if (import.meta.main) {
       }
       break;
     case "diff": {
-      const reportsDir = REPORTS_DIR;
       const db = openDb(DB_PATH);
-      await ingestAll(db, reportsDir);
-      const workload = "test262";
-      const rows = db
-        .query(`SELECT id, semver, digest FROM runs WHERE workload = ? ORDER BY finished_at DESC`)
-        .all(workload) as { id: number; semver: string; digest: string }[];
-      const pick = (ref?: string) =>
-        ref ? rows.find((r) => r.semver === ref || `${r.semver}/${r.digest}` === ref) : undefined;
-      const b = pick(argv[1]) ?? rows[0];
-      const a = pick(argv[2]) ?? rows[1];
-      if (!a || !b) { console.error("need two runs to diff (run `db build` first)"); code = 2; break; }
-      const ra = loadRunResultsFromDb(db, a.id, { semver: a.semver, digest: a.digest });
-      const rb = loadRunResultsFromDb(db, b.id, { semver: b.semver, digest: b.digest });
-      console.log(renderDiffMd(diffRuns(ra, rb)));
+      console.log(await runAdHocDiff(db, REPORTS_DIR, argv.slice(1)));
       break;
     }
     case "impact": {
       const db = openDb(DB_PATH);
-      await ingestAll(db, REPORTS_DIR);
-      const where = argv[1]
-        ? "WHERE workload = 'test262' AND semver = ?" + (argv[2] ? " AND digest LIKE ?||'%'" : "")
-        : "WHERE workload = 'test262'";
-      const params = argv[1] ? (argv[2] ? [argv[1], argv[2]] : [argv[1]]) : [];
-      const run = db
-        .query(`SELECT id FROM runs ${where} ORDER BY finished_at DESC LIMIT 1`)
-        .get(...params) as { id: number } | undefined;
-      if (!run) { console.error("no matching run (run `db build` first)"); code = 2; break; }
-      const rows = db
-        .query("SELECT test_id, status, message, features FROM results WHERE run_id = ? AND status IN ('fail','error')")
-        .all(run.id) as { test_id: string; status: string; message: string | null; features: string | null }[];
-      const failRows = rows.map((r) => ({
-        id: r.test_id, status: r.status,
-        message: r.message ?? undefined,
-        features: r.features ? r.features.split(",") : [],
-      }));
-      console.log(renderImpactMd(computeImpact(failRows)));
+      console.log(await runAdHocImpact(db, REPORTS_DIR, argv.slice(1)));
       break;
     }
     case "query": {

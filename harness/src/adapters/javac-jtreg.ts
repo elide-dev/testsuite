@@ -4,7 +4,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
-import { runProcess } from "./process";
+import { runProcess, type ProcessRunResult } from "./process";
 
 const STATUS: Record<string, TestResult["status"]> = {
   Passed: "pass",
@@ -232,18 +232,18 @@ export function parseJtregSummary(text: string): TestResult[] {
   return results;
 }
 
-function runnerFailureMessage(result: Awaited<ReturnType<typeof runProcess>>): string {
+function runnerFailureMessage(result: ProcessRunResult): string {
   if (result.timedOut) return "jtreg timed out";
   return result.stderr || result.stdout || `jtreg exited with code ${result.exitCode}`;
 }
 
-function runnerFailureResult(result: Awaited<ReturnType<typeof runProcess>>): TestResult {
+function runnerErrorResult(message: string, durationMs = 0): TestResult {
   return {
     kind: "test",
     id: "javac-jtreg::<runner>",
     status: "error",
-    message: runnerFailureMessage(result),
-    durationMs: result.durationMs,
+    message,
+    durationMs,
     meta: {
       suite: "javac-jtreg",
       upstreamPath: "<runner>",
@@ -254,6 +254,17 @@ function runnerFailureResult(result: Awaited<ReturnType<typeof runProcess>>): Te
   };
 }
 
+function runnerFailureResult(result: ProcessRunResult): TestResult {
+  return runnerErrorResult(runnerFailureMessage(result), result.durationMs);
+}
+
+function isJtregRunnerFailure(result: ProcessRunResult): boolean {
+  if (result.timedOut) return true;
+  // jtreg uses 1 for no tests, 2 for failed tests, and 3 for errored tests.
+  // When a parseable summary exists, those outcomes are carried per test.
+  return result.exitCode !== 0 && result.exitCode !== 1 && result.exitCode !== 2 && result.exitCode !== 3;
+}
+
 export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
@@ -261,7 +272,10 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const langtoolsRoot = join(ctx.suitePath, "test/langtools");
   const tests = manifest.groups.flatMap((group) => expandManifestIncludePaths(langtoolsRoot, group.include, ctx.include));
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
-  if (tests.length === 0) return;
+  if (tests.length === 0) {
+    yield runnerErrorResult("javac-jtreg selected no tests");
+    return;
+  }
   const javaExecution = await resolveJavaExecution(ctx.settings, process.env, ctx.repoRoot);
   const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
@@ -292,11 +306,17 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
     return;
   }
 
-  for (const parsed of parseJtregSummary(readFileSync(summaryPath, "utf8"))) {
+  const parsedSummary = parseJtregSummary(readFileSync(summaryPath, "utf8"));
+  if (parsedSummary.length === 0) {
+    yield runnerErrorResult("jtreg summary contained no parseable test results", result.durationMs);
+    return;
+  }
+
+  for (const parsed of parsedSummary) {
     yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
   }
 
-  if (result.exitCode !== 0 || result.timedOut) {
+  if (isJtregRunnerFailure(result)) {
     yield runnerFailureResult(result);
   }
 }

@@ -21,7 +21,15 @@ function writeExecutable(path: string, body: string): string {
   return path;
 }
 
-function setupJtregFixture(mode: "summary" | "no-summary" | "summary-runner-failure" | "summary-test-failure" = "summary") {
+function setupJtregFixture(
+  mode:
+    | "summary"
+    | "no-summary"
+    | "summary-runner-failure"
+    | "summary-test-failure"
+    | "summary-test-failure-exit"
+    | "unparseable-summary" = "summary",
+) {
   const root = mkdtempSync(join(tmpdir(), "javac-jtreg-"));
   const workspacePath = join(root, "workspace");
   const suitePath = join(root, "suite");
@@ -115,11 +123,19 @@ if [[ ${JSON.stringify(mode)} == "no-summary" ]]; then
   exit 2
 fi
 mkdir -p "$report/text"
-cat > "$report/text/summary.txt" <<'EOF'
-${mode === "summary-test-failure" ? "Failed: tools/javac/diags/Other.java" : "Passed: tools/javac/diags/ExamplePass.java"}
+if [[ ${JSON.stringify(mode)} == "unparseable-summary" ]]; then
+  printf 'jtreg wrote prose instead of summary rows\n' > "$report/text/summary.txt"
+else
+  cat > "$report/text/summary.txt" <<'EOF'
+${mode === "summary-test-failure" || mode === "summary-test-failure-exit" ? "Failed: tools/javac/diags/Other.java" : "Passed: tools/javac/diags/ExamplePass.java"}
 EOF
+fi
 if [[ ${JSON.stringify(mode)} == "summary-runner-failure" ]]; then
   echo "jtreg infrastructure failure" >&2
+  exit 4
+fi
+if [[ ${JSON.stringify(mode)} == "summary-test-failure-exit" ]]; then
+  echo "jtreg test failure" >&2
   exit 3
 fi
 `,
@@ -279,6 +295,34 @@ test("does not add a runner error when jtreg reports failed tests in the summary
   expect(results.find((result) => result.id === "javac-jtreg::<runner>")).toBeUndefined();
 });
 
+test("trusts failed jtreg summary results when jtreg exits with the test-error code", async () => {
+  const { ctx } = setupJtregFixture("summary-test-failure-exit");
+
+  const results = await collect(runJavacJtreg(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/diags/Other.java",
+      status: "fail",
+    }),
+  ]);
+  expect(results.find((result) => result.id === "javac-jtreg::<runner>")).toBeUndefined();
+});
+
+test("returns a runner error when jtreg writes an unparseable summary", async () => {
+  const { ctx } = setupJtregFixture("unparseable-summary");
+
+  const results = await collect(runJavacJtreg(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "javac-jtreg::<runner>",
+      status: "error",
+      message: "jtreg summary contained no parseable test results",
+    }),
+  ]);
+});
+
 test("expands directory manifest entries to matching files for include globs", () => {
   expect(
     expandManifestIncludePaths(
@@ -301,13 +345,19 @@ test("passes only included manifest paths to jtreg", async () => {
   expect(args).not.toContain("tools/javac/launcher/BasicSourceLauncherTests.java");
 });
 
-test("returns no results and does not invoke jtreg when include globs match no javac tests", async () => {
+test("returns a setup error and does not invoke jtreg when include globs match no javac tests", async () => {
   const { ctx, logs } = setupJtregFixture();
   ctx.include = ["tools/javac/does-not-exist/**/*.java"];
 
   const results = await collect(runJavacJtreg(ctx));
 
-  expect(results).toEqual([]);
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "javac-jtreg::<runner>",
+      status: "error",
+      message: "javac-jtreg selected no tests",
+    }),
+  ]);
   expect(existsSync(logs.jtregArgsLog)).toBe(false);
 });
 

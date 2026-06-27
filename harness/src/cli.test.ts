@@ -2,13 +2,15 @@ import { test, expect } from "bun:test";
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { buildAdapterContext, main, parseArgs, REGISTRY_PATH, REPO_ROOT, WORK_DIR } from "./cli";
+import { buildAdapterContext, main, parseArgs, REGISTRY_PATH, REPO_ROOT, runAdHocDiff, runAdHocImpact, WORK_DIR } from "./cli";
 import { ADAPTERS } from "./adapters";
 import { loadManifest } from "./manifest";
 import { loadRegistry } from "./registry";
 import { expandManifestIncludePaths } from "./adapters/javac-jtreg";
 import type { Adapter } from "./adapters/types";
-import type { Result } from "./results/schema";
+import type { Result, TestResult } from "./results/schema";
+import { writeResults } from "./results/store";
+import { openDb } from "./db/open";
 
 test("parses run subcommand and options", () => {
   const o = parseArgs([
@@ -243,4 +245,76 @@ test("treats zero emitted TestResults as a harness error before writing reports"
   } finally {
     delete ADAPTERS[adapterId];
   }
+});
+
+async function writeIngestedRun(
+  reportsDir: string,
+  workload: string,
+  semver: string,
+  digest: string,
+  finishedAt: string,
+  results: TestResult[],
+): Promise<void> {
+  const dir = join(reportsDir, semver, digest.slice(0, 12), workload);
+  mkdirSync(dir, { recursive: true });
+  const meta = {
+    workload,
+    kind: "test" as const,
+    elide: { semver, digest },
+    startedAt: finishedAt,
+    finishedAt,
+  };
+  await writeResults(dir, meta, results);
+  await Bun.write(
+    join(dir, "summary.json"),
+    JSON.stringify({
+      meta,
+      counts: { pass: results.filter((result) => result.status === "pass").length, total: results.length },
+      regressions: results.filter((result) => result.status === "fail" || result.status === "error").map((result) => result.id),
+      newPasses: [],
+    }),
+  );
+}
+
+test("ad-hoc diff uses the requested workload from ingested runs", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-adhoc-diff-"));
+  const reportsDir = join(root, "reports");
+  await writeIngestedRun(reportsDir, "alpha", "1.0.0", "aaaaaaaaaaaa", "2026-01-01T00:00:00.000Z", [
+    { kind: "test", id: "alpha-fixed", status: "fail" },
+    { kind: "test", id: "alpha-regressed", status: "pass" },
+  ]);
+  await writeIngestedRun(reportsDir, "alpha", "1.1.0", "bbbbbbbbbbbb", "2026-01-02T00:00:00.000Z", [
+    { kind: "test", id: "alpha-fixed", status: "pass" },
+    { kind: "test", id: "alpha-regressed", status: "fail" },
+  ]);
+  await writeIngestedRun(reportsDir, "test262", "9.9.9", "cccccccccccc", "2026-01-03T00:00:00.000Z", [
+    { kind: "test", id: "test262-only", status: "fail" },
+  ]);
+  const db = openDb(":memory:");
+
+  const output = await runAdHocDiff(db, reportsDir, ["alpha"]);
+
+  expect(output).toContain("`1.0.0` → `1.1.0`");
+  expect(output).toContain("alpha-fixed");
+  expect(output).toContain("alpha-regressed");
+  expect(output).not.toContain("test262-only");
+});
+
+test("ad-hoc impact uses the requested workload from ingested runs", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-adhoc-impact-"));
+  const reportsDir = join(root, "reports");
+  await writeIngestedRun(reportsDir, "beta", "2.0.0", "dddddddddddd", "2026-01-01T00:00:00.000Z", [
+    { kind: "test", id: "beta-fail", status: "fail", message: "beta exploded", meta: { features: ["beta-feature"] } },
+    { kind: "test", id: "beta-pass", status: "pass" },
+  ]);
+  await writeIngestedRun(reportsDir, "test262", "2.0.0", "eeeeeeeeeeee", "2026-01-02T00:00:00.000Z", [
+    { kind: "test", id: "test262-fail", status: "fail", message: "test262 exploded" },
+  ]);
+  const db = openDb(":memory:");
+
+  const output = await runAdHocImpact(db, reportsDir, ["beta", "2.0.0"]);
+
+  expect(output).toContain("beta-fail");
+  expect(output).toContain("beta-feature");
+  expect(output).not.toContain("test262-fail");
 });
