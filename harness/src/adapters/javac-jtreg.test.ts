@@ -21,7 +21,7 @@ function writeExecutable(path: string, body: string): string {
   return path;
 }
 
-function setupJtregFixture(mode: "summary" | "no-summary" = "summary") {
+function setupJtregFixture(mode: "summary" | "no-summary" | "summary-runner-failure" | "summary-test-failure" = "summary") {
   const root = mkdtempSync(join(tmpdir(), "javac-jtreg-"));
   const workspacePath = join(root, "workspace");
   const suitePath = join(root, "suite");
@@ -116,8 +116,12 @@ if [[ ${JSON.stringify(mode)} == "no-summary" ]]; then
 fi
 mkdir -p "$report/text"
 cat > "$report/text/summary.txt" <<'EOF'
-Passed: tools/javac/diags/ExamplePass.java
+${mode === "summary-test-failure" ? "Failed: tools/javac/diags/Other.java" : "Passed: tools/javac/diags/ExamplePass.java"}
 EOF
+if [[ ${JSON.stringify(mode)} == "summary-runner-failure" ]]; then
+  echo "jtreg infrastructure failure" >&2
+  exit 3
+fi
 `,
   );
 
@@ -233,6 +237,46 @@ test("returns a runner error when the current jtreg run produces no summary", as
       message: "jtreg failed\n",
     }),
   ]);
+});
+
+test("returns parsed per-test results plus a runner error when jtreg exits non-zero after writing a summary", async () => {
+  const { ctx } = setupJtregFixture("summary-runner-failure");
+
+  const results = await collect(runJavacJtreg(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/diags/ExamplePass.java",
+      status: "pass",
+    }),
+    expect.objectContaining({
+      id: "javac-jtreg::<runner>",
+      status: "error",
+      message: "jtreg infrastructure failure\n",
+      meta: {
+        suite: "javac-jtreg",
+        upstreamPath: "<runner>",
+        category: "runner",
+        runner: "jtreg",
+        subtest: "<runner>",
+      },
+    }),
+  ]);
+  expect(results[1]?.durationMs).toEqual(expect.any(Number));
+});
+
+test("does not add a runner error when jtreg reports failed tests in the summary but exits cleanly", async () => {
+  const { ctx } = setupJtregFixture("summary-test-failure");
+
+  const results = await collect(runJavacJtreg(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/diags/Other.java",
+      status: "fail",
+    }),
+  ]);
+  expect(results.find((result) => result.id === "javac-jtreg::<runner>")).toBeUndefined();
 });
 
 test("expands directory manifest entries to matching files for include globs", () => {

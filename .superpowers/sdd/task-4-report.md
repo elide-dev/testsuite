@@ -238,6 +238,34 @@ Results:
   - explicit `jdkHome` validation failure for missing `bin/javac`
   - `JAVA_HOME` fallback validation failure for missing `bin/jar`
 
+## Task 4 seventh fix
+
+- Updated `harness/src/adapters/javac-jtreg.ts` to preserve parsed jtreg summary results while also surfacing infrastructure failure when the jtreg process exits non-zero or times out after producing a summary.
+- Centralized runner-level error construction so both the existing no-summary path and the new partial-summary failure path emit the same `javac-jtreg::<runner>` error shape, including duration and runner metadata.
+- Extended `harness/src/adapters/javac-jtreg.test.ts` with regressions for:
+  - non-zero jtreg exit after writing a summary, which must now yield both the parsed per-test result and a runner-level error
+  - summary-reported failed tests with process exit `0`, which must remain per-test-only with no extra runner error
+
+### Verification after seventh fix
+
+Commands:
+
+```bash
+cd harness
+env -u NODE_EXTRA_CA_CERTS bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+env -u NODE_EXTRA_CA_CERTS bun run typecheck
+env -u NODE_EXTRA_CA_CERTS bun test src/adapters/test262.test.ts src/cli.test.ts src/registry.test.ts
+env -u NODE_EXTRA_CA_CERTS bun test
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `30 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Cheap cross-check (`test262` adapter + CLI + registry): `13 pass`, `0 fail`
+- Full harness suite: `76 pass`, `0 fail`
+- All commands completed without the prior extra-cert warning when run under `env -u NODE_EXTRA_CA_CERTS`.
+
 ### Verification after fifth fix
 
 Commands:

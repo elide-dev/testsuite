@@ -232,6 +232,28 @@ export function parseJtregSummary(text: string): TestResult[] {
   return results;
 }
 
+function runnerFailureMessage(result: Awaited<ReturnType<typeof runProcess>>): string {
+  if (result.timedOut) return "jtreg timed out";
+  return result.stderr || result.stdout || `jtreg exited with code ${result.exitCode}`;
+}
+
+function runnerFailureResult(result: Awaited<ReturnType<typeof runProcess>>): TestResult {
+  return {
+    kind: "test",
+    id: "javac-jtreg::<runner>",
+    status: "error",
+    message: runnerFailureMessage(result),
+    durationMs: result.durationMs,
+    meta: {
+      suite: "javac-jtreg",
+      upstreamPath: "<runner>",
+      category: "runner",
+      runner: "jtreg",
+      subtest: "<runner>",
+    },
+  };
+}
+
 export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
@@ -266,25 +288,16 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
 
   const summaryPath = join(reportDir, "text/summary.txt");
   if (!existsSync(summaryPath)) {
-    yield {
-      kind: "test",
-      id: "javac-jtreg::<runner>",
-      status: "error",
-      message: result.timedOut ? "jtreg timed out" : result.stderr || result.stdout,
-      durationMs: result.durationMs,
-      meta: {
-        suite: "javac-jtreg",
-        upstreamPath: "<runner>",
-        category: "runner",
-        runner: "jtreg",
-        subtest: "<runner>",
-      },
-    };
+    yield runnerFailureResult(result);
     return;
   }
 
   for (const parsed of parseJtregSummary(readFileSync(summaryPath, "utf8"))) {
     yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
+  }
+
+  if (result.exitCode !== 0 || result.timedOut) {
+    yield runnerFailureResult(result);
   }
 }
 
