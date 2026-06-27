@@ -155,3 +155,23 @@ Results:
 - `bun test`: `13 pass`, `0 fail`
 - `bun run typecheck`: exit code `0`
 - Both commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
+
+### Controller verification after second fix
+
+Commands:
+
+```bash
+cd harness
+bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+bun run typecheck
+bun test src/adapters/test262.test.ts src/cli.test.ts src/registry.test.ts
+bun test
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `13 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Test262 adapter/CLI/registry tests: `12 pass`, `0 fail`
+- Full harness suite: `59 pass`, `0 fail`
+- Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
