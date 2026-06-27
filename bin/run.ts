@@ -4,7 +4,20 @@
 
 import { $ } from "bun";
 import { createHash, randomUUID } from "node:crypto";
-import { chmodSync, cpSync, existsSync, mkdirSync, rmSync, statSync, openSync, closeSync, readFileSync, writeFileSync, unlinkSync } from "node:fs";
+import {
+  chmodSync,
+  cpSync,
+  existsSync,
+  mkdirSync,
+  rmSync,
+  statSync,
+  openSync,
+  closeSync,
+  readFileSync,
+  writeFileSync,
+  unlinkSync,
+  readdirSync,
+} from "node:fs";
 import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -31,6 +44,34 @@ interface WorkloadInfo {
   path?: string;
 }
 
+interface SuiteRunSummary {
+  meta: {
+    workload: string;
+    finishedAt: string;
+    elide: { semver: string; digest: string };
+    suiteVersion?: string;
+  };
+  counts: { pass: number; fail: number; skip: number; error: number; total: number };
+  regressions: string[];
+  newPasses: string[];
+}
+
+interface SuiteChanges {
+  fixed: string[];
+  regressed: string[];
+  added: number;
+  removed: number;
+  stillFailing: number;
+}
+
+interface SuiteSummaryRow {
+  suite: string;
+  rc: number;
+  current?: SuiteRunSummary;
+  previous?: SuiteRunSummary;
+  changes?: SuiteChanges;
+}
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_ELIDE_REF = "ghcr.io/elide-dev/elide:nightly";
 const RUN_LABEL_KEY = "elide.testsuite.run";
@@ -53,6 +94,16 @@ let handlingSignal = false;
 function log(message: string): void {
   process.stderr.write(`[bin/run] ${message}\n`);
 }
+
+const COLOR = process.stderr.isTTY && !process.env.NO_COLOR;
+const ansi = {
+  green: (s: string) => COLOR ? `\x1b[32m${s}\x1b[0m` : s,
+  red: (s: string) => COLOR ? `\x1b[31m${s}\x1b[0m` : s,
+  yellow: (s: string) => COLOR ? `\x1b[33m${s}\x1b[0m` : s,
+  cyan: (s: string) => COLOR ? `\x1b[36m${s}\x1b[0m` : s,
+  dim: (s: string) => COLOR ? `\x1b[2m${s}\x1b[0m` : s,
+  bold: (s: string) => COLOR ? `\x1b[1m${s}\x1b[0m` : s,
+};
 
 function usageError(message: string): never {
   log(message);
@@ -444,6 +495,155 @@ function assertWritableMountSources(): void {
   }
 }
 
+function walkSummaryPaths(root: string): string[] {
+  if (!existsSync(root)) return [];
+  const out: string[] = [];
+  const visit = (dir: string): void => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const path = resolve(dir, entry.name);
+      if (entry.isDirectory()) visit(path);
+      else if (entry.isFile() && entry.name === "summary.json") out.push(path);
+    }
+  };
+  visit(root);
+  return out;
+}
+
+function readJsonFile<T>(path: string): T | undefined {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")) as T;
+  } catch {
+    return undefined;
+  }
+}
+
+function summaryDirFromPath(summaryPath: string): string {
+  return dirname(summaryPath);
+}
+
+function loadSuiteSummaryRows(suites: string[], suiteExitCodes: number[], digest: string): SuiteSummaryRow[] {
+  const summaries = walkSummaryPaths(resolve(ROOT, "reports"))
+    .map((summaryPath) => ({ summaryPath, summary: readJsonFile<SuiteRunSummary>(summaryPath) }))
+    .filter((entry): entry is { summaryPath: string; summary: SuiteRunSummary } => Boolean(entry.summary?.meta?.workload));
+
+  return suites.map((suite, index) => {
+    const matching = summaries
+      .filter(({ summary }) => summary.meta.workload === suite)
+      .sort((a, b) => b.summary.meta.finishedAt.localeCompare(a.summary.meta.finishedAt));
+    const current = matching.find(({ summary }) => summary.meta.elide.digest === digest);
+    const previous = matching.find(({ summary }) => {
+      if (!current) return false;
+      if (summary.meta.finishedAt >= current.summary.meta.finishedAt) return false;
+      if (summary.meta.elide.semver === current.summary.meta.elide.semver &&
+          summary.meta.elide.digest.slice(0, 12) === current.summary.meta.elide.digest.slice(0, 12)) {
+        return false;
+      }
+      return true;
+    });
+    const changes = current ? readJsonFile<SuiteChanges>(resolve(summaryDirFromPath(current.summaryPath), "changes.json")) : undefined;
+    return {
+      suite,
+      rc: suiteExitCodes[index] ?? 2,
+      current: current?.summary,
+      previous: previous?.summary,
+      changes,
+    };
+  });
+}
+
+function passRate(summary: SuiteRunSummary | undefined): number | undefined {
+  if (!summary || summary.counts.total === 0) return undefined;
+  return summary.counts.pass / summary.counts.total;
+}
+
+function formatPercent(value: number | undefined): string {
+  return value === undefined ? "n/a" : `${(value * 100).toFixed(1)}%`;
+}
+
+function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSummary | undefined): string {
+  const cur = passRate(current);
+  const prev = passRate(previous);
+  if (cur === undefined || prev === undefined) return ansi.dim("n/a");
+  const delta = (cur - prev) * 100;
+  if (Math.abs(delta) < 0.05) return ansi.dim("→ 0.0pp");
+  return delta > 0 ? ansi.green(`↗ +${delta.toFixed(1)}pp`) : ansi.red(`↘ ${delta.toFixed(1)}pp`);
+}
+
+function statusLabel(row: SuiteSummaryRow): string {
+  if (row.rc === 2 || row.rc > 2 || !row.current) return ansi.red("🛑 ERROR");
+  const regressions = row.current.regressions.length;
+  if (row.rc === 0 && regressions === 0) return ansi.green("🟢 GREEN");
+  if (regressions > 0) return ansi.red("🔴 REGRESSED");
+  return row.rc === 1 ? ansi.yellow("🟡 RED") : ansi.green("🟢 GREEN");
+}
+
+function changesLabel(row: SuiteSummaryRow): string {
+  const parts: string[] = [];
+  if (row.current?.newPasses.length) parts.push(ansi.green(`✨ ${row.current.newPasses.length} new`));
+  if (row.current?.regressions.length) parts.push(ansi.red(`🚨 ${row.current.regressions.length} regressions`));
+  if (row.changes) {
+    if (row.changes.fixed.length) parts.push(ansi.green(`✅ ${row.changes.fixed.length} fixed`));
+    if (row.changes.regressed.length) parts.push(ansi.red(`❌ ${row.changes.regressed.length} regressed`));
+    if (!row.changes.fixed.length && !row.changes.regressed.length) parts.push(ansi.dim("no status drift"));
+  } else if (!parts.length) {
+    parts.push(ansi.dim("baseline n/a"));
+  }
+  return parts.join(", ");
+}
+
+function padVisible(value: string, width: number): string {
+  const visible = value.replace(/\x1b\[[0-9;]*m/g, "").length;
+  return value + " ".repeat(Math.max(0, width - visible));
+}
+
+function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
+  const headers = ["Suite", "Status", "Pass rate", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
+  const body = rows.map((row) => {
+    const counts = row.current?.counts;
+    return [
+      row.suite,
+      statusLabel(row),
+      formatPercent(passRate(row.current)),
+      formatDelta(row.current, row.previous),
+      counts ? `${counts.pass}/${counts.total}` : "n/a",
+      counts ? String(counts.fail) : "n/a",
+      counts ? String(counts.error) : "n/a",
+      counts ? String(counts.skip) : "n/a",
+      changesLabel(row),
+    ];
+  });
+  const widths = headers.map((header, i) => Math.max(header.length, ...body.map((row) => row[i].replace(/\x1b\[[0-9;]*m/g, "").length)));
+  const line = (cells: string[]): string => `│ ${cells.map((cell, i) => padVisible(cell, widths[i])).join(" │ ")} │`;
+  const sep = `├${widths.map((width) => "─".repeat(width + 2)).join("┼")}┤`;
+  const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
+  const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
+  const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
+  const totalTests = rows.reduce((sum, row) => sum + (row.current?.counts.total ?? 0), 0);
+  const totalRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
+  const totalNewPasses = rows.reduce((sum, row) => sum + (row.current?.newPasses.length ?? 0), 0);
+  const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;
+  const headline = errored
+    ? ansi.red(`🛑 ${errored} suite${errored === 1 ? "" : "s"} had harness errors`)
+    : totalRegressions
+      ? ansi.red(`🔴 ${totalRegressions} regression${totalRegressions === 1 ? "" : "s"} across selected suites`)
+      : ansi.green("🟢 No regressions across selected suites");
+
+  process.stderr.write("\n");
+  process.stderr.write(`${ansi.bold("Compliance Summary")} ${headline}\n`);
+  process.stderr.write(`${ansi.dim(`Selected suites: ${rows.length} · Aggregate pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} · New passes: ${totalNewPasses}`)}\n`);
+  process.stderr.write(`${top}\n`);
+  process.stderr.write(`${line(headers.map((header) => ansi.bold(header)))}\n`);
+  process.stderr.write(`${sep}\n`);
+  for (const row of body) process.stderr.write(`${line(row)}\n`);
+  process.stderr.write(`${bottom}\n\n`);
+}
+
 async function main(): Promise<number> {
   process.chdir(ROOT);
   const options = parseArgs(Bun.argv.slice(2));
@@ -579,6 +779,8 @@ async function main(): Promise<number> {
     if (rc === 2 || rc > 2) overall = 2;
     else if (rc === 1 && overall === 0) overall = 1;
   }
+
+  renderFinalSuiteSummary(loadSuiteSummaryRows(suites, suiteExitCodes, digest));
 
   if (overall === 0) log("DONE: all selected suites GREEN.");
   if (overall === 1) log("DONE: selected suites completed with regressions. exit 1.");
