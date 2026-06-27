@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "smol-toml";
 import type { Expectations } from "./load";
-import { expectedFor, filePathOf } from "./compare";
+import { expectedFor, expectationKeysOf } from "./compare";
 import type { TestResult } from "../results/schema";
 
 export function ratchetPath(expectationsDir: string, suite: string): string {
@@ -20,7 +20,7 @@ export function ratchetCandidates(tests: TestResult[], exp: Expectations): strin
   const out: string[] = [];
   for (const t of tests) {
     if (t.status !== "fail" && t.status !== "error") continue;
-    if (expectedFor(exp, filePathOf(t.id)) === "pass") out.push(t.id);
+    if (expectedFor(exp, expectationKeysOf(t)) === "pass") out.push(t.id);
   }
   return out.sort();
 }

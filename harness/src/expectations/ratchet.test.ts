@@ -7,7 +7,12 @@ import { parseExpectations } from "./load";
 import { compare } from "./compare";
 import type { TestResult } from "../results/schema";
 
-const mk = (id: string, status: TestResult["status"]): TestResult => ({ kind: "test", id, status });
+const mk = (id: string, status: TestResult["status"], meta?: TestResult["meta"]): TestResult => ({
+  kind: "test",
+  id,
+  status,
+  meta,
+});
 
 test("writeRatchet then loadRatchet round-trips exact ids", () => {
   const dir = mkdtempSync(join(tmpdir(), "ratchet-"));
@@ -41,6 +46,16 @@ test("ratchetCandidates = failing ids not covered by skip/[fail] globs", () => {
     mk("test/ok/d.js default", "pass"), // passing
   ];
   expect(ratchetCandidates(tests, exp)).toEqual(["test/new/a.js default"]);
+});
+
+test("ratchetCandidates respects CPython module-level fail expectations via upstreamPath", () => {
+  const exp = parseExpectations(`
+[fail]
+"test_re" = "tracked module"
+`);
+  expect(
+    ratchetCandidates([mk("test_re.ReTests.test_basic_re_sub", "fail", { upstreamPath: "test_re" })], exp),
+  ).toEqual([]);
 });
 
 test("a ratcheted failing id is expected (not a regression)", () => {

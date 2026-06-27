@@ -16,6 +16,13 @@ export function filePathOf(id: string): string {
   return id.replace(/ (default|strict mode)$/, "");
 }
 
+export function expectationKeysOf(result: Pick<TestResult, "id" | "meta">): string[] {
+  const keys = [filePathOf(result.id)];
+  const upstreamPath = String(result.meta?.upstreamPath ?? "").trim();
+  if (upstreamPath && !keys.includes(upstreamPath)) keys.push(upstreamPath);
+  return keys;
+}
+
 interface CompiledEntry extends ExpectationEntry {
   isMatch: (p: string) => boolean;
 }
@@ -27,13 +34,16 @@ function compile(exp: Expectations): CompiledEntry[] {
     .sort((a, b) => b.glob.length - a.glob.length);
 }
 
-function expectedForEntries(entries: CompiledEntry[], filePath: string): ExpectedStatus {
-  for (const e of entries) if (e.isMatch(filePath)) return e.expected;
+function expectedForEntries(entries: CompiledEntry[], keys: string[]): ExpectedStatus {
+  for (const e of entries) {
+    if (keys.some((key) => e.isMatch(key))) return e.expected;
+  }
   return "pass";
 }
 
-export function expectedFor(exp: Expectations, filePath: string): ExpectedStatus {
-  return expectedForEntries(compile(exp), filePath);
+export function expectedFor(exp: Expectations, filePathOrKeys: string | string[]): ExpectedStatus {
+  const keys = Array.isArray(filePathOrKeys) ? filePathOrKeys : [filePathOrKeys];
+  return expectedForEntries(compile(exp), keys);
 }
 
 export function compare(results: TestResult[], exp: Expectations): Comparison {
@@ -50,7 +60,7 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
       c.counts.skip++;
       continue;
     }
-    const globExpected = expectedForEntries(entries, filePathOf(r.id));
+    const globExpected = expectedForEntries(entries, expectationKeysOf(r));
     if (globExpected === "skip") {
       c.counts.skip++;
       continue;

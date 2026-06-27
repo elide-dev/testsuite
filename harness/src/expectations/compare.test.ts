@@ -11,10 +11,11 @@ const toml = `
 `;
 const exp = parseExpectations(toml);
 
-const mk = (id: string, status: TestResult["status"]): TestResult => ({
+const mk = (id: string, status: TestResult["status"], meta?: TestResult["meta"]): TestResult => ({
   kind: "test",
   id,
   status,
+  meta,
 });
 
 test("regression: expected pass, actual fail", () => {
@@ -71,4 +72,30 @@ test("WPT expectation globs match result ids without subtest suffixes", () => {
   const c = compare([mk("url/urlsearchparams.any.js :: URLSearchParams constructor", "fail")], exp2);
   expect(c.regressions).toHaveLength(0);
   expect(c.counts.fail).toBe(1);
+});
+
+test("CPython module-level fail expectations match upstreamPath metadata", () => {
+  const exp2 = parseExpectations(`
+[fail]
+"test_re" = "module failure tracked"
+`);
+  const c = compare(
+    [mk("test_re.ReTests.test_basic_re_sub", "fail", { upstreamPath: "test_re" })],
+    exp2,
+  );
+  expect(c.regressions).toHaveLength(0);
+  expect(c.counts.fail).toBe(1);
+});
+
+test("CPython module-level skip expectations match upstreamPath metadata", () => {
+  const exp2 = parseExpectations(`
+[skip]
+"test_re" = "module skipped"
+`);
+  const c = compare(
+    [mk("test_re.ReTests.test_basic_re_sub", "fail", { upstreamPath: "test_re" })],
+    exp2,
+  );
+  expect(c.regressions).toHaveLength(0);
+  expect(c.counts.skip).toBe(1);
 });

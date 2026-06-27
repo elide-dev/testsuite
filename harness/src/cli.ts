@@ -23,6 +23,7 @@ export interface CliOptions {
   command: string;
   workload: string;
   registryPath: string;
+  repoRoot: string;
   elidePath: string;
   digest: string;
   suiteRoot: string;
@@ -50,6 +51,7 @@ export function parseArgs(argv: string[]): CliOptions {
     command,
     workload,
     registryPath: get("--registry", REGISTRY_PATH),
+    repoRoot: get("--repo-root", REPO_ROOT),
     elidePath: get("--elide-path", "/opt/elide/bin/elide"),
     digest: get("--digest", "local"),
     suiteRoot: get("--suite-root", resolve(REPO_ROOT, "suites")),
@@ -80,9 +82,9 @@ const MARK: Record<string, string> = {
   skip: "⊘",
 };
 
-export function suitePathForWorkload(suiteRoot: string, workloadPath: string): string {
-  const suiteBase = resolve(REPO_ROOT, "suites");
-  const absWorkloadPath = isAbsolute(workloadPath) ? workloadPath : resolve(REPO_ROOT, workloadPath);
+export function suitePathForWorkload(repoRoot: string, suiteRoot: string, workloadPath: string): string {
+  const suiteBase = resolve(repoRoot, "suites");
+  const absWorkloadPath = isAbsolute(workloadPath) ? workloadPath : resolve(repoRoot, workloadPath);
   return resolve(suiteRoot, relative(suiteBase, absWorkloadPath));
 }
 
@@ -95,16 +97,16 @@ export function buildAdapterContext(
 ): AdapterContext {
   const settings = { ...wl.settings };
   if (typeof settings.manifest === "string" && !isAbsolute(settings.manifest)) {
-    settings.manifest = resolve(REPO_ROOT, settings.manifest);
+    settings.manifest = resolve(o.repoRoot, settings.manifest);
   }
   return {
     elide: identity,
     elidePath: o.elidePath,
-    repoRoot: REPO_ROOT,
-    suitePath: suitePathForWorkload(o.suiteRoot, wl.path),
+    repoRoot: o.repoRoot,
+    suitePath: suitePathForWorkload(o.repoRoot, o.suiteRoot, wl.path),
     include: o.include
       ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
-      : (wl.settings.include as string[]) ?? ["test/**/*.js"],
+      : Array.isArray(wl.settings.include) ? (wl.settings.include as string[]) : [],
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
     settings,

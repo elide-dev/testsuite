@@ -3,10 +3,10 @@
 
 [[group]]
 id = "url"
-include = ["url/urlsearchparams.any.js"]
+include = ["url/urlsearchparams-constructor.any.js"]
 tags = ["wintertc", "pure-api"]
 
 [[group]]
 id = "encoding"
-include = ["encoding/textdecoder.any.js", "encoding/textencoder.any.js"]
+include = ["encoding/textdecoder-fatal.any.js", "encoding/textencoder-constructor-non-utf.any.js"]
 tags = ["wintertc", "pure-api"]

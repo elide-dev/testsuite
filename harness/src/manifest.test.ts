@@ -1,4 +1,4 @@
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { test, expect } from "bun:test";
@@ -53,4 +53,14 @@ test("javac langtools smoke manifest includes a true compile-then-run slice", ()
 
   expect(include).toContain("tools/javac/diags");
   expect(include).toContain("tools/javac/IllDefinedOrderOfInit.java");
+});
+
+test("wintertc WPT manifest includes checked-out paths when the suite exists", () => {
+  const suiteRoot = `${import.meta.dir}/../../suites/wpt`;
+  if (!existsSync(suiteRoot)) return;
+
+  const manifest = loadManifest(`${import.meta.dir}/../../manifests/wintertc-wpt-2025.toml`);
+  for (const path of manifest.groups.flatMap((group) => group.include)) {
+    expect(existsSync(join(suiteRoot, path))).toBe(true);
+  }
 });
