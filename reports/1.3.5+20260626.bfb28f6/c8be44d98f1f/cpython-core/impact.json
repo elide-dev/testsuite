@@ -77,7 +77,7 @@
         "test_json.test_tool.TestTool.test_ensure_ascii_default"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 213, in test_ensure_ascii_default\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 213, in test_ensure_ascii_default\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -117,7 +117,7 @@
         "test_json.test_tool.TestTool.test_infile_outfile"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 125, in test_infile_outfile\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 125, in test_infile_outfile\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -127,7 +127,7 @@
         "test_json.test_tool.TestTool.test_infile_stdout"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 103, in test_infile_stdout\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 103, in test_infile_stdout\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -187,7 +187,7 @@
         "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 202, in test_no_ensure_ascii_flag\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 202, in test_no_ensure_ascii_flag\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -207,7 +207,7 @@
         "test_json.test_tool.TestTool.test_non_ascii_infile"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 117, in test_non_ascii_infile\n    infile = self._create_infile(data)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 117, in test_non_ascii_infile\n    infile = self._create_infile(data)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -257,7 +257,7 @@
         "test_json.test_tool.TestTool.test_sort_keys_flag"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 157, in test_sort_keys_flag\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 157, in test_sort_keys_flag\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     },
     {
@@ -317,7 +317,7 @@
         "test_json.test_tool.TestTool.test_writing_in_place"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 136, in test_writing_in_place\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 136, in test_writing_in_place\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_28_tmpæ'"
       ]
     }
   ],
