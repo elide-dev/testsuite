@@ -1,0 +1,250 @@
+name: "Check - Compliance"
+
+"on":
+  workflow_call:
+    inputs:
+      runner:
+        description: "Runner JSON, e.g. [\"self-hosted\",\"linux\"] or \"ubuntu-latest\""
+        required: false
+        default: '["self-hosted","linux"]'
+        type: string
+      elide_ref:
+        description: "Elide image tag/digest/ref; ignored when elide_tarball_url is set"
+        required: false
+        default: "nightly"
+        type: string
+      elide_tarball_url:
+        description: "Optional URL to a tarball containing bin/elide"
+        required: false
+        default: ""
+        type: string
+      suite_test262:
+        required: false
+        default: true
+        type: boolean
+      suite_wpt_wintertc:
+        required: false
+        default: true
+        type: boolean
+      suite_cpython_core:
+        required: false
+        default: true
+        type: boolean
+      suite_javac_jtreg:
+        required: false
+        default: true
+        type: boolean
+      include:
+        description: "Optional include glob passed to every selected suite"
+        required: false
+        default: ""
+        type: string
+      threads:
+        required: false
+        default: ""
+        type: string
+      suite_workers:
+        required: false
+        default: ""
+        type: string
+      concurrency_multiplier:
+        required: false
+        default: "2"
+        type: string
+      log:
+        required: false
+        default: true
+        type: boolean
+      failure_output:
+        required: false
+        default: "hide"
+        type: string
+      ratchet:
+        required: false
+        default: false
+        type: boolean
+      update_summaries:
+        required: false
+        default: false
+        type: boolean
+      apply_updates:
+        description: "Commit generated reports/ratchets/README updates to a branch"
+        required: false
+        default: false
+        type: boolean
+      update_branch:
+        required: false
+        default: "sync/compliance"
+        type: string
+      create_pr:
+        required: false
+        default: true
+        type: boolean
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  CI: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  compliance:
+    name: "Compliance"
+    runs-on: ${{ fromJSON(inputs.runner) }}
+    timeout-minutes: 720
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      ELIDE_REF: ${{ inputs.elide_ref }}
+      ELIDE_TARBALL_URL: ${{ inputs.elide_tarball_url }}
+      INCLUDE: ${{ inputs.include }}
+      THREADS: ${{ inputs.threads }}
+      SUITE_WORKERS: ${{ inputs.suite_workers }}
+      CONCURRENCY_MULTIPLIER: ${{ inputs.concurrency_multiplier }}
+      FAILURE_OUTPUT: ${{ inputs.failure_output }}
+      UPDATE_BRANCH: ${{ inputs.update_branch }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: "Setup: Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
+      - name: "Setup: Checkout"
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+          submodules: false
+          clean: false
+          persist-credentials: true
+
+      - name: "Setup: Bun"
+        uses: step-security/setup-bun@f6f5dadeac34f70c7828f731569e8d6e8330b8fb # v2.1.3
+        with:
+          bun-version: "1.3.14"
+
+      - name: "Setup: Select Suites"
+        id: suites
+        shell: bash
+        env:
+          SUITE_TEST262: ${{ inputs.suite_test262 }}
+          SUITE_WPT_WINTERTC: ${{ inputs.suite_wpt_wintertc }}
+          SUITE_CPYTHON_CORE: ${{ inputs.suite_cpython_core }}
+          SUITE_JAVAC_JTREG: ${{ inputs.suite_javac_jtreg }}
+        run: |
+          set -euo pipefail
+          suites=()
+          [[ "$SUITE_TEST262" == "true" ]] && suites+=(test262)
+          [[ "$SUITE_WPT_WINTERTC" == "true" ]] && suites+=(wpt-wintertc)
+          [[ "$SUITE_CPYTHON_CORE" == "true" ]] && suites+=(cpython-core)
+          [[ "$SUITE_JAVAC_JTREG" == "true" ]] && suites+=(javac-jtreg)
+          if [[ "${#suites[@]}" -eq 0 ]]; then
+            echo "No suites selected." >&2
+            exit 2
+          fi
+          csv="$(IFS=,; echo "${suites[*]}")"
+          echo "csv=$csv" >> "$GITHUB_OUTPUT"
+          echo "Selected suites: $csv"
+
+      - name: "Setup: Dependencies and Submodules"
+        env:
+          SELECTED_SUITES: ${{ steps.suites.outputs.csv }}
+        run: bun run setup --suite "$SELECTED_SUITES"
+
+      - name: "Setup: Elide Tarball"
+        id: elide
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$ELIDE_TARBALL_URL" ]]; then
+            echo "target=$ELIDE_REF" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          mkdir -p "$RUNNER_TEMP/elide-download" "$RUNNER_TEMP/elide-install"
+          archive="$RUNNER_TEMP/elide-download/elide.tar"
+          curl -fsSL "$ELIDE_TARBALL_URL" -o "$archive"
+          tar -xf "$archive" -C "$RUNNER_TEMP/elide-install"
+          elide_bin="$(find "$RUNNER_TEMP/elide-install" -path '*/bin/elide' -type f | head -n 1)"
+          if [[ -z "$elide_bin" ]]; then
+            echo "No bin/elide found in tarball: $ELIDE_TARBALL_URL" >&2
+            exit 2
+          fi
+          chmod +x "$elide_bin"
+          target="$(cd "$(dirname "$elide_bin")/.." && pwd)"
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
+      - name: "Run: Compliance Suites"
+        shell: bash
+        env:
+          ELIDE_TARGET: ${{ steps.elide.outputs.target }}
+          SELECTED_SUITES: ${{ steps.suites.outputs.csv }}
+        run: |
+          set -euo pipefail
+          args=(
+            bun run testsuite:ready
+            --elide "$ELIDE_TARGET"
+            --suite "$SELECTED_SUITES"
+            --concurrency-multiplier "$CONCURRENCY_MULTIPLIER"
+            --failure-output "$FAILURE_OUTPUT"
+          )
+          [[ "${{ inputs.log }}" == "true" ]] && args+=(--log)
+          [[ "${{ inputs.ratchet }}" == "true" ]] && args+=(--ratchet)
+          [[ "${{ inputs.update_summaries }}" == "true" ]] && args+=(--update-summaries)
+          [[ -n "$INCLUDE" ]] && args+=(--include "$INCLUDE")
+          [[ -n "$THREADS" ]] && args+=(--threads "$THREADS")
+          [[ -n "$SUITE_WORKERS" ]] && args+=(--suite-workers "$SUITE_WORKERS")
+          "${args[@]}"
+
+      - name: "Upload: Reports"
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: compliance-reports
+          path: |
+            reports/**
+            expectations/*.ratchet.toml
+            README.md
+          if-no-files-found: ignore
+
+      - name: "Update: Commit Generated Reports"
+        if: ${{ always() && inputs.apply_updates }}
+        id: update
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "elide-ci"
+          git config user.email "ci@elide.dev"
+          git add reports expectations/*.ratchet.toml README.md
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No generated changes to commit."
+            exit 0
+          fi
+
+          branch="${UPDATE_BRANCH:-sync/compliance}"
+          git checkout -B "$branch"
+          git commit -m "ci: update compliance reports"
+          git push --force-with-lease origin "$branch"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: "Update: Open Pull Request"
+        if: ${{ always() && inputs.apply_updates && inputs.create_pr && steps.update.outputs.changed == 'true' }}
+        shell: bash
+        env:
+          BRANCH: ${{ steps.update.outputs.branch }}
+        run: |
+          set -euo pipefail
+          title="ci: update compliance reports"
+          body="Automated compliance report update from ${GITHUB_WORKFLOW} run ${GITHUB_RUN_ID}."
+          existing="$(gh pr list --head "$BRANCH" --state open --json url --jq '.[0].url // ""')"
+          if [[ -n "$existing" ]]; then
+            gh pr edit "$existing" --title "$title" --body "$body"
+            echo "Updated PR: $existing"
+          else
+            gh pr create --base "${GITHUB_REF_NAME:-main}" --head "$BRANCH" --title "$title" --body "$body"
+          fi

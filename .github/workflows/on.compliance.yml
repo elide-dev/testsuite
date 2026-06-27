@@ -1,0 +1,185 @@
+name: "Manual - Compliance"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: "Runner JSON"
+        required: false
+        default: '["self-hosted","linux"]'
+        type: string
+      elide_ref:
+        description: "Elide image tag/digest/ref; ignored when tarball URL is set"
+        required: false
+        default: "nightly"
+        type: string
+      elide_tarball_url:
+        description: "Optional URL to a tarball containing bin/elide"
+        required: false
+        default: ""
+        type: string
+      suite_test262:
+        description: "Run Test262"
+        required: false
+        default: true
+        type: boolean
+      suite_wpt_wintertc:
+        description: "Run WPT WinterTC"
+        required: false
+        default: true
+        type: boolean
+      suite_cpython_core:
+        description: "Run CPython core"
+        required: false
+        default: true
+        type: boolean
+      suite_javac_jtreg:
+        description: "Run javac jtreg"
+        required: false
+        default: true
+        type: boolean
+      include:
+        description: "Optional include glob passed to every selected suite"
+        required: false
+        default: ""
+        type: string
+      threads:
+        description: "Optional per-suite thread override"
+        required: false
+        default: ""
+        type: string
+      suite_workers:
+        description: "Optional suite worker override"
+        required: false
+        default: ""
+        type: string
+      ratchet:
+        description: "Update ratchet baselines"
+        required: false
+        default: false
+        type: boolean
+      update_summaries:
+        description: "Refresh README/report summaries"
+        required: false
+        default: false
+        type: boolean
+      apply_updates:
+        description: "Commit generated updates to a branch"
+        required: false
+        default: false
+        type: boolean
+      update_branch:
+        description: "Branch for generated updates"
+        required: false
+        default: "sync/compliance"
+        type: string
+  repository_dispatch:
+    types:
+      - compliance
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "manual-compliance-${{ github.run_id }}"
+  cancel-in-progress: false
+
+jobs:
+  inputs:
+    name: "Inputs"
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.resolve.outputs.runner }}
+      elide_ref: ${{ steps.resolve.outputs.elide_ref }}
+      elide_tarball_url: ${{ steps.resolve.outputs.elide_tarball_url }}
+      suite_test262: ${{ steps.resolve.outputs.suite_test262 }}
+      suite_wpt_wintertc: ${{ steps.resolve.outputs.suite_wpt_wintertc }}
+      suite_cpython_core: ${{ steps.resolve.outputs.suite_cpython_core }}
+      suite_javac_jtreg: ${{ steps.resolve.outputs.suite_javac_jtreg }}
+      include: ${{ steps.resolve.outputs.include }}
+      threads: ${{ steps.resolve.outputs.threads }}
+      suite_workers: ${{ steps.resolve.outputs.suite_workers }}
+      ratchet: ${{ steps.resolve.outputs.ratchet }}
+      update_summaries: ${{ steps.resolve.outputs.update_summaries }}
+      apply_updates: ${{ steps.resolve.outputs.apply_updates }}
+      update_branch: ${{ steps.resolve.outputs.update_branch }}
+    steps:
+      - name: "Resolve Inputs"
+        id: resolve
+        shell: python
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          import json
+          import os
+
+          with open(os.environ["GITHUB_EVENT_PATH"], "r", encoding="utf-8") as fh:
+            event = json.load(fh)
+          manual = event.get("inputs") or {}
+          payload = event.get("client_payload") or {}
+          suites = payload.get("suites") or manual.get("suites") or []
+          if isinstance(suites, str):
+            suites = [part.strip() for part in suites.split(",") if part.strip()]
+          suites = set(suites)
+
+          def value(name, default=""):
+            return payload.get(name, manual.get(name, default))
+
+          def flag(name, default=False, suite_name=None):
+            raw = value(name, default)
+            if suite_name and suites:
+              raw = suite_name in suites
+            if isinstance(raw, bool):
+              return raw
+            return str(raw).lower() in ("1", "true", "yes", "on")
+
+          outputs = {
+            "runner": value("runner", "[\"self-hosted\",\"linux\"]"),
+            "elide_ref": value("elide_ref", "nightly"),
+            "elide_tarball_url": value("elide_tarball_url", ""),
+            "suite_test262": flag("suite_test262", True, "test262"),
+            "suite_wpt_wintertc": flag("suite_wpt_wintertc", True, "wpt-wintertc"),
+            "suite_cpython_core": flag("suite_cpython_core", True, "cpython-core"),
+            "suite_javac_jtreg": flag("suite_javac_jtreg", True, "javac-jtreg"),
+            "include": value("include", ""),
+            "threads": value("threads", ""),
+            "suite_workers": value("suite_workers", ""),
+            "ratchet": flag("ratchet", False),
+            "update_summaries": flag("update_summaries", False),
+            "apply_updates": flag("apply_updates", False),
+            "update_branch": value("update_branch", "sync/compliance"),
+          }
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+            for key, val in outputs.items():
+              if isinstance(val, bool):
+                val = "true" if val else "false"
+              out.write(f"{key}={val}\n")
+
+  compliance:
+    name: "Compliance"
+    needs: [inputs]
+    uses: ./.github/workflows/check.compliance.yml
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      runner: ${{ needs.inputs.outputs.runner }}
+      elide_ref: ${{ needs.inputs.outputs.elide_ref }}
+      elide_tarball_url: ${{ needs.inputs.outputs.elide_tarball_url }}
+      suite_test262: ${{ fromJSON(needs.inputs.outputs.suite_test262) }}
+      suite_wpt_wintertc: ${{ fromJSON(needs.inputs.outputs.suite_wpt_wintertc) }}
+      suite_cpython_core: ${{ fromJSON(needs.inputs.outputs.suite_cpython_core) }}
+      suite_javac_jtreg: ${{ fromJSON(needs.inputs.outputs.suite_javac_jtreg) }}
+      include: ${{ needs.inputs.outputs.include }}
+      threads: ${{ needs.inputs.outputs.threads }}
+      suite_workers: ${{ needs.inputs.outputs.suite_workers }}
+      log: true
+      failure_output: "hide"
+      ratchet: ${{ fromJSON(needs.inputs.outputs.ratchet) }}
+      update_summaries: ${{ fromJSON(needs.inputs.outputs.update_summaries) }}
+      apply_updates: ${{ fromJSON(needs.inputs.outputs.apply_updates) }}
+      update_branch: ${{ needs.inputs.outputs.update_branch }}
+      create_pr: true
