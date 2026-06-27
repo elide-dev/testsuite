@@ -1,5 +1,6 @@
 import { test, expect } from "bun:test";
-import { parseArgs } from "./cli";
+import { resolve } from "node:path";
+import { buildAdapterContext, parseArgs } from "./cli";
 import { ADAPTERS } from "./adapters";
 
 test("parses run subcommand and options", () => {
@@ -29,4 +30,21 @@ test("parses the --log flag", () => {
 
 test("exports the test262 adapter", () => {
   expect(ADAPTERS.test262.id).toBe("test262");
+});
+
+test("builds suitePath from registry path, not workload id", () => {
+  const o = { ...parseArgs(["run", "placeholder"]), suiteRoot: "/work/suites" };
+  const ctx = buildAdapterContext(
+    o,
+    {
+      id: "checkout-alias",
+      path: "suites/test262",
+      settings: { include: ["test/**/*.js"] },
+    },
+    { semver: "1.0.0", digest: "abc123" },
+    { entries: [], ratchet: new Set() },
+  );
+
+  expect(ctx.suitePath).toBe("/work/suites/test262");
+  expect(ctx.workspacePath).toBe(resolve(".harness/work/checkout-alias"));
 });

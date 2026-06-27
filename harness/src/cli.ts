@@ -1,9 +1,11 @@
 import { mkdirSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { ADAPTERS } from "./adapters";
+import type { AdapterContext } from "./adapters/types";
 import { loadRegistry } from "./registry";
 import { resolveIdentity } from "./elide";
 import { loadExpectations, skipGlobs } from "./expectations/load";
+import type { Expectations } from "./expectations/load";
 import { compare } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
@@ -71,6 +73,31 @@ const MARK: Record<string, string> = {
   skip: "⊘",
 };
 
+export function suitePathForWorkload(suiteRoot: string, workloadPath: string): string {
+  return resolve(suiteRoot, relative(resolve("suites"), resolve(workloadPath)));
+}
+
+export function buildAdapterContext(
+  o: CliOptions,
+  wl: Pick<{ id: string; path: string; settings: Record<string, unknown> }, "id" | "path" | "settings">,
+  identity: Awaited<ReturnType<typeof resolveIdentity>>,
+  exp: Expectations,
+  workspacePath = resolve(".harness/work", wl.id),
+): AdapterContext {
+  return {
+    elide: identity,
+    elidePath: o.elidePath,
+    suitePath: suitePathForWorkload(o.suiteRoot, wl.path),
+    include: o.include
+      ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
+      : (wl.settings.include as string[]) ?? ["test/**/*.js"],
+    skipGlobs: skipGlobs(exp),
+    threads: o.threads,
+    settings: wl.settings,
+    workspacePath,
+  };
+}
+
 export async function main(o: CliOptions): Promise<number> {
   const registry = loadRegistry(resolve("registry.toml"));
   const wl = registry.find((w) => w.id === o.workload);
@@ -84,19 +111,7 @@ export async function main(o: CliOptions): Promise<number> {
 
   const workspacePath = resolve(".harness/work", wl.id);
   mkdirSync(workspacePath, { recursive: true });
-
-  const ctx = {
-    elide: identity,
-    elidePath: o.elidePath,
-    suitePath: join(o.suiteRoot, wl.id.replace(/^.*\//, "")),
-    include: o.include
-      ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
-      : (wl.settings.include as string[]) ?? ["test/**/*.js"],
-    skipGlobs: skipGlobs(exp),
-    threads: o.threads,
-    settings: wl.settings,
-    workspacePath,
-  };
+  const ctx = buildAdapterContext(o, wl, identity, exp, workspacePath);
 
   const results: Result[] = [];
   for await (const r of adapter.run(ctx)) {
