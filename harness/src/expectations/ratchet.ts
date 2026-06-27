@@ -17,12 +17,12 @@ export function loadRatchet(path: string): Set<string> {
 
 // Failing test ids not already covered by hand-curated [skip]/[fail] globs.
 export function ratchetCandidates(tests: TestResult[], exp: Expectations): string[] {
-  const out: string[] = [];
+  const out = new Set<string>();
   for (const t of tests) {
     if (t.status !== "fail" && t.status !== "error") continue;
-    if (expectedFor(exp, expectationKeysOf(t)) === "pass") out.push(t.id);
+    if (expectedFor(exp, expectationKeysOf(t)) === "pass") out.add(t.id);
   }
-  return out.sort();
+  return [...out].sort();
 }
 
 function tomlBasicString(value: string): string {
@@ -31,6 +31,6 @@ function tomlBasicString(value: string): string {
 
 export function writeRatchet(path: string, ids: string[], header: string): void {
   const lines = [header, "", "[fail]"];
-  for (const id of [...ids].sort()) lines.push(`${tomlBasicString(id)} = ${tomlBasicString("")}`);
+  for (const id of [...new Set(ids)].sort()) lines.push(`${tomlBasicString(id)} = ${tomlBasicString("")}`);
   writeFileSync(path, lines.join("\n") + "\n", "utf8");
 }

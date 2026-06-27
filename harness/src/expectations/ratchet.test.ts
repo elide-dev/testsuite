@@ -32,6 +32,14 @@ test("writeRatchet handles WPT-style ids with quotes and backslashes", () => {
   expect(set.has(id)).toBe(true);
 });
 
+test("writeRatchet dedupes repeated ids before writing TOML", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ratchet-"));
+  const p = join(dir, "cpython-core.ratchet.toml");
+  const id = "test_json.test_tool.TestTool.test_ensure_ascii_default";
+  writeRatchet(p, [id, id], "# header");
+  expect(loadRatchet(p)).toEqual(new Set([id]));
+});
+
 test("ratchetCandidates = failing ids not covered by skip/[fail] globs", () => {
   const exp = parseExpectations(`
 [skip]
@@ -46,6 +54,13 @@ test("ratchetCandidates = failing ids not covered by skip/[fail] globs", () => {
     mk("test/ok/d.js default", "pass"), // passing
   ];
   expect(ratchetCandidates(tests, exp)).toEqual(["test/new/a.js default"]);
+});
+
+test("ratchetCandidates dedupes repeated failing ids", () => {
+  const exp = parseExpectations("");
+  expect(ratchetCandidates([mk("test_json.duplicate", "error"), mk("test_json.duplicate", "fail")], exp)).toEqual([
+    "test_json.duplicate",
+  ]);
 });
 
 test("ratchetCandidates respects CPython module-level fail expectations via upstreamPath", () => {
