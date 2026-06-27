@@ -1,7 +1,8 @@
 import { test, expect } from "bun:test";
 import { resolve } from "node:path";
-import { buildAdapterContext, parseArgs, REPO_ROOT } from "./cli";
+import { buildAdapterContext, parseArgs, REGISTRY_PATH, REPO_ROOT, WORK_DIR } from "./cli";
 import { ADAPTERS } from "./adapters";
+import { loadRegistry } from "./registry";
 
 test("parses run subcommand and options", () => {
   const o = parseArgs([
@@ -47,7 +48,7 @@ test("builds suitePath from registry path, not workload id", () => {
 
   expect(ctx.suitePath).toBe("/work/suites/test262");
   expect(ctx.repoRoot).toBe(REPO_ROOT);
-  expect(ctx.workspacePath).toBe(resolve(".harness/work/checkout-alias"));
+  expect(ctx.workspacePath).toBe(resolve(WORK_DIR, "checkout-alias"));
 });
 
 test("builds wpt context with repo-root manifest and all-files include", () => {
@@ -68,4 +69,15 @@ test("builds wpt context with repo-root manifest and all-files include", () => {
   expect(ctx.include).toEqual(["**/*"]);
   expect(ctx.settings.manifest).toBe(resolve(REPO_ROOT, "manifests/wintertc-wpt-2025.toml"));
   expect(ctx.repoRoot).toBe(REPO_ROOT);
+});
+
+test("loads registry path from repo root when cwd is harness", () => {
+  const cwd = process.cwd();
+  process.chdir(resolve(REPO_ROOT, "harness"));
+  try {
+    const ws = loadRegistry(REGISTRY_PATH);
+    expect(ws.find((w) => w.id === "wpt-wintertc")?.path).toBe("suites/wpt");
+  } finally {
+    process.chdir(cwd);
+  }
 });

@@ -305,3 +305,27 @@ Result:
 $ tsc --noEmit
 Warning: Ignoring extra certs from `/workspace/elide/apps/buildless/app/base/pki/root-ecc.crt`, load failed: error:80000002:system library::No such file or directory
 ```
+
+## Task 2 latest review fix: CLI repo-root defaults
+
+Updated `harness/src/cli.ts` so registry loading, report ingestion defaults, workspace paths, and suite path derivation use repo-root constants instead of ambient current working directory. This closes the `cd harness` entrypoint gap flagged in review.
+
+Added a focused regression in `harness/src/cli.test.ts` that changes cwd to `REPO_ROOT/harness` and still loads the repository registry via `REGISTRY_PATH`.
+
+### Verification rerun
+
+Focused tests run from `harness/`:
+
+```bash
+bun test src/adapters/wpt-wintertc.test.ts src/manifest.test.ts src/registry.test.ts src/cli.test.ts
+```
+
+Result: 14 pass, 0 fail.
+
+Typecheck run from `harness/`:
+
+```bash
+bun run typecheck
+```
+
+Result: exit 0.

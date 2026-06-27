@@ -35,6 +35,9 @@ export interface CliOptions {
 }
 
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
+export const REGISTRY_PATH = resolve(REPO_ROOT, "registry.toml");
+export const REPORTS_DIR = resolve(REPO_ROOT, "reports");
+export const WORK_DIR = resolve(REPO_ROOT, ".harness/work");
 
 export function parseArgs(argv: string[]): CliOptions {
   const [command, workload, ...rest] = argv;
@@ -48,7 +51,7 @@ export function parseArgs(argv: string[]): CliOptions {
     elidePath: get("--elide-path", "/opt/elide/bin/elide"),
     digest: get("--digest", "local"),
     suiteRoot: get("--suite-root", resolve(REPO_ROOT, "suites")),
-    reportsDir: get("--reports", resolve(REPO_ROOT, "reports")),
+    reportsDir: get("--reports", REPORTS_DIR),
     expectationsDir: get("--expectations", resolve(REPO_ROOT, "expectations")),
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
@@ -60,7 +63,7 @@ export function parseArgs(argv: string[]): CliOptions {
 
 const DB_PATH = resolve(REPO_ROOT, ".harness/results.sqlite");
 
-export async function dbBuild(reportsDir = resolve("reports")): Promise<number> {
+export async function dbBuild(reportsDir = REPORTS_DIR): Promise<number> {
   const db = openDb(DB_PATH);
   resetDb(db);
   const n = await ingestAll(db, reportsDir, { force: true });
@@ -76,7 +79,9 @@ const MARK: Record<string, string> = {
 };
 
 export function suitePathForWorkload(suiteRoot: string, workloadPath: string): string {
-  return resolve(suiteRoot, relative(resolve("suites"), resolve(workloadPath)));
+  const suiteBase = resolve(REPO_ROOT, "suites");
+  const absWorkloadPath = isAbsolute(workloadPath) ? workloadPath : resolve(REPO_ROOT, workloadPath);
+  return resolve(suiteRoot, relative(suiteBase, absWorkloadPath));
 }
 
 export function buildAdapterContext(
@@ -84,7 +89,7 @@ export function buildAdapterContext(
   wl: Pick<{ id: string; path: string; settings: Record<string, unknown> }, "id" | "path" | "settings">,
   identity: Awaited<ReturnType<typeof resolveIdentity>>,
   exp: Expectations,
-  workspacePath = resolve(".harness/work", wl.id),
+  workspacePath = resolve(WORK_DIR, wl.id),
 ): AdapterContext {
   const settings = { ...wl.settings };
   if (typeof settings.manifest === "string" && !isAbsolute(settings.manifest)) {
@@ -106,7 +111,7 @@ export function buildAdapterContext(
 }
 
 export async function main(o: CliOptions): Promise<number> {
-  const registry = loadRegistry(resolve("registry.toml"));
+  const registry = loadRegistry(REGISTRY_PATH);
   const wl = registry.find((w) => w.id === o.workload);
   if (!wl) throw new Error(`unknown workload: ${o.workload}`);
   const adapter = ADAPTERS[wl.adapter];
@@ -116,7 +121,7 @@ export async function main(o: CliOptions): Promise<number> {
   const exp = loadExpectations(join(o.expectationsDir, `${wl.id}.toml`));
   const startedAt = new Date().toISOString();
 
-  const workspacePath = resolve(".harness/work", wl.id);
+  const workspacePath = resolve(WORK_DIR, wl.id);
   mkdirSync(workspacePath, { recursive: true });
   const ctx = buildAdapterContext(o, wl, identity, exp, workspacePath);
 
@@ -212,7 +217,7 @@ if (import.meta.main) {
       }
       break;
     case "diff": {
-      const reportsDir = resolve("reports");
+      const reportsDir = REPORTS_DIR;
       const db = openDb(DB_PATH);
       await ingestAll(db, reportsDir);
       const workload = "test262";
@@ -231,7 +236,7 @@ if (import.meta.main) {
     }
     case "impact": {
       const db = openDb(DB_PATH);
-      await ingestAll(db, resolve("reports"));
+      await ingestAll(db, REPORTS_DIR);
       const where = argv[1]
         ? "WHERE workload = 'test262' AND semver = ?" + (argv[2] ? " AND digest LIKE ?||'%'" : "")
         : "WHERE workload = 'test262'";
@@ -263,7 +268,7 @@ if (import.meta.main) {
       // rejected at the engine level regardless of statement shape (defeats
       // multi-statement / `WITH ... DELETE` allowlist escapes).
       const wdb = openDb(DB_PATH);
-      await ingestAll(wdb, resolve("reports"));
+      await ingestAll(wdb, REPORTS_DIR);
       wdb.close();
       const ro = new Database(DB_PATH, { readonly: true });
       try {
