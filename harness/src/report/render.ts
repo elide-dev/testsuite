@@ -25,6 +25,15 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
     `| ${pass} | ${c.counts.fail} | ${c.counts.error} | ${c.counts.skip} | ${c.regressions.length} | ${c.newPasses.length} |`,
     "",
   );
+  if (meta.workload !== "test262" && c.observed.length) {
+    lines.push(`## Observed cases (${c.observed.length})`, "");
+    for (const r of c.observed.slice(0, 200)) {
+      const detail = r.status === "pass" ? "pass" : `${r.status}${r.message ? ` — ${r.message}` : ""}`;
+      lines.push(`- \`${r.id}\` — ${detail}`);
+    }
+    if (c.observed.length > 200) lines.push(`- …and ${c.observed.length - 200} more`);
+    lines.push("");
+  }
   if (c.regressions.length) {
     lines.push(`## ❌ Regressions (${c.regressions.length})`, "");
     for (const r of c.regressions.slice(0, 200))

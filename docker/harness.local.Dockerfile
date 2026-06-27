@@ -3,6 +3,15 @@
 # node:25-trixie (Debian 13, glibc 2.41) — Elide's binary requires GLIBC >= 2.39.
 FROM node:25-trixie
 RUN npm install -g bun@1
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      default-jdk \
+      git \
+      jtreg7 \
+      python3 \
+ && rm -rf /var/lib/apt/lists/*
 COPY .elide-install /opt/elide
 RUN chmod +x /opt/elide/bin/elide
 ENV PATH=/opt/elide/bin:$PATH

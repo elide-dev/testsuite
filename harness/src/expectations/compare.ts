@@ -5,6 +5,7 @@ import type { TestResult } from "../results/schema";
 export interface Comparison {
   regressions: TestResult[]; // expected pass, actual fail/error
   newPasses: TestResult[]; // expected fail, actual pass
+  observed: TestResult[]; // non-skipped tests seen during the run
   counts: { pass: number; fail: number; skip: number; error: number; total: number };
 }
 
@@ -40,6 +41,7 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
   const c: Comparison = {
     regressions: [],
     newPasses: [],
+    observed: [],
     counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0 },
   };
   for (const r of results) {
@@ -53,6 +55,7 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
       c.counts.skip++;
       continue;
     }
+    c.observed.push(r);
     const expected: ExpectedStatus =
       globExpected === "fail" || exp.ratchet.has(r.id) ? "fail" : "pass";
     if (r.status === "pass") {

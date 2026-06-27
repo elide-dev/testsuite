@@ -91,7 +91,11 @@ fi
 log "preflight ok: elide $(printf '%s' "$PREFLIGHT" | head -1)"
 
 # ---- run the suite -----------------------------------------------------------
-SUITE_VERSION="$(git -C "$ROOT/suites/$SUITE" rev-parse HEAD 2>/dev/null || echo unknown)"
+if [[ -d "$ROOT/suites/$SUITE/.git" || -f "$ROOT/suites/$SUITE/.git" ]]; then
+  SUITE_VERSION="$(git -C "$ROOT/suites/$SUITE" rev-parse HEAD 2>/dev/null || echo unknown)"
+else
+  SUITE_VERSION="unknown"
+fi
 # --ratchet writes expectations/<suite>.ratchet.toml back to the host, so the
 # expectations mount must be writable for ratchet runs (read-only otherwise).
 EXP_MODE=ro
@@ -107,6 +111,7 @@ docker run --rm ${PLAT[@]+"${PLAT[@]}"} \
   -v "$ROOT/registry.toml:/work/registry.toml:ro" \
   "$IMG" \
   run "$SUITE" \
+  --registry /work/registry.toml \
   --elide-path /opt/elide/bin/elide \
   --digest "$DIGEST" \
   --suite-root /work/suites \

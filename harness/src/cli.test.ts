@@ -29,6 +29,10 @@ test("parses the --log flag", () => {
   expect(parseArgs(["run", "test262", "--log"]).log).toBe(true);
 });
 
+test("parses an explicit registry path override", () => {
+  expect(parseArgs(["run", "test262", "--registry", "/work/registry.toml"]).registryPath).toBe("/work/registry.toml");
+});
+
 test("exports the test262 adapter", () => {
   expect(ADAPTERS.test262.id).toBe("test262");
 });

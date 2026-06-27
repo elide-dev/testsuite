@@ -5,6 +5,12 @@ This repository runs upstream conformance test suites against pinned builds of
 **Test262** (TC39's JavaScript conformance suite) is the first suite; the
 harness is workload-neutral so more suites — and, later, benchmarks — slot in.
 
+Next suites are added in this order:
+
+1. `wpt-wintertc` - a sparse Web Platform Tests subset for WinterTC / ECMA-429 pure in-process APIs.
+2. `cpython-core` - CPython 3.12 pure-core language and standard-library tests.
+3. `javac-jtreg` - OpenJDK langtools javac tests through jtreg, compiling with Elide and initially running generated programs with a regular JDK.
+
 Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev/WHIPLASH/issues/1172),
 [Test262 (WHIPLASH#1173)](https://github.com/elide-dev/WHIPLASH/issues/1173).
 
@@ -36,6 +42,10 @@ THREADS=8 ./bin/run --elide nightly --suite test262 --log
 
 # A quick slice (finishes in seconds) — scope to any glob
 ./bin/run --elide nightly --log --include 'test/language/types/boolean/**/*.js'
+
+./bin/run --elide nightly --suite wpt-wintertc --threads 8
+./bin/run --elide nightly --suite cpython-core --threads 8
+./bin/run --elide nightly --suite javac-jtreg --threads 4
 
 # Pin a specific build: image tag, digest, or a local Elide install directory
 ./bin/run --elide ghcr.io/elide-dev/elide@sha256:…
@@ -104,6 +114,8 @@ static web UI; the SQLite DB is a disposable local index.
 
 ```
 suites/test262/        Test262 (git submodule)
+manifests/             curated suite slices for WPT, CPython, and jtreg
+suites/drivers/        small bridge/wrapper programs used by external suites
 expectations/          baseline (test262.toml) + machine ratchet (test262.ratchet.toml)
 reports/               committed per-version reports + top-level index
 harness/               the Bun/TypeScript harness (src/, fixtures/, patches/)

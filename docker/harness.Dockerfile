@@ -6,6 +6,15 @@ FROM ${ELIDE_REF} AS elide
 # so an older base (e.g. the default bookworm/2.36) cannot run the copied-in binary.
 FROM node:25-trixie
 RUN npm install -g bun@1
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      default-jdk \
+      git \
+      jtreg7 \
+      python3 \
+ && rm -rf /var/lib/apt/lists/*
 COPY --from=elide /opt/elide /opt/elide
 ENV PATH=/opt/elide/bin:$PATH
 

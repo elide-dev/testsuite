@@ -22,6 +22,7 @@ import { computeImpact, renderImpactMd } from "./analyze/impact";
 export interface CliOptions {
   command: string;
   workload: string;
+  registryPath: string;
   elidePath: string;
   digest: string;
   suiteRoot: string;
@@ -48,6 +49,7 @@ export function parseArgs(argv: string[]): CliOptions {
   return {
     command,
     workload,
+    registryPath: get("--registry", REGISTRY_PATH),
     elidePath: get("--elide-path", "/opt/elide/bin/elide"),
     digest: get("--digest", "local"),
     suiteRoot: get("--suite-root", resolve(REPO_ROOT, "suites")),
@@ -111,7 +113,7 @@ export function buildAdapterContext(
 }
 
 export async function main(o: CliOptions): Promise<number> {
-  const registry = loadRegistry(REGISTRY_PATH);
+  const registry = loadRegistry(o.registryPath);
   const wl = registry.find((w) => w.id === o.workload);
   if (!wl) throw new Error(`unknown workload: ${o.workload}`);
   const adapter = ADAPTERS[wl.adapter];

@@ -1,7 +1,7 @@
 import { test, expect } from "bun:test";
 import { renderSuiteReport, renderTopIndex } from "./render";
-import type { RunMeta } from "../results/schema";
-import type { Comparison } from "../expectations/compare";
+import type { RunMeta, TestResult } from "../results/schema";
+import { compare, type Comparison } from "../expectations/compare";
 
 const meta: RunMeta = {
   workload: "test262",
@@ -13,6 +13,10 @@ const meta: RunMeta = {
 const cmp: Comparison = {
   regressions: [{ kind: "test", id: "language/r.js default", status: "fail", message: "x" }],
   newPasses: [{ kind: "test", id: "built-ins/n.js default", status: "pass" }],
+  observed: [
+    { kind: "test", id: "language/r.js default", status: "fail", message: "x" },
+    { kind: "test", id: "built-ins/n.js default", status: "pass" },
+  ],
   counts: { pass: 90, fail: 5, skip: 5, error: 0, total: 100 },
 };
 
@@ -23,6 +27,25 @@ test("suite report includes pass rate, regressions, new passes", () => {
   expect(md).toContain("90/100");
   expect(md).toContain("language/r.js default");
   expect(md).toContain("built-ins/n.js default");
+});
+
+test("renders non-test262 suite reports with normalized counts", () => {
+  const meta: RunMeta = {
+    workload: "wpt-wintertc",
+    kind: "test",
+    elide: { semver: "1.0.0", digest: "abc123" },
+    startedAt: "2026-06-27T00:00:00.000Z",
+    finishedAt: "2026-06-27T00:01:00.000Z",
+    suiteVersion: "wpt-sparse",
+  };
+  const tests: TestResult[] = [
+    { kind: "test", id: "url/a.any.js :: a", status: "pass", meta: { category: "url" } },
+    { kind: "test", id: "encoding/b.any.js :: b", status: "fail", message: "bad", meta: { category: "encoding" } },
+  ];
+  const md = renderSuiteReport(meta, compare(tests, { entries: [], ratchet: new Set() }));
+  expect(md).toContain("# wpt-wintertc");
+  expect(md).toContain("Pass rate: 1/2");
+  expect(md).toContain("url/a.any.js :: a");
 });
 
 test("top index renders a version matrix with a checkmark when no regressions", () => {
