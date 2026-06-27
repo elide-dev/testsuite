@@ -1,5 +1,5 @@
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
@@ -7,10 +7,10 @@ import { loadManifest } from "../manifest";
 import { runProcess, type ProcessRunResult } from "./process";
 
 const STATUS: Record<string, TestResult["status"]> = {
-  Passed: "pass",
-  Failed: "fail",
-  Error: "error",
-  "Not run": "skip",
+  passed: "pass",
+  failed: "fail",
+  error: "error",
+  "not run": "skip",
 };
 
 function categoryOf(path: string): string {
@@ -124,6 +124,11 @@ function configuredJavaRunner(settings: Record<string, unknown>): string {
   return String(settings.javaRunner ?? "").trim() || "java";
 }
 
+function normalizeJavaRunner(jdkHome: string, javaRunner: string): string {
+  if (javaRunner === "java") return join(jdkHome, "bin", "java");
+  return javaRunner;
+}
+
 export async function resolveJavaExecution(
   settings: Record<string, unknown>,
   env: NodeJS.ProcessEnv = process.env,
@@ -132,9 +137,10 @@ export async function resolveJavaExecution(
   const explicitJdkHome = String(settings.jdkHome ?? "").trim();
   const envJdkHome = String(env.JAVA_HOME ?? "").trim();
   if (explicitJdkHome) {
+    const jdkHome = validateJdkHome(explicitJdkHome);
     return {
-      jdkHome: validateJdkHome(explicitJdkHome),
-      javaRunner: configuredJavaRunner(settings),
+      jdkHome,
+      javaRunner: normalizeJavaRunner(jdkHome, configuredJavaRunner(settings)),
     };
   }
 
@@ -149,9 +155,10 @@ export async function resolveJavaExecution(
       });
       const derived = parseJavaHome(`${result.stdout}\n${result.stderr}`);
       if (derived) {
+        const jdkHome = validateJdkHome(derived);
         return {
-          jdkHome: validateJdkHome(derived),
-          javaRunner,
+          jdkHome,
+          javaRunner: normalizeJavaRunner(jdkHome, javaRunner),
         };
       }
     } catch {
@@ -210,16 +217,60 @@ export async function createJtregRunLayout(ctx: AdapterContext, realJdkHome?: st
   return { runRoot, workDir, reportDir, wrapperJdk };
 }
 
+function copyTestRootWithoutGroups(source: string, target: string): void {
+  const content = readFileSync(source, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^groups\s*=.*$/, "# groups disabled for sparse harness runs"))
+    .join("\n");
+  writeFileSync(target, content);
+}
+
+function symlinkIfPresent(source: string, target: string): void {
+  if (!existsSync(source)) return;
+  symlinkSync(source, target);
+}
+
+function copySelectedLangtoolsPaths(sourceLangtoolsRoot: string, patchedLangtoolsRoot: string, tests: string[]): void {
+  for (const test of tests) {
+    const source = join(sourceLangtoolsRoot, test);
+    const target = join(patchedLangtoolsRoot, test);
+    mkdirSync(dirname(target), { recursive: true });
+    cpSync(source, target, { recursive: true });
+  }
+}
+
+export function createSparseLangtoolsRoot(ctx: AdapterContext, runRoot: string, tests: string[]): string {
+  const sourceLangtoolsRoot = join(ctx.suitePath, "test/langtools");
+  const patchedTestRoot = join(runRoot, "suite/test");
+  const patchedLangtoolsRoot = join(patchedTestRoot, "langtools");
+  mkdirSync(patchedLangtoolsRoot, { recursive: true });
+
+  copyTestRootWithoutGroups(join(sourceLangtoolsRoot, "TEST.ROOT"), join(patchedLangtoolsRoot, "TEST.ROOT"));
+  symlinkIfPresent(join(sourceLangtoolsRoot, "ProblemList.txt"), join(patchedLangtoolsRoot, "ProblemList.txt"));
+  copySelectedLangtoolsPaths(sourceLangtoolsRoot, patchedLangtoolsRoot, tests);
+  symlinkIfPresent(join(ctx.suitePath, "test/lib"), join(patchedTestRoot, "lib"));
+  symlinkIfPresent(join(ctx.suitePath, "test/jtreg-ext"), join(patchedTestRoot, "jtreg-ext"));
+
+  return patchedLangtoolsRoot;
+}
+
 export function parseJtregSummary(text: string): TestResult[] {
   const results: TestResult[] = [];
   for (const line of text.split(/\r?\n/)) {
-    const match = /^(Passed|Failed|Error|Not run):\s+(.+)$/.exec(line.trim());
-    if (!match) continue;
-    const path = match[2];
+    const trimmed = line.trim();
+    const statusFirst = /^(Passed|Failed|Error|Not run):\s+(.+)$/i.exec(trimmed);
+    const pathFirst = /^(.+?)\s+(Passed|Failed|Error|Not run)\.\s*(.*)$/i.exec(trimmed);
+    const statusName = statusFirst?.[1] ?? pathFirst?.[2];
+    const path = statusFirst?.[2] ?? pathFirst?.[1];
+    const message = pathFirst?.[3]?.trim();
+    if (!statusName || !path) continue;
+    const status = STATUS[statusName.toLowerCase()];
+    if (!status) continue;
     results.push({
       kind: "test",
       id: path,
-      status: STATUS[match[1]],
+      status,
+      ...(message ? { message } : {}),
       meta: {
         suite: "javac-jtreg",
         upstreamPath: path,
@@ -277,7 +328,8 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
     return;
   }
   const javaExecution = await resolveJavaExecution(ctx.settings, process.env, ctx.repoRoot);
-  const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
+  const { runRoot, workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
+  const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
 
   const result = await runProcess(
@@ -288,10 +340,10 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
       `-jdk:${wrapperJdk}`,
       `-w:${workDir}`,
       `-r:${reportDir}`,
-      ...tests.map((test) => join(ctx.suitePath, "test/langtools", test)),
+      ...tests.map((test) => join(jtregLangtoolsRoot, test)),
     ],
     {
-      cwd: ctx.suitePath,
+      cwd: jtregLangtoolsRoot,
       timeoutMs: Number(ctx.settings.timeoutMs ?? 300_000),
       env: {
         ELIDE_JAVAC: ctx.elidePath,
@@ -308,7 +360,11 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
 
   const parsedSummary = parseJtregSummary(readFileSync(summaryPath, "utf8"));
   if (parsedSummary.length === 0) {
-    yield runnerErrorResult("jtreg summary contained no parseable test results", result.durationMs);
+    const summarySnippet = readFileSync(summaryPath, "utf8").trim().split(/\r?\n/).slice(0, 20).join("\n");
+    yield runnerErrorResult(
+      `jtreg summary contained no parseable test results${summarySnippet ? `:\n${summarySnippet}` : ""}`,
+      result.durationMs,
+    );
     return;
   }
 

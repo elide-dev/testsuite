@@ -37,6 +37,21 @@ function setupJtregFixture(
   mkdirSync(workspacePath, { recursive: true });
   mkdirSync(join(suitePath, "test/langtools/tools/javac/diags"), { recursive: true });
   mkdirSync(join(suitePath, "test/langtools/tools/javac/launcher"), { recursive: true });
+  mkdirSync(join(suitePath, "test/lib"), { recursive: true });
+  mkdirSync(join(suitePath, "test/jtreg-ext/requires"), { recursive: true });
+  writeFileSync(
+    join(suitePath, "test/langtools/TEST.ROOT"),
+    [
+      "groups=TEST.groups",
+      "external.lib.roots = ../../",
+      "requires.extraPropDefns = ../jtreg-ext/requires/VMProps.java",
+      "requires.extraPropDefns.libs = ../lib/jdk/test/lib/Platform.java",
+      "",
+    ].join("\n"),
+  );
+  writeFileSync(join(suitePath, "test/langtools/TEST.groups"), "all = missing/path\n");
+  writeFileSync(join(suitePath, "test/langtools/ProblemList.txt"), "");
+  writeFileSync(join(suitePath, "test/jtreg-ext/requires/VMProps.java"), "// vm props\n");
   writeFileSync(join(suitePath, "test/langtools/tools/javac/diags/ExamplePass.java"), "// example pass\n");
   writeFileSync(join(suitePath, "test/langtools/tools/javac/diags/Other.java"), "// other\n");
   writeFileSync(join(suitePath, "test/langtools/tools/javac/launcher/BasicSourceLauncherTests.java"), "// smoke\n");
@@ -194,6 +209,25 @@ test("maps jtreg summary lines to TestResult records", () => {
   expect(out[3].status).toBe("skip");
 });
 
+test("maps jtreg uppercase FAILED summary lines", () => {
+  expect(parseJtregSummary("FAILED: tools/javac/Example.java\n")).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/Example.java",
+      status: "fail",
+    }),
+  ]);
+});
+
+test("maps jtreg path-first summary lines", () => {
+  expect(parseJtregSummary("tools/javac/IllDefinedOrderOfInit.java  Error. command line error (exit code 2)\n")).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/IllDefinedOrderOfInit.java",
+      status: "error",
+      message: "command line error (exit code 2)",
+    }),
+  ]);
+});
+
 test("runs jtreg with a generated wrapper JDK and delegates to configured java/elide wrappers", async () => {
   const { ctx, logs } = setupJtregFixture();
 
@@ -314,13 +348,12 @@ test("returns a runner error when jtreg writes an unparseable summary", async ()
 
   const results = await collect(runJavacJtreg(ctx));
 
-  expect(results).toEqual([
-    expect.objectContaining({
-      id: "javac-jtreg::<runner>",
-      status: "error",
-      message: "jtreg summary contained no parseable test results",
-    }),
-  ]);
+  expect(results).toHaveLength(1);
+  expect(results[0]).toMatchObject({
+    id: "javac-jtreg::<runner>",
+    status: "error",
+  });
+  expect(results[0]?.message).toContain("jtreg summary contained no parseable test results");
 });
 
 test("expands directory manifest entries to matching files for include globs", () => {
@@ -424,12 +457,51 @@ test("preserves configured javaRunner when explicit jdkHome is used", async () =
   });
 });
 
+test("uses jdkHome/bin/java when explicit jdkHome is paired with bare javaRunner", async () => {
+  const { ctx } = setupJtregFixture();
+  ctx.settings.javaRunner = "java";
+
+  await expect(resolveJavaExecution(ctx.settings, {}, ctx.repoRoot)).resolves.toMatchObject({
+    jdkHome: String(ctx.settings.jdkHome),
+    javaRunner: join(String(ctx.settings.jdkHome), "bin", "java"),
+  });
+});
+
 test("preserves discovered javaRunner when java.home is derived from it", async () => {
   const { ctx } = setupJtregFixture();
   delete ctx.settings.jdkHome;
 
   await expect(resolveJavaExecution(ctx.settings, {}, ctx.repoRoot)).resolves.toMatchObject({
     javaRunner: String(ctx.settings.javaRunner),
+  });
+});
+
+test("uses discovered jdkHome/bin/java when bare javaRunner resolves through PATH", async () => {
+  const { ctx } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+  const fixtureRoot = dirname(String(ctx.settings.javaRunner));
+  const fakeJdk = join(fixtureRoot, "fake-jdk");
+  const binDir = join(fixtureRoot, "bin");
+  mkdirSync(binDir, { recursive: true });
+  writeExecutable(
+    join(binDir, "java"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+if [[ "$#" -ge 2 && "$1" == "-XshowSettings:properties" && "$2" == "-version" ]]; then
+  printf 'Property settings:\\n'
+  printf '    java.home = %s\\n' ${JSON.stringify(fakeJdk)}
+  exit 0
+fi
+exit 9
+`,
+  );
+  ctx.settings.javaRunner = "java";
+
+  await expect(
+    resolveJavaExecution(ctx.settings, { PATH: `${binDir}:${process.env.PATH ?? ""}` }, ctx.repoRoot),
+  ).resolves.toMatchObject({
+    jdkHome: fakeJdk,
+    javaRunner: join(fakeJdk, "bin", "java"),
   });
 });
 

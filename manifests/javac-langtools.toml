@@ -10,3 +10,9 @@ id = "javac-compile-run-smoke"
 include = ["tools/javac/IllDefinedOrderOfInit.java"]
 tags = ["javac", "execution", "compile-run"]
 reason = "Smoke slice that compiles a langtools test and then runs the compiled program"
+
+[[group]]
+id = "javac-generics-compile-smoke"
+include = ["tools/javac/generics/GenericOverride.java"]
+tags = ["javac", "generics", "compile"]
+reason = "Small compile-only jtreg smoke that is green under the current Elide javac wrapper"
