@@ -3,7 +3,7 @@
 // Exit codes: 0 = GREEN; 1 = regressions; 2 = harness/setup/infra error.
 
 import { $ } from "bun";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { chmodSync, cpSync, existsSync, mkdirSync, rmSync, statSync, openSync, closeSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -29,6 +29,9 @@ interface WorkloadInfo {
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_ELIDE_REF = "ghcr.io/elide-dev/elide:nightly";
+const RUN_LABEL_KEY = "elide.testsuite.run";
+const RUN_ID = `${Date.now()}-${process.pid}-${randomUUID()}`;
+const RUN_LABEL = `${RUN_LABEL_KEY}=${RUN_ID}`;
 const CONTAINER_PATH = [
   "/opt/jtreg/bin",
   "/opt/graalvm-jdk-25.0.3/bin",
@@ -40,6 +43,8 @@ const CONTAINER_PATH = [
   "/sbin",
   "/bin",
 ].join(":");
+let activeProcess: ReturnType<typeof Bun.spawn> | undefined;
+let handlingSignal = false;
 
 function log(message: string): void {
   process.stderr.write(`[bin/run] ${message}\n`);
@@ -49,6 +54,36 @@ function usageError(message: string): never {
   log(message);
   process.exit(2);
 }
+
+function cleanupContainersSync(): void {
+  const listed = Bun.spawnSync(["docker", "ps", "-aq", "--filter", `label=${RUN_LABEL}`], {
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  const ids = new TextDecoder().decode(listed.stdout).trim().split(/\s+/).filter(Boolean);
+  if (ids.length === 0) return;
+  log(`cleaning up ${ids.length} running container(s) for interrupted run`);
+  Bun.spawnSync(["docker", "rm", "-f", ...ids], {
+    stdout: "ignore",
+    stderr: "ignore",
+  });
+}
+
+function interrupt(signal: NodeJS.Signals): never {
+  if (handlingSignal) process.exit(130);
+  handlingSignal = true;
+  log(`received ${signal}; stopping active command and cleaning up containers`);
+  try {
+    activeProcess?.kill("SIGINT");
+  } catch {
+    // Best effort: labelled containers are forcibly removed below.
+  }
+  cleanupContainersSync();
+  process.exit(signal === "SIGTERM" ? 143 : 130);
+}
+
+process.on("SIGINT", () => interrupt("SIGINT"));
+process.on("SIGTERM", () => interrupt("SIGTERM"));
 
 function parseArgs(argv: string[]): Options {
   const options: Options = {
@@ -138,7 +173,12 @@ async function run(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv
     stdout: "inherit",
     stderr: "inherit",
   });
-  return await proc.exited;
+  activeProcess = proc;
+  try {
+    return await proc.exited;
+  } finally {
+    if (activeProcess === proc) activeProcess = undefined;
+  }
 }
 
 async function capture(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<{
@@ -152,12 +192,17 @@ async function capture(args: string[], opts: { cwd?: string; env?: NodeJS.Proces
     stdout: "pipe",
     stderr: "pipe",
   });
-  const [stdout, stderr, exitCode] = await Promise.all([
-    new Response(proc.stdout).text(),
-    new Response(proc.stderr).text(),
-    proc.exited,
-  ]);
-  return { exitCode, stdout, stderr };
+  activeProcess = proc;
+  try {
+    const [stdout, stderr, exitCode] = await Promise.all([
+      new Response(proc.stdout).text(),
+      new Response(proc.stderr).text(),
+      proc.exited,
+    ]);
+    return { exitCode, stdout, stderr };
+  } finally {
+    if (activeProcess === proc) activeProcess = undefined;
+  }
 }
 
 async function requireDocker(): Promise<void> {
@@ -230,7 +275,19 @@ async function buildHarnessImage(options: Options, image: string, plat: string[]
 
 async function preflight(image: string, plat: string[], user: string[]): Promise<void> {
   log("preflight: elide --version");
-  const result = await capture(["docker", "run", "--rm", ...plat, ...user, "--entrypoint", "/opt/elide/bin/elide", image, "--version"]);
+  const result = await capture([
+    "docker",
+    "run",
+    "--rm",
+    "--label",
+    RUN_LABEL,
+    ...plat,
+    ...user,
+    "--entrypoint",
+    "/opt/elide/bin/elide",
+    image,
+    "--version",
+  ]);
   if (result.exitCode !== 0) {
     log(`PREFLIGHT FAILED (exit ${result.exitCode}): elide could not run inside the image:`);
     for (const line of `${result.stdout}${result.stderr}`.split(/\r?\n/).filter(Boolean)) {
@@ -275,6 +332,8 @@ async function fixHostOwnership(image: string, plat: string[], uid: string, gid:
     "docker",
     "run",
     "--rm",
+    "--label",
+    RUN_LABEL,
     ...plat,
     "--entrypoint",
     "chown",
@@ -337,6 +396,8 @@ async function main(): Promise<number> {
       "docker",
       "run",
       "--rm",
+      "--label",
+      RUN_LABEL,
       ...plat,
       ...user,
       "-v",

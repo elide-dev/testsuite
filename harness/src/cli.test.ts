@@ -1,4 +1,4 @@
-import { test, expect } from "bun:test";
+import { test, expect, spyOn } from "bun:test";
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -239,6 +239,30 @@ test("stores reports below semver, short digest, and workload to avoid collision
     expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "alpha", "pass-rate.svg"))).toBe(true);
     expect(existsSync(join(root, "reports", "pass-rate.svg"))).toBe(true);
   } finally {
+    delete ADAPTERS[adapterId];
+  }
+});
+
+test("prints pass percentage in the run summary", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-summary-percent-"));
+  const adapterId = "fixture-summary-percent";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "test", id: "case default", status: "pass" };
+    },
+  };
+  const logSpy = spyOn(console, "log").mockImplementation(() => {});
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["alpha"]);
+
+    expect(await runFixtureWorkload(root, "alpha", adapterId)).toBe(0);
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0%)"));
+  } finally {
+    logSpy.mockRestore();
     delete ADAPTERS[adapterId];
   }
 });

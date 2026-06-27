@@ -283,8 +283,9 @@ export async function main(o: CliOptions): Promise<number> {
   await Bun.write(join(outDir, "impact.md"), renderImpactMd(impact));
 
   const green = comparison.regressions.length === 0;
+  const passRate = comparison.counts.total ? (comparison.counts.pass / comparison.counts.total) * 100 : 0;
   console.log(
-    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass, ` +
+    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass (${passRate.toFixed(1)}%), ` +
       `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${green ? "GREEN" : "RED"}`,
   );
   return green ? 0 : 1;
