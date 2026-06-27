@@ -279,3 +279,33 @@ Created commit:
 ```text
 feat(python): add CPython 3.12 pure core suite
 ```
+
+---
+
+## Re-Review Fix - 2026-06-26
+
+Fixed the driver-side id normalization issue called out in re-review.
+
+### Change made
+
+- Updated `suites/drivers/python/elide_regrtest_driver.py` so emitted unittest `module` and `case` values strip a leading `test.` package prefix before JSON emission.
+- Kept module-level `SkipTest` / driver-level error emission on the bare module argument, unchanged.
+- Added `suites/drivers/python/test_elide_regrtest_driver.py` to verify both:
+  - `normalize_unittest_id()` strips the prefix, and
+  - `JsonResult` emits normalized module and case ids for a representative unittest result.
+
+### Verification
+
+Ran:
+
+```bash
+python3 suites/drivers/python/test_elide_regrtest_driver.py
+cd harness && bun test src/adapters/cpython-core.test.ts src/manifest.test.ts src/registry.test.ts
+cd harness && bun run typecheck
+```
+
+Results:
+
+- Python driver test passed: `2 tests, 0 failures`
+- Bun test bundle passed: `7 pass, 0 fail`
+- Typecheck passed: `tsc --noEmit` exited 0
