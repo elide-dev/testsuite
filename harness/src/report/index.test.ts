@@ -4,9 +4,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { buildIndexJson } from "./index";
 
-test("buildIndexJson lists each run with counts and paths", async () => {
+test("buildIndexJson lists workload-scoped runs with counts and paths", async () => {
   const root = mkdtempSync(join(tmpdir(), "idx-"));
-  const dir = join(root, "1.3.5", "abcd1234ef56");
+  const dir = join(root, "1.3.5", "abcd1234ef56", "test262");
   mkdirSync(dir, { recursive: true });
   await Bun.write(join(dir, "summary.json"), JSON.stringify({
     meta: { workload: "test262", elide: { semver: "1.3.5", digest: "abcd1234ef56" }, finishedAt: "2026-06-26T00:00:00Z" },
@@ -18,6 +18,6 @@ test("buildIndexJson lists each run with counts and paths", async () => {
   expect(idx.runs[0]).toMatchObject({
     workload: "test262", semver: "1.3.5", digest: "abcd1234ef56",
     pass: 90, total: 100, regressions: 0,
-    reportDir: "1.3.5/abcd1234ef56",
+    reportDir: "1.3.5/abcd1234ef56/test262",
   });
 });

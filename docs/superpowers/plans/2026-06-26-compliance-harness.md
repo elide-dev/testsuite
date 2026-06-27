@@ -4,7 +4,7 @@
 
 **Goal:** Run Test262 against a pinned Elide build inside a Docker image, compare results to a checked-in expectations baseline, and emit committed Markdown reports — with a workload-neutral core that leaves room for more suites and future benchmarks.
 
-**Architecture:** A Bun/TypeScript CLI orchestrates per-suite *adapters* that emit a normalized result stream. The Test262 adapter shells out to the stock `test262-harness` driving a **custom eshost `elide` host** (verified feasible by spike). Results are compared against `expectations/test262.toml`; reports are written under `reports/<semver>/<digest>/`. A combined Docker image (pinned Elide + Node + Bun + harness) makes each `elide run` a fast local subprocess.
+**Architecture:** A Bun/TypeScript CLI orchestrates per-suite *adapters* that emit a normalized result stream. The Test262 adapter shells out to the stock `test262-harness` driving a **custom eshost `elide` host** (verified feasible by spike). Results are compared against `expectations/test262.toml`; reports are written under `reports/<semver>/<short-digest>/<workload>/`. A combined Docker image (pinned Elide + Node + Bun + harness) makes each `elide run` a fast local subprocess.
 
 **Tech Stack:** Bun, TypeScript, `test262-harness` + `eshost` (Node), `smol-toml`, `picomatch`, `zod`, Docker, GitHub Actions.
 
@@ -16,7 +16,7 @@
 - eshost auto-discovers host types by scanning `eshost/lib/agents/*.js`; the host is named **`elide`** → files `eshost/lib/agents/elide.js` and `eshost/runtimes/elide.js`.
 - Elide CLI: entrypoint `/opt/elide/bin/elide`; run a file with `elide run --quiet <file>`; version via `elide --version` (first token like `1.3.5+20260626.bfb28f6`). Errors print a **box to stdout** (stderr empty); exit code non-zero on throw.
 - Elide image: `ghcr.io/elide-dev/elide` (tag `nightly`); Elide installed at `/opt/elide`.
-- Reports keyed `reports/<semver>/<short-digest>/` (short-digest = first 12 hex chars of the image/binary sha256).
+- Reports keyed `reports/<semver>/<short-digest>/<workload>/` (short-digest = first 12 hex chars of the image/binary sha256).
 - Result statuses: `pass | fail | skip | error`. A run is green **iff zero regressions**.
 - Commit after every task. Work on branch `compliance-harness`.
 
@@ -1120,7 +1120,7 @@ export async function writeSummaryJson(dir: string, meta: RunMeta, c: Comparison
   await Bun.write(join(dir, "summary.json"), JSON.stringify(summary, null, 2));
 }
 
-// Walk reports/<semver>/<digest>/summary.json, keep the newest run per workload.
+// Walk reports/<semver>/<short-digest>/<workload>/summary.json, keep the newest run per workload.
 export async function rebuildTopIndex(reportsDir: string): Promise<string> {
   const latest = new Map<string, RunSummary & { finishedAt: string }>();
   if (existsSync(reportsDir)) {
@@ -1456,7 +1456,7 @@ Expected: both records show `"pass": true`. This confirms the production host (`
 
 Temporarily narrow `registry.toml` `include` to a small dir (e.g. `["test/language/types/boolean/**/*.js"]`), then:
 Run: `THREADS=4 ./bin/run --elide nightly --suite test262`
-Expected: prints a summary line, creates `reports/<semver>/<digest>/{index.md,test262.md,summary.json,results.json.gz}` and `reports/index.md`. Restore `include` afterward.
+Expected: prints a summary line, creates `reports/<semver>/<short-digest>/test262/{index.md,test262.md,summary.json,results.json.gz}` and `reports/index.md`. Restore `include` afterward.
 
 - [ ] **Step 7: Commit**
 
@@ -1545,7 +1545,9 @@ jobs:
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@v4
-        with: { submodules: recursive }
+        with: { submodules: false }
+      - name: Initialize requested suite
+        run: "# see .github/workflows/compliance.yml for suite-specific shallow init"
       - name: Run suite
         run: ./bin/run --elide "${{ inputs.elide_ref || 'nightly' }}" --suite "${{ inputs.suite || 'test262' }}"
         env: { THREADS: "8" }
@@ -1606,7 +1608,7 @@ Expected: completes; prints a summary; writes a report. Note the runtime — tun
 
 - [ ] **Step 2: Inspect regressions and crashy areas**
 
-Run: `cat reports/*/*/test262.md | head -80`
+Run: `cat reports/*/*/test262/test262.md | head -80`
 Identify large failing/error clusters (e.g. `intl402/**`, `built-ins/Atomics/**`, realm-dependent tests).
 
 - [ ] **Step 3: Seed `expectations/test262.toml`**

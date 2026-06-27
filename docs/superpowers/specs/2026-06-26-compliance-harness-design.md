@@ -84,9 +84,9 @@ registry.toml                   # all workloads: id, kind, path, adapter, settin
 expectations/
   test262.toml                  # checked-in baseline (skip/fail + reasons)
 reports/
-  <semver>/<short-digest>/
+  <semver>/<short-digest>/<workload>/
     index.md                    # per-run landing (Pages)
-    test262.md                  # rollup + chapter/feature breakdown
+    <workload>.md               # rollup + suite-specific breakdown
     summary.json                # counts + regression/new-pass lists (small, machine)
     results.json.gz             # every test's status (machine, for diffs)
   index.md                      # top-level: latest run per suite + version matrix
@@ -124,7 +124,7 @@ bin/run --elide nightly --suite test262
         ├─ test262-harness --host-type elide --host-path /usr/bin/elide \
         │     --reporter json --test262-dir suites/test262 <globs>
         ├─ compare vs expectations/test262.toml
-        └─ write reports/<semver>/<digest>/...   ; exit 0|1
+        └─ write reports/<semver>/<short-digest>/<workload>/...   ; exit 0|1
 ```
 
 Why bind-mount instead of `COPY` the repo into the image: the image carries only
@@ -146,7 +146,8 @@ Resolution always yields a canonical identity `{ semver, digest }`:
 - For a local binary: `docker build` FROM a Bun base, `COPY` the binary in;
   `digest` = `sha256` of the binary file; `semver` from `elide --version`.
 
-Reports are keyed `reports/<semver>/<short-digest>/`, so two different builds of
+Reports are keyed `reports/<semver>/<short-digest>/<workload>/`, so workloads
+for the same Elide build do not overwrite each other and two different builds of
 the same `semver` never collide. GitHub Actions exposes `elide_ref` as a
 `workflow_dispatch` input accepting any of the three forms.
 
@@ -273,11 +274,11 @@ prominently listed so the baseline can be tightened.
 
 ## 10. Reports
 
-Per run, committed under `reports/<semver>/<short-digest>/`:
+Per run, committed under `reports/<semver>/<short-digest>/<workload>/`:
 
 - `index.md` — landing page (Pages): run identity, headline pass-rate, links.
-- `test262.md` — rollup: counts, pass-rate, regression list, new-pass list, and a
-  breakdown by Test262 chapter/feature.
+- `<workload>.md` — rollup: counts, pass-rate, regression list, new-pass list,
+  and any suite-specific breakdown.
 - `summary.json` — small machine summary: counts + regression/new-pass ids.
 - `results.json.gz` — every result's status, for later per-test diffs.
 
@@ -309,8 +310,9 @@ so behavior matches.
 
 - Triggers: `workflow_dispatch` (input `elide_ref`: tag | digest | binary-artifact)
   and a nightly `schedule`.
-- Steps: checkout (with submodules) → `bin/run --elide <ref> --suite test262` →
-  on success, commit the new `reports/<semver>/<digest>/...` and refreshed
+- Steps: checkout (without default submodules) → initialize the requested suite
+  submodule → `bin/run --elide <ref> --suite test262` → on success, commit the
+  new `reports/<semver>/<short-digest>/<workload>/...` and refreshed
   `reports/index.md` back to the repo → upload full `results.json.gz` as an
   artifact too. Job fails if the harness exits non-zero (regressions).
 - Pages: a separate job (or the same) publishes `reports/`.

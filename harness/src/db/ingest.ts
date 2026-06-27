@@ -1,8 +1,9 @@
 import type { Database } from "bun:sqlite";
-import { readdirSync, existsSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { normalizeSignature } from "../analyze/signature";
 import { readResults, type StoredRun } from "../results/store";
+import { findReportRunDirs } from "../report/index";
 
 export function ingestRun(db: Database, run: StoredRun): number {
   const tx = db.transaction((r: StoredRun) => {
@@ -39,7 +40,7 @@ export function ingestRun(db: Database, run: StoredRun): number {
   return tx(run);
 }
 
-// Ingest every committed run under reportsDir/<semver>/<digest>/results.json.gz.
+// Ingest every committed run under reportsDir/<semver>/<short-digest>/<workload>/results.json.gz.
 // Idempotent: skips runs already present (by workload/semver/digest) unless force.
 export async function ingestAll(
   db: Database,
@@ -48,23 +49,17 @@ export async function ingestAll(
 ): Promise<number> {
   if (!existsSync(reportsDir)) return 0;
   let n = 0;
-  for (const semver of readdirSync(reportsDir)) {
-    const verDir = join(reportsDir, semver);
-    let digests: string[] = [];
-    try { digests = readdirSync(verDir); } catch { continue; }
-    for (const digest of digests) {
-      const dir = join(verDir, digest);
-      if (!existsSync(join(dir, "results.json.gz"))) continue;
-      const stored = await readResults(dir);
-      if (!opts.force) {
-        const present = db
-          .query("SELECT 1 FROM runs WHERE workload = ? AND semver = ? AND digest = ?")
-          .get(stored.meta.workload, stored.meta.elide.semver, stored.meta.elide.digest);
-        if (present) continue;
-      }
-      ingestRun(db, stored);
-      n++;
+  for (const run of findReportRunDirs(reportsDir)) {
+    if (!existsSync(join(run.dir, "results.json.gz"))) continue;
+    const stored = await readResults(run.dir);
+    if (!opts.force) {
+      const present = db
+        .query("SELECT 1 FROM runs WHERE workload = ? AND semver = ? AND digest = ?")
+        .get(stored.meta.workload, stored.meta.elide.semver, stored.meta.elide.digest);
+      if (present) continue;
     }
+    ingestRun(db, stored);
+    n++;
   }
   return n;
 }

@@ -1194,7 +1194,7 @@ Create `suites/drivers/jtreg/elide-javac-wrapper.sh`:
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-exec "${ELIDE_JAVAC:-/opt/elide/bin/elide}" java compile "$@"
+exec "${ELIDE_JAVAC:-/opt/elide/bin/elide}" javac -- "$@"
 ```
 
 Create `suites/drivers/jtreg/java-runner-wrapper.sh`:

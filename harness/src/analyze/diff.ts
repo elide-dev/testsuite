@@ -1,7 +1,6 @@
-import { readdirSync, existsSync } from "node:fs";
-import { join } from "node:path";
 import type { Database } from "bun:sqlite";
 import { readResults, type StoredRun } from "../results/store";
+import { findReportRunDirs } from "../report/index";
 
 export interface RunRef { semver: string; digest: string }
 export interface RunResults { ref: RunRef; statuses: Map<string, string> }
@@ -70,22 +69,13 @@ export async function findPreviousRunDir(
   workload: string,
   current: RunRef,
 ): Promise<string | null> {
-  if (!existsSync(reportsDir)) return null;
   let best: { dir: string; finishedAt: string } | null = null;
-  for (const semver of readdirSync(reportsDir)) {
-    const verDir = join(reportsDir, semver);
-    let digests: string[] = [];
-    try { digests = readdirSync(verDir); } catch { continue; }
-    for (const digest of digests) {
-      const dir = join(verDir, digest);
-      const sp = join(dir, "summary.json");
-      if (!existsSync(sp)) continue;
-      const s = JSON.parse(await Bun.file(sp).text());
-      if (s.meta.workload !== workload) continue;
-      if (s.meta.elide.semver === current.semver && digest.startsWith(current.digest.slice(0, 12))) continue;
-      const finishedAt = s.meta.finishedAt as string;
-      if (!best || finishedAt > best.finishedAt) best = { dir, finishedAt };
-    }
+  for (const run of findReportRunDirs(reportsDir)) {
+    const s = JSON.parse(await Bun.file(run.summaryPath).text());
+    if (s.meta.workload !== workload) continue;
+    if (s.meta.elide.semver === current.semver && run.digest.startsWith(current.digest.slice(0, 12))) continue;
+    const finishedAt = s.meta.finishedAt as string;
+    if (!best || finishedAt > best.finishedAt) best = { dir: run.dir, finishedAt };
   }
   return best?.dir ?? null;
 }

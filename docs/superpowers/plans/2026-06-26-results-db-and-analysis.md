@@ -305,7 +305,7 @@ export function ingestRun(db: Database, run: StoredRun): number {
   return tx(run);
 }
 
-// Ingest every committed run under reportsDir/<semver>/<digest>/results.json.gz.
+// Ingest every committed run under reportsDir/<semver>/<short-digest>/<workload>/results.json.gz.
 // Idempotent: skips runs already present (by workload/semver/digest) unless force.
 export async function ingestAll(
   db: Database,

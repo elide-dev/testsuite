@@ -20,19 +20,20 @@ The committed `results.json.gz` per run remains the source of truth. Two derived
 
 - **Local analysis plane** — `.harness/results.sqlite` (gitignored, derived via Bun's built-in `bun:sqlite`). Built by ingesting committed `results.json.gz` files. Powers the `diff` / `impact` / `query` CLIs. Fast, expressive, disposable, rebuildable anywhere.
 - **Published plane (the web-UI contract)** — committed static files a future Bun-built static bundle can `fetch()` with no server:
-  - per run (in `reports/<semver>/<short-digest>/`): `results.json.gz`, `summary.json`, **`impact.json`**, **`changes.json`**, plus human `test262.md`, `impact.md`, `changes.md`.
+  - per run (in `reports/<semver>/<short-digest>/<workload>/`): `results.json.gz`, `summary.json`, **`impact.json`**, **`changes.json`**, plus human `<workload>.md`, `impact.md`, `changes.md`.
   - top level: `reports/index.md` **+ `reports/index.json`** (machine index of every revision → suites → counts/pass-rate/paths) — the entry point a static UI loads.
 
 Every analysis (impact, diff) emits **both** a committed `.json` (machine/UI) and `.md` (human) form. The SQLite DB is never the web UI's data source; it is derived from the same committed JSON, so the planes cannot drift.
 
 ```
-reports/<ver>/<digest>/results.json.gz        ← committed source of truth
+reports/<ver>/<digest>/<workload>/results.json.gz
+                                                ← committed source of truth
    │  ingest (run auto-ingests itself; `db build` rebuilds all)
    ▼
 .harness/results.sqlite (gitignored)          ← local analysis engine
    │
-   ├─ diff   → reports/<ver>/<digest>/changes.{md,json}   (+ `harness diff`)
-   ├─ impact → reports/<ver>/<digest>/impact.{md,json}    (+ `harness impact`)
+   ├─ diff   → reports/<ver>/<digest>/<workload>/changes.{md,json}   (+ `harness diff`)
+   ├─ impact → reports/<ver>/<digest>/<workload>/impact.{md,json}    (+ `harness impact`)
    └─ query  → ad-hoc SQL (`harness query`)
 
 reports/index.{md,json}                        ← committed; static-UI entry point
@@ -77,7 +78,7 @@ CREATE INDEX ix_results_signature  ON results(signature);
 CREATE INDEX ix_results_run_test   ON results(run_id, test_id);
 ```
 
-A run is identified by `(workload, semver, digest)`; re-ingest **replaces** it (the on-disk report overwrites per version+digest, so the DB mirrors disk). `signature` and `features` are computed at ingest so queries stay cheap. `db build` drops and recreates the schema, then ingests every committed `results.json.gz`.
+A run is identified by `(workload, semver, digest)`; re-ingest **replaces** that workload/version/digest run while other workloads sharing the same Elide version and digest remain distinct on disk. `signature` and `features` are computed at ingest so queries stay cheap. `db build` drops and recreates the schema, then ingests every committed `results.json.gz`.
 
 ## 5. Ratchet
 

@@ -58,7 +58,7 @@ regression.
 
 ## Reports
 
-Committed under `reports/<elide-version>/<short-digest>/`:
+Committed under `reports/<elide-version>/<short-digest>/<workload>/`:
 
 | file | purpose |
 |---|---|
@@ -69,7 +69,8 @@ Committed under `reports/<elide-version>/<short-digest>/`:
 | `results.json.gz` | every test's status (machine, for cross-version diffs) |
 
 `reports/index.md` (+ `index.json`) is the top-level matrix of the latest run
-per suite. Published via GitHub Pages.
+per suite. Machine-readable index entries point at the workload-scoped report
+directory. Published via GitHub Pages.
 
 ## Expectations & the ratchet
 

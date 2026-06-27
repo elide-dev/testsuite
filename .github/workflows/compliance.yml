@@ -24,7 +24,33 @@ jobs:
       SUITE: ${{ inputs.suite || 'test262' }}
     steps:
       - uses: actions/checkout@v4
-        with: { submodules: recursive }
+        with:
+          fetch-depth: 1
+          submodules: false
+      - name: Initialize requested suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$SUITE" in
+            test262)
+              git submodule update --init --depth 1 --recommend-shallow suites/test262
+              ;;
+            wpt-wintertc)
+              ./bin/init-wpt
+              ;;
+            cpython-core)
+              git submodule update --init --depth 1 --recommend-shallow suites/cpython
+              ;;
+            javac-jtreg)
+              git submodule update --init --depth 1 --recommend-shallow --filter=blob:none suites/openjdk
+              git -C suites/openjdk sparse-checkout init --cone
+              git -C suites/openjdk sparse-checkout set test/langtools/tools/javac
+              ;;
+            *)
+              echo "unknown suite: $SUITE" >&2
+              exit 2
+              ;;
+          esac
       - name: Run suite
         run: ./bin/run --elide "$ELIDE_REF" --suite "$SUITE"
         env:

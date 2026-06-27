@@ -1,10 +1,14 @@
 import { test, expect } from "bun:test";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { buildAdapterContext, parseArgs, REGISTRY_PATH, REPO_ROOT, WORK_DIR } from "./cli";
+import { buildAdapterContext, main, parseArgs, REGISTRY_PATH, REPO_ROOT, WORK_DIR } from "./cli";
 import { ADAPTERS } from "./adapters";
 import { loadManifest } from "./manifest";
 import { loadRegistry } from "./registry";
 import { expandManifestIncludePaths } from "./adapters/javac-jtreg";
+import type { Adapter } from "./adapters/types";
+import type { Result } from "./results/schema";
 
 test("parses run subcommand and options", () => {
   const o = parseArgs([
@@ -145,5 +149,98 @@ test("loads registry path from repo root when cwd is harness", () => {
     expect(ws.find((w) => w.id === "wpt-wintertc")?.path).toBe("suites/wpt");
   } finally {
     process.chdir(cwd);
+  }
+});
+
+function writeFixtureElide(root: string): string {
+  const elidePath = join(root, "elide");
+  writeFileSync(elidePath, "#!/usr/bin/env bash\nprintf 'Elide 1.2.3\\n'\n");
+  chmodSync(elidePath, 0o755);
+  return elidePath;
+}
+
+async function writeHarnessFixture(root: string, adapterId: string, workloads: string[]): Promise<void> {
+  mkdirSync(join(root, "expectations"), { recursive: true });
+  mkdirSync(join(root, "suites"), { recursive: true });
+  await Bun.write(
+    join(root, "registry.toml"),
+    workloads
+      .map((workload) => `[[workload]]\nid = "${workload}"\nkind = "test"\nadapter = "${adapterId}"\npath = "suites/${workload}"\n`)
+      .join("\n"),
+  );
+  for (const workload of workloads) {
+    mkdirSync(join(root, "suites", workload), { recursive: true });
+    await Bun.write(join(root, "expectations", `${workload}.toml`), "");
+  }
+}
+
+async function runFixtureWorkload(root: string, workload: string, adapterId: string): Promise<number> {
+  return main({
+    ...parseArgs([
+      "run",
+      workload,
+      "--registry",
+      join(root, "registry.toml"),
+      "--repo-root",
+      root,
+      "--elide-path",
+      join(root, "elide"),
+      "--digest",
+      "abcdef1234567890",
+      "--suite-root",
+      join(root, "suites"),
+      "--reports",
+      join(root, "reports"),
+      "--expectations",
+      join(root, "expectations"),
+    ]),
+    log: false,
+  });
+}
+
+test("stores reports below semver, short digest, and workload to avoid collisions", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-report-path-"));
+  const adapterId = "fixture-single-test";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "test", id: "case default", status: "pass" };
+    },
+  };
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["alpha", "beta"]);
+
+    expect(await runFixtureWorkload(root, "alpha", adapterId)).toBe(0);
+    expect(await runFixtureWorkload(root, "beta", adapterId)).toBe(0);
+
+    expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "alpha", "summary.json"))).toBe(true);
+    expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "beta", "summary.json"))).toBe(true);
+  } finally {
+    delete ADAPTERS[adapterId];
+  }
+});
+
+test("treats zero emitted TestResults as a harness error before writing reports", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-zero-tests-"));
+  const adapterId = "fixture-zero-tests";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "benchmark", id: "startup", metric: "time", value: 1, unit: "ms" };
+    },
+  };
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["empty"]);
+
+    await expect(runFixtureWorkload(root, "empty", adapterId)).rejects.toThrow(/no test results/i);
+    expect(existsSync(join(root, "reports", "1.2.3", "abcdef123456", "empty", "summary.json"))).toBe(false);
+  } finally {
+    delete ADAPTERS[adapterId];
   }
 });

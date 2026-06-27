@@ -141,6 +141,9 @@ export async function main(o: CliOptions): Promise<number> {
   const finishedAt = new Date().toISOString();
 
   const tests = results.filter((r): r is TestResult => r.kind === "test");
+  if (tests.length === 0) {
+    throw new Error(`no test results emitted for workload '${wl.id}'`);
+  }
   const cmp = compare(tests, exp);
   let comparison = cmp;
   if (o.ratchet) {
@@ -164,7 +167,7 @@ export async function main(o: CliOptions): Promise<number> {
 
   // Keep the digest path component safe (no '/' or ':' from a stray tag ref).
   const shortDigest = identity.digest.replace(/[^0-9a-zA-Z]/g, "").slice(0, 12) || "local";
-  const outDir = join(o.reportsDir, identity.semver, shortDigest);
+  const outDir = join(o.reportsDir, identity.semver, shortDigest, wl.id);
   mkdirSync(outDir, { recursive: true });
   await writeResults(outDir, meta, results);
   await writeSummaryJson(outDir, meta, comparison);
