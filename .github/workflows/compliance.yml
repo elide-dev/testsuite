@@ -44,7 +44,7 @@ jobs:
             javac-jtreg)
               git submodule update --init --depth 1 --recommend-shallow --filter=blob:none suites/openjdk
               git -C suites/openjdk sparse-checkout init --cone
-              git -C suites/openjdk sparse-checkout set test/langtools/tools/javac
+              git -C suites/openjdk sparse-checkout set test/langtools/tools/javac test/lib test/jtreg-ext
               ;;
             *)
               echo "unknown suite: $SUITE" >&2

@@ -7,14 +7,30 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       ca-certificates \
       curl \
-      default-jdk \
       git \
-      jtreg7 \
       python3 \
+      unzip \
  && rm -rf /var/lib/apt/lists/*
+ARG TARGETARCH
+ARG JDK26_BASE_URL=https://download.java.net/java/GA/jdk26/c3cc523845074aa0af4f5e1e1ed4151d/35/GPL
+RUN case "${TARGETARCH}" in \
+      amd64) JDK_ARCH=x64 ;; \
+      arm64) JDK_ARCH=aarch64 ;; \
+      *) echo "unsupported TARGETARCH=${TARGETARCH}" >&2; exit 1 ;; \
+    esac \
+ && curl -fsSL "${JDK26_BASE_URL}/openjdk-26_linux-${JDK_ARCH}_bin.tar.gz" -o /tmp/jdk.tar.gz \
+ && mkdir -p /opt/jdk-26 \
+ && tar -xzf /tmp/jdk.tar.gz -C /opt/jdk-26 --strip-components=1 \
+ && rm /tmp/jdk.tar.gz
+ARG JTREG_VERSION=8.2.1+1
+RUN curl -fsSL "https://builds.shipilev.net/jtreg/jtreg-${JTREG_VERSION}.zip" -o /tmp/jtreg.zip \
+ && unzip -q /tmp/jtreg.zip -d /opt \
+ && rm /tmp/jtreg.zip
 COPY .elide-install /opt/elide
 RUN chmod +x /opt/elide/bin/elide
-ENV PATH=/opt/elide/bin:$PATH
+ENV JAVA_HOME=/opt/jdk-26
+ENV JTREG_HOME=/opt/jtreg
+ENV PATH=/opt/jtreg/bin:/opt/jdk-26/bin:/opt/elide/bin:$PATH
 
 WORKDIR /opt/harness
 COPY harness/package.json harness/bun.lock ./
