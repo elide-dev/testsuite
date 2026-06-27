@@ -11,3 +11,4 @@
 [submodule "suites/openjdk"]
 	path = suites/openjdk
 	url = https://github.com/openjdk/jdk
+	shallow = true

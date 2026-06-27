@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
@@ -15,6 +15,51 @@ const STATUS: Record<string, TestResult["status"]> = {
 
 function categoryOf(path: string): string {
   return path.split("/").slice(0, 3).join("/");
+}
+
+function shellQuote(value: string): string {
+  return `'${value.replaceAll("'", `'\\''`)}'`;
+}
+
+function createWrapperCommand(path: string): string {
+  return [
+    "#!/usr/bin/env bash",
+    "set -euo pipefail",
+    `exec ${shellQuote(path)} \"$@\"`,
+    "",
+  ].join("\n");
+}
+
+export interface JtregRunLayout {
+  runRoot: string;
+  workDir: string;
+  reportDir: string;
+  wrapperJdk: string;
+}
+
+export function createJtregRunLayout(ctx: AdapterContext): JtregRunLayout {
+  mkdirSync(ctx.workspacePath, { recursive: true });
+  const runRoot = mkdtempSync(join(ctx.workspacePath, "jtreg-run-"));
+  const workDir = join(runRoot, "JTwork");
+  const reportDir = join(runRoot, "JTreport");
+  const wrapperJdk = join(runRoot, "wrapper-jdk");
+  const wrapperBin = join(wrapperJdk, "bin");
+  mkdirSync(workDir, { recursive: true });
+  mkdirSync(reportDir, { recursive: true });
+  mkdirSync(wrapperBin, { recursive: true });
+
+  writeFileSync(
+    join(wrapperBin, "javac"),
+    createWrapperCommand(join(ctx.repoRoot, "suites/drivers/jtreg/elide-javac-wrapper.sh")),
+  );
+  writeFileSync(
+    join(wrapperBin, "java"),
+    createWrapperCommand(join(ctx.repoRoot, "suites/drivers/jtreg/java-runner-wrapper.sh")),
+  );
+  chmodSync(join(wrapperBin, "javac"), 0o755);
+  chmodSync(join(wrapperBin, "java"), 0o755);
+
+  return { runRoot, workDir, reportDir, wrapperJdk };
 }
 
 export function parseJtregSummary(text: string): TestResult[] {
@@ -39,16 +84,13 @@ export function parseJtregSummary(text: string): TestResult[] {
   return results;
 }
 
-async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
+export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
   const manifest = loadManifest(resolve(manifestPath));
   const tests = manifest.groups.flatMap((group) => group.include);
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
-  const workDir = join(ctx.workspacePath, "JTwork");
-  const reportDir = join(ctx.workspacePath, "JTreport");
-  const javacWrapper = join(ctx.repoRoot, "suites/drivers/jtreg/elide-javac-wrapper.sh");
-  const javaWrapper = join(ctx.repoRoot, "suites/drivers/jtreg/java-runner-wrapper.sh");
+  const { workDir, reportDir, wrapperJdk } = createJtregRunLayout(ctx);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
 
   const result = await runProcess(
@@ -56,10 +98,9 @@ async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
       jtreg,
       "-verbose:summary",
       "-retain:fail,error",
+      `-jdk:${wrapperJdk}`,
       `-w:${workDir}`,
       `-r:${reportDir}`,
-      `-javacoption:-J-Delide.javac.wrapper=${javacWrapper}`,
-      `-javaoption:-Delide.java.wrapper=${javaWrapper}`,
       ...tests.map((test) => join(ctx.suitePath, "test/langtools", test)),
     ],
     {
