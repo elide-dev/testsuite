@@ -1,14 +1,33 @@
 {
   "bySignature": [
     {
-      "signature": "FileNotFoundError: [Errno <n>] No such file or directory: <str>",
-      "count": 2,
+      "signature": "AttributeError(<str>)",
+      "count": 1,
       "exampleIds": [
-        "test_json.test_tool.TestTool.test_ensure_ascii_default",
-        "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
+        "test_builtin"
       ],
       "samples": [
-        "FileNotFoundError: [Errno 2] No such file or directory: '@test_26_tmpæ.out'"
+        "AttributeError(\"module '_asyncio' has no attribute 'Future'\")"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in cleanup ast.AST._fields = old_value ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute of immutab",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 74, in cleanup\n    ast.AST._fields = old_value\n    ^^^^^^^^^^^^^^^\nTypeError: cannot set '_fields' attribute of immutable type 'ast.AST'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_AST_fields_NULL_check del ast.AST._fields ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 77, in test_AST_fields_NULL_check\n    del ast.AST._fields\n        ^^^^^^^^^^^^^^^\nTypeError: cannot set '_fields' attribute of immutable type 'ast.AST'"
       ]
     },
     {
@@ -22,6 +41,26 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_bug_40736 with self.assertRaisesRegex(TypeError, <str>): AssertionError: <str> does not match <",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_bug_40736"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2405, in test_bug_40736\n    with self.assertRaisesRegex(TypeError, \"got 'int'\"):\nAssertionError: \"got 'int'\" does not match \"object of type 'int' has no len()\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_cli_file_input res, _ = script_helper.run_python_until_end(<str>, <str>, filename) ^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.ASTMainTests.test_cli_file_input"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 2794, in test_cli_file_input\n    res, _ = script_helper.run_python_until_end(\"-m\", \"ast\", filename)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_compact process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True",
       "count": 1,
       "exampleIds": [
@@ -32,13 +71,23 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_ensure_ascii_default assert_python_ok(<str>, <str>, infile, outfile) File <str>, line <n>, in a",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_ensure_ascii_default infile = self._create_infile(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File ",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_ensure_ascii_default"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 216, in test_ensure_ascii_default\n    assert_python_ok('-m', 'json.tool', infile, outfile)\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 213, in test_ensure_ascii_default\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_exception_groups_feature_version with self.assertRaises(SyntaxError): AssertionError: SyntaxErr",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_exception_groups_feature_version"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 845, in test_exception_groups_feature_version\n    with self.assertRaises(SyntaxError):\nAssertionError: SyntaxError not raised"
       ]
     },
     {
@@ -62,23 +111,23 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_outfile rc, out, err = assert_python_ok(<str>, <str>, infile, outfile) ^^^^^^^^^^^^^^^^^",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_outfile infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_infile_outfile"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 127, in test_infile_outfile\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile, outfile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 125, in test_infile_outfile\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_stdout rc, out, err = assert_python_ok(<str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_stdout infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _cr",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_infile_stdout"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 104, in test_infile_stdout\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 103, in test_infile_stdout\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
       ]
     },
     {
@@ -92,13 +141,53 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_ensure_ascii_flag assert_python_ok(<str>, <str>, <str>, infile, outfile) File <str>, line <n",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_keep_buffer with self.assertRaises(BufferError): AssertionError: BufferError not raised",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_keep_buffer"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 71, in test_keep_buffer\n    with self.assertRaises(BufferError):\nAssertionError: BufferError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_literal_eval_str_int_limit with self.assertRaises(SyntaxError) as err_ctx: AssertionError: Synt",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.ASTHelpers_Test.test_literal_eval_str_int_limit"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 1301, in test_literal_eval_str_int_limit\n    with self.assertRaises(SyntaxError) as err_ctx:\nAssertionError: SyntaxError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_locale_caching self.check_en_US_iso88591() File <str>, line <n>, in check_en_US_iso88591 self.a",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_locale_caching"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2130, in test_locale_caching\n    self.check_en_US_iso88591()\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2139, in check_en_US_iso88591\n    self.assertTrue(re.match(b'\\xc5', b'\\xe5', re.L|re.I))\nAssertionError: None is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_locale_compiled self.assertTrue(p.match(b<str>)) AssertionError: None is not true",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_locale_compiled"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2175, in test_locale_compiled\n    self.assertTrue(p.match(b'\\xe5\\xe5'))\nAssertionError: None is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_ensure_ascii_flag infile = self._create_infile(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File ",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 205, in test_no_ensure_ascii_flag\n    assert_python_ok('-m', 'json.tool', '--no-ensure-ascii', infile, outfile)\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 202, in test_no_ensure_ascii_flag\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
       ]
     },
     {
@@ -112,13 +201,43 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_non_ascii_infile rc, out, err = assert_python_ok(<str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^^^^^^",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_non_ascii_infile infile = self._create_infile(data) ^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line ",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_non_ascii_infile"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 118, in test_non_ascii_infile\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 117, in test_non_ascii_infile\n    infile = self._create_infile(data)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_possible_set_operations with self.assertWarnsRegex(FutureWarning, <str>) as w: AssertionError: ",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_possible_set_operations"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 1216, in test_possible_set_operations\n    with self.assertWarnsRegex(FutureWarning, 'Possible set difference') as w:\nAssertionError: FutureWarning not triggered"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_regression_gh94675 p.start() File <str>, line <n>, in start self._popen = self._Popen(self) ^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_regression_gh94675"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2621, in test_regression_gh94675\n    p.start()\n  File \"/work/suites/cpython/Lib/multiprocessing/process.py\", line 121, in start\n    self._popen = self._Popen(self)\n                  ^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/context.py\", line 224, in _Popen\n    return _default_context.get_context().Process._Popen(process_obj)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/context.py\", line 282, in _Popen\n    return Popen(process_obj)\n           ^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/popen_fork.py\", line 19, in __init__\n    self._launch(process_obj)\n  File \"/work/suites/cpython/Lib/multiprocessing/popen_fork.py\", line 66, in _launch\n    self.pid = os.fork()\n               ^^^^^^^^^\nAttributeError: module 'os' has no attribute 'fork'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_repeat_minmax_overflow self.assertRaises(OverflowError, re.compile, r<str> % <n>**<n>) Assertio",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_repeat_minmax_overflow"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 1987, in test_repeat_minmax_overflow\n    self.assertRaises(OverflowError, re.compile, r\".{%d}\" % 2**128)\nAssertionError: OverflowError not raised by compile"
       ]
     },
     {
@@ -132,13 +251,23 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_sort_keys_flag rc, out, err = assert_python_ok(<str>, <str>, <str>, infile) ^^^^^^^^^^^^^^^^^^^",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_sort_keys_flag infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_sort_keys_flag"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 158, in test_sort_keys_flag\n    rc, out, err = assert_python_ok('-m', 'json.tool', '--sort-keys', infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 157, in test_sort_keys_flag\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_source_segment_padded self.assertEqual( AssertionError: <str> != <str> def fun(self) -> None: -",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.EndPositionTests.test_source_segment_padded"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 2462, in test_source_segment_padded\n    self.assertEqual(\nAssertionError: '    def fun(self) -> None:\\n        \"ЖЖЖ' != '    def fun(self) -> None:\\n        \"ЖЖЖЖЖ\"'\n      def fun(self) -> None:\n-         \"ЖЖЖ\n+         \"ЖЖЖЖЖ\"\n?             +++"
       ]
     },
     {
@@ -162,6 +291,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_symbolic_groups_errors self.checkPatternError(b<str>, File <str>, line <n>, in checkPatternErro",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_symbolic_groups_errors"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 287, in test_symbolic_groups_errors\n    self.checkPatternError(b'(?P<\\xc2\\xb5>x)',\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 50, in checkPatternError\n    with self.assertRaises(re.error) as cm:\nAssertionError: error not raised"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_tab process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True) ^^",
       "count": 1,
       "exampleIds": [
@@ -172,13 +311,13 @@
       ]
     },
     {
-      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_writing_in_place rc, out, err = assert_python_ok(<str>, <str>, infile, infile) ^^^^^^^^^^^^^^^^",
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_writing_in_place infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in ",
       "count": 1,
       "exampleIds": [
         "test_json.test_tool.TestTool.test_writing_in_place"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 137, in test_writing_in_place\n    rc, out, err = assert_python_ok('-m', 'json.tool', infile, infile)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 136, in test_writing_in_place\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_26_tmpæ'"
       ]
     }
   ],

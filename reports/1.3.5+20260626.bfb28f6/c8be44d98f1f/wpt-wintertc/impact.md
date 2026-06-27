@@ -24,6 +24,15 @@ distinct messages:
 - `assert_equals: expected "b\0c" but got "b"`
 example test: `url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction`
 
+### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: encodings_table is not defined │ │ │ │ In file file:/tmp/wpt-el`
+
+distinct messages:
+- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│ReferenceError: encodings_table is not defined                               │
+│                                                                             │
+│ In file file:/tmp/wpt-elide-ETYgg1/case                   `
+example test: `encoding/textencoder-constructor-non-utf.any.js :: <file>`
+
 ### 1 × `assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function <str> did not throw`
 
 distinct messages:

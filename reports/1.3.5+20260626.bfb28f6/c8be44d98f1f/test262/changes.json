@@ -10,6 +10,6 @@
   "fixed": [],
   "regressed": [],
   "added": 0,
-  "removed": 92274,
-  "stillFailing": 0
+  "removed": 0,
+  "stillFailing": 6811
 }

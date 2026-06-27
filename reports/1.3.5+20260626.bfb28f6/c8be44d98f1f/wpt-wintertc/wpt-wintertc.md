@@ -2,17 +2,19 @@
 
 - Image digest: `c8be44d98f1f086fee340d19c5e6d66e4c88f5d593213d47783361b87bcaf657`
 - Suite version: `1eb456f600fedad07c8cd6439796fb81db54faff`
-- Ran: 2026-06-27T15:34:41.304Z → 2026-06-27T15:34:41.384Z
+- Ran: 2026-06-27T17:13:59.784Z → 2026-06-27T17:13:59.968Z
 
 ## Summary
 
-**Pass rate: 17/27 (62.96%)**
+![Pass-rate chart](./pass-rate.svg)
+
+**Pass rate: 53/64 (82.81%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 17 | 10 | 0 | 0 | 10 | 0 |
+| 53 | 10 | 1 | 0 | 0 | 0 |
 
-## Observed cases (27)
+## Observed cases (64)
 
 - `url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction` — fail — assert_equals: expected "a=b" but got ""
 - `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, no arguments` — pass
@@ -41,16 +43,57 @@
 - `url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)` — fail — assert_array_equals: expected property 0 to be "x\ufffd" but got "x?" (expected array ["x\ufffd", "3"] got ["x?", "1"])
 - `url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys` — fail — assert_array_equals: expected property 0 to be "a\0b" but got "a" (expected array ["a\0b", "42"] got ["a", "42"])
 - `url/urlsearchparams-constructor.any.js :: Custom [Symbol.iterator]` — fail — assert_equals: expected (string) "b" but got (object) null
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid code` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - ends early` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - ends early 2` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 2` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 3` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 4` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 5` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 6` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - > 0x10FFFF` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - obsolete lead byte` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 2 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 3 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 4 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 5 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 6 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 2 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 3 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 4 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 5 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 6 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 3 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 4 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 5 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 6 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 4 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 5 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 6 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+10FFFF - 5 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+10FFFF - 6 bytes` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - lead surrogate` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - trail surrogate` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - surrogate pair` — pass
+- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-16le - truncated code unit` — pass
+- `encoding/textdecoder-fatal.any.js :: The fatal attribute of TextDecoder` — pass
+- `encoding/textdecoder-fatal.any.js :: Error seen with fatal does not prevent future decodes` — pass
+- `encoding/textencoder-constructor-non-utf.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│ReferenceError: encodings_table is not defined                               │
+│                                                                             │
+│ In file file:/tmp/wpt-elide-ETYgg1/case                                     │
+│   ╭─                                                                        │
+│   (source excerpt suppressed)                                               │
+│─ Stack Trace ───────────────────────────────────────────────────────────────│
+│                                                                             │
+│ ╭─ [js] :module:eval                      case.js:5242:1-15                 │
+│ │                                                                           │
+│ · elide run /tmp/wpt-elide-ETYgg1/case.js                                   │
+│                                                                             │
+│─ Advice ────────────────────────────────────────────────────────────────────│
+│                                                                             │
+│ An error occurred while executing your code.                                │
+│                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────╯
 
-## ❌ Regressions (10)
-
-- `url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction` — assert_equals: expected "a=b" but got ""
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, DOMException as argument` — assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function "() => new URLSearchParams(DOMException.prototype)" did not throw
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, object.` — assert_equals: expected (string) "b" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, FormData.` — assert_equals: expected (string) "b" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: Parse \0` — assert_equals: expected "b\0c" but got "b"
-- `url/urlsearchparams-constructor.any.js :: Parse %00` — assert_equals: expected (string) "b\0c" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: Construct with 2 unpaired surrogates (no trailing)` — assert_array_equals: expected property 0 to be "\ufffdx" but got "?x" (expected array ["\ufffdx", "3"] got ["?x", "1"])
-- `url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)` — assert_array_equals: expected property 0 to be "x\ufffd" but got "x?" (expected array ["x\ufffd", "3"] got ["x?", "1"])
-- `url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys` — assert_array_equals: expected property 0 to be "a\0b" but got "a" (expected array ["a\0b", "42"] got ["a", "42"])
-- `url/urlsearchparams-constructor.any.js :: Custom [Symbol.iterator]` — assert_equals: expected (string) "b" but got (object) null

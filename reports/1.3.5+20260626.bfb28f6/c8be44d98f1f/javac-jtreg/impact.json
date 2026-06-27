@@ -1,4 +1,27 @@
 {
-  "bySignature": [],
+  "bySignature": [
+    {
+      "signature": "(no message)",
+      "count": 1356,
+      "exampleIds": [
+        "tools/javac/analyzer/AnalyzerMandatoryWarnings.java",
+        "tools/javac/analyzer/AnalyzerNotQuiteSpeculative.java",
+        "tools/javac/analyzer/AnalyzersCheckSourceLevel.java",
+        "tools/javac/analyzer/Diamond.java",
+        "tools/javac/analyzer/DiamondFields.java"
+      ],
+      "samples": []
+    },
+    {
+      "signature": "jtreg timed out",
+      "count": 1,
+      "exampleIds": [
+        "javac-jtreg::<runner>"
+      ],
+      "samples": [
+        "jtreg timed out"
+      ]
+    }
+  ],
   "byFeature": []
 }

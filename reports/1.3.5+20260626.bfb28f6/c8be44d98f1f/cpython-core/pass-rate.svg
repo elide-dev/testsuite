@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
+  <title id="title">cpython-core pass-rate chart</title>
+  <desc id="desc">458 of 1017 tests passed.</desc>
+  <rect width="720" height="170" fill="#ffffff"/>
+  <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">cpython-core</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">458/1017 pass (45.0%)</text>
+  <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
+  <rect x="40.00" y="84" width="288.22" height="28" fill="#198754"><title>pass: 458</title></rect>
+  <rect x="328.22" y="84" width="7.55" height="28" fill="#dc3545"><title>fail: 12</title></rect>
+  <rect x="335.77" y="84" width="12.59" height="28" fill="#6f42c1"><title>error: 20</title></rect>
+  <rect x="348.36" y="84" width="331.64" height="28" fill="#6c757d"><title>skip: 527</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 12 · error 20 · skip 527 · regressions 0</text>
+</svg>

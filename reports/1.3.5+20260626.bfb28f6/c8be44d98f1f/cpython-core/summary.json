@@ -6,37 +6,17 @@
       "semver": "1.3.5+20260626.bfb28f6",
       "digest": "c8be44d98f1f086fee340d19c5e6d66e4c88f5d593213d47783361b87bcaf657"
     },
-    "startedAt": "2026-06-27T15:34:49.977Z",
-    "finishedAt": "2026-06-27T15:35:13.808Z",
+    "startedAt": "2026-06-27T17:14:00.269Z",
+    "finishedAt": "2026-06-27T17:14:11.514Z",
     "suiteVersion": "7c999be49dee7f12703e4b2e07e990544fabd40e"
   },
   "counts": {
-    "pass": 162,
-    "fail": 2,
-    "skip": 1,
-    "error": 17,
-    "total": 182
+    "pass": 458,
+    "fail": 12,
+    "skip": 527,
+    "error": 20,
+    "total": 1017
   },
-  "regressions": [
-    "test_json.test_scanstring.TestCScanstring.test_scanstring",
-    "test_json.test_scanstring.TestCScanstring.test_surrogates",
-    "test_json.test_tool.TestTool.test_broken_pipe_error",
-    "test_json.test_tool.TestTool.test_compact",
-    "test_json.test_tool.TestTool.test_ensure_ascii_default",
-    "test_json.test_tool.TestTool.test_ensure_ascii_default",
-    "test_json.test_tool.TestTool.test_help_flag",
-    "test_json.test_tool.TestTool.test_indent",
-    "test_json.test_tool.TestTool.test_infile_outfile",
-    "test_json.test_tool.TestTool.test_infile_stdout",
-    "test_json.test_tool.TestTool.test_jsonlines",
-    "test_json.test_tool.TestTool.test_no_ensure_ascii_flag",
-    "test_json.test_tool.TestTool.test_no_ensure_ascii_flag",
-    "test_json.test_tool.TestTool.test_no_indent",
-    "test_json.test_tool.TestTool.test_non_ascii_infile",
-    "test_json.test_tool.TestTool.test_sort_keys_flag",
-    "test_json.test_tool.TestTool.test_stdin_stdout",
-    "test_json.test_tool.TestTool.test_tab",
-    "test_json.test_tool.TestTool.test_writing_in_place"
-  ],
+  "regressions": [],
   "newPasses": []
 }
