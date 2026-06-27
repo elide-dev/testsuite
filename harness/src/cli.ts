@@ -1,5 +1,6 @@
-import { join, resolve } from "node:path";
 import { mkdirSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { ADAPTERS } from "./adapters";
 import { loadRegistry } from "./registry";
 import { resolveIdentity } from "./elide";
 import { loadExpectations, skipGlobs } from "./expectations/load";
@@ -7,8 +8,6 @@ import { compare } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
-import { test262Adapter } from "./adapters/test262";
-import type { Adapter } from "./adapters/types";
 import type { Result, RunMeta, TestResult } from "./results/schema";
 import { renderSuiteReport, renderRunIndex } from "./report/render";
 import { writeSummaryJson, rebuildTopIndex, buildIndexJson } from "./report/index";
@@ -32,8 +31,6 @@ export interface CliOptions {
   suiteVersion?: string;
   ratchet: boolean;
 }
-
-const ADAPTERS: Record<string, Adapter> = { test262: test262Adapter };
 
 export function parseArgs(argv: string[]): CliOptions {
   const [command, workload, ...rest] = argv;
@@ -85,6 +82,9 @@ export async function main(o: CliOptions): Promise<number> {
   const exp = loadExpectations(join(o.expectationsDir, `${wl.id}.toml`));
   const startedAt = new Date().toISOString();
 
+  const workspacePath = resolve(".harness/work", wl.id);
+  mkdirSync(workspacePath, { recursive: true });
+
   const ctx = {
     elide: identity,
     elidePath: o.elidePath,
@@ -94,6 +94,8 @@ export async function main(o: CliOptions): Promise<number> {
       : (wl.settings.include as string[]) ?? ["test/**/*.js"],
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
+    settings: wl.settings,
+    workspacePath,
   };
 
   const results: Result[] = [];

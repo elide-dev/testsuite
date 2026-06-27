@@ -8,4 +8,7 @@ test("loads test262 workload from registry.toml", () => {
   expect(t262!.kind).toBe("test");
   expect(t262!.adapter).toBe("test262");
   expect(t262!.path).toBe("suites/test262");
+  expect(t262!.settings).toEqual({
+    include: ["test/language/**/*.js", "test/built-ins/**/*.js"],
+  });
 });

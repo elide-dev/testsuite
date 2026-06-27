@@ -1,5 +1,6 @@
 import { test, expect } from "bun:test";
 import { parseArgs } from "./cli";
+import { ADAPTERS } from "./adapters";
 
 test("parses run subcommand and options", () => {
   const o = parseArgs([
@@ -24,4 +25,8 @@ test("defaults threads to 1 and digest to 'local'", () => {
 
 test("parses the --log flag", () => {
   expect(parseArgs(["run", "test262", "--log"]).log).toBe(true);
+});
+
+test("exports the test262 adapter", () => {
+  expect(ADAPTERS.test262.id).toBe("test262");
 });
