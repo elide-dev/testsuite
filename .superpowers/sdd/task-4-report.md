@@ -131,3 +131,27 @@ Results:
 - `bun test`: `10 pass`, `0 fail`
 - `bun run typecheck`: exit code `0`
 - Both commands still emit the existing environment-specific extra-cert warning but complete successfully.
+
+## Task 4 second fix
+
+- Reworked `harness/src/adapters/javac-jtreg.ts` so the per-run wrapper JDK is built from a real JDK home instead of a synthetic `bin/`-only tree.
+- Added `resolveJdkHome()` with `settings.jdkHome` first and `JAVA_HOME` fallback, and fail-fast runner errors when no usable real JDK home is configured.
+- Preserved the real JDK layout by symlinking top-level entries and non-overridden `bin/*` tools into the wrapper JDK, while still replacing only `bin/java` and `bin/javac` with repo wrapper scripts.
+- Added include filtering for jtreg manifest entries using the same glob semantics already used by the WPT adapter.
+- Extended adapter tests to cover wrapper JDK preservation/symlinking, filtered manifest forwarding, and missing `jdkHome` handling.
+
+### Verification after second fix
+
+Commands:
+
+```bash
+cd harness
+bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+bun run typecheck
+```
+
+Results:
+
+- `bun test`: `13 pass`, `0 fail`
+- `bun run typecheck`: exit code `0`
+- Both commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.

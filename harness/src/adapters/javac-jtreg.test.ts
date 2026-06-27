@@ -1,9 +1,9 @@
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { expect, test } from "bun:test";
 import type { AdapterContext } from "./types";
-import { parseJtregSummary, runJavacJtreg } from "./javac-jtreg";
+import { filterIncludedPaths, parseJtregSummary, resolveJdkHome, runJavacJtreg } from "./javac-jtreg";
 
 const fixtureSummary = await Bun.file(`${import.meta.dir}/../../fixtures/jtreg/JTreport/text/summary.txt`).text();
 
@@ -25,8 +25,21 @@ function setupJtregFixture(mode: "summary" | "no-summary" = "summary") {
   const root = mkdtempSync(join(tmpdir(), "javac-jtreg-"));
   const workspacePath = join(root, "workspace");
   const suitePath = join(root, "suite");
+  const jdkHome = join(root, "fake-jdk");
   mkdirSync(workspacePath, { recursive: true });
   mkdirSync(join(suitePath, "test/langtools/tools/javac/diags"), { recursive: true });
+  mkdirSync(join(jdkHome, "bin"), { recursive: true });
+  mkdirSync(join(jdkHome, "conf"), { recursive: true });
+  writeFileSync(join(jdkHome, "release"), "JAVA_VERSION=test\n");
+  writeExecutable(join(jdkHome, "bin", "java"), "#!/usr/bin/env bash\nexit 9\n");
+  writeExecutable(join(jdkHome, "bin", "javac"), "#!/usr/bin/env bash\nexit 9\n");
+  writeExecutable(
+    join(jdkHome, "bin", "jar"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$@" >> ${JSON.stringify(join(root, "logs", "jar.log"))}
+`,
+  );
 
   const manifestPath = join(root, "manifest.toml");
   writeFileSync(
@@ -34,7 +47,7 @@ function setupJtregFixture(mode: "summary" | "no-summary" = "summary") {
     [
       '[[group]]',
       'id = "javac"',
-      'include = ["tools/javac/diags/ExamplePass.java"]',
+      'include = ["tools/javac/diags/ExamplePass.java", "tools/javac/diags/Other.java"]',
       "",
     ].join("\n"),
   );
@@ -43,6 +56,7 @@ function setupJtregFixture(mode: "summary" | "no-summary" = "summary") {
   mkdirSync(logsDir, { recursive: true });
   const elideLog = join(logsDir, "elide.log");
   const javaLog = join(logsDir, "java.log");
+  const jarLog = join(logsDir, "jar.log");
   const jtregArgsLog = join(logsDir, "jtreg.args");
   const jtregJdkLog = join(logsDir, "jtreg.jdk");
   const jtregWorkLog = join(logsDir, "jtreg.work");
@@ -84,6 +98,7 @@ printf '%s\n' "$work" > ${JSON.stringify(jtregWorkLog)}
 printf '%s\n' "$report" > ${JSON.stringify(jtregReportLog)}
 "$jdk/bin/java" -version
 "$jdk/bin/javac" Sample.java
+"$jdk/bin/jar" tf sample.jar
 if [[ ${JSON.stringify(mode)} == "no-summary" ]]; then
   echo "jtreg failed" >&2
   exit 2
@@ -107,6 +122,7 @@ EOF
       manifest: manifestPath,
       jtregPath,
       javaRunner,
+      jdkHome,
       timeoutMs: 5_000,
     },
     workspacePath,
@@ -117,6 +133,7 @@ EOF
     logs: {
       elideLog,
       javaLog,
+      jarLog,
       jtregArgsLog,
       jtregJdkLog,
       jtregWorkLog,
@@ -166,8 +183,12 @@ test("runs jtreg with a generated wrapper JDK and delegates to configured java/e
   expect(wrapperJdk).toEndWith("/wrapper-jdk");
   expect(workDir).toEndWith("/JTwork");
   expect(reportDir).toEndWith("/JTreport");
+  expect(readFileSync(join(wrapperJdk, "release"), "utf8")).toBe("JAVA_VERSION=test\n");
+  expect(lstatSync(join(wrapperJdk, "conf")).isSymbolicLink()).toBe(true);
+  expect(lstatSync(join(wrapperJdk, "bin", "jar")).isSymbolicLink()).toBe(true);
   expect(readFileSync(logs.elideLog, "utf8")).toContain("javac\n--\nSample.java");
   expect(readFileSync(logs.javaLog, "utf8")).toContain("-version");
+  expect(readFileSync(logs.jarLog, "utf8")).toContain("tf\nsample.jar");
 });
 
 test("creates fresh jtreg work/report directories for each run", async () => {
@@ -200,4 +221,32 @@ test("returns a runner error when the current jtreg run produces no summary", as
       message: "jtreg failed\n",
     }),
   ]);
+});
+
+test("filters manifest paths by include globs", () => {
+  expect(
+    filterIncludedPaths(
+      ["tools/javac/diags/ExamplePass.java", "tools/javac/diags/Other.java", "tools/javac/tree/Tree.java"],
+      ["tools/javac/diags/Example*.java", "tools/javac/tree/**"],
+    ),
+  ).toEqual(["tools/javac/diags/ExamplePass.java", "tools/javac/tree/Tree.java"]);
+});
+
+test("passes only included manifest paths to jtreg", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  ctx.include = ["tools/javac/diags/Example*.java"];
+
+  await collect(runJavacJtreg(ctx));
+
+  const args = readFileSync(logs.jtregArgsLog, "utf8");
+  expect(args).toContain("tools/javac/diags/ExamplePass.java");
+  expect(args).not.toContain("tools/javac/diags/Other.java");
+});
+
+test("resolves jdkHome from settings and rejects missing configuration", () => {
+  const { ctx } = setupJtregFixture();
+  expect(resolveJdkHome(ctx.settings, {})).toBe(String(ctx.settings.jdkHome));
+  expect(() => resolveJdkHome({}, {})).toThrow(
+    "javac-jtreg requires settings.jdkHome or JAVA_HOME to point to a real JDK home",
+  );
 });
