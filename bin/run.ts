@@ -172,17 +172,57 @@ function userArgs(uid: string, gid: string): string[] {
   return ["--user", `${uid}:${gid}`, "-e", "HOME=/work/.harness", "-e", `PATH=${CONTAINER_PATH}`];
 }
 
-async function run(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<number> {
+async function writeStream(
+  stream: ReadableStream<Uint8Array>,
+  sink: NodeJS.WriteStream,
+  prefix = "",
+): Promise<void> {
+  const decoder = new TextDecoder();
+  let pending = "";
+  const writeLine = (line: string): void => {
+    sink.write(prefix ? `${prefix}${line}\n` : `${line}\n`);
+  };
+
+  for await (const chunk of stream) {
+    pending += decoder.decode(chunk, { stream: true });
+    let newline = pending.search(/\r?\n/);
+    while (newline >= 0) {
+      const line = pending.slice(0, newline);
+      pending = pending.slice(pending[newline] === "\r" && pending[newline + 1] === "\n" ? newline + 2 : newline + 1);
+      writeLine(line);
+      newline = pending.search(/\r?\n/);
+    }
+  }
+  pending += decoder.decode();
+  if (pending) {
+    sink.write(prefix ? `${prefix}${pending}` : pending);
+    if (!pending.endsWith("\n")) sink.write("\n");
+  }
+}
+
+async function run(
+  args: string[],
+  opts: { cwd?: string; env?: NodeJS.ProcessEnv; prefix?: string } = {},
+): Promise<number> {
+  const piped = opts.prefix !== undefined;
   const proc = Bun.spawn(args, {
     cwd: opts.cwd ?? ROOT,
     env: opts.env ?? process.env,
     stdin: "inherit",
-    stdout: "inherit",
-    stderr: "inherit",
+    stdout: piped ? "pipe" : "inherit",
+    stderr: piped ? "pipe" : "inherit",
   });
   activeProcesses.add(proc);
   try {
-    return await proc.exited;
+    const output = piped
+      ? Promise.all([
+          writeStream(proc.stdout as ReadableStream<Uint8Array>, process.stdout, opts.prefix),
+          writeStream(proc.stderr as ReadableStream<Uint8Array>, process.stderr, opts.prefix),
+        ])
+      : Promise.resolve();
+    const rc = await proc.exited;
+    await output;
+    return rc;
   } finally {
     activeProcesses.delete(proc);
   }
@@ -449,7 +489,7 @@ async function main(): Promise<number> {
       "--failure-output",
       options.failureOutput,
     ];
-    const rc = await run(args);
+    const rc = await run(args, { prefix: `[${suite}] ` });
     switch (rc) {
       case 0:
         log(`DONE: ${suite} GREEN (no regressions). reports/ updated.`);
