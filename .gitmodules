@@ -4,3 +4,7 @@
 [submodule "suites/wpt"]
 	path = suites/wpt
 	url = https://github.com/web-platform-tests/wpt
+[submodule "suites/cpython"]
+	path = suites/cpython
+	url = https://github.com/python/cpython.git
+	branch = 3.12

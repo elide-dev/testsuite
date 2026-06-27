@@ -1,0 +1,6 @@
+# CPython 3.12 pure-core smoke slice.
+
+[[group]]
+id = "core"
+include = ["test_builtin", "test_re", "test_json", "test_ast"]
+tags = ["python312", "pure-core"]

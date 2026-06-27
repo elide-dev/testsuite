@@ -19,3 +19,13 @@ path = "suites/wpt"
   include = ["**/*"]
   manifest = "manifests/wintertc-wpt-2025.toml"
   timeoutMs = 60000
+
+[[workload]]
+id = "cpython-core"
+kind = "test"
+adapter = "cpython-core"
+path = "suites/cpython"
+
+  [workload.settings]
+  manifest = "manifests/cpython-core.toml"
+  timeoutMs = 120000

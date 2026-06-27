@@ -1,0 +1,6 @@
+# CPython 3.12 pure-core expectations baseline.
+# Keys are picomatch globs over CPython module names or unittest case ids.
+
+[skip]
+
+[fail]

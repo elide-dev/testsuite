@@ -23,3 +23,13 @@ test("loads wpt-wintertc workload from registry.toml", () => {
   expect(wpt!.settings.include).toEqual(["**/*"]);
   expect(wpt!.settings.manifest).toBe("manifests/wintertc-wpt-2025.toml");
 });
+
+test("loads cpython-core workload from registry.toml", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  const py = ws.find((w) => w.id === "cpython-core");
+  expect(py).toBeDefined();
+  expect(py!.kind).toBe("test");
+  expect(py!.adapter).toBe("cpython-core");
+  expect(py!.path).toBe("suites/cpython");
+  expect(py!.settings.manifest).toBe("manifests/cpython-core.toml");
+});
