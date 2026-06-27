@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { expect, test } from "bun:test";
 import type { AdapterContext } from "./types";
-import { filterIncludedPaths, parseJtregSummary, resolveJdkHome, runJavacJtreg } from "./javac-jtreg";
+import { expandManifestIncludePaths, parseJtregSummary, resolveJavaExecution, resolveJdkHome, runJavacJtreg } from "./javac-jtreg";
 
 const fixtureSummary = await Bun.file(`${import.meta.dir}/../../fixtures/jtreg/JTreport/text/summary.txt`).text();
 
@@ -29,6 +29,8 @@ function setupJtregFixture(mode: "summary" | "no-summary" = "summary") {
   mkdirSync(workspacePath, { recursive: true });
   mkdirSync(join(suitePath, "test/langtools/tools/javac/diags"), { recursive: true });
   mkdirSync(join(suitePath, "test/langtools/tools/javac/launcher"), { recursive: true });
+  writeFileSync(join(suitePath, "test/langtools/tools/javac/diags/ExamplePass.java"), "// example pass\n");
+  writeFileSync(join(suitePath, "test/langtools/tools/javac/diags/Other.java"), "// other\n");
   writeFileSync(join(suitePath, "test/langtools/tools/javac/launcher/BasicSourceLauncherTests.java"), "// smoke\n");
   mkdirSync(join(jdkHome, "bin"), { recursive: true });
   mkdirSync(join(jdkHome, "conf"), { recursive: true });
@@ -63,6 +65,7 @@ printf '%s\n' "$@" >> ${JSON.stringify(join(root, "logs", "jar.log"))}
   const jtregJdkLog = join(logsDir, "jtreg.jdk");
   const jtregWorkLog = join(logsDir, "jtreg.work");
   const jtregReportLog = join(logsDir, "jtreg.report");
+  const jtregJavaEnvLog = join(logsDir, "jtreg.java-env");
 
   const elidePath = writeExecutable(
     join(root, "fake-elide.sh"),
@@ -103,6 +106,7 @@ done
 printf '%s\n' "$jdk" > ${JSON.stringify(jtregJdkLog)}
 printf '%s\n' "$work" > ${JSON.stringify(jtregWorkLog)}
 printf '%s\n' "$report" > ${JSON.stringify(jtregReportLog)}
+printf '%s\n' "$JTREG_JAVA" > ${JSON.stringify(jtregJavaEnvLog)}
 "$jdk/bin/java" -version
 "$jdk/bin/javac" Sample.java
 "$jdk/bin/jar" tf sample.jar
@@ -145,6 +149,7 @@ EOF
       jtregJdkLog,
       jtregWorkLog,
       jtregReportLog,
+      jtregJavaEnvLog,
     },
   };
 }
@@ -230,9 +235,10 @@ test("returns a runner error when the current jtreg run produces no summary", as
   ]);
 });
 
-test("filters manifest paths by include globs", () => {
+test("expands directory manifest entries to matching files for include globs", () => {
   expect(
-    filterIncludedPaths(
+    expandManifestIncludePaths(
+      "/tmp/langtools",
       ["tools/javac/diags/ExamplePass.java", "tools/javac/diags/Other.java", "tools/javac/tree/Tree.java"],
       ["tools/javac/diags/Example*.java", "tools/javac/tree/**"],
     ),
@@ -246,17 +252,19 @@ test("passes only included manifest paths to jtreg", async () => {
   await collect(runJavacJtreg(ctx));
 
   const args = readFileSync(logs.jtregArgsLog, "utf8");
-  expect(args).toContain("tools/javac/diags");
+  expect(args).toContain("tools/javac/diags/ExamplePass.java");
+  expect(args).not.toContain("tools/javac/diags/Other.java");
   expect(args).not.toContain("tools/javac/launcher/BasicSourceLauncherTests.java");
 });
 
-test("keeps directory manifest entries when a file-style include targets descendants", () => {
+test("keeps directory manifest entries unchanged when include globs are empty", () => {
   expect(
-    filterIncludedPaths(
+    expandManifestIncludePaths(
+      "/tmp/langtools",
       ["tools/javac/diags", "tools/javac/launcher/BasicSourceLauncherTests.java"],
-      ["tools/javac/diags/Example*.java"],
+      [],
     ),
-  ).toEqual(["tools/javac/diags"]);
+  ).toEqual(["tools/javac/diags", "tools/javac/launcher/BasicSourceLauncherTests.java"]);
 });
 
 test("resolves jdkHome from explicit settings first", async () => {
@@ -280,6 +288,72 @@ test("falls back to JAVA_HOME when javaRunner discovery is unavailable", async (
   expect(await resolveJdkHome(ctx.settings, { JAVA_HOME: join(dirname(missingRunner), "fake-jdk") }, ctx.repoRoot)).toMatch(
     /fake-jdk$/,
   );
+});
+
+test("preserves configured javaRunner when explicit jdkHome is used", async () => {
+  const { ctx } = setupJtregFixture();
+
+  await expect(resolveJavaExecution(ctx.settings, {}, ctx.repoRoot)).resolves.toMatchObject({
+    jdkHome: String(ctx.settings.jdkHome),
+    javaRunner: String(ctx.settings.javaRunner),
+  });
+});
+
+test("preserves discovered javaRunner when java.home is derived from it", async () => {
+  const { ctx } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+
+  await expect(resolveJavaExecution(ctx.settings, {}, ctx.repoRoot)).resolves.toMatchObject({
+    javaRunner: String(ctx.settings.javaRunner),
+  });
+});
+
+test("uses JAVA_HOME/bin/java when falling back from a broken javaRunner", async () => {
+  const { ctx } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+  const missingRunner = join(dirname(String(ctx.settings.javaRunner)), "missing-java");
+  ctx.settings.javaRunner = missingRunner;
+
+  await expect(
+    resolveJavaExecution(ctx.settings, { JAVA_HOME: join(dirname(missingRunner), "fake-jdk") }, ctx.repoRoot),
+  ).resolves.toMatchObject({
+    javaRunner: join(dirname(missingRunner), "fake-jdk", "bin", "java"),
+  });
+});
+
+test("passes through configured JTREG_JAVA when explicit jdkHome is set", async () => {
+  const { ctx, logs } = setupJtregFixture();
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregJavaEnvLog, "utf8").trim()).toBe(String(ctx.settings.javaRunner));
+});
+
+test("passes through configured JTREG_JAVA when javaRunner discovery succeeds", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregJavaEnvLog, "utf8").trim()).toBe(String(ctx.settings.javaRunner));
+});
+
+test("uses JAVA_HOME/bin/java for JTREG_JAVA when javaRunner discovery falls back", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  delete ctx.settings.jdkHome;
+  const originalJavaHome = process.env.JAVA_HOME;
+  const fallbackJavaHome = join(dirname(String(ctx.settings.javaRunner)), "fake-jdk");
+  ctx.settings.javaRunner = join(dirname(String(ctx.settings.javaRunner)), "missing-java");
+  process.env.JAVA_HOME = fallbackJavaHome;
+
+  try {
+    await collect(runJavacJtreg(ctx));
+  } finally {
+    if (originalJavaHome === undefined) delete process.env.JAVA_HOME;
+    else process.env.JAVA_HOME = originalJavaHome;
+  }
+
+  expect(readFileSync(logs.jtregJavaEnvLog, "utf8").trim()).toBe(join(fallbackJavaHome, "bin", "java"));
 });
 
 test("rejects missing JDK configuration after javaRunner discovery and JAVA_HOME fallback", async () => {

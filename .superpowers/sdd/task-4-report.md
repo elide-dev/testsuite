@@ -202,3 +202,27 @@ Results:
 - Cheap cross-check (`test262` adapter + CLI + registry): `12 pass`, `0 fail`
 - Controller full harness suite: `64 pass`, `0 fail`
 - Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.
+
+## Task 4 fourth fix
+
+- Replaced the source-launcher smoke slice in `manifests/javac-langtools.toml` with a true langtools compile-then-run test: `tools/javac/IllDefinedOrderOfInit.java`, which locally carries `@compile IllDefinedOrderOfInit.java` and `@run main IllDefinedOrderOfInit`.
+- Updated `harness/src/manifest.test.ts` so the manifest regression check now requires that compile-then-run slice instead of launcher-only coverage.
+- Reworked `harness/src/adapters/javac-jtreg.ts` to resolve the real JDK home and effective `JTREG_JAVA` together via `resolveJavaExecution()`: explicit `jdkHome` preserves configured `javaRunner`, successful `javaRunner` discovery preserves that runner, and `JAVA_HOME` fallback now exports `${resolvedJdkHome}/bin/java`.
+- Tightened file-granular `--include` handling for directory manifest entries by expanding matching descendant `.java` files under `test/langtools` only when include globs are present, while preserving raw directory entries when include globs are empty.
+- Extended `harness/src/adapters/javac-jtreg.test.ts` to cover directory-entry narrowing, effective runner selection, and the `JTREG_JAVA` environment passed into jtreg for explicit, discovered, and fallback runner cases.
+
+### Verification after fourth fix
+
+Commands:
+
+```bash
+cd harness
+bun test src/adapters/javac-jtreg.test.ts src/manifest.test.ts src/registry.test.ts
+bun run typecheck
+```
+
+Results:
+
+- Focused javac/manifest/registry tests: `24 pass`, `0 fail`
+- Typecheck: exit code `0`
+- Commands emitted the same environment-specific extra-cert warning and otherwise completed successfully.

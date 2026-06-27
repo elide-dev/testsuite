@@ -37,18 +37,56 @@ export interface JtregRunLayout {
   wrapperJdk: string;
 }
 
+export interface ResolvedJavaExecution {
+  jdkHome: string;
+  javaRunner: string;
+}
+
 function compileIncludeFilters(globs: string[]): Array<(path: string) => boolean> {
   return globs.map((glob) => picomatch(glob));
 }
 
-function matchesIncludedDescendant(path: string, includeGlobs: string[]): boolean {
-  return includeGlobs.some((glob) => glob === path || glob.startsWith(`${path}/`));
+function collectJavaFiles(rootPath: string, relativePath: string): string[] {
+  const files: string[] = [];
+  for (const entry of readdirSync(rootPath, { withFileTypes: true })) {
+    const childRoot = join(rootPath, entry.name);
+    const childRelative = `${relativePath}/${entry.name}`;
+    if (entry.isDirectory()) {
+      files.push(...collectJavaFiles(childRoot, childRelative));
+      continue;
+    }
+    if (entry.isFile() && childRelative.endsWith(".java")) {
+      files.push(childRelative);
+    }
+  }
+  return files;
 }
 
-export function filterIncludedPaths(paths: string[], includeGlobs: string[]): string[] {
-  if (!includeGlobs.length) return paths;
+export function expandManifestIncludePaths(langtoolsRoot: string, manifestPaths: string[], includeGlobs: string[]): string[] {
+  if (!includeGlobs.length) return manifestPaths;
   const matchers = compileIncludeFilters(includeGlobs);
-  return paths.filter((path) => matchers.some((match) => match(path)) || matchesIncludedDescendant(path, includeGlobs));
+  const selected: string[] = [];
+  const seen = new Set<string>();
+  const addPath = (path: string): void => {
+    if (seen.has(path)) return;
+    seen.add(path);
+    selected.push(path);
+  };
+
+  for (const manifestPath of manifestPaths) {
+    if (matchers.some((match) => match(manifestPath))) {
+      addPath(manifestPath);
+    }
+    const fullPath = join(langtoolsRoot, manifestPath);
+    if (!existsSync(fullPath) || !statSync(fullPath).isDirectory()) continue;
+    for (const javaFile of collectJavaFiles(fullPath, manifestPath)) {
+      if (matchers.some((match) => match(javaFile))) {
+        addPath(javaFile);
+      }
+    }
+  }
+
+  return selected;
 }
 
 function validateJdkHome(jdkHome: string): string {
@@ -73,13 +111,28 @@ export async function resolveJdkHome(
   env: NodeJS.ProcessEnv = process.env,
   cwd = process.cwd(),
 ): Promise<string> {
+  return (await resolveJavaExecution(settings, env, cwd)).jdkHome;
+}
+
+function configuredJavaRunner(settings: Record<string, unknown>): string {
+  return String(settings.javaRunner ?? "").trim() || "java";
+}
+
+export async function resolveJavaExecution(
+  settings: Record<string, unknown>,
+  env: NodeJS.ProcessEnv = process.env,
+  cwd = process.cwd(),
+): Promise<ResolvedJavaExecution> {
   const explicitJdkHome = String(settings.jdkHome ?? "").trim();
   const envJdkHome = String(env.JAVA_HOME ?? "").trim();
   if (explicitJdkHome) {
-    return validateJdkHome(explicitJdkHome);
+    return {
+      jdkHome: validateJdkHome(explicitJdkHome),
+      javaRunner: configuredJavaRunner(settings),
+    };
   }
 
-  const javaRunner = String(settings.javaRunner ?? "java").trim();
+  const javaRunner = configuredJavaRunner(settings);
   if (javaRunner) {
     try {
       const result = await runProcess([javaRunner, "-XshowSettings:properties", "-version"], {
@@ -90,7 +143,10 @@ export async function resolveJdkHome(
       });
       const derived = parseJavaHome(`${result.stdout}\n${result.stderr}`);
       if (derived) {
-        return validateJdkHome(derived);
+        return {
+          jdkHome: validateJdkHome(derived),
+          javaRunner,
+        };
       }
     } catch {
       // Compatibility fallback below handles missing or non-executable javaRunner values.
@@ -98,7 +154,11 @@ export async function resolveJdkHome(
   }
 
   if (envJdkHome) {
-    return validateJdkHome(envJdkHome);
+    const jdkHome = validateJdkHome(envJdkHome);
+    return {
+      jdkHome,
+      javaRunner: join(jdkHome, "bin", "java"),
+    };
   }
 
   throw new Error("javac-jtreg could not determine a real JDK home from settings.jdkHome, javaRunner, or JAVA_HOME");
@@ -131,7 +191,7 @@ export function buildWrapperJdk(wrapperJdk: string, realJdkHome: string, repoRoo
   chmodSync(join(wrapperBin, "java"), 0o755);
 }
 
-export async function createJtregRunLayout(ctx: AdapterContext): Promise<JtregRunLayout> {
+export async function createJtregRunLayout(ctx: AdapterContext, realJdkHome?: string): Promise<JtregRunLayout> {
   mkdirSync(ctx.workspacePath, { recursive: true });
   const runRoot = mkdtempSync(join(ctx.workspacePath, "jtreg-run-"));
   const workDir = join(runRoot, "JTwork");
@@ -139,7 +199,7 @@ export async function createJtregRunLayout(ctx: AdapterContext): Promise<JtregRu
   const wrapperJdk = join(runRoot, "wrapper-jdk");
   mkdirSync(workDir, { recursive: true });
   mkdirSync(reportDir, { recursive: true });
-  buildWrapperJdk(wrapperJdk, await resolveJdkHome(ctx.settings, process.env, ctx.repoRoot), ctx.repoRoot);
+  buildWrapperJdk(wrapperJdk, realJdkHome ?? (await resolveJdkHome(ctx.settings, process.env, ctx.repoRoot)), ctx.repoRoot);
 
   return { runRoot, workDir, reportDir, wrapperJdk };
 }
@@ -170,9 +230,11 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
   const manifest = loadManifest(resolve(manifestPath));
-  const tests = manifest.groups.flatMap((group) => filterIncludedPaths(group.include, ctx.include));
+  const langtoolsRoot = join(ctx.suitePath, "test/langtools");
+  const tests = manifest.groups.flatMap((group) => expandManifestIncludePaths(langtoolsRoot, group.include, ctx.include));
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
-  const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx);
+  const javaExecution = await resolveJavaExecution(ctx.settings, process.env, ctx.repoRoot);
+  const { workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
 
   const result = await runProcess(
@@ -190,7 +252,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
       timeoutMs: Number(ctx.settings.timeoutMs ?? 300_000),
       env: {
         ELIDE_JAVAC: ctx.elidePath,
-        JTREG_JAVA: String(ctx.settings.javaRunner ?? "java"),
+        JTREG_JAVA: javaExecution.javaRunner,
       },
     },
   );

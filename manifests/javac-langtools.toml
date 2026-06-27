@@ -6,7 +6,7 @@ include = ["tools/javac/diags"]
 tags = ["javac", "diagnostics"]
 
 [[group]]
-id = "javac-launcher-smoke"
-include = ["tools/javac/launcher/BasicSourceLauncherTests.java"]
-tags = ["javac", "execution", "launcher"]
-reason = "Smoke slice that exercises javac source-launcher execution"
+id = "javac-compile-run-smoke"
+include = ["tools/javac/IllDefinedOrderOfInit.java"]
+tags = ["javac", "execution", "compile-run"]
+reason = "Smoke slice that compiles a langtools test and then runs the compiled program"
