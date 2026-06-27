@@ -35,7 +35,7 @@ regressions.
 - The WPT submodule slice used by `wpt-wintertc`: `./bin/init-wpt`
 - The CPython 3.12 submodule for `cpython-core`: `git submodule update --init --depth 1 --recommend-shallow suites/cpython`
 - The OpenJDK langtools slice for `javac-jtreg`:
-  `git submodule update --init --depth 1 --recommend-shallow --filter=blob:none suites/openjdk && git -C suites/openjdk sparse-checkout init --cone && git -C suites/openjdk sparse-checkout set test/langtools/tools/javac`
+  `git submodule update --init --depth 1 --recommend-shallow --filter=blob:none suites/openjdk && git -C suites/openjdk sparse-checkout init --cone && git -C suites/openjdk sparse-checkout set test/langtools/tools/javac test/lib test/jtreg-ext`
 
 ## Running
 
@@ -46,9 +46,17 @@ THREADS=8 ./bin/run --elide nightly --suite test262 --log
 # A quick slice (finishes in seconds) — scope to any glob
 ./bin/run --elide nightly --log --include 'test/language/types/boolean/**/*.js'
 
-./bin/run --elide nightly --suite wpt-wintertc --threads 8
-./bin/run --elide nightly --suite cpython-core --threads 8
-./bin/run --elide nightly --suite javac-jtreg --threads 4
+# Current broad-suite smoke commands. These may be RED until expectations are
+# ratcheted, but they should emit upstream case/subtest results instead of
+# runner setup failures.
+./bin/run --elide nightly --suite wpt-wintertc --include 'url/urlsearchparams-constructor.any.js' --log
+./bin/run --elide nightly --suite cpython-core --include 'test_json' --log
+./bin/run --elide nightly --suite javac-jtreg --include 'tools/javac/IllDefinedOrderOfInit.java' --log
+
+# Broader slices after the smoke path is stable.
+./bin/run --elide nightly --suite wpt-wintertc --threads 8 --log
+./bin/run --elide nightly --suite cpython-core --threads 8 --log
+./bin/run --elide nightly --suite javac-jtreg --threads 4 --log
 
 # Pin a specific build: image tag, digest, or a local Elide install directory
 ./bin/run --elide ghcr.io/elide-dev/elide@sha256:…
