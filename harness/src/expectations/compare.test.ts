@@ -41,6 +41,14 @@ test("skip glob overrides status to skip", () => {
   expect(c.counts.skip).toBe(1);
 });
 
+test("actual skip results are counted as skip and never regressions", () => {
+  const c = compare([mk("language/foo.js default", "skip")], exp);
+  expect(c.regressions).toHaveLength(0);
+  expect(c.counts.skip).toBe(1);
+  expect(c.counts.fail).toBe(0);
+  expect(c.counts.pass).toBe(0);
+});
+
 test("most specific glob wins", () => {
   const exp2 = parseExpectations(`
 [skip]

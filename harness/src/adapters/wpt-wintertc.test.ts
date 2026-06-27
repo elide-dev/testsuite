@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { parseWptLine, parseWptLines } from "./wpt-wintertc";
+import { filterIncludedPaths, parseWptLine, parseWptLines } from "./wpt-wintertc";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/wpt-wintertc.ndjson`).text();
 
@@ -30,4 +30,13 @@ test("maps WPT bridge JSON lines to TestResult records", () => {
 
 test("ignores blank WPT lines", () => {
   expect(parseWptLine("")).toBeNull();
+});
+
+test("filters manifest paths by include globs", () => {
+  expect(
+    filterIncludedPaths(
+      ["url/urlsearchparams.any.js", "encoding/textdecoder.any.js", "streams/readable-streams/general.any.js"],
+      ["encoding/**", "streams/**"],
+    ),
+  ).toEqual(["encoding/textdecoder.any.js", "streams/readable-streams/general.any.js"]);
 });

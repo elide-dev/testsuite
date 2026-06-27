@@ -21,6 +21,16 @@ const STATUS: Record<WptBridgeRecord["status"], TestResult["status"]> = {
   SKIP: "skip",
 };
 
+function compileIncludeFilters(globs: string[]): Array<(path: string) => boolean> {
+  return globs.map((glob) => picomatch(glob));
+}
+
+export function filterIncludedPaths(paths: string[], includeGlobs: string[]): string[] {
+  if (!includeGlobs.length) return paths;
+  const matchers = compileIncludeFilters(includeGlobs);
+  return paths.filter((path) => matchers.some((match) => match(path)));
+}
+
 export function parseWptLine(line: string): TestResult | null {
   const s = line.trim();
   if (!s) return null;
@@ -54,7 +64,7 @@ async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestResult> {
   const runner = join(process.cwd(), "suites/drivers/wpt/wintertc-runner.js");
 
   for (const group of manifest.groups) {
-    for (const rel of group.include) {
+    for (const rel of filterIncludedPaths(group.include, ctx.include)) {
       const result = await runProcess(
         ["node", runner, "--suite", ctx.suitePath, "--test", rel, "--category", group.id, "--elide", ctx.elidePath],
         { cwd: process.cwd(), timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },

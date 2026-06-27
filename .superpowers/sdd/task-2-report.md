@@ -190,3 +190,54 @@ Result:
 ```text
 $ tsc --noEmit
 ```
+
+## Task 2 re-review fix: skip handling and WPT include filtering
+
+Updated `harness/src/expectations/compare.ts` so actual `TestResult.status === "skip"` values are counted as skips immediately and never recorded as regressions. Added a focused regression in `harness/src/expectations/compare.test.ts` that covers a skip result with no matching skip glob.
+
+Updated `harness/src/adapters/wpt-wintertc.ts` so manifest entries are filtered against `ctx.include` using `picomatch` before execution. Added a focused unit test in `harness/src/adapters/wpt-wintertc.test.ts` for the pure include-path filter helper.
+
+### Verification rerun
+
+Focused tests run from `harness/`:
+
+```bash
+bun test src/expectations/compare.test.ts src/adapters/wpt-wintertc.test.ts
+```
+
+Result:
+
+```text
+bun test v1.3.14 (0d9b296a)
+
+src/expectations/compare.test.ts:
+(pass) regression: expected pass, actual fail [2.35ms]
+(pass) expected fail that fails is not a regression [0.10ms]
+(pass) new pass: expected fail, actual pass [0.08ms]
+(pass) skip glob overrides status to skip [0.04ms]
+(pass) actual skip results are counted as skip and never regressions [0.03ms]
+(pass) most specific glob wins [0.15ms]
+(pass) WPT expectation globs match result ids without subtest suffixes [0.04ms]
+
+src/adapters/wpt-wintertc.test.ts:
+(pass) maps WPT bridge JSON lines to TestResult records [0.62ms]
+(pass) ignores blank WPT lines [0.13ms]
+(pass) filters manifest paths by include globs [0.14ms]
+
+ 10 pass
+ 0 fail
+ 23 expect() calls
+Ran 10 tests across 2 files. [82.00ms]
+```
+
+Typecheck run from `harness/`:
+
+```bash
+bun run typecheck
+```
+
+Result:
+
+```text
+$ tsc --noEmit
+```

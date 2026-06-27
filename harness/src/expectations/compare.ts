@@ -44,6 +44,10 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
   };
   for (const r of results) {
     c.counts.total++;
+    if (r.status === "skip") {
+      c.counts.skip++;
+      continue;
+    }
     const globExpected = expectedForEntries(entries, filePathOf(r.id));
     if (globExpected === "skip") {
       c.counts.skip++;
