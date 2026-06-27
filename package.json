@@ -8,7 +8,7 @@
     "testsuite": "bun ./bin/run.ts",
     "testsuite:ready": "bun ./bin/run.ts --prepare-suites",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "typecheck:harness": "bun --cwd harness run typecheck",
+    "typecheck:harness": "bun --cwd harness typecheck",
     "test:harness": "bun --cwd harness test"
   },
   "devDependencies": {
