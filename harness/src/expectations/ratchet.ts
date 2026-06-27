@@ -25,9 +25,12 @@ export function ratchetCandidates(tests: TestResult[], exp: Expectations): strin
   return out.sort();
 }
 
+function tomlBasicString(value: string): string {
+  return JSON.stringify(value);
+}
+
 export function writeRatchet(path: string, ids: string[], header: string): void {
   const lines = [header, "", "[fail]"];
-  // smol-toml quotes are double-quotes; ids contain no double-quotes in test262.
-  for (const id of [...ids].sort()) lines.push(`"${id}" = ""`);
+  for (const id of [...ids].sort()) lines.push(`${tomlBasicString(id)} = ${tomlBasicString("")}`);
   writeFileSync(path, lines.join("\n") + "\n", "utf8");
 }

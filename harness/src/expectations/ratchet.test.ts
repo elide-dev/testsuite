@@ -18,6 +18,15 @@ test("writeRatchet then loadRatchet round-trips exact ids", () => {
   expect(set.has("test/b.js strict mode")).toBe(true);
 });
 
+test("writeRatchet handles WPT-style ids with quotes and backslashes", () => {
+  const dir = mkdtempSync(join(tmpdir(), "ratchet-"));
+  const p = join(dir, "wpt.ratchet.toml");
+  const id = 'url/a.any.js :: name "with" slash \\\\';
+  writeRatchet(p, [id], "# header");
+  const set = loadRatchet(p);
+  expect(set.has(id)).toBe(true);
+});
+
 test("ratchetCandidates = failing ids not covered by skip/[fail] globs", () => {
   const exp = parseExpectations(`
 [skip]

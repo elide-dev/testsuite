@@ -134,3 +134,59 @@ Result:
 $ tsc --noEmit
 Warning: Ignoring extra certs from `/workspace/elide/apps/buildless/app/base/pki/root-ecc.crt`, load failed: error:80000002:system library::No such file or directory
 ```
+
+## Task 2 re-review fix
+
+Fixed `harness/src/expectations/ratchet.ts` to serialize ratchet ids with TOML basic-string escaping instead of raw quoted keys. This keeps WPT-style ids such as `url/a.any.js :: name "with" slash \\` valid in `.ratchet.toml` files and readable by `loadRatchet()`.
+
+Added a regression in `harness/src/expectations/ratchet.test.ts` that writes and reloads that exact WPT-style id through the ratchet file path.
+
+### Verification rerun
+
+Focused tests run from `harness/`:
+
+```bash
+bun test src/expectations/ratchet.test.ts src/expectations/compare.test.ts src/adapters/wpt-wintertc.test.ts
+```
+
+Result:
+
+```text
+bun test v1.3.14 (0d9b296a)
+
+src/expectations/ratchet.test.ts:
+(pass) writeRatchet then loadRatchet round-trips exact ids [2.54ms]
+(pass) writeRatchet handles WPT-style ids with quotes and backslashes [0.21ms]
+(pass) ratchetCandidates = failing ids not covered by skip/[fail] globs [1.69ms]
+(pass) a ratcheted failing id is expected (not a regression) [0.17ms]
+(pass) a ratcheted id that now passes surfaces as a new pass [0.03ms]
+
+src/expectations/compare.test.ts:
+(pass) regression: expected pass, actual fail [0.15ms]
+(pass) expected fail that fails is not a regression [0.04ms]
+(pass) new pass: expected fail, actual pass [0.06ms]
+(pass) skip glob overrides status to skip [0.02ms]
+(pass) most specific glob wins [0.39ms]
+(pass) WPT expectation globs match result ids without subtest suffixes [0.05ms]
+
+src/adapters/wpt-wintertc.test.ts:
+(pass) maps WPT bridge JSON lines to TestResult records [0.65ms]
+(pass) ignores blank WPT lines [0.12ms]
+
+ 13 pass
+ 0 fail
+ 25 expect() calls
+Ran 13 tests across 3 files. [85.00ms]
+```
+
+Typecheck run from `harness/`:
+
+```bash
+bun run typecheck
+```
+
+Result:
+
+```text
+$ tsc --noEmit
+```
