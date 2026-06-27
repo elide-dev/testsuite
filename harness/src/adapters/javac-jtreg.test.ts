@@ -257,6 +257,15 @@ test("runs jtreg with a generated wrapper JDK and delegates to configured java/e
   expect(readFileSync(logs.jarLog, "utf8")).toContain("tf\nsample.jar");
 });
 
+test("uses jtreg start/end verbose output when adapter logging is enabled", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  ctx.log = true;
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-verbose:default,time\n");
+});
+
 test("creates fresh jtreg work/report directories for each run", async () => {
   const { ctx, logs } = setupJtregFixture();
 

@@ -175,6 +175,7 @@ export function buildAdapterContext(
       : Array.isArray(wl.settings.include) ? (wl.settings.include as string[]) : [],
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
+    log: o.log,
     settings,
     workspacePath,
   };

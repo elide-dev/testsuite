@@ -331,11 +331,17 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const { runRoot, workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
+  const verboseArg = ctx.log ? "-verbose:default,time" : "-verbose:summary";
+  const streamJtregLine = ctx.log
+    ? (stream: "stdout" | "stderr") => (line: string): void => {
+        if (line.trim()) process.stderr.write(`[jtreg:${stream}] ${line}\n`);
+      }
+    : undefined;
 
   const result = await runProcess(
     [
       jtreg,
-      "-verbose:summary",
+      verboseArg,
       "-retain:fail,error",
       `-jdk:${wrapperJdk}`,
       `-w:${workDir}`,
@@ -349,6 +355,8 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
         ELIDE_JAVAC: ctx.elidePath,
         JTREG_JAVA: javaExecution.javaRunner,
       },
+      onStdoutLine: streamJtregLine?.("stdout"),
+      onStderrLine: streamJtregLine?.("stderr"),
     },
   );
 

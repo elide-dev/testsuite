@@ -9,6 +9,7 @@ export interface AdapterContext {
   include: string[]; // globs relative to suitePath, from registry
   skipGlobs: string[]; // file-path globs to exclude, from expectations [skip]
   threads: number;
+  log?: boolean;
   settings: Record<string, unknown>;
   workspacePath: string;
 }
