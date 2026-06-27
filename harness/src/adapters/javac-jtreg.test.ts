@@ -28,6 +28,7 @@ function setupJtregFixture(
     | "summary-runner-failure"
     | "summary-test-failure"
     | "summary-test-failure-exit"
+    | "streaming"
     | "unparseable-summary" = "summary",
 ) {
   const root = mkdtempSync(join(tmpdir(), "javac-jtreg-"));
@@ -89,6 +90,7 @@ printf '%s\n' "$@" >> ${JSON.stringify(join(root, "logs", "jar.log"))}
   const jtregWorkLog = join(logsDir, "jtreg.work");
   const jtregReportLog = join(logsDir, "jtreg.report");
   const jtregJavaEnvLog = join(logsDir, "jtreg.java-env");
+  const continueFile = join(logsDir, "continue");
 
   const elidePath = writeExecutable(
     join(root, "fake-elide.sh"),
@@ -141,6 +143,10 @@ mkdir -p "$report/text"
 if [[ ${JSON.stringify(mode)} == "unparseable-summary" ]]; then
   printf 'jtreg wrote prose instead of summary rows\n' > "$report/text/summary.txt"
 else
+  if [[ ${JSON.stringify(mode)} == "streaming" ]]; then
+    printf 'Passed: tools/javac/diags/ExamplePass.java\n'
+    while [[ ! -f ${JSON.stringify(continueFile)} ]]; do sleep 0.05; done
+  fi
   cat > "$report/text/summary.txt" <<'EOF'
 ${mode === "summary-test-failure" || mode === "summary-test-failure-exit" ? "Failed: tools/javac/diags/Other.java" : "Passed: tools/javac/diags/ExamplePass.java"}
 EOF
@@ -185,6 +191,7 @@ fi
       jtregWorkLog,
       jtregReportLog,
       jtregJavaEnvLog,
+      continueFile,
     },
   };
 }
@@ -257,13 +264,31 @@ test("runs jtreg with a generated wrapper JDK and delegates to configured java/e
   expect(readFileSync(logs.jarLog, "utf8")).toContain("tf\nsample.jar");
 });
 
-test("uses jtreg start/end verbose output when adapter logging is enabled", async () => {
+test("uses jtreg summary output when adapter logging is enabled", async () => {
   const { ctx, logs } = setupJtregFixture();
   ctx.log = true;
 
   await collect(runJavacJtreg(ctx));
 
-  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-verbose:default,time\n");
+  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-verbose:summary\n");
+});
+
+test("streams jtreg summary results before the process exits", async () => {
+  const { ctx, logs } = setupJtregFixture("streaming");
+  ctx.log = true;
+
+  const iterator = runJavacJtreg(ctx)[Symbol.asyncIterator]();
+  await expect(iterator.next()).resolves.toMatchObject({
+    value: expect.objectContaining({
+      id: "tools/javac/diags/ExamplePass.java",
+      status: "pass",
+    }),
+    done: false,
+  });
+
+  writeFileSync(logs.continueFile, "");
+
+  await expect(iterator.next()).resolves.toEqual({ value: undefined, done: true });
 });
 
 test("creates fresh jtreg work/report directories for each run", async () => {

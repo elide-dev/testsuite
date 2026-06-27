@@ -316,6 +316,50 @@ function isJtregRunnerFailure(result: ProcessRunResult): boolean {
   return result.exitCode !== 0 && result.exitCode !== 1 && result.exitCode !== 2 && result.exitCode !== 3;
 }
 
+function appendCapped(output: string, text: string, cap: number): string {
+  return output.length < cap ? output + text.slice(0, cap - output.length) : output;
+}
+
+async function* readStreamLines(
+  stream: ReadableStream<Uint8Array>,
+  onText: (text: string) => void,
+): AsyncIterable<string> {
+  const decoder = new TextDecoder();
+  let pending = "";
+  for await (const chunk of stream) {
+    const text = decoder.decode(chunk, { stream: true });
+    onText(text);
+    pending += text;
+    let newline = pending.search(/\r?\n/);
+    while (newline >= 0) {
+      const line = pending.slice(0, newline);
+      pending = pending.slice(pending[newline] === "\r" && pending[newline + 1] === "\n" ? newline + 2 : newline + 1);
+      yield line;
+      newline = pending.search(/\r?\n/);
+    }
+  }
+  const rest = decoder.decode();
+  if (rest) {
+    onText(rest);
+    pending += rest;
+  }
+  if (pending) yield pending;
+}
+
+async function readStreamText(
+  stream: ReadableStream<Uint8Array>,
+  cap: number,
+  onLine?: (line: string) => void,
+): Promise<string> {
+  let output = "";
+  for await (const line of readStreamLines(stream, (text) => {
+    output = appendCapped(output, text, cap);
+  })) {
+    onLine?.(line);
+  }
+  return output;
+}
+
 export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
@@ -331,34 +375,72 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const { runRoot, workDir, reportDir, wrapperJdk } = await createJtregRunLayout(ctx, javaExecution.jdkHome);
   const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
-  const verboseArg = ctx.log ? "-verbose:default,time" : "-verbose:summary";
-  const streamJtregLine = ctx.log
-    ? (stream: "stdout" | "stderr") => (line: string): void => {
-        if (line.trim()) process.stderr.write(`[jtreg:${stream}] ${line}\n`);
-      }
-    : undefined;
+  const argv = [
+    jtreg,
+    "-verbose:summary",
+    "-retain:fail,error",
+    `-jdk:${wrapperJdk}`,
+    `-w:${workDir}`,
+    `-r:${reportDir}`,
+    ...tests.map((test) => join(jtregLangtoolsRoot, test)),
+  ];
+  const emitted = new Set<string>();
+  let result: ProcessRunResult;
+  if (ctx.log || ctx.verbose) {
+    const started = performance.now();
+    const proc = Bun.spawn(argv, {
+      cwd: jtregLangtoolsRoot,
+      env: {
+        ...process.env,
+        ELIDE_JAVAC: ctx.elidePath,
+        JTREG_JAVA: javaExecution.javaRunner,
+      },
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      proc.kill("SIGKILL");
+    }, Number(ctx.settings.timeoutMs ?? 300_000));
+    let stdout = "";
+    const stderrPromise = readStreamText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, ctx.verbose
+      ? (line) => {
+          if (line.trim()) process.stderr.write(`[jtreg:stderr] ${line}\n`);
+        }
+      : undefined);
 
-  const result = await runProcess(
-    [
-      jtreg,
-      verboseArg,
-      "-retain:fail,error",
-      `-jdk:${wrapperJdk}`,
-      `-w:${workDir}`,
-      `-r:${reportDir}`,
-      ...tests.map((test) => join(jtregLangtoolsRoot, test)),
-    ],
-    {
+    for await (const line of readStreamLines(proc.stdout as ReadableStream<Uint8Array>, (text) => {
+      stdout = appendCapped(stdout, text, 1_000_000);
+    })) {
+      if (ctx.verbose && line.trim()) process.stderr.write(`[jtreg:stdout] ${line}\n`);
+      for (const parsed of parseJtregSummary(line)) {
+        if (emitted.has(parsed.id)) continue;
+        emitted.add(parsed.id);
+        yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
+      }
+    }
+
+    const [exitCode, stderr] = await Promise.all([proc.exited, stderrPromise]);
+    clearTimeout(timer);
+    result = {
+      command: argv,
+      exitCode,
+      stdout,
+      stderr,
+      durationMs: Math.round(performance.now() - started),
+      timedOut,
+    };
+  } else {
+    result = await runProcess(argv, {
       cwd: jtregLangtoolsRoot,
       timeoutMs: Number(ctx.settings.timeoutMs ?? 300_000),
       env: {
         ELIDE_JAVAC: ctx.elidePath,
         JTREG_JAVA: javaExecution.javaRunner,
       },
-      onStdoutLine: streamJtregLine?.("stdout"),
-      onStderrLine: streamJtregLine?.("stderr"),
-    },
-  );
+    });
+  }
 
   const summaryPath = join(reportDir, "text/summary.txt");
   if (!existsSync(summaryPath)) {
@@ -367,7 +449,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   }
 
   const parsedSummary = parseJtregSummary(readFileSync(summaryPath, "utf8"));
-  if (parsedSummary.length === 0) {
+  if (parsedSummary.length === 0 && emitted.size === 0) {
     const summarySnippet = readFileSync(summaryPath, "utf8").trim().split(/\r?\n/).slice(0, 20).join("\n");
     yield runnerErrorResult(
       `jtreg summary contained no parseable test results${summarySnippet ? `:\n${summarySnippet}` : ""}`,
@@ -377,6 +459,7 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   }
 
   for (const parsed of parsedSummary) {
+    if (emitted.has(parsed.id)) continue;
     yield skip.some((match) => match(String(parsed.meta?.upstreamPath))) ? { ...parsed, status: "skip" } : parsed;
   }
 

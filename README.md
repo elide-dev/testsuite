@@ -75,9 +75,13 @@ bun run testsuite --elide /path/to/elide-install      # dir containing bin/elide
 `./bin/run ...` remains as a direct executable alias for the same Bun/TypeScript
 launcher.
 
-`--log` streams a mark per test to stderr (`✅` pass · `❌` fail · `🛑` error ·
-`⊘` skip); the summary line goes to stdout. The exit code is non-zero on any
-regression.
+`--log` streams one normalized mark per completed test to stderr (`✅` pass ·
+`❌` fail · `🛑` error · `⊘` skip); the summary line goes to stdout. Add
+`--verbose` to also mirror raw runner stdout/stderr, which is useful for
+debugging harness behavior. Failure messages are persisted in reports either
+way; console printing can be controlled with `--failure-output show|hide` or the
+aliases `--show-failure-output` / `--hide-failure-output`. The exit code is
+non-zero on any regression.
 
 ## Reports
 

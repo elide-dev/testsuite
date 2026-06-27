@@ -37,6 +37,18 @@ test("parses the --log flag", () => {
   expect(parseArgs(["run", "test262", "--log"]).log).toBe(true);
 });
 
+test("parses the --verbose flag", () => {
+  expect(parseArgs(["run", "test262", "--verbose"]).verbose).toBe(true);
+});
+
+test("parses failure output controls", () => {
+  expect(parseArgs(["run", "test262"]).failureOutput).toBe("show");
+  expect(parseArgs(["run", "test262", "--failure-output", "hide"]).failureOutput).toBe("hide");
+  expect(parseArgs(["run", "test262", "--hide-failure-output"]).failureOutput).toBe("hide");
+  expect(parseArgs(["run", "test262", "--hide-failure-output", "--show-failure-output"]).failureOutput).toBe("show");
+  expect(() => parseArgs(["run", "test262", "--failure-output", "loud"])).toThrow("--failure-output must be 'show' or 'hide'");
+});
+
 test("parses the --update-summaries flag", () => {
   expect(parseArgs(["run", "test262", "--update-summaries"]).updateSummaries).toBe(true);
 });

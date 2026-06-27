@@ -10,6 +10,7 @@ export interface AdapterContext {
   skipGlobs: string[]; // file-path globs to exclude, from expectations [skip]
   threads: number;
   log?: boolean;
+  verbose?: boolean;
   settings: Record<string, unknown>;
   workspacePath: string;
 }

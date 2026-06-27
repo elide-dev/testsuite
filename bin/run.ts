@@ -15,9 +15,11 @@ interface Options {
   threads: string;
   platform: string;
   log: boolean;
+  verbose: boolean;
   include?: string;
   ratchet: boolean;
   updateSummaries: boolean;
+  failureOutput: "show" | "hide";
 }
 
 interface WorkloadInfo {
@@ -56,8 +58,10 @@ function parseArgs(argv: string[]): Options {
     threads: process.env.THREADS || "1",
     platform: process.env.PLATFORM || "",
     log: false,
+    verbose: false,
     ratchet: false,
     updateSummaries: false,
+    failureOutput: "show",
   };
 
   for (let i = 0; i < argv.length;) {
@@ -85,6 +89,21 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--log":
         options.log = true;
+        break;
+      case "--verbose":
+        options.verbose = true;
+        break;
+      case "--failure-output": {
+        const mode = value(arg);
+        if (mode !== "show" && mode !== "hide") usageError("--failure-output must be 'show' or 'hide'");
+        options.failureOutput = mode;
+        break;
+      }
+      case "--show-failure-output":
+        options.failureOutput = "show";
+        break;
+      case "--hide-failure-output":
+        options.failureOutput = "hide";
         break;
       case "--include":
         options.include = value(arg);
@@ -356,9 +375,12 @@ async function main(): Promise<number> {
       "--suite-version",
       version,
       ...(options.log ? ["--log"] : []),
+      ...(options.verbose ? ["--verbose"] : []),
       ...(options.include ? ["--include", options.include] : []),
       ...(options.ratchet ? ["--ratchet"] : []),
       ...(options.updateSummaries ? ["--update-summaries"] : []),
+      "--failure-output",
+      options.failureOutput,
     ];
     const rc = await run(args);
     switch (rc) {

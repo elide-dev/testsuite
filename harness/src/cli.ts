@@ -33,6 +33,8 @@ export interface CliOptions {
   expectationsDir: string;
   threads: number;
   log: boolean;
+  verbose: boolean;
+  failureOutput: "show" | "hide";
   include?: string; // comma-separated glob override (else registry settings.include)
   suiteVersion?: string;
   ratchet: boolean;
@@ -50,6 +52,10 @@ export function parseArgs(argv: string[]): CliOptions {
     const i = rest.indexOf(flag);
     return i >= 0 ? rest[i + 1] : dflt;
   };
+  const failureOutputValue = get("--failure-output", rest.includes("--hide-failure-output") ? "hide" : "show");
+  if (failureOutputValue !== "show" && failureOutputValue !== "hide") {
+    throw new Error("--failure-output must be 'show' or 'hide'");
+  }
   return {
     command,
     workload,
@@ -62,6 +68,8 @@ export function parseArgs(argv: string[]): CliOptions {
     expectationsDir: get("--expectations", resolve(REPO_ROOT, "expectations")),
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
+    verbose: rest.includes("--verbose"),
+    failureOutput: rest.includes("--show-failure-output") ? "show" : failureOutputValue,
     include: get("--include", "") || undefined,
     suiteVersion: get("--suite-version", "") || undefined,
     ratchet: rest.includes("--ratchet"),
@@ -176,6 +184,7 @@ export function buildAdapterContext(
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
     log: o.log,
+    verbose: o.verbose,
     settings,
     workspacePath,
   };
@@ -201,7 +210,8 @@ export async function main(o: CliOptions): Promise<number> {
     results.push(r);
     if (o.log && r.kind === "test") {
       // Live per-test marks go to stderr so stdout stays clean for the summary.
-      const tail = r.status === "fail" || r.status === "error" ? `  — ${r.message ?? ""}` : "";
+      const shouldPrintFailureOutput = o.failureOutput === "show" && (r.status === "fail" || r.status === "error");
+      const tail = shouldPrintFailureOutput ? `  — ${r.message ?? ""}` : "";
       process.stderr.write(`${MARK[r.status] ?? "?"} ${r.id}${tail}\n`);
     }
   }
