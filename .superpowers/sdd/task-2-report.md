@@ -241,3 +241,67 @@ Result:
 ```text
 $ tsc --noEmit
 ```
+
+## Task 2 latest review fix: WPT default include and stable repo-root paths
+
+Set `registry.toml` to give `wpt-wintertc` an explicit `settings.include = ["**/*"]`, so the default WPT run executes every manifest entry instead of inheriting the generic CLI fallback `["test/**/*.js"]`, which matches nothing in WPT manifests.
+
+Updated `harness/src/cli.ts` to derive a stable `REPO_ROOT` from source location, normalize relative workload manifests to absolute repo-root paths before building the adapter context, and pass that repo root through `AdapterContext`.
+
+Updated `harness/src/adapters/wpt-wintertc.ts` to load the normalized manifest path directly and resolve the WPT runner and spawn `cwd` from `ctx.repoRoot` instead of `process.cwd()`, which keeps `cd harness` local development working.
+
+Added focused coverage in `harness/src/registry.test.ts` for the WPT workload’s all-files include default, and in `harness/src/cli.test.ts` for the repo-root manifest normalization and context wiring.
+
+### Verification rerun
+
+Focused tests run from `harness/`:
+
+```bash
+bun test src/adapters/wpt-wintertc.test.ts src/manifest.test.ts src/registry.test.ts src/cli.test.ts
+```
+
+Result:
+
+```text
+bun test v1.3.14 (0d9b296a)
+warn: ignoring extra certs from /workspace/elide/apps/buildless/app/base/pki/root-ecc.crt, load failed: error:10000002:SSL routines:OPENSSL_internal:system library
+
+src/manifest.test.ts:
+(pass) loads grouped manifest entries [2.92ms]
+(pass) rejects absolute manifest paths [0.98ms]
+
+src/registry.test.ts:
+(pass) loads test262 workload from registry.toml [0.93ms]
+(pass) loads wpt-wintertc workload from registry.toml [0.11ms]
+
+src/cli.test.ts:
+(pass) parses run subcommand and options [0.09ms]
+(pass) defaults threads to 1 and digest to 'local' [0.01ms]
+(pass) parses the --log flag [0.01ms]
+(pass) exports the test262 adapter
+(pass) builds suitePath from registry path, not workload id [0.08ms]
+(pass) builds wpt context with repo-root manifest and all-files include [0.04ms]
+
+src/adapters/wpt-wintertc.test.ts:
+(pass) maps WPT bridge JSON lines to TestResult records [0.65ms]
+(pass) ignores blank WPT lines [0.11ms]
+(pass) filters manifest paths by include globs [0.76ms]
+
+ 13 pass
+ 0 fail
+ 36 expect() calls
+Ran 13 tests across 4 files. [91.00ms]
+```
+
+Typecheck run from `harness/`:
+
+```bash
+bun run typecheck
+```
+
+Result:
+
+```text
+$ tsc --noEmit
+Warning: Ignoring extra certs from `/workspace/elide/apps/buildless/app/base/pki/root-ecc.crt`, load failed: error:80000002:system library::No such file or directory
+```

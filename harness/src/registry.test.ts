@@ -20,5 +20,6 @@ test("loads wpt-wintertc workload from registry.toml", () => {
   expect(wpt!.kind).toBe("test");
   expect(wpt!.adapter).toBe("wpt-wintertc");
   expect(wpt!.path).toBe("suites/wpt");
+  expect(wpt!.settings.include).toEqual(["**/*"]);
   expect(wpt!.settings.manifest).toBe("manifests/wintertc-wpt-2025.toml");
 });

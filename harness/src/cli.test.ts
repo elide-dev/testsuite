@@ -1,6 +1,6 @@
 import { test, expect } from "bun:test";
 import { resolve } from "node:path";
-import { buildAdapterContext, parseArgs } from "./cli";
+import { buildAdapterContext, parseArgs, REPO_ROOT } from "./cli";
 import { ADAPTERS } from "./adapters";
 
 test("parses run subcommand and options", () => {
@@ -46,5 +46,26 @@ test("builds suitePath from registry path, not workload id", () => {
   );
 
   expect(ctx.suitePath).toBe("/work/suites/test262");
+  expect(ctx.repoRoot).toBe(REPO_ROOT);
   expect(ctx.workspacePath).toBe(resolve(".harness/work/checkout-alias"));
+});
+
+test("builds wpt context with repo-root manifest and all-files include", () => {
+  const ctx = buildAdapterContext(
+    parseArgs(["run", "wpt-wintertc"]),
+    {
+      id: "wpt-wintertc",
+      path: "suites/wpt",
+      settings: {
+        include: ["**/*"],
+        manifest: "manifests/wintertc-wpt-2025.toml",
+      },
+    },
+    { semver: "1.0.0", digest: "abc123" },
+    { entries: [], ratchet: new Set() },
+  );
+
+  expect(ctx.include).toEqual(["**/*"]);
+  expect(ctx.settings.manifest).toBe(resolve(REPO_ROOT, "manifests/wintertc-wpt-2025.toml"));
+  expect(ctx.repoRoot).toBe(REPO_ROOT);
 });

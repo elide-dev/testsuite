@@ -16,5 +16,6 @@ adapter = "wpt-wintertc"
 path = "suites/wpt"
 
   [workload.settings]
+  include = ["**/*"]
   manifest = "manifests/wintertc-wpt-2025.toml"
   timeoutMs = 60000

@@ -1,4 +1,4 @@
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
@@ -59,15 +59,15 @@ export function parseWptLines(text: string): TestResult[] {
 async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("wpt-wintertc requires settings.manifest");
-  const manifest = loadManifest(resolve(manifestPath));
+  const manifest = loadManifest(manifestPath);
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
-  const runner = join(process.cwd(), "suites/drivers/wpt/wintertc-runner.js");
+  const runner = join(ctx.repoRoot, "suites/drivers/wpt/wintertc-runner.js");
 
   for (const group of manifest.groups) {
     for (const rel of filterIncludedPaths(group.include, ctx.include)) {
       const result = await runProcess(
         ["node", runner, "--suite", ctx.suitePath, "--test", rel, "--category", group.id, "--elide", ctx.elidePath],
-        { cwd: process.cwd(), timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },
+        { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },
       );
       if (result.timedOut || result.exitCode !== 0) {
         yield {

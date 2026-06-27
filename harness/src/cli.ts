@@ -1,5 +1,5 @@
 import { mkdirSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import { ADAPTERS } from "./adapters";
 import type { AdapterContext } from "./adapters/types";
 import { loadRegistry } from "./registry";
@@ -34,6 +34,8 @@ export interface CliOptions {
   ratchet: boolean;
 }
 
+export const REPO_ROOT = resolve(import.meta.dir, "../..");
+
 export function parseArgs(argv: string[]): CliOptions {
   const [command, workload, ...rest] = argv;
   const get = (flag: string, dflt: string): string => {
@@ -45,9 +47,9 @@ export function parseArgs(argv: string[]): CliOptions {
     workload,
     elidePath: get("--elide-path", "/opt/elide/bin/elide"),
     digest: get("--digest", "local"),
-    suiteRoot: get("--suite-root", resolve("suites")),
-    reportsDir: get("--reports", resolve("reports")),
-    expectationsDir: get("--expectations", resolve("expectations")),
+    suiteRoot: get("--suite-root", resolve(REPO_ROOT, "suites")),
+    reportsDir: get("--reports", resolve(REPO_ROOT, "reports")),
+    expectationsDir: get("--expectations", resolve(REPO_ROOT, "expectations")),
     threads: parseInt(get("--threads", "1"), 10),
     log: rest.includes("--log"),
     include: get("--include", "") || undefined,
@@ -56,7 +58,7 @@ export function parseArgs(argv: string[]): CliOptions {
   };
 }
 
-const DB_PATH = resolve(".harness/results.sqlite");
+const DB_PATH = resolve(REPO_ROOT, ".harness/results.sqlite");
 
 export async function dbBuild(reportsDir = resolve("reports")): Promise<number> {
   const db = openDb(DB_PATH);
@@ -84,16 +86,21 @@ export function buildAdapterContext(
   exp: Expectations,
   workspacePath = resolve(".harness/work", wl.id),
 ): AdapterContext {
+  const settings = { ...wl.settings };
+  if (typeof settings.manifest === "string" && !isAbsolute(settings.manifest)) {
+    settings.manifest = resolve(REPO_ROOT, settings.manifest);
+  }
   return {
     elide: identity,
     elidePath: o.elidePath,
+    repoRoot: REPO_ROOT,
     suitePath: suitePathForWorkload(o.suiteRoot, wl.path),
     include: o.include
       ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
       : (wl.settings.include as string[]) ?? ["test/**/*.js"],
     skipGlobs: skipGlobs(exp),
     threads: o.threads,
-    settings: wl.settings,
+    settings,
     workspacePath,
   };
 }
