@@ -88,6 +88,7 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const manifest = loadManifest(manifestPath);
   const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
+  const driverSkipArgs = ctx.skipGlobs.flatMap((glob) => ["--skip", glob]);
   const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
   if (modules.length === 0) {
     yield runnerErrorResult("cpython-core selected no modules");
@@ -96,7 +97,7 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
 
   const started = performance.now();
   const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
-  const proc = Bun.spawn([ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...modules], {
+  const proc = Bun.spawn([ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...driverSkipArgs, ...modules], {
     cwd: ctx.repoRoot,
     env: process.env,
     stdout: "pipe",

@@ -1,4 +1,5 @@
 import argparse
+import fnmatch
 import importlib
 import json
 import sys
@@ -15,12 +16,51 @@ def normalize_unittest_id(value):
     return value[5:] if value.startswith("test.") else value
 
 
+def case_id(test):
+    return normalize_unittest_id(test.id() if hasattr(test, "id") else str(test))
+
+
+def module_id(test):
+    return normalize_unittest_id(test.__class__.__module__)
+
+
+def should_skip(test, patterns):
+    test_case_id = case_id(test)
+    test_module_id = module_id(test)
+    return any(
+        fnmatch.fnmatchcase(test_case_id, pattern) or fnmatch.fnmatchcase(test_module_id, pattern)
+        for pattern in patterns
+    )
+
+
+def filter_suite(suite, skip_patterns):
+    filtered = unittest.TestSuite()
+    skipped = 0
+    for item in suite:
+        if isinstance(item, unittest.TestSuite):
+            child_suite, child_skipped = filter_suite(item, skip_patterns)
+            skipped += child_skipped
+            if child_suite.countTestCases() > 0:
+                filtered.addTest(child_suite)
+        elif should_skip(item, skip_patterns):
+            emit({
+                "module": module_id(item),
+                "case": case_id(item),
+                "status": "skip",
+                "message": "driver-level skip",
+            })
+            skipped += 1
+        else:
+            filtered.addTest(item)
+    return filtered, skipped
+
+
 class JsonResult(unittest.TextTestResult):
     def _case_id(self, test):
-        return normalize_unittest_id(test.id() if hasattr(test, "id") else str(test))
+        return case_id(test)
 
     def _module_id(self, test):
-        return normalize_unittest_id(test.__class__.__module__)
+        return module_id(test)
 
     def _emit(self, test, status, message=None):
         record = {"module": self._module_id(test), "case": self._case_id(test), "status": status}
@@ -52,6 +92,7 @@ class JsonResult(unittest.TextTestResult):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cpython-root", required=True)
+    parser.add_argument("--skip", action="append", default=[])
     parser.add_argument("modules", nargs="+")
     args = parser.parse_args()
     sys.path.insert(0, args.cpython_root + "/Lib")
@@ -62,6 +103,7 @@ def main():
         try:
             module = importlib.import_module("test." + module_name)
             suite = unittest.defaultTestLoader.loadTestsFromModule(module)
+            suite, _ = filter_suite(suite, args.skip)
             result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0).run(suite)
             ok = ok and result.wasSuccessful()
         except unittest.SkipTest as exc:

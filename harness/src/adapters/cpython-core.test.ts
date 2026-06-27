@@ -98,7 +98,7 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
     repoRoot: resolve(import.meta.dir, "../..", ".."),
     suitePath,
     include: [],
-    skipGlobs: [],
+    skipGlobs: ["test_re.ReTests.test_look_behind_overflow"],
     threads: 1,
     settings: { manifest, timeoutMs: 5_000 },
     workspacePath: join(root, "workspace"),
@@ -112,8 +112,14 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
       status: "pass",
     }),
   ]);
-  expect(readFileSync(argsLog, "utf8")).toContain("run\n");
-  expect(readFileSync(argsLog, "utf8")).toContain("--\n--cpython-root\n");
+  const argv = readFileSync(argsLog, "utf8").trim().split("\n");
+  expect(argv).toContain("run");
+  expect(argv).toContain("--");
+  expect(argv).toContain("--cpython-root");
+  expect(argv).toContain("--skip");
+  expect(argv).toContain("test_re.ReTests.test_look_behind_overflow");
+  expect(argv.indexOf("--skip")).toBeGreaterThan(argv.indexOf("--cpython-root"));
+  expect(argv.indexOf("--skip")).toBeLessThan(argv.indexOf("test_re"));
 });
 
 test("passes only included CPython modules to the driver", async () => {
