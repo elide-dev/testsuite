@@ -16,7 +16,12 @@ interface CpythonRecord {
 export function parseCpythonLine(line: string): TestResult | null {
   const s = line.trim();
   if (!s) return null;
-  const r = JSON.parse(s) as CpythonRecord;
+  let r: CpythonRecord;
+  try {
+    r = JSON.parse(s) as CpythonRecord;
+  } catch {
+    return null;
+  }
   return {
     kind: "test",
     id: r.case || r.module,
@@ -43,15 +48,37 @@ export function remapCpythonSkip(result: TestResult, skipGlobs: Array<(value: st
   return skipGlobs.some((match) => match(upstreamPath) || match(caseId)) ? { ...result, status: "skip" } : result;
 }
 
-async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
+export function filterIncludedModules(modules: string[], includeGlobs: string[]): string[] {
+  if (!includeGlobs.length) return modules;
+  const matchers = includeGlobs.map((glob) => picomatch(glob));
+  return modules.filter((module) => matchers.some((match) => match(module)));
+}
+
+export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
   const manifest = loadManifest(manifestPath);
-  const modules = manifest.groups.flatMap((g) => g.include);
+  const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
   const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
+  if (modules.length === 0) {
+    yield {
+      kind: "test",
+      id: "cpython-core::<runner>",
+      status: "error",
+      message: "cpython-core selected no modules",
+      meta: {
+        suite: "cpython-core",
+        upstreamPath: "<runner>",
+        category: "runner",
+        runner: "regrtest",
+        subtest: "<runner>",
+      },
+    };
+    return;
+  }
   const result = await runProcess(
-    [ctx.elidePath, "run", driver, "--cpython-root", ctx.suitePath, ...modules],
+    [ctx.elidePath, "run", driver, "--", "--cpython-root", ctx.suitePath, ...modules],
     { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 120_000) },
   );
 
