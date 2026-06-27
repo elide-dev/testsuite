@@ -170,7 +170,11 @@ README_MODE=ro
 [[ ${#UPDATE_SUMMARIES[@]} -gt 0 ]] && README_MODE=rw
 
 if [[ $ALL_SUITES -eq 1 && ${#SUITES[@]} -eq 0 ]]; then
-  mapfile -t SUITES < <(list_workloads "$ROOT/registry.toml")
+  while IFS= read -r workload; do
+    [[ -n "$workload" ]] && SUITES+=("$workload")
+  done <<EOF
+$(list_workloads "$ROOT/registry.toml")
+EOF
 fi
 if [[ ${#SUITES[@]} -eq 0 ]]; then
   SUITES=(test262)
