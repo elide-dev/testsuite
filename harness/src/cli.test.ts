@@ -2,7 +2,7 @@ import { test, expect, spyOn } from "bun:test";
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { buildAdapterContext, main, parseArgs, REGISTRY_PATH, REPO_ROOT, runAdHocDiff, runAdHocImpact, WORK_DIR } from "./cli";
+import { buildAdapterContext, logMarkForResult, main, parseArgs, REGISTRY_PATH, REPO_ROOT, runAdHocDiff, runAdHocImpact, WORK_DIR } from "./cli";
 import { ADAPTERS } from "./adapters";
 import { loadManifest } from "./manifest";
 import { loadRegistry } from "./registry";
@@ -51,6 +51,24 @@ test("parses failure output controls", () => {
 
 test("parses the --update-summaries flag", () => {
   expect(parseArgs(["run", "test262", "--update-summaries"]).updateSummaries).toBe(true);
+});
+
+test("log marks distinguish pass, ignored, expected failure, and unexpected failure", () => {
+  const exp = {
+    entries: [
+      { glob: "expected/**", expected: "fail" as const, reason: "" },
+      { glob: "ignored/**", expected: "skip" as const, reason: "" },
+    ],
+    ratchet: new Set(["ratcheted/case.js default"]),
+  };
+
+  expect(logMarkForResult({ kind: "test", id: "ok/case.js default", status: "pass" }, exp, false)).toBe("🟢");
+  expect(logMarkForResult({ kind: "test", id: "ignored/case.js default", status: "fail" }, exp, false)).toBe("🔵");
+  expect(logMarkForResult({ kind: "test", id: "expected/case.js default", status: "error" }, exp, false)).toBe("🟡");
+  expect(logMarkForResult({ kind: "test", id: "ratcheted/case.js default", status: "fail" }, exp, false)).toBe("🟡");
+  expect(logMarkForResult({ kind: "test", id: "new/case.js default", status: "fail" }, exp, false)).toBe("🔴");
+  expect(logMarkForResult({ kind: "test", id: "new/case.js default", status: "fail" }, exp, true)).toBe("🟡");
+  expect(logMarkForResult({ kind: "test", id: "skip/case.js default", status: "skip" }, exp, false)).toBe("🔵");
 });
 
 test("parses an explicit registry path override", () => {

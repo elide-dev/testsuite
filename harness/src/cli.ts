@@ -6,7 +6,7 @@ import { loadRegistry } from "./registry";
 import { resolveIdentity } from "./elide";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import type { Expectations } from "./expectations/load";
-import { compare } from "./expectations/compare";
+import { compare, expectationKeysOf, expectedFor } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
@@ -151,12 +151,12 @@ export async function runAdHocImpact(db: Database, reportsDir: string, args: str
   return renderImpactMd(computeImpact(failRows));
 }
 
-const MARK: Record<string, string> = {
-  pass: "✅",
-  fail: "❌",
-  error: "🛑",
-  skip: "⊘",
-};
+const LOG_MARK = {
+  pass: "🟢",
+  expectedFailure: "🟡",
+  unexpectedFailure: "🔴",
+  skip: "🔵",
+} as const;
 
 function isTransientResult(result: Result): boolean {
   return result.kind === "test" && result.meta?.transient === true;
@@ -164,6 +164,16 @@ function isTransientResult(result: Result): boolean {
 
 function shouldSuppressLog(result: Result): boolean {
   return result.kind === "test" && result.meta?.quiet === true;
+}
+
+export function logMarkForResult(result: TestResult, exp: Expectations, ratchetMode: boolean): string {
+  if (result.status === "skip") return LOG_MARK.skip;
+  const expected = expectedFor(exp, expectationKeysOf(result));
+  if (expected === "skip") return LOG_MARK.skip;
+  if (result.status === "pass") return LOG_MARK.pass;
+  return expected === "fail" || exp.ratchet.has(result.id) || ratchetMode
+    ? LOG_MARK.expectedFailure
+    : LOG_MARK.unexpectedFailure;
 }
 
 export function suitePathForWorkload(repoRoot: string, suiteRoot: string, workloadPath: string): string {
@@ -223,7 +233,7 @@ export async function main(o: CliOptions): Promise<number> {
       // Live per-test marks go to stderr so stdout stays clean for the summary.
       const shouldPrintFailureOutput = o.failureOutput === "show" && (r.status === "fail" || r.status === "error");
       const tail = shouldPrintFailureOutput ? `  — ${r.message ?? ""}` : "";
-      process.stderr.write(`${o.logPrefix}${MARK[r.status] ?? "?"} ${r.id}${tail}\n`);
+      process.stderr.write(`${o.logPrefix}${logMarkForResult(r, exp, o.ratchet)} ${r.id}${tail}\n`);
     }
   }
   const finishedAt = new Date().toISOString();
