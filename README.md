@@ -11,6 +11,12 @@ Next suites are added in this order:
 2. `cpython-core` - CPython 3.12 pure-core language and standard-library tests.
 3. `javac-jtreg` - broad OpenJDK langtools javac coverage through jtreg, compiling with Elide and initially running generated programs with a regular JDK. Annotation processing and modules are intentionally excluded from the default manifest for now.
 
+Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev/WHIPLASH/issues/1172),
+[Test262 (WHIPLASH#1173)](https://github.com/elide-dev/WHIPLASH/issues/1173).
+
+> [!CAUTION]
+> Full suites aren't running yet.
+
 ## Latest compatibility
 
 <!-- compat-summary:start -->
@@ -207,7 +213,6 @@ bun run typecheck
 
 Or open the repo in a GitHub Codespace / VS Code devcontainer, which provisions
 Bun, Node, Docker-in-Docker, and Elide automatically.
-
 
 
 
