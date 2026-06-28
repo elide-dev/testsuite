@@ -5,4 +5,4 @@
 
 | regressed | fixed | added | removed | still failing |
 |---:|---:|---:|---:|---:|
-| 0 | 0 | 0 | 0 | 11 |
+| 0 | 0 | 2236 | 0 | 11 |

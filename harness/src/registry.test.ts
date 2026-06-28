@@ -9,7 +9,7 @@ test("loads test262 workload from registry.toml", () => {
   expect(t262!.adapter).toBe("test262");
   expect(t262!.path).toBe("suites/test262");
   expect(t262!.settings).toEqual({
-    include: ["test/language/**/*.js", "test/built-ins/**/*.js"],
+    include: ["test/**/*.js"],
   });
 });
 
@@ -54,5 +54,6 @@ test("loads javac-jtreg workload from registry.toml", () => {
   expect(javac!.path).toBe("suites/openjdk");
   expect(javac!.settings.manifest).toBe("manifests/javac-langtools.toml");
   expect(javac!.settings.timeoutMs).toBe(3600000);
+  expect(javac!.settings.jtregCaseTimeoutSeconds).toBe(300);
   expect(javac!.settings.javaRunner).toBe("java");
 });

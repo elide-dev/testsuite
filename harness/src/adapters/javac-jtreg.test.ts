@@ -301,6 +301,16 @@ test("passes configured jtreg timeout factor through to jtreg", async () => {
   expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-timeoutFactor:2\n");
 });
 
+test("maps configured jtreg case timeout seconds to timeout factor", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  delete ctx.settings.jtregTimeoutFactor;
+  ctx.settings.jtregCaseTimeoutSeconds = 300;
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-timeoutFactor:2.5\n");
+});
+
 test("streams jtreg summary results before the process exits", async () => {
   const { ctx, logs } = setupJtregFixture("streaming");
   ctx.log = true;

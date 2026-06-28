@@ -13,7 +13,7 @@
   "regressed": [
     "tools/javac/lambda/LambdaParserTest.java"
   ],
-  "added": 0,
+  "added": 997,
   "removed": 0,
   "stillFailing": 29
 }

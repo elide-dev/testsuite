@@ -13,6 +13,8 @@ const STATUS: Record<string, TestResult["status"]> = {
   "not run": "skip",
 };
 
+const JTREG_DEFAULT_ACTION_TIMEOUT_SECONDS = 120;
+
 function categoryOf(path: string): string {
   return path.split("/").slice(0, 3).join("/");
 }
@@ -330,6 +332,18 @@ function appendCapped(output: string, text: string, cap: number): string {
   return output.length < cap ? output + text.slice(0, cap - output.length) : output;
 }
 
+function jtregTimeoutArgs(settings: Record<string, unknown>): string[] {
+  const caseTimeoutSeconds = Number(settings.jtregCaseTimeoutSeconds);
+  if (Number.isFinite(caseTimeoutSeconds) && caseTimeoutSeconds > 0) {
+    return [`-timeoutFactor:${caseTimeoutSeconds / JTREG_DEFAULT_ACTION_TIMEOUT_SECONDS}`];
+  }
+
+  const timeoutFactor = Number(settings.jtregTimeoutFactor ?? 1);
+  return Number.isFinite(timeoutFactor) && timeoutFactor > 0
+    ? [`-timeoutFactor:${timeoutFactor}`]
+    : [];
+}
+
 async function* readStreamLines(
   stream: ReadableStream<Uint8Array>,
   onText: (text: string) => void,
@@ -386,15 +400,11 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
   const concurrency = Math.max(1, Math.trunc(ctx.threads) || 1);
-  const timeoutFactor = Number(ctx.settings.jtregTimeoutFactor ?? 1);
-  const jtregTimeoutArgs = Number.isFinite(timeoutFactor) && timeoutFactor > 0
-    ? [`-timeoutFactor:${timeoutFactor}`]
-    : [];
   const argv = [
     jtreg,
     "-verbose:summary",
     `-concurrency:${concurrency}`,
-    ...jtregTimeoutArgs,
+    ...jtregTimeoutArgs(ctx.settings),
     "-retain:fail,error",
     `-jdk:${wrapperJdk}`,
     `-w:${workDir}`,

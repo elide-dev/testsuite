@@ -11,7 +11,7 @@
     "test_exceptions.ExceptionTests.test_generator_del_cleanup_exc_state"
   ],
   "regressed": [],
-  "added": 1321,
+  "added": 515,
   "removed": 2534,
   "stillFailing": 111
 }

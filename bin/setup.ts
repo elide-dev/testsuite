@@ -31,8 +31,8 @@ const SUITES: SuiteSetup[] = [
     id: "wpt-wintertc",
     aliases: ["wpt", "wpt-wintertc"],
     path: "suites/wpt",
-    sparse: ["resources", "url", "encoding"],
-    required: ["resources", "url", "encoding"],
+    sparse: ["resources", "url", "encoding", "fetch"],
+    required: ["resources", "url", "encoding", "fetch"],
     filterBlobNone: true,
   },
   {

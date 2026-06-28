@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
   <title id="title">cpython-core pass-rate chart</title>
-  <desc id="desc">2931 of 3351 tests passed.</desc>
+  <desc id="desc">2207 of 2545 tests passed.</desc>
   <rect width="720" height="170" fill="#ffffff"/>
   <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">cpython-core</text>
-  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">2931/3351 pass (87.5%)</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">2207/2545 pass (86.7%)</text>
   <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
-  <rect x="40.00" y="84" width="559.79" height="28" fill="#198754"><title>pass: 2931</title></rect>
-  <rect x="599.79" y="84" width="23.11" height="28" fill="#dc3545"><title>fail: 121</title></rect>
-  <rect x="622.89" y="84" width="29.60" height="28" fill="#6f42c1"><title>error: 155</title></rect>
-  <rect x="652.50" y="84" width="27.50" height="28" fill="#6c757d"><title>skip: 144</title></rect>
-  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 121 · error 155 · skip 144 · regressions 0</text>
+  <rect x="40.00" y="84" width="555.00" height="28" fill="#198754"><title>pass: 2207</title></rect>
+  <rect x="595.00" y="84" width="26.15" height="28" fill="#dc3545"><title>fail: 104</title></rect>
+  <rect x="621.16" y="84" width="26.40" height="28" fill="#6f42c1"><title>error: 105</title></rect>
+  <rect x="647.56" y="84" width="32.44" height="28" fill="#6c757d"><title>skip: 129</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 104 · error 105 · skip 129 · regressions 0</text>
 </svg>

@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
   <title id="title">javac-jtreg pass-rate chart</title>
-  <desc id="desc">2903 of 2937 tests passed.</desc>
+  <desc id="desc">3730 of 3934 tests passed.</desc>
   <rect width="720" height="170" fill="#ffffff"/>
   <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">javac-jtreg</text>
-  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">2903/2937 pass (98.8%)</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">3730/3934 pass (94.8%)</text>
   <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
-  <rect x="40.00" y="84" width="632.59" height="28" fill="#198754"><title>pass: 2903</title></rect>
-  <rect x="672.59" y="84" width="0.65" height="28" fill="#dc3545"><title>fail: 3</title></rect>
-  <rect x="673.24" y="84" width="5.88" height="28" fill="#6f42c1"><title>error: 27</title></rect>
-  <rect x="679.13" y="84" width="0.87" height="28" fill="#6c757d"><title>skip: 4</title></rect>
-  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 3 · error 27 · skip 4 · regressions 0</text>
+  <rect x="40.00" y="84" width="606.81" height="28" fill="#198754"><title>pass: 3730</title></rect>
+  <rect x="646.81" y="84" width="1.30" height="28" fill="#dc3545"><title>fail: 8</title></rect>
+  <rect x="648.11" y="84" width="31.24" height="28" fill="#6f42c1"><title>error: 192</title></rect>
+  <rect x="679.35" y="84" width="0.65" height="28" fill="#6c757d"><title>skip: 4</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 8 · error 192 · skip 4 · regressions 0</text>
 </svg>

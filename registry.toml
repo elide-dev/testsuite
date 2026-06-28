@@ -31,7 +31,8 @@ path = "suites/openjdk"
   [workload.settings]
   manifest = "manifests/javac-langtools.toml"
   timeoutMs = 3600000
-  jtregTimeoutFactor = 2
+  # jtreg's default action timeout is 120s; this maps to -timeoutFactor:2.5.
+  jtregCaseTimeoutSeconds = 300
   jtregPath = "jtreg"
   # Optional explicit real JDK home for the jtreg wrapper layout.
   # If omitted, the adapter derives java.home from javaRunner and only falls back to JAVA_HOME for compatibility.
@@ -46,4 +47,4 @@ path = "suites/test262"
 
   [workload.settings]
   # Globs (relative to path) to execute. Skip globs live in expectations/.
-  include = ["test/language/**/*.js", "test/built-ins/**/*.js"]
+  include = ["test/**/*.js"]

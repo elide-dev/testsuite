@@ -2,16 +2,28 @@
   "bySignature": [
     {
       "signature": "system error (exit code <n>)",
-      "count": 25,
+      "count": 190,
       "exampleIds": [
+        "tools/javac/7129225/TestImportStar.java",
         "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
-        "tools/javac/annotations/neg/8171322/TypeVariableAsAnnotationTest.java",
-        "tools/javac/annotations/repeatingAnnotations/generatedInRepeating/GeneratedInRepeating.java",
-        "tools/javac/annotations/typeAnnotations/failures/TypeVariableMissingTA.java",
-        "tools/javac/annotations/typeAnnotations/packageanno/PackageProcessor.java"
+        "tools/javac/T6411379.java",
+        "tools/javac/T6423583.java",
+        "tools/javac/T6458749.java"
       ],
       "samples": [
         "system error (exit code 3)"
+      ]
+    },
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 3,
+      "exampleIds": [
+        "tools/javac/completionDeps/DepsAndDocLint.java",
+        "tools/javac/doclint/ImplicitHeadingsTest.java",
+        "tools/javac/doclint/implicitSource/ImplicitSourceTest.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
       ]
     },
     {
@@ -22,8 +34,20 @@
         "tools/javac/lambda/LambdaParserTest.java"
       ],
       "samples": [
-        "'/work/.harness/work/javac-jtreg/jtreg-run-NDttrQ/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240186 ms)",
-        "'/work/.harness/work/javac-jtreg/jtreg-run-NDttrQ/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240171 ms)"
+        "'/work/.harness/work/javac-jtreg/jtreg-run-xpW5Jx/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240247 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-xpW5Jx/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240163 ms)"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.Exception: <n> errors found",
+      "count": 2,
+      "exampleIds": [
+        "tools/javac/T8132562/ClassPathWithDoubleQuotesTest.java",
+        "tools/javac/modules/AllDefaultTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.Exception: 1 errors found",
+        "Execution failed: `main' threw exception: java.lang.Exception: 2 errors found"
       ]
     },
     {
@@ -39,13 +63,13 @@
       ]
     },
     {
-      "signature": "Compilation failed: Compilation failed",
+      "signature": "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only",
       "count": 1,
       "exampleIds": [
-        "tools/javac/completionDeps/DepsAndDocLint.java"
+        "tools/javac/newlines/NewLineTest.java"
       ],
       "samples": [
-        "Compilation failed: Compilation failed"
+        "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only"
       ]
     }
   ],

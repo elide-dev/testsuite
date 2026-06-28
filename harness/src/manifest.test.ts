@@ -47,18 +47,12 @@ test("rejects absolute manifest paths", () => {
   expect(() => loadManifest(file)).toThrow("manifest include must be relative: /abs/test.js");
 });
 
-test("javac langtools manifest defaults to broad compiler coverage without unsupported areas", () => {
+test("javac langtools manifest enables the full tools/javac tree", () => {
   const manifest = loadManifest(`${import.meta.dir}/../../manifests/javac-langtools.toml`);
   const include = manifest.groups.flatMap((group) => group.include);
 
-  expect(include).toContain("tools/javac/diags");
-  expect(include).toContain("tools/javac/generics");
-  expect(include).toContain("tools/javac/lambda");
-  expect(include).toContain("tools/javac/api");
-  expect(include).toContain("tools/javac/records");
-  expect(include).toContain("tools/javac/IllDefinedOrderOfInit.java");
-  expect(include).not.toContain("tools/javac/processing");
-  expect(include).not.toContain("tools/javac/modules");
+  expect(manifest.groups.map((group) => group.id)).toEqual(["javac-all"]);
+  expect(include).toEqual(["tools/javac"]);
 });
 
 test("cpython manifest entries exist in the checked-out CPython suite", () => {

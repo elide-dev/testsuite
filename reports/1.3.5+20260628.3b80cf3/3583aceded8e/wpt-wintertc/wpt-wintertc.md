@@ -2,97 +2,218 @@
 
 - Image digest: `3583aceded8e8e4cab8248f08f245aa6859ce893f81e9de5c52097863c70b4cb`
 - Suite version: `1eb456f600fedad07c8cd6439796fb81db54faff`
-- Ran: 2026-06-28T03:50:18.888Z → 2026-06-28T03:50:19.193Z
+- Ran: 2026-06-28T04:24:59.548Z → 2026-06-28T04:25:04.738Z
 
 ## Summary
 
 ![Pass-rate chart](./pass-rate.svg)
 
-**Pass rate: 53/64 (82.81%)**
+**Pass rate: 835/2300 (36.30%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 53 | 10 | 1 | 0 | 0 | 0 |
+| 835 | 1324 | 141 | 0 | 0 | 0 |
 
-## Observed cases (64)
+## Observed cases (2300)
 
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid code` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - ends early` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - ends early 2` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 2` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 3` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 4` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 5` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - invalid trail 6` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - > 0x10FFFF` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - obsolete lead byte` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 2 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 3 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 4 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 5 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+0000 - 6 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 2 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 3 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 4 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 5 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+007F - 6 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 3 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 4 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 5 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+07FF - 6 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 4 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 5 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+FFFF - 6 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+10FFFF - 5 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - overlong U+10FFFF - 6 bytes` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - lead surrogate` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - trail surrogate` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-8 - surrogate pair` — pass
-- `encoding/textdecoder-fatal.any.js :: Fatal flag: utf-16le - truncated code unit` — pass
-- `encoding/textdecoder-fatal.any.js :: The fatal attribute of TextDecoder` — pass
-- `encoding/textdecoder-fatal.any.js :: Error seen with fatal does not prevent future decodes` — pass
-- `encoding/textencoder-constructor-non-utf.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│ReferenceError: encodings_table is not defined                               │
-│                                                                             │
-│ In file ../tmp/wpt-elide-5UUDmN/case.js:5242:1:                             │
-│   (source excerpt suppressed)                                               │
-│─ Stack Trace ───────────────────────────────────────────────────────────────│
-│                                                                             │
-│ ╭─ [js] :module:eval                      case.js:5242:1-15                 │
-│ │                                                                           │
-│ · elide run /tmp/wpt-elide-5UUDmN/case.js                                   │
-│                                                                             │
-│─ Advice ────────────────────────────────────────────────────────────────────│
-│                                                                             │
-│ An error occurred while executing your code.                                │
-│                                                                             │
-╰─────────────────────────────────────────────────────────────────────────────╯
-
-- `url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction` — fail — assert_equals: expected "a=b" but got ""
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, no arguments` — pass
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, remove leading "?"` — pass
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, DOMException as argument` — fail — assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function "() => new URLSearchParams(DOMException.prototype)" did not throw
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, empty string as argument` — pass
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, {} as argument` — pass
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, string.` — pass
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, object.` — fail — assert_equals: expected (string) "b" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, FormData.` — fail — assert_equals: expected (string) "b" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: Parse +` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse encoded +` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse space` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse %20` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse \0` — fail — assert_equals: expected "b\0c" but got "b"
-- `url/urlsearchparams-constructor.any.js :: Parse %00` — fail — assert_equals: expected (string) "b\0c" but got (object) null
-- `url/urlsearchparams-constructor.any.js :: Parse ⎄` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse %e2%8e%84` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse 💩` — pass
-- `url/urlsearchparams-constructor.any.js :: Parse %f0%9f%92%a9` — pass
-- `url/urlsearchparams-constructor.any.js :: Constructor with sequence of sequences of strings` — pass
-- `url/urlsearchparams-constructor.any.js :: Construct with object with +` — pass
-- `url/urlsearchparams-constructor.any.js :: Construct with object with two keys` — pass
-- `url/urlsearchparams-constructor.any.js :: Construct with array with two keys` — pass
-- `url/urlsearchparams-constructor.any.js :: Construct with 2 unpaired surrogates (no trailing)` — fail — assert_array_equals: expected property 0 to be "\ufffdx" but got "?x" (expected array ["\ufffdx", "3"] got ["?x", "1"])
-- `url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)` — fail — assert_array_equals: expected property 0 to be "x\ufffd" but got "x?" (expected array ["x\ufffd", "3"] got ["x?", "1"])
-- `url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys` — fail — assert_array_equals: expected property 0 to be "a\0b" but got "a" (expected array ["a\0b", "42"] got ["a", "42"])
-- `url/urlsearchparams-constructor.any.js :: Custom [Symbol.iterator]` — fail — assert_equals: expected (string) "b" but got (object) null
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Sanity check` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Wrong order` — pass
+- `encoding/api-basics.any.js :: Default encodings` — pass
+- `encoding/api-basics.any.js :: Default inputs` — pass
+- `encoding/api-basics.any.js :: Encode/decode round trip: utf-8` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16le` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16be` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC` — fail — assert_equals: expected "\ufffd$" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC, character` — fail — assert_equals: expected "\ufffd$P" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: ASCII ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double ASCII ESC, character` — fail — assert_equals: expected "\ufffdP" but got "P"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, ASCII ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: characters` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: SO / SI` — fail — assert_equals: expected "\r\ufffd\ufffd\x10" but got "\r\x10"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, characters` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, SO / SI` — fail — assert_equals: expected "\r\ufffd\ufffd\x10" but got "\r\x10"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, error ESC, Katakana ESC` — fail — assert_equals: expected "\ufffdﾐ" but got "\ufffd(IP"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, error ESC, character` — fail — assert_equals: expected "\ufffdﾐ" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, error ESC #2, character` — fail — assert_equals: expected "\ufffd､ﾐ" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, character, Katakana ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, SO / SI` — fail — assert_equals: expected "\ufffd\ufffd\ufffd\ufffd" but got "ｍｐ"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC #2, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, error ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "\ufffd\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC` — fail — assert_equals: expected "\ufffd" but got ""
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC #2, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, error ESC #2, character` — fail — assert_equals: expected "\ufffdば\ufffd" but got "\ufffd\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, single byte, multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "\ufffdだ佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, lead error byte` — fail — assert_equals: expected "\ufffd\ufffd" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, trail error byte` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC #2` — fail — assert_equals: expected "P\ufffd$" but got "P\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC #3` — fail — assert_equals: expected "P\ufffdP" but got "P\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, ASCII ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Roman ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Katakana ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Multibyte ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Multibyte ESC #2` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler 0` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler 128` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler random` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: DataView, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: DataView, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int8Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int8Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int16Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int16Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int32Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int32Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint16Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint16Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint32Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint32Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint8ClampedArray, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint8ClampedArray, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigInt64Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigInt64Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigUint64Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigUint64Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float16Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float16Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float32Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float32Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float64Array, backed by: ArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Float64Array, backed by: SharedArrayBuffer` — fail — createBuffer is not defined
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", createBuffer(arrayBufferOrSharedArrayBuffer, 10))" threw object "ReferenceError: createBuffer is not defined" ("ReferenceError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: SharedArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", createBuffer(arrayBufferOrSharedArrayBuffer, 10))" threw object "ReferenceError: createBuffer is not defined" ("ReferenceError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/encodeInto.any.js :: encodeInto() and a detached output buffer` — fail — value of type Direct is not yet supported by structured clone
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 6432` — pass
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7533` — fail — assert_equals: expected 7743 but got 59335
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7536` — fail — assert_equals: expected 505 but got 59336
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7672` — fail — assert_equals: expected 12350 but got 59367
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7673` — fail — assert_equals: expected 12272 but got 59368
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7674` — fail — assert_equals: expected 12273 but got 59369
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7675` — fail — assert_equals: expected 12274 but got 59370
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7676` — fail — assert_equals: expected 12275 but got 59371
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7677` — fail — assert_equals: expected 12276 but got 59372
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7678` — fail — assert_equals: expected 12277 but got 59373
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7679` — fail — assert_equals: expected 12278 but got 59374
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7680` — fail — assert_equals: expected 12279 but got 59375
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7681` — fail — assert_equals: expected 12280 but got 59376
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7682` — fail — assert_equals: expected 12281 but got 59377
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7683` — fail — assert_equals: expected 12282 but got 59378
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7684` — fail — assert_equals: expected 12283 but got 59379
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23766` — fail — assert_equals: expected 11905 but got 59413
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23770` — fail — assert_equals: expected 11908 but got 59417
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23771` — fail — assert_equals: expected 13427 but got 59418
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23772` — fail — assert_equals: expected 13383 but got 59419
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23773` — fail — assert_equals: expected 11912 but got 59420
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23774` — fail — assert_equals: expected 11915 but got 59421
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23776` — fail — assert_equals: expected 13726 but got 59423
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23777` — fail — assert_equals: expected 13850 but got 59424
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23778` — fail — assert_equals: expected 13838 but got 59425
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23779` — fail — assert_equals: expected 11916 but got 59426
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23780` — fail — assert_equals: expected 11927 but got 59427
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23781` — fail — assert_equals: expected 14702 but got 59428
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23782` — fail — assert_equals: expected 14616 but got 59429
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23784` — fail — assert_equals: expected 14799 but got 59431
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23785` — fail — assert_equals: expected 14815 but got 59432
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23786` — fail — assert_equals: expected 14963 but got 59433
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23787` — fail — assert_equals: expected 14800 but got 59434
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23790` — fail — assert_equals: expected 15182 but got 59437
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23791` — fail — assert_equals: expected 15470 but got 59438
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23792` — fail — assert_equals: expected 15584 but got 59439
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23793` — fail — assert_equals: expected 11943 but got 59440
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23796` — fail — assert_equals: expected 11946 but got 59443
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23797` — fail — assert_equals: expected 16470 but got 59444
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23798` — fail — assert_equals: expected 16735 but got 59445
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23799` — fail — assert_equals: expected 11950 but got 59446
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23800` — fail — assert_equals: expected 17207 but got 59447
+- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23801` — fail — assert_equals: expected 11955 but got 59448
+- …and 2100 more

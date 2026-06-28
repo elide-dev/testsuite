@@ -1,53 +1,894 @@
 {
   "bySignature": [
     {
-      "signature": "assert_equals: expected (string) <str> but got (object) null",
-      "count": 4,
+      "signature": "promise_test: Unhandled rejection with value: object <str>",
+      "count": 356,
       "exampleIds": [
+        "encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextDecoderStream",
+        "encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextDecoderStream",
+        "encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextEncoderStream",
+        "encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextEncoderStream",
+        "encoding/streams/decode-incomplete-input.any.js :: incomplete input with error mode \"replacement\" should end with a replacement character"
+      ],
+      "samples": [
+        "promise_test: Unhandled rejection with value: object \"TypeError: self[streamClass.name] is not a constructor\"",
+        "promise_test: Unhandled rejection with value: object \"ReferenceError: readableStreamFromArray is not defined\"",
+        "promise_test: Unhandled rejection with value: object \"ReferenceError: TextDecoderStream is not defined\"",
+        "promise_test: Unhandled rejection with value: object \"ReferenceError: document is not defined\"",
+        "promise_test: Unhandled rejection with value: object \"ReferenceError: caches is not defined\""
+      ]
+    },
+    {
+      "signature": "document is not defined",
+      "count": 171,
+      "exampleIds": [
+        "encoding/unsupported-labels.window.js :: 437 is not supported by the Encoding Standard",
+        "encoding/unsupported-labels.window.js :: adobe-standard-encoding is not supported by the Encoding Standard",
+        "encoding/unsupported-labels.window.js :: armscii-8 is not supported by the Encoding Standard",
+        "encoding/unsupported-labels.window.js :: bocu-1 is not supported by the Encoding Standard",
+        "encoding/unsupported-labels.window.js :: cesu-8 is not supported by the Encoding Standard"
+      ],
+      "samples": [
+        "document is not defined"
+      ]
+    },
+    {
+      "signature": "createBuffer is not defined",
+      "count": 142,
+      "exampleIds": [
+        "encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 0",
+        "encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler 0",
+        "encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler 0",
+        "encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler 0",
+        "encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 128"
+      ],
+      "samples": [
+        "createBuffer is not defined"
+      ]
+    },
+    {
+      "signature": "Request constructor: failed to parse URL <str>",
+      "count": 138,
+      "exampleIds": [
+        "fetch/api/request/request-consume.any.js :: Consume String request's body as text",
+        "fetch/api/request/request-consume.any.js :: Consume String request's body as blob",
+        "fetch/api/request/request-consume.any.js :: Consume String request's body as arrayBuffer",
+        "fetch/api/request/request-consume.any.js :: Consume String request's body as bytes",
+        "fetch/api/request/request-consume.any.js :: Consume String request's body as JSON"
+      ],
+      "samples": [
+        "Request constructor: failed to parse URL ''",
+        "Request constructor: failed to parse URL '...'",
+        "Request constructor: failed to parse URL '/'",
+        "Request constructor: failed to parse URL './'"
+      ]
+    },
+    {
+      "signature": "assert_equals: expected <n> but got <n>",
+      "count": 84,
+      "exampleIds": [
+        "encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7533",
+        "encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7536",
+        "encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7672",
+        "encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7673",
+        "encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 7674"
+      ],
+      "samples": [
+        "assert_equals: expected 7743 but got 59335",
+        "assert_equals: expected 505 but got 59336",
+        "assert_equals: expected 12350 but got 59367",
+        "assert_equals: expected 12272 but got 59368",
+        "assert_equals: expected 12273 but got 59369"
+      ]
+    },
+    {
+      "signature": "location is not defined",
+      "count": 83,
+      "exampleIds": [
+        "fetch/api/request/request-bad-port.any.js :: Request on bad port 0 should throw TypeError.",
+        "fetch/api/request/request-bad-port.any.js :: Request on bad port 1 should throw TypeError.",
+        "fetch/api/request/request-bad-port.any.js :: Request on bad port 7 should throw TypeError.",
+        "fetch/api/request/request-bad-port.any.js :: Request on bad port 9 should throw TypeError.",
+        "fetch/api/request/request-bad-port.any.js :: Request on bad port 11 should throw TypeError."
+      ],
+      "samples": [
+        "location is not defined"
+      ]
+    },
+    {
+      "signature": "assert_equals: property expected <str> but got <str>",
+      "count": 80,
+      "exampleIds": [
+        "url/url-setters-stripping.any.js :: Setting protocol with U+0000 before inserted colon (https:)",
+        "url/url-setters-stripping.any.js :: Setting username with leading U+0000 (https:)",
+        "url/url-setters-stripping.any.js :: Setting username with middle U+0000 (https:)",
+        "url/url-setters-stripping.any.js :: Setting username with trailing U+0000 (https:)",
+        "url/url-setters-stripping.any.js :: Setting password with leading U+0000 (https:)"
+      ],
+      "samples": [
+        "assert_equals: property expected \"https:\" but got \"http:\"",
+        "assert_equals: property expected \"%00test\" but got \"\"",
+        "assert_equals: property expected \"te%00st\" but got \"te\"",
+        "assert_equals: property expected \"test%00\" but got \"test\"",
+        "assert_equals: property expected \"host:8000\" but got \"te:8000\""
+      ]
+    },
+    {
+      "signature": "assert_equals: expected <str> but got <str>",
+      "count": 61,
+      "exampleIds": [
+        "encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC",
+        "encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC, character",
+        "encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double ASCII ESC, character",
+        "encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: SO / SI",
+        "encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, SO / SI"
+      ],
+      "samples": [
+        "assert_equals: expected \"\\ufffd$\" but got \"\\ufffd\"",
+        "assert_equals: expected \"\\ufffd$P\" but got \"\\ufffd\"",
+        "assert_equals: expected \"\\ufffdP\" but got \"P\"",
+        "assert_equals: expected \"\\r\\ufffd\\ufffd\\x10\" but got \"\\r\\x10\"",
+        "assert_equals: expected \"\\ufffdﾐ\" but got \"\\ufffd(IP\""
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: get_host_info is not defined │ │ │ │ In file <loc>: │ │ (source",
+      "count": 58,
+      "exampleIds": [
+        "fetch/api/abort/general.any.js :: <file>",
+        "fetch/api/basic/keepalive.any.js :: <file>",
+        "fetch/api/basic/mode-same-origin.any.js :: <file>",
+        "fetch/api/cors/cors-basic.any.js :: <file>",
+        "fetch/api/cors/cors-cookies-redirect.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: get_host_info is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-k5n57b/case.js:5262:18:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5262:18-30                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-k5n57b/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: get_host_info is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-zutxja/case.js:5252:5:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5252:5-17                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-zutxja/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: get_host_info is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-aRuBYU/case.js:5254:17:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5254:17-29                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-aRuBYU/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: get_host_info is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-uh19YT/case.js:5248:5:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5248:5-17                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-uh19YT/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: get_host_info is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-taUIeX/case.js:5243:19:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:19-31                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-taUIeX/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "TextDecoderStream is not defined",
+      "count": 25,
+      "exampleIds": [
+        "encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'unicode-1-1-utf-8'",
+        "encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'iso-8859-2'",
+        "encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'ascii'",
+        "encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'utf-16'",
+        "encoding/streams/decode-attributes.any.js :: setting fatal to 'false' should set the attribute to false"
+      ],
+      "samples": [
+        "TextDecoderStream is not defined"
+      ]
+    },
+    {
+      "signature": "Invalid URL port",
+      "count": 24,
+      "exampleIds": [
+        "url/url-setters-stripping.any.js :: Setting port with leading U+0009 (https:)",
+        "url/url-setters-stripping.any.js :: Setting port with middle U+0009 (https:)",
+        "url/url-setters-stripping.any.js :: Setting port with trailing U+0009 (https:)",
+        "url/url-setters-stripping.any.js :: Setting port with leading U+000A (https:)",
+        "url/url-setters-stripping.any.js :: Setting port with middle U+000A (https:)"
+      ],
+      "samples": [
+        "Invalid URL port"
+      ]
+    },
+    {
+      "signature": "URL.createObjectURL is not a function",
+      "count": 17,
+      "exampleIds": [
+        "fetch/range/blob.any.js :: Blob range with no value",
+        "fetch/range/blob.any.js :: Blob range with incorrect range header",
+        "fetch/range/blob.any.js :: Blob range with incorrect range header #2",
+        "fetch/range/blob.any.js :: Blob range with incorrect range header #3",
+        "fetch/range/blob.any.js :: Blob range request with multiple range values"
+      ],
+      "samples": [
+        "URL.createObjectURL is not a function"
+      ]
+    },
+    {
+      "signature": "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object <str>",
+      "count": 14,
+      "exampleIds": [
+        "fetch/api/response/response-clone.any.js :: Check response clone use structureClone for teed ReadableStreams (Int8Arraychunk)",
+        "fetch/api/response/response-clone.any.js :: Check response clone use structureClone for teed ReadableStreams (Int16Arraychunk)",
+        "fetch/api/response/response-clone.any.js :: Check response clone use structureClone for teed ReadableStreams (Int32Arraychunk)",
+        "fetch/api/response/response-clone.any.js :: Check response clone use structureClone for teed ReadableStreams (ArrayBufferchunk)",
+        "fetch/api/response/response-clone.any.js :: Check response clone use structureClone for teed ReadableStreams (Uint8Arraychunk)"
+      ],
+      "samples": [
+        "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object \"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\"",
+        "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object \"0,0\"",
+        "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object \"0,0,0,0\"",
+        "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object \"[object ArrayBuffer]\"",
+        "assert_not_equals: Buffer of cloned response stream is a clone of the original buffer got disallowed value object \"0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\""
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: run_tests is not defined │ │ │ │ In file <loc>: │ │ (source exc",
+      "count": 13,
+      "exampleIds": [
+        "fetch/api/request/request-cache-default.any.js :: <file>",
+        "fetch/api/request/request-cache-only-if-cached.any.js :: <file>",
+        "fetch/api/request/request-cache-no-cache.any.js :: <file>",
+        "fetch/api/request/request-cache-reload.any.js :: <file>",
+        "fetch/api/request/request-cache-no-store.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: run_tests is not defined                                     │\n│                                                                             │\n│ In file ../tmp/wpt-elide-nczxhI/case.js:5277:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5277:1-9                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-nczxhI/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: run_tests is not defined                                     │\n│                                                                             │\n│ In file ../tmp/wpt-elide-XYthax/case.js:5304:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5304:1-9                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-XYthax/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: run_tests is not defined                                     │\n│                                                                             │\n│ In file ../tmp/wpt-elide-wBN6AS/case.js:5263:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5263:1-9                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-wBN6AS/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: run_tests is not defined                                     │\n│                                                                             │\n│ In file ../tmp/wpt-elide-ZqU5f3/case.js:5289:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5289:1-9                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-ZqU5f3/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: run_tests is not defined                                     │\n│                                                                             │\n│ In file ../tmp/wpt-elide-ZNJ2D2/case.js:5275:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5275:1-9                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-ZNJ2D2/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "validateStreamFromString is not defined",
+      "count": 13,
+      "exampleIds": [
+        "fetch/api/response/response-clone.any.js :: Check original response's body after cloning",
+        "fetch/api/response/response-clone.any.js :: Check cloned response's body",
+        "fetch/api/response/response-consume-stream.any.js :: Read empty text response's body as readableStream",
+        "fetch/api/response/response-consume-stream.any.js :: Read empty blob response's body as readableStream",
+        "fetch/api/response/response-consume-stream.any.js :: Read blob response's body as readableStream with mode=undefined"
+      ],
+      "samples": [
+        "validateStreamFromString is not defined"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: RESOURCES_DIR is not defined │ │ │ │ In file <loc>: │ │ (source",
+      "count": 12,
+      "exampleIds": [
+        "fetch/api/basic/mode-no-cors.sub.any.js :: <file>",
+        "fetch/api/basic/referrer.any.js :: <file>",
+        "fetch/api/basic/request-upload.any.js :: <file>",
+        "fetch/api/basic/request-headers.any.js :: <file>",
+        "fetch/api/basic/request-upload.h2.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: RESOURCES_DIR is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-5NIB2x/case.js:5261:13:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5261:13-25                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-5NIB2x/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: RESOURCES_DIR is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-x0adNf/case.js:5253:18:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5253:18-30                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-x0adNf/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: RESOURCES_DIR is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-EVq9Bo/case.js:5271:13:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5271:13-25                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-EVq9Bo/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: RESOURCES_DIR is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-u50XRM/case.js:5281:11:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5281:11-23                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-u50XRM/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: RESOURCES_DIR is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-JYTNc4/case.js:5275:13:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5275:13-25                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-JYTNc4/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_throws_js: function <str> threw object <str> (<str>) expected instance of function <str> (<str>)",
+      "count": 11,
+      "exampleIds": [
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() cannot be called without request.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() throws TypeError on non-trustworthy http URL.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() throws TypeError on file:// scheme.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() throws TypeError on ftp:// scheme.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() throws TypeError on ssh:// scheme."
+      ],
+      "samples": [
+        "assert_throws_js: function \"() => fetchLater()\" threw object \"ReferenceError: fetchLater is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")",
+        "assert_throws_js: function \"() => fetchLater('http://example.com')\" threw object \"ReferenceError: fetchLater is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")",
+        "assert_throws_js: function \"() => fetchLater('file://tmp')\" threw object \"ReferenceError: fetchLater is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")",
+        "assert_throws_js: function \"() => fetchLater('ftp://example.com')\" threw object \"ReferenceError: fetchLater is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")",
+        "assert_throws_js: function \"() => fetchLater('ssh://example.com')\" threw object \"ReferenceError: fetchLater is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")"
+      ]
+    },
+    {
+      "signature": "fetchLater is not defined",
+      "count": 11,
+      "exampleIds": [
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() with same-origin (https) URL does not throw.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() with http://localhost URL does not throw.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() with https://localhost URL does not throw.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() with http://127.0.0.1 URL does not throw.",
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() with https://127.0.0.1 URL does not throw."
+      ],
+      "samples": [
+        "fetchLater is not defined"
+      ]
+    },
+    {
+      "signature": "validate_expectations_custom_url is not defined",
+      "count": 11,
+      "exampleIds": [
+        "fetch/metadata/fetch-preflight.https.sub.any.js :: Same-site fetch with preflight",
+        "fetch/metadata/fetch-preflight.https.sub.any.js :: Cross-site fetch with preflight",
+        "fetch/metadata/trailing-dot.https.sub.any.js :: Fetching a resource from the same origin, but spelled with a trailing dot.",
+        "fetch/metadata/trailing-dot.https.sub.any.js :: Fetching a resource from the same site, but spelled with a trailing dot.",
+        "fetch/metadata/trailing-dot.https.sub.any.js :: Fetching a resource from a cross-site host, spelled with a trailing dot."
+      ],
+      "samples": [
+        "validate_expectations_custom_url is not defined"
+      ]
+    },
+    {
+      "signature": "assert_equals: <n> -> <n> expected <str> but got <str>",
+      "count": 10,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: koi8-u",
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: windows-874",
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: windows-1252",
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: windows-1253",
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: windows-1255"
+      ],
+      "samples": [
+        "assert_equals: 174 -> 1118 expected \"ў\" but got \"╝\"",
+        "assert_equals: 129 -> 129 expected \"\" but got \"\\ufffd\"",
+        "assert_equals: 152 -> 152 expected \"\" but got \"\\ufffd\""
+      ]
+    },
+    {
+      "signature": "RESOURCES_DIR is not defined",
+      "count": 9,
+      "exampleIds": [
+        "fetch/api/basic/accept-header.any.js :: Request through fetch should have 'accept' header with value '*/*'",
+        "fetch/api/basic/accept-header.any.js :: Request through fetch should have 'accept' header with value 'custom/*'",
+        "fetch/api/basic/accept-header.any.js :: Request through fetch should have a 'accept-language' header",
+        "fetch/api/basic/accept-header.any.js :: Request through fetch should have 'accept-language' header with value 'bzh'",
+        "fetch/api/basic/stream-response.any.js :: Stream response's body when content-type is present"
+      ],
+      "samples": [
+        "RESOURCES_DIR is not defined"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: dirname is not defined │ │ │ │ In file <loc>: │ │ (source excer",
+      "count": 7,
+      "exampleIds": [
+        "fetch/api/basic/integrity.sub.any.js :: <file>",
+        "fetch/api/cors/cors-expose-star.sub.any.js :: <file>",
+        "fetch/api/cors/cors-filtering.sub.any.js :: <file>",
+        "fetch/api/cors/cors-multiple-origins.sub.any.js :: <file>",
+        "fetch/api/cors/cors-redirect-preflight.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: dirname is not defined                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-r9tmY5/case.js:5275:14:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5275:14-20                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-r9tmY5/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: dirname is not defined                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-4BmqUr/case.js:5241:52:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5241:52-58                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-4BmqUr/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: dirname is not defined                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-1fET8S/case.js:5280:50:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5280:50-56                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-1fET8S/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: dirname is not defined                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-S7ZAsv/case.js:5244:52:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] corsMultipleOrigins               case.js:5244:52-58                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-S7ZAsv/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: dirname is not defined                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-w7xwhl/case.js:5268:17:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5268:17-23                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-w7xwhl/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: parallelPromiseTest is not defined │ │ │ │ In file <loc>: │ │ (",
+      "count": 6,
+      "exampleIds": [
+        "fetch/fetch-later/activate-after.https.window.js :: <file>",
+        "fetch/fetch-later/send-on-discard/not-send-after-abort.https.window.js :: <file>",
+        "fetch/fetch-later/send-on-deactivate-with-background-sync.https.window.js :: <file>",
+        "fetch/fetch-later/send-on-discard/send-multiple-with-activate-after.https.window.js :: <file>",
+        "fetch/fetch-later/send-on-deactivate.https.window.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: parallelPromiseTest is not defined                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-6mGPuD/case.js:5248:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5248:1-19                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-6mGPuD/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: parallelPromiseTest is not defined                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-l1xt7P/case.js:5244:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:1-19                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-l1xt7P/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: parallelPromiseTest is not defined                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-RbI2xX/case.js:5256:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5256:1-19                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-RbI2xX/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: parallelPromiseTest is not defined                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-fJku94/case.js:5245:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5245:1-19                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-fJku94/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: parallelPromiseTest is not defined                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-wj0vSQ/case.js:5253:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5253:1-19                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-wj0vSQ/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_throws_js: function <str> did not throw",
+      "count": 6,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: Concatenating two ISO-2022-JP outputs is not always valid",
+        "encoding/textdecoder-mistakes.any.js :: labels: invalid non-ascii",
+        "fetch/api/headers/headers-record.any.js :: Basic operation with Symbol keys",
+        "fetch/api/response/response-from-stream.any.js :: Constructing a Response with a stream on which getReader() is called",
+        "fetch/api/response/response-from-stream.any.js :: Constructing a Response with a stream on which read() is called"
+      ],
+      "samples": [
+        "assert_throws_js: function \"() => fatal.decode(u(...a, ...a))\" did not throw",
+        "assert_throws_js: function \"() => new TextDecoder(label)\" did not throw",
+        "assert_throws_js: function \"function() { var h = new Headers(proxy); }\" did not throw",
+        "assert_throws_js: function \"() => new Response(stream)\" did not throw"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: encodings_table is not defined │ │ │ │ In file <loc>: │ │ (sour",
+      "count": 5,
+      "exampleIds": [
+        "encoding/api-replacement-encodings.any.js :: <file>",
+        "encoding/replacement-encodings.any.js :: <file>",
+        "encoding/single-byte-decoder.window.js :: <file>",
+        "encoding/textdecoder-labels.any.js :: <file>",
+        "encoding/textencoder-constructor-non-utf.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-XNFi0I/case.js:5242:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5242:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-XNFi0I/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-OxV8R3/case.js:5244:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-OxV8R3/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-DOoU1R/case.js:5245:27:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5245:27-41                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-DOoU1R/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-sVjV51/case.js:5244:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-sVjV51/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-0N12Pc/case.js:5242:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5242:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-0N12Pc/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_array_equals: expected property <n> to be <str> but got <str> (expected array [<str>, <str>] got [<str>, <str>])",
+      "count": 5,
+      "exampleIds": [
+        "url/urlsearchparams-constructor.any.js :: Construct with 2 unpaired surrogates (no trailing)",
+        "url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)",
+        "url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys",
+        "url/urlencoded-parser.any.js :: request.formData() with input: ﻿test=﻿",
+        "url/urlencoded-parser.any.js :: response.formData() with input: ﻿test=﻿"
+      ],
+      "samples": [
+        "assert_array_equals: expected property 0 to be \"\\ufffdx\" but got \"?x\" (expected array [\"\\ufffdx\", \"3\"] got [\"?x\", \"1\"])",
+        "assert_array_equals: expected property 0 to be \"x\\ufffd\" but got \"x?\" (expected array [\"x\\ufffd\", \"3\"] got [\"x?\", \"1\"])",
+        "assert_array_equals: expected property 0 to be \"a\\0b\" but got \"a\" (expected array [\"a\\0b\", \"42\"] got [\"a\", \"42\"])",
+        "assert_array_equals: expected property 0 to be \"﻿test\" but got \"test\" (expected array [\"﻿test\", \"﻿\"] got [\"test\", \"﻿\"])"
+      ]
+    },
+    {
+      "signature": "assert_equals: expected (string) <str> but got (object) null",
+      "count": 5,
+      "exampleIds": [
+        "fetch/api/headers/headers-basic.any.js :: Create headers with existing headers with custom iterator",
         "url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, object.",
         "url/urlsearchparams-constructor.any.js :: URLSearchParams constructor, FormData.",
         "url/urlsearchparams-constructor.any.js :: Parse %00",
         "url/urlsearchparams-constructor.any.js :: Custom [Symbol.iterator]"
       ],
       "samples": [
+        "assert_equals: expected (string) \"test\" but got (object) null",
         "assert_equals: expected (string) \"b\" but got (object) null",
         "assert_equals: expected (string) \"b\\0c\" but got (object) null"
       ]
     },
     {
-      "signature": "assert_array_equals: expected property <n> to be <str> but got <str> (expected array [<str>, <str>] got [<str>, <str>])",
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: http_content is not defined │ │ │ │ In file <loc>: │ │ (source ",
+      "count": 4,
+      "exampleIds": [
+        "fetch/http-cache/cc-request.any.js :: <file>",
+        "fetch/http-cache/heuristic.any.js :: <file>",
+        "fetch/http-cache/status.any.js :: <file>",
+        "fetch/http-cache/vary.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: http_content is not defined                                  │\n│                                                                             │\n│ In file ../tmp/wpt-elide-eB7slC/case.js:5400:20:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5400:20-31                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-eB7slC/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: http_content is not defined                                  │\n│                                                                             │\n│ In file ../tmp/wpt-elide-no9Z9b/case.js:5308:12:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] check_status                      case.js:5308:12-23                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-no9Z9b/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: http_content is not defined                                  │\n│                                                                             │\n│ In file ../tmp/wpt-elide-oJnemn/case.js:5252:12:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] check_status                      case.js:5252:12-23                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-oJnemn/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: http_content is not defined                                  │\n│                                                                             │\n│ In file ../tmp/wpt-elide-5V1FLj/case.js:5319:24:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5319:24-35                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-5V1FLj/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Cannot read property <str> of undefined │ │ │ │ In file <loc>: │ │ (",
+      "count": 4,
+      "exampleIds": [
+        "fetch/api/basic/request-referrer.any.js :: <file>",
+        "fetch/api/headers/header-values.any.js :: <file>",
+        "fetch/api/headers/header-values-normalize.any.js :: <file>",
+        "url/historical.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Cannot read property 'href' of undefined                          │\n│                                                                             │\n│ In file ../tmp/wpt-elide-HXG570/case.js:5259:30:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5259:30-47                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-HXG570/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Cannot read property 'isWorker' of undefined                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-3vAjjm/case.js:5250:8:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :=>                               case.js:5250:8-27                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-3vAjjm/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Cannot read property 'isWorker' of undefined                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-39tkbY/case.js:5272:8:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5272:8-27                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-39tkbY/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Cannot read property 'isWindow' of undefined                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-x4aLB9/case.js:5246:4:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5246:4-23                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-x4aLB9/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_throws_js: the constructor should throw function <str> threw object <str> (<str>) expected instance of function <str> (<str>)",
+      "count": 4,
+      "exampleIds": [
+        "encoding/streams/decode-attributes.any.js :: constructing with an invalid encoding should throw",
+        "encoding/streams/decode-attributes.any.js :: constructing with a non-stringifiable encoding should throw",
+        "encoding/streams/decode-attributes.any.js :: a throwing fatal member should cause the constructor to throw",
+        "encoding/streams/decode-attributes.any.js :: a throwing ignoreBOM member should cause the constructor to throw"
+      ],
+      "samples": [
+        "assert_throws_js: the constructor should throw function \"() => new TextDecoderStream('')\" threw object \"ReferenceError: TextDecoderStream is not defined\" (\"ReferenceError\") expected instance of function \"function RangeError() { [native code] }\" (\"RangeError\")",
+        "assert_throws_js: the constructor should throw function \"() => new TextDecoderStream({\n    toString() { return {}; }\n  })\" threw object \"ReferenceError: TextDecoderStream is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")",
+        "assert_throws_js: the constructor should throw function \"() => new TextDecoderStream('utf-8', {\n                     get fatal() { throw new Error(); }\n                   })\" threw object \"ReferenceError: TextDecoderStream is not defined\" (\"ReferenceError\") expected instance of function \"function Error() { [native code] }\" (\"Error\")",
+        "assert_throws_js: the constructor should throw function \"() => new TextDecoderStream('utf-8', {\n                     get ignoreBOM() { throw new Error(); }\n                   })\" threw object \"ReferenceError: TextDecoderStream is not defined\" (\"ReferenceError\") expected instance of function \"function Error() { [native code] }\" (\"Error\")"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: expected_block is not defined │ │ │ │ In file <loc>: │ │ (sourc",
       "count": 3,
       "exampleIds": [
-        "url/urlsearchparams-constructor.any.js :: Construct with 2 unpaired surrogates (no trailing)",
-        "url/urlsearchparams-constructor.any.js :: Construct with 3 unpaired surrogates (no leading)",
-        "url/urlsearchparams-constructor.any.js :: Construct with object with NULL, non-ASCII, and surrogate keys"
+        "fetch/orb/tentative/known-mime-type.sub.any.js :: <file>",
+        "fetch/orb/tentative/status.sub.any.js :: <file>",
+        "fetch/orb/tentative/nosniff.sub.any.js :: <file>"
       ],
       "samples": [
-        "assert_array_equals: expected property 0 to be \"\\ufffdx\" but got \"?x\" (expected array [\"\\ufffdx\", \"3\"] got [\"?x\", \"1\"])",
-        "assert_array_equals: expected property 0 to be \"x\\ufffd\" but got \"x?\" (expected array [\"x\\ufffd\", \"3\"] got [\"x?\", \"1\"])",
-        "assert_array_equals: expected property 0 to be \"a\\0b\" but got \"a\" (expected array [\"a\\0b\", \"42\"] got [\"a\", \"42\"])"
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: expected_block is not defined                                │\n│                                                                             │\n│ In file ../tmp/wpt-elide-nGkfVa/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-14                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-nGkfVa/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: expected_block is not defined                                │\n│                                                                             │\n│ In file ../tmp/wpt-elide-WnIna0/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-14                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-WnIna0/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: expected_block is not defined                                │\n│                                                                             │\n│ In file ../tmp/wpt-elide-X9Qd0g/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-14                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-X9Qd0g/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
       ]
     },
     {
-      "signature": "assert_equals: expected <str> but got <str>",
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: idl_test is not defined │ │ │ │ In file <loc>: │ │ (source exce",
+      "count": 3,
+      "exampleIds": [
+        "encoding/idlharness.any.js :: <file>",
+        "fetch/api/idlharness.https.any.js :: <file>",
+        "url/idlharness.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: idl_test is not defined                                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-pfg7XV/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-8                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-pfg7XV/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: idl_test is not defined                                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-CIYCxE/case.js:5244:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:1-8                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-CIYCxE/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: idl_test is not defined                                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-uw76Qm/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-8                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-uw76Qm/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: subsetTestByKey is not defined │ │ │ │ In file <loc>: │ │ (sour",
+      "count": 3,
+      "exampleIds": [
+        "fetch/local-network-access/navigate.tentative.https.window.js :: <file>",
+        "fetch/local-network-access/iframe.tentative.https.window.js :: <file>",
+        "fetch/local-network-access/navigate.tentative.window.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: subsetTestByKey is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-qs40y4/case.js:5260:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5260:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-qs40y4/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: subsetTestByKey is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-QQTbVZ/case.js:5267:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5267:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-QQTbVZ/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: subsetTestByKey is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-47bnPp/case.js:5263:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5263:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-47bnPp/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_array_equals: lengths differ, expected array [<str>, object <str>, <str>, object <str>] length <n>, got [<str>, object <str>, <str>] length <n>",
+      "count": 3,
+      "exampleIds": [
+        "fetch/api/headers/headers-record.any.js :: Correct operation ordering with two properties",
+        "fetch/api/headers/headers-record.any.js :: Correct operation ordering with non-enumerable properties",
+        "fetch/api/headers/headers-record.any.js :: Correct operation ordering with undefined descriptors"
+      ],
+      "samples": [
+        "assert_array_equals: lengths differ, expected array [\"get\", object \"[object Object]\", \"a\", object \"[object Object]\"] length 4, got [\"getOwnPropertyDescriptor\", object \"[object Object]\", \"c\"] length 3",
+        "assert_array_equals: lengths differ, expected array [\"get\", object \"[object Object]\", \"c\", object \"[object Object]\"] length 4, got [\"getOwnPropertyDescriptor\", object \"[object Object]\", \"e\"] length 3"
+      ]
+    },
+    {
+      "signature": "assert_true: enumerable expected true got false",
+      "count": 3,
+      "exampleIds": [
+        "fetch/api/headers/headers-basic.any.js :: Check keys method",
+        "fetch/api/headers/headers-basic.any.js :: Check values method",
+        "fetch/api/headers/headers-basic.any.js :: Check entries method"
+      ],
+      "samples": [
+        "assert_true: enumerable expected true got false"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: expected_allow_fetch is not defined │ │ │ │ In file <loc>: │ │ ",
       "count": 2,
       "exampleIds": [
-        "url/urlsearchparams-constructor.any.js :: Basic URLSearchParams construction",
-        "url/urlsearchparams-constructor.any.js :: Parse \\0"
+        "fetch/orb/tentative/content-range.sub.any.js :: <file>",
+        "fetch/orb/tentative/unknown-mime-type.sub.any.js :: <file>"
       ],
       "samples": [
-        "assert_equals: expected \"a=b\" but got \"\"",
-        "assert_equals: expected \"b\\0c\" but got \"b\""
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: expected_allow_fetch is not defined                          │\n│                                                                             │\n│ In file ../tmp/wpt-elide-P998cy/case.js:5244:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:1-20                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-P998cy/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: expected_allow_fetch is not defined                          │\n│                                                                             │\n│ In file ../tmp/wpt-elide-IlMPZQ/case.js:5243:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5243:1-20                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-IlMPZQ/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
       ]
     },
     {
-      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: encodings_table is not defined │ │ │ │ In file <loc>: │ │ (sour",
-      "count": 1,
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: location is not defined │ │ │ │ In file <loc>: │ │ (source exce",
+      "count": 2,
       "exampleIds": [
-        "encoding/textencoder-constructor-non-utf.any.js :: <file>"
+        "fetch/api/redirect/redirect-back-to-original-origin.any.js :: <file>",
+        "fetch/http-cache/credentials.tentative.any.js :: <file>"
       ],
       "samples": [
-        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: encodings_table is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-5UUDmN/case.js:5242:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5242:1-15                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-5UUDmN/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: location is not defined                                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-uulb26/case.js:5242:14:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5242:14-21                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-uulb26/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: location is not defined                                      │\n│                                                                             │\n│ In file ../tmp/wpt-elide-xShxXL/case.js:5264:13:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5264:13-20                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-xShxXL/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: subsetTest is not defined │ │ │ │ In file <loc>: │ │ (source ex",
+      "count": 2,
+      "exampleIds": [
+        "encoding/api-invalid-label.any.js :: <file>",
+        "encoding/textdecoder-fatal-single-byte.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: subsetTest is not defined                                    │\n│                                                                             │\n│ In file ../tmp/wpt-elide-kEIpCW/case.js:5264:3:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :anonymous                        case.js:5264:3-12                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-kEIpCW/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: subsetTest is not defined                                    │\n│                                                                             │\n│ In file ../tmp/wpt-elide-EgjORg/case.js:5293:13:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :anonymous                        case.js:5293:13-22                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-EgjORg/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Request constructor: failed to parse URL <str> │ │ │ │ In file <loc>",
+      "count": 2,
+      "exampleIds": [
+        "fetch/api/request/request-disturbed.any.js :: <file>",
+        "fetch/api/request/request-structure.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Request constructor: failed to parse URL ''                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-ISPOEp/case.js:5247:22:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5247:22-36                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-ISPOEp/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯",
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: Request constructor: failed to parse URL ''                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-b1khEe/case.js:5242:15:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5242:15-29                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-b1khEe/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_throws_js: function <str><str> threw object <str> (<str>) expected instance of function <str> (<str>)",
+      "count": 2,
+      "exampleIds": [
+        "encoding/encodeInto.any.js :: Invalid encodeInto() destination: ArrayBuffer",
+        "encoding/encodeInto.any.js :: Invalid encodeInto() destination: SharedArrayBuffer"
+      ],
+      "samples": [
+        "assert_throws_js: function \"() => new TextEncoder().encodeInto(\"\", createBuffer(arrayBufferOrSharedArrayBuffer, 10))\" threw object \"ReferenceError: createBuffer is not defined\" (\"ReferenceError\") expected instance of function \"function TypeError() { [native code] }\" (\"TypeError\")"
+      ]
+    },
+    {
+      "signature": "assert_true: bodyUsed should be true expected true got false",
+      "count": 2,
+      "exampleIds": [
+        "fetch/api/response/response-stream-disturbed-by-pipe.any.js :: using pipeTo on Response body should disturb it synchronously",
+        "fetch/api/response/response-stream-disturbed-by-pipe.any.js :: using pipeThrough on Response body should disturb it synchronously"
+      ],
+      "samples": [
+        "assert_true: bodyUsed should be true expected true got false"
+      ]
+    },
+    {
+      "signature": "promise_rejects_exactly: CustomTestError should propagate function <str> threw object <str> but we expected it to throw object <str>",
+      "count": 2,
+      "exampleIds": [
+        "fetch/api/response/response-error-from-stream.any.js :: ReadableStream start() Error propagates to Response.formData() Promise",
+        "fetch/api/response/response-error-from-stream.any.js :: ReadableStream pull() Error propagates to Response.formData() Promise"
+      ],
+      "samples": [
+        "promise_rejects_exactly: CustomTestError should propagate function \"function() { throw e; }\" threw object \"TypeError: Body.formData: Content-Type must be application/x-www-form-urlencoded or multipart/form-data (no Content-Type set)\" but we expected it to throw object \"Error: Start error\"",
+        "promise_rejects_exactly: CustomTestError should propagate function \"function() { throw e; }\" threw object \"TypeError: Body.formData: Content-Type must be application/x-www-form-urlencoded or multipart/form-data (no Content-Type set)\" but we expected it to throw object \"Error: Pull error\""
+      ]
+    },
+    {
+      "signature": "promise_test: Unhandled rejection with value: object <str>start<str>",
+      "count": 2,
+      "exampleIds": [
+        "fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'response'",
+        "fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'consumeNonEmptyResponse'"
+      ],
+      "samples": [
+        "promise_test: Unhandled rejection with value: object \"TypeError: underlying source/sink/transformer member \"start\" must be a function or undefined\""
+      ]
+    },
+    {
+      "signature": "TextDecoder: encoding ISO-<n>-<n>-I not available on this JVM",
+      "count": 2,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: iso-8859-8-i decodes bytes the same way as iso-8859-8",
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: iso-8859-8-i"
+      ],
+      "samples": [
+        "TextDecoder: encoding ISO-8859-8-I not available on this JVM"
+      ]
+    },
+    {
+      "signature": "TextEncoderStream is not defined",
+      "count": 2,
+      "exampleIds": [
+        "encoding/streams/encode-bad-chunks.any.js :: a chunk that cannot be converted to a string should error the streams",
+        "encoding/streams/readable-writable-properties.any.js :: TextEncoderStream readable and writable properties must pass brand checks"
+      ],
+      "samples": [
+        "TextEncoderStream is not defined"
+      ]
+    },
+    {
+      "signature": "validateStreamFromPartialString is not defined",
+      "count": 2,
+      "exampleIds": [
+        "fetch/api/response/response-consume-stream.any.js :: Read form data response's body as readableStream with mode=undefined",
+        "fetch/api/response/response-consume-stream.any.js :: Read form data response's body as readableStream with mode=byob"
+      ],
+      "samples": [
+        "validateStreamFromPartialString is not defined"
+      ]
+    },
+    {
+      "signature": "XMLHttpRequest is not defined",
+      "count": 2,
+      "exampleIds": [
+        "fetch/content-length/api-and-duplicate-headers.any.js :: XMLHttpRequest and duplicate Content-Length/Content-Type headers",
+        "fetch/redirects/data.window.js :: XMLHttpRequest fetch that redirects to data: URL"
+      ],
+      "samples": [
+        "XMLHttpRequest is not defined"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │java.lang.IllegalStateException: Current state = CODING_END, new state = │ │COD",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-fatal-streaming.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│java.lang.IllegalStateException: Current state = CODING_END, new state =     │\n│CODING                                                                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-Z5Inoh/case.js                                     │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :anonymous                         case.js:5276:9-43                │\n│ │─ [js] assert_throws_js_impl             case.js:2197:13-27                │\n│ │─ [js] assert_throws_js                   case.js:2184:9-49                │\n│ │─ [js] assert_wrapper                    case.js:1520:28-51                │\n│ │─ [js] :anonymous                          case.js:5275:5-6                │\n│ │─ [js] Test.step                         case.js:2871:20-81                │\n│ │─ [js] test                               case.js:635:21-59                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-Z5Inoh/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: badRequestArgTests is not defined │ │ │ │ In file <loc>: │ │ (s",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/request/request-error.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: badRequestArgTests is not defined                            │\n│                                                                             │\n│ In file ../tmp/wpt-elide-9l8WeQ/case.js:5244:34:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:34-51                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-9l8WeQ/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: BeaconDataType is not defined │ │ │ │ In file <loc>: │ │ (sourc",
+      "count": 1,
+      "exampleIds": [
+        "fetch/fetch-later/quota/small-payload.https.window.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: BeaconDataType is not defined                                │\n│                                                                             │\n│ In file ../tmp/wpt-elide-PDRtJR/case.js:5246:24:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5246:24-37                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-PDRtJR/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: createBuffer is not defined │ │ │ │ In file <loc>: │ │ (source ",
+      "count": 1,
+      "exampleIds": [
+        "encoding/streams/decode-utf8.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: createBuffer is not defined                                  │\n│                                                                             │\n│ In file ../tmp/wpt-elide-TlW0zo/case.js:5248:37:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :=>                               case.js:5248:37-48                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-TlW0zo/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: decode_test is not defined │ │ │ │ In file <loc>: │ │ (source e",
+      "count": 1,
+      "exampleIds": [
+        "encoding/unsupported-encodings.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: decode_test is not defined                                   │\n│                                                                             │\n│ In file ../tmp/wpt-elide-3aLIP2/case.js:5244:3:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :=>                               case.js:5244:3-13                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-3aLIP2/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: forbiddenMethod is not defined │ │ │ │ In file <loc>: │ │ (sour",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/headers/headers-forbidden-override.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: forbiddenMethod is not defined                               │\n│                                                                             │\n│ In file ../tmp/wpt-elide-Lt4Ou1/case.js:5265:6:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5265:6-20                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-Lt4Ou1/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: idx is not defined │ │ │ │ In file <loc>: │ │ (source excerpt s",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/request/request-init-priority.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: idx is not defined                                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-6kv3Z2/case.js:5244:6:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5244:6-8                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-6kv3Z2/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: importScripts is not defined │ │ │ │ In file <loc>: │ │ (source",
+      "count": 1,
+      "exampleIds": [
+        "fetch/fetch-later/basic.https.worker.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: importScripts is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-cMDfJs/case.js:5239:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5239:1-13                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-cMDfJs/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: now is not defined │ │ │ │ In file <loc>: │ │ (source excerpt s",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/request/request-cache-default-conditional.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: now is not defined                                           │\n│                                                                             │\n│ In file ../tmp/wpt-elide-igEwuK/case.js:5251:49:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5251:49-51                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-igEwuK/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: QUOTA_PER_ORIGIN is not defined │ │ │ │ In file <loc>: │ │ (sou",
+      "count": 1,
+      "exampleIds": [
+        "fetch/fetch-later/quota/oversized-payload.https.window.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: QUOTA_PER_ORIGIN is not defined                              │\n│                                                                             │\n│ In file ../tmp/wpt-elide-XBVyhC/case.js:5245:37:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5245:37-52                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-XBVyhC/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: ranges is not defined │ │ │ │ In file <loc>: │ │ (source excerp",
+      "count": 1,
+      "exampleIds": [
+        "encoding/legacy-mb-schinese/gb18030/gb18030-decoder.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: ranges is not defined                                        │\n│                                                                             │\n│ In file ../tmp/wpt-elide-P6l6T6/case.js:5328:21:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5328:21-26                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-P6l6T6/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: requestForbiddenHeaders is not defined │ │ │ │ In file <loc>: │",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/basic/request-forbidden-headers.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: requestForbiddenHeaders is not defined                       │\n│                                                                             │\n│ In file ../tmp/wpt-elide-639TN8/case.js:5257:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5257:1-23                 │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-639TN8/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: stringToArray is not defined │ │ │ │ In file <loc>: │ │ (source",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/basic/text-utf8.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: stringToArray is not defined                                 │\n│                                                                             │\n│ In file ../tmp/wpt-elide-dacBY8/case.js:5245:23:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] testTextDecoding                  case.js:5245:23-35                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-dacBY8/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: window is not defined │ │ │ │ In file <loc>: │ │ (source excerp",
+      "count": 1,
+      "exampleIds": [
+        "encoding/streams/realms.window.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: window is not defined                                        │\n│                                                                             │\n│ In file ../tmp/wpt-elide-iytp50/case.js:5368:1:                             │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5368:1-6                  │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-iytp50/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: URL.createObjectURL is not a function │ │ │ │ In file <loc>: │ │ (so",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/basic/scheme-blob.sub.any.js :: <file>"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│TypeError: URL.createObjectURL is not a function                             │\n│                                                                             │\n│ In file ../tmp/wpt-elide-AVOvqY/case.js:5257:20:                            │\n│   (source excerpt suppressed)                                               │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :module:eval                      case.js:5257:20-44                │\n│ │                                                                           │\n│ · elide run /tmp/wpt-elide-AVOvqY/case.js                                   │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    },
+    {
+      "signature": "assert_array_equals: lengths differ, expected array [] length <n>, got [<str>] length <n>",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/headers/header-setcookie.any.js :: Set-Cookie is a forbidden response header"
+      ],
+      "samples": [
+        "assert_array_equals: lengths differ, expected array [] length 0, got [\"foo=bar\"] length 1"
+      ]
+    },
+    {
+      "signature": "assert_equals: <n>,<n> expected <str> but got <str>",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: gbk decoder is gb18030 decoder"
+      ],
+      "samples": [
+        "assert_equals: 129,48 expected \"\\ufffd\" but got \"\\ufffd0\""
+      ]
+    },
+    {
+      "signature": "assert_equals: expected true but got false",
+      "count": 1,
+      "exampleIds": [
+        "url/url-statics-canparse.any.js :: URL.canParse(undefined, aaa:/b)"
+      ],
+      "samples": [
+        "assert_equals: expected true but got false"
+      ]
+    },
+    {
+      "signature": "assert_equals: Resolved value should be empty expected <n> but got <n>",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/response/response-consume-empty.any.js :: Consume empty FormData response body as text"
+      ],
+      "samples": [
+        "assert_equals: Resolved value should be empty expected 0 but got 62"
+      ]
+    },
+    {
+      "signature": "assert_throws_dom: function <str> threw object <str> that is not a DOMException AbortError: property <str> is equal to undefined, expected <n>",
+      "count": 1,
+      "exampleIds": [
+        "fetch/fetch-later/basic.https.window.js :: fetchLater() throws AbortError when its initial abort signal is aborted."
+      ],
+      "samples": [
+        "assert_throws_dom: function \"() => fetchLater('/', {signal: controller.signal})\" threw object \"ReferenceError: fetchLater is not defined\" that is not a DOMException AbortError: property \"code\" is equal to undefined, expected 20"
       ]
     },
     {
@@ -58,6 +899,166 @@
       ],
       "samples": [
         "assert_throws_js: Constructing a URLSearchParams from DOMException.prototype should throw due to branding checks function \"() => new URLSearchParams(DOMException.prototype)\" did not throw"
+      ]
+    },
+    {
+      "signature": "assert_true: textStream exists on Response.prototype expected true got false",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/body/textstream.any.js :: textStream method existence"
+      ],
+      "samples": [
+        "assert_true: textStream exists on Response.prototype expected true got false"
+      ]
+    },
+    {
+      "signature": "Cannot read property <str> of null",
+      "count": 1,
+      "exampleIds": [
+        "url/url-statics-parse.any.js :: URL.parse(undefined, aaa:/b)"
+      ],
+      "samples": [
+        "Cannot read property 'href' of null"
+      ]
+    },
+    {
+      "signature": "get_host_info is not defined",
+      "count": 1,
+      "exampleIds": [
+        "fetch/cross-origin-resource-policy/scheme-restriction.any.js :: Cross-Origin-Resource-Policy: same-site blocks retrieving HTTPS from HTTP"
+      ],
+      "samples": [
+        "get_host_info is not defined"
+      ]
+    },
+    {
+      "signature": "Headers.append requires the <str> argument",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/headers/headers-basic.any.js :: Check append method"
+      ],
+      "samples": [
+        "Headers.append requires the 'value' argument"
+      ]
+    },
+    {
+      "signature": "Headers.set requires the <str> argument",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/headers/headers-basic.any.js :: Check set method"
+      ],
+      "samples": [
+        "Headers.set requires the 'value' argument"
+      ]
+    },
+    {
+      "signature": "Image is not defined",
+      "count": 1,
+      "exampleIds": [
+        "fetch/cross-origin-resource-policy/scheme-restriction.https.window.js :: Cross-Origin-Resource-Policy does not block Mixed Content <img>"
+      ],
+      "samples": [
+        "Image is not defined"
+      ]
+    },
+    {
+      "signature": "Invalid URL hostname",
+      "count": 1,
+      "exampleIds": [
+        "url/url-setters-stripping.any.js :: Setting hostname with leading U+0000 (https:)"
+      ],
+      "samples": [
+        "Invalid URL hostname"
+      ]
+    },
+    {
+      "signature": "MediaSource is not defined",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/basic/mediasource.window.js :: Cannot fetch blob: URL from a MediaSource"
+      ],
+      "samples": [
+        "MediaSource is not defined"
+      ]
+    },
+    {
+      "signature": "Response.redirect: failed to parse URL <str>",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/response/response-consume-stream.any.js :: Getting a redirect Response stream"
+      ],
+      "samples": [
+        "Response.redirect: failed to parse URL '/'"
+      ]
+    },
+    {
+      "signature": "TextDecoder: encoding macintosh not available on this JVM",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: macintosh"
+      ],
+      "samples": [
+        "TextDecoder: encoding macintosh not available on this JVM"
+      ]
+    },
+    {
+      "signature": "TextDecoder: encoding x-mac-cyrillic not available on this JVM",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: selected single-byte: x-mac-cyrillic"
+      ],
+      "samples": [
+        "TextDecoder: encoding x-mac-cyrillic not available on this JVM"
+      ]
+    },
+    {
+      "signature": "TextDecoder: unsupported encoding label: x-user-defined",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-mistakes.any.js :: specific: x-user-defined"
+      ],
+      "samples": [
+        "TextDecoder: unsupported encoding label: x-user-defined"
+      ]
+    },
+    {
+      "signature": "TextDecoder.decode: input must be a BufferSource (ArrayBuffer or TypedArray)",
+      "count": 1,
+      "exampleIds": [
+        "encoding/textdecoder-arguments.any.js :: TextDecoder decode() with array buffer detached during arg conversion"
+      ],
+      "samples": [
+        "TextDecoder.decode: input must be a BufferSource (ArrayBuffer or TypedArray)"
+      ]
+    },
+    {
+      "signature": "token is not defined",
+      "count": 1,
+      "exampleIds": [
+        "fetch/api/basic/conditional-get.any.js :: Testing conditional GET with ETags"
+      ],
+      "samples": [
+        "token is not defined"
+      ]
+    },
+    {
+      "signature": "value of type Direct is not yet supported by structured clone",
+      "count": 1,
+      "exampleIds": [
+        "encoding/encodeInto.any.js :: encodeInto() and a detached output buffer"
+      ],
+      "samples": [
+        "value of type Direct is not yet supported by structured clone"
+      ]
+    },
+    {
+      "signature": "window is not defined",
+      "count": 1,
+      "exampleIds": [
+        "fetch/fetch-later/non-secure.window.js :: fetchLater() is not supported in non-secure context."
+      ],
+      "samples": [
+        "window is not defined"
       ]
     }
   ],

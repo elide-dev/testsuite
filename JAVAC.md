@@ -12,41 +12,28 @@ Counts are expanded `.java` jtreg test files from the pinned OpenJDK checkout
 
 ### Enabled
 
-- [x] Diagnostics: `javac-diagnostics` - 946 files
-- [x] Core language and type checking: `javac-core-language` - 1,167 files
-- [x] Modern language features: `javac-modern-language` - 1,338 files
-- [x] Classfile and JVM output: `javac-classfile-jvm` - 179 files
-- [x] Compiler behavior and resolution: `javac-compiler-behavior` - 292 files
-- [x] Options and warnings: `javac-options-warnings` - 159 files
-- [x] API and tooling: `javac-api-tooling` - 223 files
-- [x] Smoke files: `javac-smoke-files` - 1 file
+- [x] Full javac langtools tree: `tools/javac` - 5,554 files
 
-Enabled total: 4,305 unique jtreg `.java` files.
+Enabled total: 5,554 unique jtreg `.java` files.
 
-### Intentionally Excluded
+### Enabled For Classification
 
-- [ ] Annotation processing: `tools/javac/processing` - 355 files
-- [ ] Modules: `tools/javac/modules` - 83 files
+- [x] Annotation processing: `tools/javac/processing` - 355 files
+- [x] Modules: `tools/javac/modules` - 83 files
 
 ### Not Enabled Yet
 
-- [ ] Remaining `tools/javac` tests outside the enabled manifest and intentional
-  exclusions - 811 files
-
-The largest remaining buckets include historical regression directories,
-doclint/policy/tooling areas, and assorted named bug directories. These should
-be added in smaller batches after the current broad compiler surface is stable.
+- [x] No remaining `tools/javac` `.java` jtreg files in the pinned checkout.
 
 ### Coverage Accounting
 
-- Enabled against the current javac target surface, excluding annotation
-  processing and modules: 4,305 / 5,116 = 84.1%.
-- Enabled against all OpenJDK `tools/javac` `.java` tests: 4,305 / 5,554 =
-  77.5%.
+- Enabled against all OpenJDK `tools/javac` `.java` tests: 5,554 / 5,554 =
+  100.0%.
 
 The current `javac-jtreg` suite pass rate should be read as pass percentage
-within the enabled embedded-compiler compliance surface. Annotation processing
-and modules are intentionally excluded from the default target for now.
+within the full embedded-compiler compliance surface. Annotation processing and
+modules are enabled even though some failures are expected, so they can be
+classified and ratcheted instead of hidden.
 
 ## Future Java Suites
 
