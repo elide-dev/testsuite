@@ -41,6 +41,15 @@ test("ignores non-JSON CPython output lines", () => {
   ]);
 });
 
+test("ignores JSON printed by CPython tests that is not a harness record", () => {
+  expect(parseCpythonLines('{"status":"ok","value":1}\n{"module":"test_re","case":"test_re.Case.test","status":"pass"}\n')).toEqual([
+    expect.objectContaining({
+      id: "test_re.Case.test",
+      status: "pass",
+    }),
+  ]);
+});
+
 test("ignores CPython running records", () => {
   expect(parseCpythonLines('{"module":"test_re","case":"test_re.Case.test_slow","status":"running"}\n')).toEqual([]);
 });
@@ -201,6 +210,41 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   expect(writes).toContain("progress: still running CPython shard");
   expect(writes).toContain("active importing test_re");
   expect(writes).toContain("active test_re.ReTests.test_basic");
+});
+
+test("ignores stray stdout while still streaming valid CPython results", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+printf '{"status":"ok","value":1}\\n'
+printf '{"module":"test_re","case":"test_re.Case.test_one","status":"pass"}\\n'
+printf '{"module":"test_re","case":"test_re.Case.test_two","status":"fail","message":"boom"}\\n'
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  const results = await collect(runCpythonCore(ctx));
+
+  expect(results.map((result) => [result.id, result.status])).toEqual([
+    ["test_re.Case.test_one", "pass"],
+    ["test_re.Case.test_two", "fail"],
+  ]);
 });
 
 test("streams CPython results before the driver exits", async () => {

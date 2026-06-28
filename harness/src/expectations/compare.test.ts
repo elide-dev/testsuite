@@ -50,6 +50,12 @@ test("actual skip results are counted as skip and never regressions", () => {
   expect(c.counts.pass).toBe(0);
 });
 
+test("malformed result ids do not crash expectation matching", () => {
+  const malformed = { kind: "test" as const, status: "pass" as const } as TestResult;
+  const c = compare([malformed], exp);
+  expect(c.counts.pass).toBe(1);
+});
+
 test("most specific glob wins", () => {
   const exp2 = parseExpectations(`
 [skip]

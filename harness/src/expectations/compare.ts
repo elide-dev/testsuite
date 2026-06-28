@@ -11,13 +11,14 @@ export interface Comparison {
 
 // Normalize result ids to the path segment used by expectation globs.
 export function filePathOf(id: string): string {
+  id = String(id ?? "");
   const wptSep = id.indexOf(" :: ");
   if (wptSep >= 0) return id.slice(0, wptSep);
   return id.replace(/ (default|strict mode)$/, "");
 }
 
 export function expectationKeysOf(result: Pick<TestResult, "id" | "meta">): string[] {
-  const keys = [filePathOf(result.id)];
+  const keys = [filePathOf(result.id)].filter(Boolean);
   const upstreamPath = String(result.meta?.upstreamPath ?? "").trim();
   if (upstreamPath && !keys.includes(upstreamPath)) keys.push(upstreamPath);
   return keys;

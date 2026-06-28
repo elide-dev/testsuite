@@ -10,7 +10,7 @@ import unittest
 
 
 def emit(record):
-    print(json.dumps(record, sort_keys=True), flush=True)
+    print(json.dumps(record, sort_keys=True), file=sys.__stdout__, flush=True)
 
 
 def emit_progress(message):
@@ -140,7 +140,7 @@ def main():
             suite, _ = filter_suite(suite, args.skip)
             if args.progress_stderr:
                 emit_progress("running " + module_name)
-            result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0).run(suite)
+            result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)
             if args.progress_stderr:
                 emit_progress("done " + module_name)
             ok = ok and result.wasSuccessful()

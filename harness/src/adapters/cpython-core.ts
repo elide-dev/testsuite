@@ -13,11 +13,18 @@ interface CpythonRecord {
   durationMs?: number;
 }
 
+const CPYTHON_STATUSES = new Set(["pass", "fail", "skip", "error", "running"]);
+
 function parseCpythonRecord(line: string): CpythonRecord | null {
   const s = line.trim();
   if (!s) return null;
   try {
-    return JSON.parse(s) as CpythonRecord;
+    const parsed = JSON.parse(s) as Partial<CpythonRecord>;
+    if (typeof parsed.module !== "string" || parsed.module.length === 0) return null;
+    if (typeof parsed.status !== "string" || !CPYTHON_STATUSES.has(parsed.status)) return null;
+    if (parsed.case !== undefined && typeof parsed.case !== "string") return null;
+    if (parsed.message !== undefined && typeof parsed.message !== "string") parsed.message = String(parsed.message);
+    return parsed as CpythonRecord;
   } catch {
     return null;
   }
@@ -27,9 +34,11 @@ export function parseCpythonLine(line: string): TestResult | null {
   const r = parseCpythonRecord(line);
   if (!r) return null;
   if (r.status === "running") return null;
+  const id = r.case || r.module;
+  if (!id) return null;
   return {
     kind: "test",
-    id: r.case || r.module,
+    id,
     status: r.status,
     message: r.message,
     durationMs: r.durationMs,
