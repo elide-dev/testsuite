@@ -3,6 +3,7 @@ import { latestRunSummariesFromIndex } from "./index";
 
 const START = "<!-- compat-summary:start -->";
 const END = "<!-- compat-summary:end -->";
+const HEADING = "## Compatibility";
 
 export function renderReadmeCompatSummary(index: { runs: IndexEntry[] }): string {
   const latest = latestRunSummariesFromIndex(index);
@@ -35,12 +36,14 @@ export async function updateReadmeCompatSummary(readmePath: string, index: { run
   const end = current.indexOf(END);
   let base = current;
   if (start >= 0 && end > start) {
-    const headingStart = current.lastIndexOf("## Latest compatibility", start);
+    const latestHeadingStart = current.lastIndexOf("## Latest compatibility", start);
+    const compatibilityHeadingStart = current.lastIndexOf(HEADING, start);
+    const headingStart = Math.max(latestHeadingStart, compatibilityHeadingStart);
     const removeStart = headingStart >= 0 ? headingStart : start;
     base = `${current.slice(0, removeStart)}${current.slice(end + END.length)}`;
   }
 
-  const section = `## Latest compatibility\n\n${replacement}`;
+  const section = `${HEADING}\n\n${replacement}`;
   const howItWorks = base.indexOf("## How it works");
   if (howItWorks >= 0) {
     const prefix = base.slice(0, howItWorks).trimEnd();

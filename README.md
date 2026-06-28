@@ -17,9 +17,7 @@ Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev
 > [!CAUTION]
 > Full suites aren't running yet.
 
-## Latest compatibility
-
-## Latest compatibility
+## Compatibility
 
 <!-- compat-summary:start -->
 
@@ -215,7 +213,6 @@ bun run typecheck
 
 Or open the repo in a GitHub Codespace / VS Code devcontainer, which provisions
 Bun, Node, Docker-in-Docker, and Elide automatically.
-
 
 
 
