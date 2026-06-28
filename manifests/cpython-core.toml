@@ -1,6 +1,70 @@
-# CPython 3.12 pure-core smoke slice.
+# CPython 3.12 pure-core coverage.
 
 [[group]]
-id = "core"
+id = "smoke"
 include = ["test_builtin", "test_re", "test_json", "test_ast"]
 tags = ["python312", "pure-core"]
+
+[[group]]
+id = "language-object-model"
+include = [
+  "test_bool",
+  "test_bytes",
+  "test_tuple",
+  "test_list",
+  "test_dict",
+  "test_set",
+  "test_slice",
+  "test_range",
+  "test_class",
+  "test_descr",
+  "test_super",
+  "test_metaclass",
+  "test_exceptions",
+  "test_generators",
+  "test_yield_from",
+  "test_fstring",
+  "test_patma",
+  "test_scope",
+  "test_call",
+  "test_compile",
+  "test_syntax",
+]
+tags = ["python312", "pure-core", "language"]
+
+[[group]]
+id = "containers-algorithms"
+include = [
+  "test_collections",
+  "test_deque",
+  "test_defaultdict",
+  "test_heapq",
+  "test_bisect",
+  "test_itertools",
+  "test_functools",
+  "test_operator",
+  "test_copy",
+  "test_copyreg",
+  "test_enum",
+  "test_weakref",
+  "test_weakset",
+]
+tags = ["python312", "pure-core", "stdlib"]
+
+[[group]]
+id = "numbers"
+include = [
+  "test_int",
+  "test_long",
+  "test_float",
+  "test_complex",
+  "test_math",
+  "test_cmath",
+  "test_decimal",
+  "test_fractions",
+  "test_statistics",
+  "test_random",
+  "test_array",
+  "test_struct",
+]
+tags = ["python312", "pure-core", "stdlib", "numbers"]
