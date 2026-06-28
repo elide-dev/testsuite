@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { expect, test } from "bun:test";
 import type { AdapterContext } from "./types";
-import { expandManifestIncludePaths, parseJtregSummary, resolveJavaExecution, resolveJdkHome, runJavacJtreg } from "./javac-jtreg";
+import { createSparseLangtoolsRoot, expandManifestIncludePaths, parseJtregSummary, resolveJavaExecution, resolveJdkHome, runJavacJtreg } from "./javac-jtreg";
 
 const fixtureSummary = await Bun.file(`${import.meta.dir}/../../fixtures/jtreg/JTreport/text/summary.txt`).text();
 
@@ -235,6 +235,16 @@ test("maps jtreg path-first summary lines", () => {
   ]);
 });
 
+test("maps jtreg ignored tests to skip", () => {
+  expect(parseJtregSummary("tools/javac/Paths/AbsolutePathTest.java  Error. Test ignored: 8055768 ToolBox does not close opened files\n")).toEqual([
+    expect.objectContaining({
+      id: "tools/javac/Paths/AbsolutePathTest.java",
+      status: "skip",
+      message: "Test ignored: 8055768 ToolBox does not close opened files",
+    }),
+  ]);
+});
+
 test("runs jtreg with a generated wrapper JDK and delegates to configured java/elide wrappers", async () => {
   const { ctx, logs } = setupJtregFixture();
 
@@ -433,6 +443,30 @@ test("passes only included manifest paths to jtreg", async () => {
   expect(args).toContain("tools/javac/diags/ExamplePass.java");
   expect(args).not.toContain("tools/javac/diags/Other.java");
   expect(args).not.toContain("tools/javac/launcher/BasicSourceLauncherTests.java");
+});
+
+test("sparse jtreg root keeps sibling sources and OpenJDK make helpers", () => {
+  const root = mkdtempSync(join(tmpdir(), "jtreg-sparse-root-"));
+  const suitePath = join(root, "openjdk");
+  const langtools = join(suitePath, "test/langtools");
+  mkdirSync(join(langtools, "tools/javac/MethodParameters/ClassReaderTest"), { recursive: true });
+  mkdirSync(join(suitePath, "make/langtools/src/classes/build/tools/symbolgenerator"), { recursive: true });
+  writeFileSync(join(langtools, "TEST.ROOT"), "groups=TEST.groups\n");
+  writeFileSync(join(langtools, "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java"), "class ClassReaderTest {}\n");
+  writeFileSync(join(langtools, "tools/javac/MethodParameters/ClassReaderTest/MethodParameterProcessor.java"), "class MethodParameterProcessor {}\n");
+  writeFileSync(join(suitePath, "make/langtools/src/classes/build/tools/symbolgenerator/CreateSymbols.java"), "class CreateSymbols {}\n");
+  const ctx = {
+    suitePath,
+    workspacePath: join(root, "work"),
+  } as AdapterContext;
+
+  const patched = createSparseLangtoolsRoot(ctx, join(root, "run"), [
+    "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
+  ]);
+
+  expect(existsSync(join(patched, "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java"))).toBe(true);
+  expect(existsSync(join(patched, "tools/javac/MethodParameters/ClassReaderTest/MethodParameterProcessor.java"))).toBe(true);
+  expect(lstatSync(join(root, "run/suite/make")).isSymbolicLink()).toBe(true);
 });
 
 test("returns a setup error and does not invoke jtreg when include globs match no javac tests", async () => {

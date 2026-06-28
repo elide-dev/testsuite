@@ -5,6 +5,7 @@
   "scripts": {
     "setup": "bun ./bin/setup.ts",
     "setup:suites": "bun ./bin/setup.ts --skip-install",
+    "repro": "bun ./bin/repro.ts",
     "testsuite": "bun ./bin/run.ts",
     "testsuite:ready": "bun ./bin/run.ts --prepare-suites",
     "typecheck": "tsc --noEmit -p tsconfig.json",

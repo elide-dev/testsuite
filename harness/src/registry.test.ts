@@ -52,5 +52,6 @@ test("loads javac-jtreg workload from registry.toml", () => {
   expect(javac!.adapter).toBe("javac-jtreg");
   expect(javac!.path).toBe("suites/openjdk");
   expect(javac!.settings.manifest).toBe("manifests/javac-langtools.toml");
+  expect(javac!.settings.timeoutMs).toBe(3600000);
   expect(javac!.settings.javaRunner).toBe("java");
 });

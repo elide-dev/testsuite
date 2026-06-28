@@ -46,6 +46,7 @@ const SUITES: SuiteSetup[] = [
     aliases: ["openjdk", "javac", "javac-jtreg", "jtreg"],
     path: "suites/openjdk",
     sparse: [
+      "make/langtools/src/classes/build/tools/symbolgenerator",
       "test/langtools/tools/javac",
       "test/langtools/tools/lib",
       "test/langtools/lib",
@@ -53,6 +54,7 @@ const SUITES: SuiteSetup[] = [
       "test/jtreg-ext",
     ],
     required: [
+      "make/langtools/src/classes/build/tools/symbolgenerator",
       "test/langtools/tools/javac",
       "test/langtools/tools/lib",
       "test/langtools/lib",

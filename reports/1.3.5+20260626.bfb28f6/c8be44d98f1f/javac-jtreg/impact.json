@@ -16,14 +16,18 @@
     },
     {
       "signature": "<str> timed out after <n> ms (elapsed time including timeout handling <n> ms)",
-      "count": 2,
+      "count": 4,
       "exampleIds": [
+        "tools/javac/cast/intersection/IntersectionTypeCastTest.java",
         "tools/javac/file/zip/T6836682.java",
-        "tools/javac/lambda/LambdaParserTest.java"
+        "tools/javac/lambda/LambdaParserTest.java",
+        "tools/javac/lambda/MethodReferenceParserTest.java"
       ],
       "samples": [
-        "'/work/.harness/work/javac-jtreg/jtreg-run-lexxws/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120202 ms)",
-        "'/work/.harness/work/javac-jtreg/jtreg-run-lexxws/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120153 ms)"
+        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120295 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120296 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120360 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120246 ms)"
       ]
     },
     {
@@ -39,27 +43,6 @@
       ]
     },
     {
-      "signature": "Test ignored: <n> emit correct byte code an attributes for type annotations",
-      "count": 2,
-      "exampleIds": [
-        "tools/javac/annotations/typeAnnotations/referenceinfos/Lambda.java",
-        "tools/javac/annotations/typeAnnotations/referenceinfos/NestedTypes.java"
-      ],
-      "samples": [
-        "Test ignored: 8057687 emit correct byte code an attributes for type annotations"
-      ]
-    },
-    {
-      "signature": "Can't find source file: /work/.harness/work/javac-jtreg/jtreg-run-lexxws/suite/test/langtools/../../make/langtools/src/classes/build/tools/symbolgenerator/Creat",
-      "count": 1,
-      "exampleIds": [
-        "tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java"
-      ],
-      "samples": [
-        "Can't find source file: /work/.harness/work/javac-jtreg/jtreg-run-lexxws/suite/test/langtools/../../make/langtools/src/classes/build/tools/symbolgenerator/CreateSymbols.java"
-      ]
-    },
-    {
       "signature": "Compilation failed: Compilation failed",
       "count": 1,
       "exampleIds": [
@@ -67,26 +50,6 @@
       ],
       "samples": [
         "Compilation failed: Compilation failed"
-      ]
-    },
-    {
-      "signature": "Test ignored: <n> improve ordering of errors with type annotations",
-      "count": 1,
-      "exampleIds": [
-        "tools/javac/warnings/suppress/TypeAnnotations.java"
-      ],
-      "samples": [
-        "Test ignored: 8057683 improve ordering of errors with type annotations"
-      ]
-    },
-    {
-      "signature": "Test ignored: <n> ToolBox does not close opened files",
-      "count": 1,
-      "exampleIds": [
-        "tools/javac/Paths/AbsolutePathTest.java"
-      ],
-      "samples": [
-        "Test ignored: 8055768 ToolBox does not close opened files"
       ]
     }
   ],

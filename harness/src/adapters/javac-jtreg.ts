@@ -227,15 +227,21 @@ function copyTestRootWithoutGroups(source: string, target: string): void {
 
 function symlinkIfPresent(source: string, target: string): void {
   if (!existsSync(source)) return;
+  if (existsSync(target)) return;
   symlinkSync(source, target);
 }
 
 function copySelectedLangtoolsPaths(sourceLangtoolsRoot: string, patchedLangtoolsRoot: string, tests: string[]): void {
+  const copiedDirs = new Set<string>();
   for (const test of tests) {
     const source = join(sourceLangtoolsRoot, test);
-    const target = join(patchedLangtoolsRoot, test);
-    mkdirSync(dirname(target), { recursive: true });
-    cpSync(source, target, { recursive: true });
+    const sourceDir = statSync(source).isDirectory() ? source : dirname(source);
+    const relativeDir = statSync(source).isDirectory() ? test : dirname(test);
+    if (copiedDirs.has(relativeDir)) continue;
+    copiedDirs.add(relativeDir);
+    const targetDir = join(patchedLangtoolsRoot, relativeDir);
+    mkdirSync(dirname(targetDir), { recursive: true });
+    cpSync(sourceDir, targetDir, { recursive: true });
   }
 }
 
@@ -253,6 +259,7 @@ export function createSparseLangtoolsRoot(ctx: AdapterContext, runRoot: string, 
   symlinkIfPresent(join(sourceLangtoolsRoot, "tools/javac/lib"), join(patchedLangtoolsRoot, "tools/javac/lib"));
   symlinkIfPresent(join(ctx.suitePath, "test/lib"), join(patchedTestRoot, "lib"));
   symlinkIfPresent(join(ctx.suitePath, "test/jtreg-ext"), join(patchedTestRoot, "jtreg-ext"));
+  symlinkIfPresent(join(ctx.suitePath, "make"), join(runRoot, "suite/make"));
 
   return patchedLangtoolsRoot;
 }
@@ -267,7 +274,7 @@ export function parseJtregSummary(text: string): TestResult[] {
     const path = statusFirst?.[2] ?? pathFirst?.[1];
     const message = pathFirst?.[3]?.trim();
     if (!statusName || !path) continue;
-    const status = STATUS[statusName.toLowerCase()];
+    const status = message?.startsWith("Test ignored:") ? "skip" : STATUS[statusName.toLowerCase()];
     if (!status) continue;
     results.push({
       kind: "test",

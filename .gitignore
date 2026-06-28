@@ -4,3 +4,4 @@ node_modules/
 harness/.bun/
 .elide-install/
 .harness/
+artifacts/
