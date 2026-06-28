@@ -48,3 +48,14 @@ path = "suites/test262"
   [workload.settings]
   # Globs (relative to path) to execute. Skip globs live in expectations/.
   include = ["test/**/*.js"]
+
+[[workload]]
+id = "node-api"
+kind = "test"
+adapter = "node-api"
+path = "suites/node"
+
+  [workload.settings]
+  manifest = "manifests/node-api.toml"
+  timeoutMs = 60000
+  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]

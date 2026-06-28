@@ -20,6 +20,7 @@ test("preserves binding-required workload order from registry.toml", () => {
     "cpython-core",
     "javac-jtreg",
     "test262",
+    "node-api",
   ]);
 });
 
@@ -56,4 +57,15 @@ test("loads javac-jtreg workload from registry.toml", () => {
   expect(javac!.settings.timeoutMs).toBe(3600000);
   expect(javac!.settings.jtregCaseTimeoutSeconds).toBe(300);
   expect(javac!.settings.javaRunner).toBe("java");
+});
+
+test("loads node-api workload from registry.toml", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  const node = ws.find((w) => w.id === "node-api");
+  expect(node).toBeDefined();
+  expect(node!.kind).toBe("test");
+  expect(node!.adapter).toBe("node-api");
+  expect(node!.path).toBe("suites/node");
+  expect(node!.settings.manifest).toBe("manifests/node-api.toml");
+  expect(node!.settings.elideRunArgs).toEqual(["--sandbox", "--allow-read", "--allow-write"]);
 });

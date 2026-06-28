@@ -1,0 +1,19 @@
+# Node.js core JavaScript API coverage. Paths are relative to the Node.js checkout.
+#
+# This starts with public API surfaces requested for Elide: node:path and
+# process/global process behavior. The adapter expands these globs against the
+# sparse Node checkout.
+
+[[group]]
+id = "path"
+include = [
+  "test/parallel/test-path*.js",
+]
+tags = ["node", "api", "path"]
+
+[[group]]
+id = "process"
+include = [
+  "test/parallel/test-process*.js",
+]
+tags = ["node", "api", "process"]

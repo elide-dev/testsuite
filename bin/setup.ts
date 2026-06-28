@@ -8,6 +8,7 @@ interface SuiteSetup {
   aliases: string[];
   path: string;
   sparse?: string[];
+  sparseCone?: boolean;
   required: string[];
   filterBlobNone?: boolean;
 }
@@ -28,6 +29,14 @@ const SUITES: SuiteSetup[] = [
     required: ["test", "harness"],
   },
   {
+    id: "node-api",
+    aliases: ["node", "node-api"],
+    path: "suites/node",
+    sparse: ["test/common", "test/fixtures", "test/parallel"],
+    required: ["test/common", "test/fixtures", "test/parallel"],
+    filterBlobNone: true,
+  },
+  {
     id: "wpt-wintertc",
     aliases: ["wpt", "wpt-wintertc"],
     path: "suites/wpt",
@@ -39,7 +48,10 @@ const SUITES: SuiteSetup[] = [
     id: "cpython-core",
     aliases: ["cpython", "cpython-core", "python"],
     path: "suites/cpython",
+    sparse: ["Lib/test"],
+    sparseCone: false,
     required: ["Lib/test", "Lib/test/test_re.py", "Lib/test/test_json"],
+    filterBlobNone: true,
   },
   {
     id: "javac-jtreg",
@@ -108,7 +120,7 @@ function parseArgs(argv: string[]): Options {
           "usage: bun ./bin/setup.ts [--suite id[,id...]] [--skip-install] [--check]",
           "",
           "Prepares Bun dependencies and upstream suite submodules for the compliance runner.",
-          "Known suites: test262, wpt-wintertc, cpython-core, javac-jtreg",
+          "Known suites: test262, node-api, wpt-wintertc, cpython-core, javac-jtreg",
           "",
         ].join("\n"));
         process.exit(0);
@@ -191,8 +203,17 @@ async function prepareSuite(suite: SuiteSetup): Promise<void> {
   await run(updateArgs, `checking out ${suite.id} submodule`);
 
   if (suite.sparse?.length) {
-    await run(["git", "-C", suite.path, "sparse-checkout", "init", "--cone"], `initializing sparse checkout for ${suite.id}`);
-    await run(["git", "-C", suite.path, "sparse-checkout", "set", ...suite.sparse], `populating sparse paths for ${suite.id}`);
+    const cone = suite.sparseCone !== false;
+    await run(["git", "-C", suite.path, "sparse-checkout", "init", cone ? "--cone" : "--no-cone"], `initializing sparse checkout for ${suite.id}`);
+    await run([
+      "git",
+      "-C",
+      suite.path,
+      "sparse-checkout",
+      "set",
+      ...(cone ? [] : ["--no-cone"]),
+      ...suite.sparse,
+    ], `populating sparse paths for ${suite.id}`);
   }
 
   assertSuiteReady(suite);

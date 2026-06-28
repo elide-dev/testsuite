@@ -8,7 +8,12 @@
 	path = suites/cpython
 	url = https://github.com/python/cpython.git
 	branch = 3.12
+	shallow = true
 [submodule "suites/openjdk"]
 	path = suites/openjdk
 	url = https://github.com/openjdk/jdk
+	shallow = true
+[submodule "suites/node"]
+	path = suites/node
+	url = https://github.com/nodejs/node.git
 	shallow = true

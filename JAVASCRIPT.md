@@ -54,11 +54,20 @@ rather than JavaScript source splicing.
 
 ## Node.js Compatibility
 
-- [ ] Node.js JavaScript API tests for supported built-in modules.
+- [x] Node.js `node:path` API tests from `test/parallel/test-path*.js` - 17 files.
+- [x] Node.js `process` global/module tests from
+  `test/parallel/test-process*.js` - 93 files.
+- [ ] Node.js JavaScript API tests for other supported built-in modules.
 - [ ] Node.js runtime behavior tests that do not require unsupported process,
   native-addon, inspector, or platform-specific behavior.
-- [ ] Node.js module loading, CommonJS/ESM interop, timers, buffers, URL, path,
+- [ ] Node.js module loading, CommonJS/ESM interop, timers, buffers, URL,
   events, assertions, and streams subsets.
 
 Counts should be based on Node's test files first, then refined to case-level
 counts where the Node test runner exposes stable subtest names.
+
+Current `node-api` coverage is 110 files across the initial path and process
+surface. The slice intentionally includes tests expected to fail, especially
+process tests involving child processes, permissions, abort behavior, exact
+diagnostics, and internal bindings, so those failures can be classified and
+ratcheted.

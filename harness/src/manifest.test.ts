@@ -82,3 +82,11 @@ test("wintertc WPT manifest includes checked-out paths when the suite exists", (
     expect(existsSync(join(suiteRoot, path))).toBe(true);
   }
 });
+
+test("node-api manifest selects path and process API surfaces", () => {
+  const manifest = loadManifest(`${import.meta.dir}/../../manifests/node-api.toml`);
+  const groups = new Map(manifest.groups.map((group) => [group.id, group.include]));
+
+  expect(groups.get("path")).toEqual(["test/parallel/test-path*.js"]);
+  expect(groups.get("process")).toEqual(["test/parallel/test-process*.js"]);
+});
