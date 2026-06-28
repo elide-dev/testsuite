@@ -1,0 +1,1649 @@
+{
+  "bySignature": [
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in setUp (self.module.bisect_right, [], <n>, <n>), ^^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: <str> objec",
+      "count": 13,
+      "exampleIds": [
+        "test_bisect.TestBisectC.test_backcompatibility",
+        "test_bisect.TestBisectC.test_insort",
+        "test_bisect.TestBisectC.test_insort_keynotNone",
+        "test_bisect.TestBisectC.test_keyword_args",
+        "test_bisect.TestBisectC.test_large_pyrange"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 35, in setUp\n    (self.module.bisect_right, [], 1, 0),\n     ^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_right'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_buffer self.assertRaises(BufferError, a.append, a[<n>]) AssertionError: BufferError not raised ",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_buffer",
+        "test_array.DoubleTest.test_buffer",
+        "test_array.FloatTest.test_buffer",
+        "test_array.IntTest.test_buffer",
+        "test_array.LongLongTest.test_buffer"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 1070, in test_buffer\n    self.assertRaises(BufferError, a.append, a[0])\nAssertionError: BufferError not raised by append"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_filewrite f = open(os_helper.TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionError: [Errn",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_filewrite",
+        "test_array.DoubleTest.test_filewrite",
+        "test_array.FloatTest.test_filewrite",
+        "test_array.IntTest.test_filewrite",
+        "test_array.LongLongTest.test_filewrite"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 482, in test_filewrite\n    f = open(os_helper.TESTFN, 'wb')\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, array.array, File <str>, li",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_free_after_iterating",
+        "test_array.DoubleTest.test_free_after_iterating",
+        "test_array.FloatTest.test_free_after_iterating",
+        "test_array.IntTest.test_free_after_iterating",
+        "test_array.LongLongTest.test_free_after_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 1156, in test_free_after_iterating\n    support.check_free_after_iterating(self, iter, array.array,\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1830, in check_free_after_iterating\n    test.assertTrue(done)\nAssertionError: False is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_fromfile_ioerror f = open(os_helper.TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionError",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_fromfile_ioerror",
+        "test_array.DoubleTest.test_fromfile_ioerror",
+        "test_array.FloatTest.test_fromfile_ioerror",
+        "test_array.IntTest.test_fromfile_ioerror",
+        "test_array.LongLongTest.test_fromfile_ioerror"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 473, in test_fromfile_ioerror\n    f = open(os_helper.TESTFN, 'wb')\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_reverse_iterator_picking d = pickle.dumps((itorig, orig), proto) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_reverse_iterator_picking",
+        "test_array.DoubleTest.test_reverse_iterator_picking",
+        "test_array.FloatTest.test_reverse_iterator_picking",
+        "test_array.IntTest.test_reverse_iterator_picking",
+        "test_array.LongLongTest.test_reverse_iterator_picking"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 366, in test_reverse_iterator_picking\n    d = pickle.dumps((itorig, orig), proto)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/copyreg.py\", line 70, in _reduce_ex\n    raise TypeError(f\"cannot pickle {cls.__name__!r} object\")\nTypeError: cannot pickle 'array' object"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_tofromfile f = open(os_helper.TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionError: [Err",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_tofromfile",
+        "test_array.DoubleTest.test_tofromfile",
+        "test_array.FloatTest.test_tofromfile",
+        "test_array.IntTest.test_tofromfile",
+        "test_array.LongLongTest.test_tofromfile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 451, in test_tofromfile\n    f = open(os_helper.TESTFN, 'wb')\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_weakref p = weakref.proxy(s) ^^^^^^^^^^^^^^^^ TypeError: cannot create weak reference to <str> ",
+      "count": 13,
+      "exampleIds": [
+        "test_array.ByteTest.test_weakref",
+        "test_array.DoubleTest.test_weakref",
+        "test_array.FloatTest.test_weakref",
+        "test_array.IntTest.test_weakref",
+        "test_array.LongLongTest.test_weakref"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 1098, in test_weakref\n    p = weakref.proxy(s)\n        ^^^^^^^^^^^^^^^^\nTypeError: cannot create weak reference to 'array.array' object"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_initialize_with_unicode self.assertIn(<str>, str(cm.exception)) AssertionError: <str> not found",
+      "count": 12,
+      "exampleIds": [
+        "test_array.ByteTest.test_initialize_with_unicode",
+        "test_array.DoubleTest.test_initialize_with_unicode",
+        "test_array.FloatTest.test_initialize_with_unicode",
+        "test_array.IntTest.test_initialize_with_unicode",
+        "test_array.LongLongTest.test_initialize_with_unicode"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 1144, in test_initialize_with_unicode\n    self.assertIn(\"cannot use a unicode array\", str(cm.exception))\nAssertionError: 'cannot use a unicode array' not found in \"'str' object cannot be interpreted as an integer\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 1144, in test_initialize_with_unicode\n    self.assertIn(\"cannot use a unicode array\", str(cm.exception))\nAssertionError: 'cannot use a unicode array' not found in 'must be real number, not str'"
+      ]
+    },
+    {
+      "signature": "AttributeError(<str>)",
+      "count": 5,
+      "exampleIds": [
+        "test_super",
+        "test_builtin",
+        "test_functools",
+        "test_random",
+        "test_int"
+      ],
+      "samples": [
+        "AttributeError(\"module '_asyncio' has no attribute 'Future'\")"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_fastcall_error_kw self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_fastcall_error_kw",
+        "test_call.TestCallingConventionsClass.test_fastcall_error_kw",
+        "test_call.TestCallingConventionsClassInstance.test_fastcall_error_kw",
+        "test_call.TestCallingConventionsInstance.test_fastcall_error_kw",
+        "test_call.TestCallingConventionsStatic.test_fastcall_error_kw"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 361, in test_fastcall_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_fastcall\\(\\) takes no keyword arguments\" does not match \"meth_fastcall() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 361, in test_fastcall_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_fastcall\\(\\) takes no keyword arguments\" does not match \"MethClass.meth_fastcall() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 361, in test_fastcall_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_fastcall\\(\\) takes no keyword arguments\" does not match \"MethInstance.meth_fastcall() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 361, in test_fastcall_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_fastcall\\(\\) takes no keyword arguments\" does not match \"MethStatic.meth_fastcall() got an unexpected keyword argument 'k'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_noargs_error_arg self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_noargs_error_arg",
+        "test_call.TestCallingConventionsClass.test_noargs_error_arg",
+        "test_call.TestCallingConventionsClassInstance.test_noargs_error_arg",
+        "test_call.TestCallingConventionsInstance.test_noargs_error_arg",
+        "test_call.TestCallingConventionsStatic.test_noargs_error_arg"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 325, in test_noargs_error_arg\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(1 given\\)\" does not match \"meth_noargs() takes 0 positional arguments but 1 was given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 325, in test_noargs_error_arg\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(1 given\\)\" does not match \"MethClass.meth_noargs() takes 1 positional argument but 2 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 325, in test_noargs_error_arg\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(1 given\\)\" does not match \"MethInstance.meth_noargs() takes 1 positional argument but 2 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 325, in test_noargs_error_arg\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(1 given\\)\" does not match \"MethStatic.meth_noargs() takes 1 positional argument but 2 were given\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_noargs_error_arg2 self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_noargs_error_arg2",
+        "test_call.TestCallingConventionsClass.test_noargs_error_arg2",
+        "test_call.TestCallingConventionsClassInstance.test_noargs_error_arg2",
+        "test_call.TestCallingConventionsInstance.test_noargs_error_arg2",
+        "test_call.TestCallingConventionsStatic.test_noargs_error_arg2"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 331, in test_noargs_error_arg2\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(2 given\\)\" does not match \"meth_noargs() takes 0 positional arguments but 2 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 331, in test_noargs_error_arg2\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(2 given\\)\" does not match \"MethClass.meth_noargs() takes 1 positional argument but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 331, in test_noargs_error_arg2\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(2 given\\)\" does not match \"MethInstance.meth_noargs() takes 1 positional argument but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 331, in test_noargs_error_arg2\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(2 given\\)\" does not match \"MethStatic.meth_noargs() takes 1 positional argument but 3 were given\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_noargs_error_ext self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_noargs_error_ext",
+        "test_call.TestCallingConventionsClass.test_noargs_error_ext",
+        "test_call.TestCallingConventionsClassInstance.test_noargs_error_ext",
+        "test_call.TestCallingConventionsInstance.test_noargs_error_ext",
+        "test_call.TestCallingConventionsStatic.test_noargs_error_ext"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 337, in test_noargs_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(3 given\\)\" does not match \"meth_noargs() takes 0 positional arguments but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 337, in test_noargs_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(3 given\\)\" does not match \"MethClass.meth_noargs() takes 1 positional argument but 4 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 337, in test_noargs_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(3 given\\)\" does not match \"MethInstance.meth_noargs() takes 1 positional argument but 4 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 337, in test_noargs_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no arguments \\(3 given\\)\" does not match \"MethStatic.meth_noargs() takes 1 positional argument but 4 were given\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_noargs_error_kw self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_noargs_error_kw",
+        "test_call.TestCallingConventionsClass.test_noargs_error_kw",
+        "test_call.TestCallingConventionsClassInstance.test_noargs_error_kw",
+        "test_call.TestCallingConventionsInstance.test_noargs_error_kw",
+        "test_call.TestCallingConventionsStatic.test_noargs_error_kw"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 343, in test_noargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no keyword arguments\" does not match \"meth_noargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 343, in test_noargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no keyword arguments\" does not match \"MethClass.meth_noargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 343, in test_noargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no keyword arguments\" does not match \"MethInstance.meth_noargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 343, in test_noargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_noargs\\(\\) takes no keyword arguments\" does not match \"MethStatic.meth_noargs() got an unexpected keyword argument 'k'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_o_error_arg_kw self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_o_error_arg_kw",
+        "test_call.TestCallingConventionsClass.test_o_error_arg_kw",
+        "test_call.TestCallingConventionsClassInstance.test_o_error_arg_kw",
+        "test_call.TestCallingConventionsInstance.test_o_error_arg_kw",
+        "test_call.TestCallingConventionsStatic.test_o_error_arg_kw"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 313, in test_o_error_arg_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 313, in test_o_error_arg_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethClass.meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 313, in test_o_error_arg_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethInstance.meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 313, in test_o_error_arg_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethStatic.meth_o() got an unexpected keyword argument 'k'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_o_error_ext self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_o_error_ext",
+        "test_call.TestCallingConventionsClass.test_o_error_ext",
+        "test_call.TestCallingConventionsClassInstance.test_o_error_ext",
+        "test_call.TestCallingConventionsInstance.test_o_error_ext",
+        "test_call.TestCallingConventionsStatic.test_o_error_ext"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 301, in test_o_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(3 given\\)\" does not match \"meth_o() takes 1 positional argument but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 301, in test_o_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(3 given\\)\" does not match \"MethClass.meth_o() takes 2 positional arguments but 4 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 301, in test_o_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(3 given\\)\" does not match \"MethInstance.meth_o() takes 2 positional arguments but 4 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 301, in test_o_error_ext\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(3 given\\)\" does not match \"MethStatic.meth_o() takes 2 positional arguments but 4 were given\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_o_error_kw self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_o_error_kw",
+        "test_call.TestCallingConventionsClass.test_o_error_kw",
+        "test_call.TestCallingConventionsClassInstance.test_o_error_kw",
+        "test_call.TestCallingConventionsInstance.test_o_error_kw",
+        "test_call.TestCallingConventionsStatic.test_o_error_kw"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 307, in test_o_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 307, in test_o_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethClass.meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 307, in test_o_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethInstance.meth_o() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 307, in test_o_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes no keyword arguments\" does not match \"MethStatic.meth_o() got an unexpected keyword argument 'k'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_o_error_no_arg self.assertRaisesRegex(TypeError, msg, self.obj.meth_o) AssertionError: <str> do",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_o_error_no_arg",
+        "test_call.TestCallingConventionsClass.test_o_error_no_arg",
+        "test_call.TestCallingConventionsClassInstance.test_o_error_no_arg",
+        "test_call.TestCallingConventionsInstance.test_o_error_no_arg",
+        "test_call.TestCallingConventionsStatic.test_o_error_no_arg"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 291, in test_o_error_no_arg\n    self.assertRaisesRegex(TypeError, msg, self.obj.meth_o)\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(0 given\\)\" does not match \"meth_o() missing 1 required positional argument: 'arg'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 291, in test_o_error_no_arg\n    self.assertRaisesRegex(TypeError, msg, self.obj.meth_o)\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(0 given\\)\" does not match \"MethClass.meth_o() missing 1 required positional argument: 'arg'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 291, in test_o_error_no_arg\n    self.assertRaisesRegex(TypeError, msg, self.obj.meth_o)\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(0 given\\)\" does not match \"MethInstance.meth_o() missing 1 required positional argument: 'arg'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 291, in test_o_error_no_arg\n    self.assertRaisesRegex(TypeError, msg, self.obj.meth_o)\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(0 given\\)\" does not match \"MethStatic.meth_o() missing 1 required positional argument: 'arg'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_o_error_two_args self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_o_error_two_args",
+        "test_call.TestCallingConventionsClass.test_o_error_two_args",
+        "test_call.TestCallingConventionsClassInstance.test_o_error_two_args",
+        "test_call.TestCallingConventionsInstance.test_o_error_two_args",
+        "test_call.TestCallingConventionsStatic.test_o_error_two_args"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 295, in test_o_error_two_args\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(2 given\\)\" does not match \"meth_o() takes 1 positional argument but 2 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 295, in test_o_error_two_args\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(2 given\\)\" does not match \"MethClass.meth_o() takes 2 positional arguments but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 295, in test_o_error_two_args\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(2 given\\)\" does not match \"MethInstance.meth_o() takes 2 positional arguments but 3 were given\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 295, in test_o_error_two_args\n    self.assertRaisesRegex(\nAssertionError: \"meth_o\\(\\) takes exactly one argument \\(2 given\\)\" does not match \"MethStatic.meth_o() takes 2 positional arguments but 3 were given\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_varargs_error_kw self.assertRaisesRegex( AssertionError: <str> does not match <str>",
+      "count": 5,
+      "exampleIds": [
+        "test_call.TestCallingConventions.test_varargs_error_kw",
+        "test_call.TestCallingConventionsClass.test_varargs_error_kw",
+        "test_call.TestCallingConventionsClassInstance.test_varargs_error_kw",
+        "test_call.TestCallingConventionsInstance.test_varargs_error_kw",
+        "test_call.TestCallingConventionsStatic.test_varargs_error_kw"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 267, in test_varargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_varargs\\(\\) takes no keyword arguments\" does not match \"meth_varargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 267, in test_varargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_varargs\\(\\) takes no keyword arguments\" does not match \"MethClass.meth_varargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 267, in test_varargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_varargs\\(\\) takes no keyword arguments\" does not match \"MethInstance.meth_varargs() got an unexpected keyword argument 'k'\"",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 267, in test_varargs_error_kw\n    self.assertRaisesRegex(\nAssertionError: \"meth_varargs\\(\\) takes no keyword arguments\" does not match \"MethStatic.meth_varargs() got an unexpected keyword argument 'k'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in runTest raise self.failureException(self.format_failure(new.getvalue())) AssertionError: Failed doct",
+      "count": 2,
+      "exampleIds": [
+        "test_generators.__test__.coroutine",
+        "test_generators.__test__.refleaks"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/doctest.py\", line 2256, in runTest\n    raise self.failureException(self.format_failure(new.getvalue()))\nAssertionError: Failed doctest test for test.test_generators.__test__.coroutine\n  File \"/work/suites/cpython/Lib/test/test_generators.py\", line unknown line number, in coroutine\n\n----------------------------------------------------------------------\nFile \"/work/suites/cpython/Lib/test/test_generators.py\", line ?, in test.test_generators.__test__.coroutine\nFailed example:\n    del g; gc_collect()  # For PyPy or other GCs.\nExpected:\n    exiting\nGot nothing\n----------------------------------------------------------------------\nFile \"/work/suites/cpython/Lib/test/test_generators.py\", line ?, in test.test_generators.__test__.coroutine\nFailed example:\n    del g; gc_collect()  # For PyPy or other GCs.\nExpected:\n    finally\nGot nothing\n----------------------------------------------------------------------\nFile \"/work/suites/cpython/Lib/test/test_generators.py\", line ?, in test.test_generators.__test__.coroutine\nFailed example:\n    with support.catch_unraisable_exception() as cm:\n        g = f()\n        next(g)\n        del g\n\n        cm.unraisable.exc_type == RuntimeError\n        \"generator ignored GeneratorExit\" in str(cm.unraisable.exc_value)\n        cm.unraisable.exc_traceback is not None\nException raised:\n    Traceback (most recent call last):\n      File \"/work/suites/cpython/Lib/doctest.py\", line 1368, in __run\n        exec(compile(example.source, filename, \"single\",\n      File \"<doctest test.test_generators.__test__.coroutine[83]>\", line 6, in <module>\n        cm.unraisable.exc_type == RuntimeError\n        ^^^^^^^^^^^^^^^^^^^^^^\n    AttributeError: 'NoneType' object has no attribute 'exc_type'",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/doctest.py\", line 2256, in runTest\n    raise self.failureException(self.format_failure(new.getvalue()))\nAssertionError: Failed doctest test for test.test_generators.__test__.refleaks\n  File \"/work/suites/cpython/Lib/test/test_generators.py\", line unknown line number, in refleaks\n\n----------------------------------------------------------------------\nFile \"/work/suites/cpython/Lib/test/test_generators.py\", line ?, in test.test_generators.__test__.refleaks\nFailed example:\n    with support.catch_unraisable_exception() as cm:\n        l = Leaker()\n        del l\n\n        cm.unraisable.object == Leaker.__del__\n        cm.unraisable.exc_type == RuntimeError\n        str(cm.unraisable.exc_value) == \"del failed\"\n        cm.unraisable.exc_traceback is not None\nException raised:\n    Traceback (most recent call last):\n      File \"/work/suites/cpython/Lib/doctest.py\", line 1368, in __run\n        exec(compile(example.source, filename, \"single\",\n      File \"<doctest test.test_generators.__test__.refleaks[8]>\", line 5, in <module>\n        cm.unraisable.object == Leaker.__del__\n        ^^^^^^^^^^^^^^^^^^^^\n    AttributeError: 'NoneType' object has no attribute 'object'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_check_encoding_errors proc = assert_python_failure(<str>, <str>, <str>, code) ^^^^^^^^^^^^^^^^^",
+      "count": 2,
+      "exampleIds": [
+        "test_bytes.ByteArrayTest.test_check_encoding_errors",
+        "test_bytes.BytesTest.test_check_encoding_errors"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 380, in test_check_encoding_errors\n    proc = assert_python_failure('-X', 'dev', '-c', code)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 177, in assert_python_failure\n    return _assert_python(False, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, self.type2test) File <str>,",
+      "count": 2,
+      "exampleIds": [
+        "test_tuple.TupleTest.test_free_after_iterating",
+        "test_list.ListTest.test_free_after_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/seq_tests.py\", line 430, in test_free_after_iterating\n    support.check_free_after_iterating(self, iter, self.type2test)\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1830, in check_free_after_iterating\n    test.assertTrue(done)\nAssertionError: False is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating test.support.check_free_after_iterating(self, iter, self.type2test) File <",
+      "count": 2,
+      "exampleIds": [
+        "test_bytes.ByteArrayTest.test_free_after_iterating",
+        "test_bytes.BytesTest.test_free_after_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 991, in test_free_after_iterating\n    test.support.check_free_after_iterating(self, iter, self.type2test)\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1830, in check_free_after_iterating\n    test.assertTrue(done)\nAssertionError: False is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_mod with self.assertRaisesRegex(TypeError, msg): AssertionError: <str> does not match <str>",
+      "count": 2,
+      "exampleIds": [
+        "test_bytes.ByteArrayTest.test_mod",
+        "test_bytes.BytesTest.test_mod"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 769, in test_mod\n    with self.assertRaisesRegex(TypeError, msg):\nAssertionError: \"%d format: a real number is required, not complex\" does not match \"%i format: a real number is required, not complex\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in cleanup ast.AST._fields = old_value ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute of immutab",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 74, in cleanup\n    ast.AST._fields = old_value\n    ^^^^^^^^^^^^^^^\nTypeError: cannot set '_fields' attribute of immutable type 'ast.AST'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_3114 self.assertIsNone(e) AssertionError: () is not None",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_3114"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1100, in test_3114\n    self.assertIsNone(e)\nAssertionError: () is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_add self.assertTrue(len(self.fs) == <n>) AssertionError: False is not true",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_add"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 229, in test_add\n    self.assertTrue(len(self.fs) == 1)\nAssertionError: False is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_all_freed self.assertIsNone(wr_callback()) AssertionError: <function FinalizeTestCase.test_all_",
+      "count": 1,
+      "exampleIds": [
+        "test_weakref.FinalizeTestCase.test_all_freed"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2108, in test_all_freed\n    self.assertIsNone(wr_callback())\nAssertionError: <function FinalizeTestCase.test_all_freed.<locals>.callback at 0x500efd62> is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_arg_parsing for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestErrorHandlingC.test_arg_parsing"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 380, in test_arg_parsing\n    for f in (self.module.bisect_left, self.module.bisect_right,\n              ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_array_is_sequence self.assertIsInstance(array.array(<str>), collections.abc.MutableSequence) As",
+      "count": 1,
+      "exampleIds": [
+        "test_array.MiscTest.test_array_is_sequence"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_array.py\", line 35, in test_array_is_sequence\n    self.assertIsInstance(array.array(\"B\"), collections.abc.MutableSequence)\nAssertionError: array('B') is not an instance of <class 'collections.abc.MutableSequence'>"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_AST_fields_NULL_check del ast.AST._fields ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 77, in test_AST_fields_NULL_check\n    del ast.AST._fields\n        ^^^^^^^^^^^^^^^\nTypeError: cannot set '_fields' attribute of immutable type 'ast.AST'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_atexit rc, out, err = script_helper.assert_python_ok(<str>, prog) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_weakref.FinalizeTestCase.test_atexit"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2135, in test_atexit\n    rc, out, err = script_helper.assert_python_ok('-c', prog)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_backcompatibility self.assertEqual(self.module.insort, self.module.insort_right) ^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestInsortC.test_backcompatibility"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 316, in test_backcompatibility\n    self.assertEqual(self.module.insort, self.module.insort_right)\n                     ^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'insort'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_basic self.assertRaises(MemoryError, list, range(sys.maxsize // <n>)) AssertionError: MemoryErr",
+      "count": 1,
+      "exampleIds": [
+        "test_list.ListTest.test_basic"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_list.py\", line 38, in test_basic\n    self.assertRaises(MemoryError, list, range(sys.maxsize // 2))\nAssertionError: MemoryError not raised by list"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_batched list(batched(<str>, <n>)) # n is zero ^^^^^^^^^^^^^^^^^^^^^ TypeError: n must be at lea",
+      "count": 1,
+      "exampleIds": [
+        "test_itertools.TestBasicOps.test_batched"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_itertools.py\", line 201, in test_batched\n    list(batched('ABCDEFG', 0))             # n is zero\n         ^^^^^^^^^^^^^^^^^^^^^\nTypeError: n must be at least one"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_broken_pipe_error proc = subprocess.Popen(cmd, ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_broken_pipe_error"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 226, in test_broken_pipe_error\n    proc = subprocess.Popen(cmd,\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_Buffer self.assertIsInstance(sample(b<str>), Buffer) AssertionError: b<str> is not an instance ",
+      "count": 1,
+      "exampleIds": [
+        "test_collections.TestCollectionABCs.test_Buffer"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_collections.py\", line 1965, in test_Buffer\n    self.assertIsInstance(sample(b\"x\"), Buffer)\nAssertionError: b'x' is not an instance of <class 'collections.abc.Buffer'>"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_bug_40736 with self.assertRaisesRegex(TypeError, <str>): AssertionError: <str> does not match <",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_bug_40736"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2405, in test_bug_40736\n    with self.assertRaisesRegex(TypeError, \"got 'int'\"):\nAssertionError: \"got 'int'\" does not match \"object of type 'int' has no len()\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_carloverre_multi_inherit_invalid self.fail(<str>) AssertionError: setattr through indirect base",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_carloverre_multi_inherit_invalid"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 4436, in test_carloverre_multi_inherit_invalid\n    self.fail(\"setattr through indirect base types should be rejected\")\nAssertionError: setattr through indirect base types should be rejected"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_cli_file_input res, _ = script_helper.run_python_until_end(<str>, <str>, filename) ^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.ASTMainTests.test_cli_file_input"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 2794, in test_cli_file_input\n    res, _ = script_helper.run_python_until_end(\"-m\", \"ast\", filename)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_cmp_err for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ At",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestErrorHandlingC.test_cmp_err"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 375, in test_cmp_err\n    for f in (self.module.bisect_left, self.module.bisect_right,\n              ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_colors bisect_left = self.module.bisect_left ^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: <str> obje",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestDocExampleC.test_colors"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 405, in test_colors\n    bisect_left = self.module.bisect_left\n                  ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_compact process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_compact"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 197, in test_compact\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_copy_weakkeydict self._check_copy_weakdict(weakref.WeakKeyDictionary) File <str>, line <n>, in ",
+      "count": 1,
+      "exampleIds": [
+        "test_copy.TestCopy.test_copy_weakkeydict"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 841, in test_copy_weakkeydict\n    self._check_copy_weakdict(weakref.WeakKeyDictionary)\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 834, in _check_copy_weakdict\n    self.assertEqual(len(v), 1)\nAssertionError: 2 != 1"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_copy_weakvaluedict self._check_copy_weakdict(weakref.WeakValueDictionary) File <str>, line <n>,",
+      "count": 1,
+      "exampleIds": [
+        "test_copy.TestCopy.test_copy_weakvaluedict"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 844, in test_copy_weakvaluedict\n    self._check_copy_weakdict(weakref.WeakValueDictionary)\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 834, in _check_copy_weakdict\n    self.assertEqual(len(v), 1)\nAssertionError: 2 != 1"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_correctly_rounded_true_division self.check_truediv(m*DBL_MIN_OVERFLOW + n, m) File <str>, line ",
+      "count": 1,
+      "exampleIds": [
+        "test_long.LongTest.test_correctly_rounded_true_division"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_long.py\", line 857, in test_correctly_rounded_true_division\n    self.check_truediv(m*DBL_MIN_OVERFLOW + n, m)\n  File \"/work/suites/cpython/Lib/test/test_long.py\", line 822, in check_truediv\n    self.assertEqual(expected, got, \"Incorrectly rounded division {}/{}: \"\nAssertionError: '1.7976931348623157e+308' != 'overflow'\n- 1.7976931348623157e+308\n+ overflow\n : Incorrectly rounded division 179769313486231580793728971405303415079934132710037826936173778980444968292764750946649017977587207096330286416692887910946555547851940402630657488671505820681908902000708383676273854845817711531764475730270069855571366959622842914819860834936475292719074168444365510704342711559699508093042880177904174497782/1: expected 1.7976931348623157e+308, got overflow"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_cycle_through_dict for o in gc.get_objects(): ^^^^^^^^^^^^^^^^ AttributeError: module <str> has",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_cycle_through_dict"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 4894, in test_cycle_through_dict\n    for o in gc.get_objects():\n             ^^^^^^^^^^^^^^^^\nAttributeError: module 'gc' has no attribute 'get_objects'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_debug_expressions_are_raw_strings self.assertEqual(f<str>, <str>\\\\\\\\N{OX}\\<str>) AssertionError",
+      "count": 1,
+      "exampleIds": [
+        "test_fstring.TestCase.test_debug_expressions_are_raw_strings"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_fstring.py\", line 1769, in test_debug_expressions_are_raw_strings\n    self.assertEqual(f'{b\"\\N{OX}\"=}', 'b\"\\\\N{OX}\"=b\\'\\\\\\\\N{OX}\\'')\nAssertionError: 'b\"🐂\"=b\\'\\\\\\\\N{OX}\\'' != 'b\"\\\\N{OX}\"=b\\'\\\\\\\\N{OX}\\''\n- b\"🐂\"=b'\\\\N{OX}'\n?   ^\n+ b\"\\N{OX}\"=b'\\\\N{OX}'\n?   ^^^^^^"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_debug_in_file with temp_cwd(): File <str>, line <n>, in __enter__ return next(self.gen) ^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_fstring.TestCase.test_debug_in_file"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_fstring.py\", line 1862, in test_debug_in_file\n    with temp_cwd():\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 537, in temp_cwd\n    with temp_dir(path=name, quiet=quiet) as temp_path:\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 475, in temp_dir\n    os.mkdir(path)\nPermissionError: [Errno 13] Permission denied: 'tempcwd'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_deepcopy_weakkeydict self.assertEqual(len(v), <n>) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_copy.TestCopy.test_deepcopy_weakkeydict"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 864, in test_deepcopy_weakkeydict\n    self.assertEqual(len(v), 1)\nAssertionError: 2 != 1"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_deepcopy_weakvaluedict self.assertEqual(len(v), <n>) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_copy.TestCopy.test_deepcopy_weakvaluedict"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_copy.py\", line 888, in test_deepcopy_weakvaluedict\n    self.assertEqual(len(v), 1)\nAssertionError: 2 != 1"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_delete_hook self.assertEqual(log, [<n>]) AssertionError: Lists differ: [] != [<n>] Second list ",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_delete_hook"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 3632, in test_delete_hook\n    self.assertEqual(log, [1])\nAssertionError: Lists differ: [] != [1]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n1\n\n- []\n+ [1]\n?  +"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_descrdoc check(FileIO.closed, <str>) # getset descriptor ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_descrdoc"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 3248, in test_descrdoc\n    check(FileIO.closed, \"True if the file is closed\") # getset descriptor\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 3247, in check\n    self.assertEqual(descr.__doc__, what)\nAssertionError: None != 'True if the file is closed'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_ensure_ascii_default infile = self._create_infile(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_ensure_ascii_default"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 213, in test_ensure_ascii_default\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_error_parenthesis self._check_error(f<str>, f<str>) File <str>, line <n>, in _check_error self.",
+      "count": 1,
+      "exampleIds": [
+        "test_syntax.SyntaxTestCase.test_error_parenthesis"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2376, in test_error_parenthesis\n    self._check_error(f\"a = {paren} 1, 2, 3\\nb=3\", f\"\\\\{paren}' was never closed\")\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2040, in _check_error\n    self.fail(\"SyntaxError did not contain %r\" % (errtext,))\nAssertionError: SyntaxError did not contain \"\\\\(' was never closed\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_exception_groups_feature_version with self.assertRaises(SyntaxError): AssertionError: SyntaxErr",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.AST_Tests.test_exception_groups_feature_version"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 845, in test_exception_groups_feature_version\n    with self.assertRaises(SyntaxError):\nAssertionError: SyntaxError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_fileclosed os.remove(os_helper.TESTFN) FileNotFoundError: [Errno <n>] No such file or directory",
+      "count": 1,
+      "exampleIds": [
+        "test_bool.BoolTest.test_fileclosed"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bool.py\", line 261, in test_fileclosed\n    os.remove(os_helper.TESTFN)\nFileNotFoundError: [Errno 2] No such file or directory: '@test_31_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_filename_in_syntaxerror with temp_cwd() as cwd: File <str>, line <n>, in __enter__ return next(",
+      "count": 1,
+      "exampleIds": [
+        "test_fstring.TestCase.test_filename_in_syntaxerror"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_fstring.py\", line 1614, in test_filename_in_syntaxerror\n    with temp_cwd() as cwd:\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 537, in temp_cwd\n    with temp_dir(path=name, quiet=quiet) as temp_path:\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 475, in temp_dir\n    os.mkdir(path)\nPermissionError: [Errno 13] Permission denied: 'tempcwd'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_finalize self.assertEqual(f(), None) AssertionError: <n> != None",
+      "count": 1,
+      "exampleIds": [
+        "test_weakref.FinalizeTestCase.test_finalize"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2022, in test_finalize\n    self.assertEqual(f(), None)\nAssertionError: 199 != None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_frame_resurrect self.assertTrue(frame) ^^^^^ UnboundLocalError: local variable <str> referenced",
+      "count": 1,
+      "exampleIds": [
+        "test_generators.FinalizationTest.test_frame_resurrect"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_generators.py\", line 66, in test_frame_resurrect\n    self.assertTrue(frame)\n                    ^^^^^\nUnboundLocalError: local variable 'frame' referenced before assignment"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, dict) File <str>, line <n>,",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_free_after_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 1285, in test_free_after_iterating\n    support.check_free_after_iterating(self, iter, dict)\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1830, in check_free_after_iterating\n    test.assertTrue(done)\nAssertionError: False is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_from_format self.assertEqual(PyBytes_FromFormat(b<str>, c_int(<n>)), AssertionError: b<str> != ",
+      "count": 1,
+      "exampleIds": [
+        "test_bytes.BytesTest.test_from_format"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 1146, in test_from_format\n    self.assertEqual(PyBytes_FromFormat(b'c=%c', c_int(255)),\nAssertionError: b'c=\\xc3\\xbf' != b'c=\\xff'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_generator_del_cleanup_exc_state self._check_generator_cleanup_exc_state(do_del) File <str>, lin",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_generator_del_cleanup_exc_state"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1065, in test_generator_del_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_del)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x7953ecaf> is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_generator_next_cleanup_exc_state self._check_generator_cleanup_exc_state(do_next) File <str>, l",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_generator_next_cleanup_exc_state"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1075, in test_generator_next_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_next)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x7ca83404> is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_generator_send_cleanup_exc_state self._check_generator_cleanup_exc_state(do_send) File <str>, l",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_generator_send_cleanup_exc_state"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1085, in test_generator_send_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_send)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x5f9c000d> is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_generator_throw_cleanup_exc_state self._check_generator_cleanup_exc_state(do_throw) File <str>,",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_generator_throw_cleanup_exc_state"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1055, in test_generator_throw_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_throw)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x51dd9c93> is not None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_get_only for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ A",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestErrorHandlingC.test_get_only"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 369, in test_get_only\n    for f in (self.module.bisect_left, self.module.bisect_right,\n              ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_gh129093 self.assertEqual(f<str>, <str>) AssertionError: <str> != <str> - 1True + <n>!=<n>=True",
+      "count": 1,
+      "exampleIds": [
+        "test_fstring.TestCase.test_gh129093"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_fstring.py\", line 1889, in test_gh129093\n    self.assertEqual(f'{1!=2=}', '1!=2=True')\nAssertionError: '1True' != '1!=2=True'\n- 1True\n+ 1!=2=True\n?  ++++"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_grades result = [grade(score) for score in [<n>, <n>, <n>, <n>, <n>, <n>, <n>]] ^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestDocExampleC.test_grades"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 398, in test_grades\n    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 398, in <listcomp>\n    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]\n              ^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 395, in grade\n    i = self.module.bisect(breakpoints, score)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_handle_frame_object_in_creation thresholds = gc.get_threshold() ^^^^^^^^^^^^^^^^^^ AttributeErr",
+      "count": 1,
+      "exampleIds": [
+        "test_generators.GeneratorTest.test_handle_frame_object_in_creation"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_generators.py\", line 188, in test_handle_frame_object_in_creation\n    thresholds = gc.get_threshold()\n                 ^^^^^^^^^^^^^^^^^^\nAttributeError: module 'gc' has no attribute 'get_threshold'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_hash_exact check_one_exact((), <n>, <n>) File <str>, line <n>, in check_one_exact self.fail(msg",
+      "count": 1,
+      "exampleIds": [
+        "test_tuple.TupleTest.test_hash_exact"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_tuple.py\", line 115, in test_hash_exact\n    check_one_exact((), 750394483, 5740354900026072187)\n  File \"/work/suites/cpython/Lib/test/test_tuple.py\", line 113, in check_one_exact\n    self.fail(msg)\nAssertionError: FAIL hash(()) == 3527539 != 5740354900026072187"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_hash_nan self.assertEqual(hash(value), object.__hash__(value)) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_float.GeneralFloatCases.test_hash_nan"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_float.py\", line 610, in test_hash_nan\n    self.assertEqual(hash(value), object.__hash__(value))\nAssertionError: 0 != 2146959360"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_help_flag rc, out, err = assert_python_ok(<str>, <str>, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_help_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 151, in test_help_flag\n    rc, out, err = assert_python_ok('-m', 'json.tool', '-h')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_indent process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_indent"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 173, in test_indent\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_outfile infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_infile_outfile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 125, in test_infile_outfile\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_infile_stdout infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _cr",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_infile_stdout"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 103, in test_infile_stdout\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_intersection self.assertEqual(len(i), len(self.items2)) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_intersection"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 107, in test_intersection\n    self.assertEqual(len(i), len(self.items2))\nAssertionError: 3 != 2"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_invalid_delattr self.assertRaisesRegex(TE, msg, delattr, exc, <str>) AssertionError: <str> does",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_invalid_delattr"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 671, in test_invalid_delattr\n    self.assertRaisesRegex(TE, msg, delattr, exc, 'args')\nAssertionError: \"may not be deleted\" does not match \"can't delete BaseException.args\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_invalid_line_continuation_error_position self._check_error(r<str>, File <str>, line <n>, in _ch",
+      "count": 1,
+      "exampleIds": [
+        "test_syntax.SyntaxTestCase.test_invalid_line_continuation_error_position"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2353, in test_invalid_line_continuation_error_position\n    self._check_error(r\"a = 3 \\ 4\",\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2045, in _check_error\n    self.assertEqual(err.offset, offset)\nAssertionError: 9 != 8"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_invisible_characters self._check_error(<str>, <str>) File <str>, line <n>, in _check_error self",
+      "count": 1,
+      "exampleIds": [
+        "test_syntax.SyntaxTestCase.test_invisible_characters"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2404, in test_invisible_characters\n    self._check_error('print\\x17(\"Hello\")', \"invalid non-printable character\")\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2040, in _check_error\n    self.fail(\"SyntaxError did not contain %r\" % (errtext,))\nAssertionError: SyntaxError did not contain 'invalid non-printable character'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_jsonlines process = subprocess.run(args, input=<loc>onlines_raw, capture_output=True, text=True",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_jsonlines"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 146, in test_jsonlines\n    process = subprocess.run(args, input=self.jsonlines_raw, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_jump_threading for inst in dis.get_instructions(f): ^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n",
+      "count": 1,
+      "exampleIds": [
+        "test_patma.TestSourceLocations.test_jump_threading"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_patma.py\", line 3102, in test_jump_threading\n    for inst in dis.get_instructions(f):\n                ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/dis.py\", line 356, in get_instructions\n    raise NotImplementedError(\"dis module is not supported on GraalPy\")\nNotImplementedError: dis module is not supported on GraalPy"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_keep_buffer with self.assertRaises(BufferError): AssertionError: BufferError not raised",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_keep_buffer"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 71, in test_keep_buffer\n    with self.assertRaises(BufferError):\nAssertionError: BufferError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_keywords_in_subclass u = subclass_with_init([<n>, <n>], newarg=<n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_tuple.TupleTest.test_keywords_in_subclass"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_tuple.py\", line 57, in test_keywords_in_subclass\n    u = subclass_with_init([1, 2], newarg=3)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: tuple() got an unexpected keyword argument 'newarg'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_keywords_in_subclass u = subclass_with_init(<n>, newarg=<n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ",
+      "count": 1,
+      "exampleIds": [
+        "test_float.GeneralFloatCases.test_keywords_in_subclass"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_float.py\", line 266, in test_keywords_in_subclass\n    u = subclass_with_init(2.5, newarg=3)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: float() got an unexpected keyword argument 'newarg'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_keywords_in_subclass u = subclass_with_new([<n>, <n>], newarg=<n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_list.ListTest.test_keywords_in_subclass"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_list.py\", line 72, in test_keywords_in_subclass\n    u = subclass_with_new([1, 2], newarg=3)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: list() got an unexpected keyword argument 'newarg'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_len self.assertEqual(len(self.fs), <n>) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_len"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 60, in test_len\n    self.assertEqual(len(self.fs), 0)\nAssertionError: 1 != 0"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_len_cycles self.assertIn(n1, (<n>, <n>)) AssertionError: <n> not found in (<n>, <n>)",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_len_cycles"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 423, in test_len_cycles\n    self.assertIn(n1, (0, 1))\nAssertionError: 20 not found in (0, 1)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_len_only for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ A",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestErrorHandlingC.test_len_only"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 364, in test_len_only\n    for f in (self.module.bisect_left, self.module.bisect_right,\n              ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_len_race self.addCleanup(gc.set_threshold, *gc.get_threshold()) ^^^^^^^^^^^^^^^^ AttributeError",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_len_race"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 428, in test_len_race\n    self.addCleanup(gc.set_threshold, *gc.get_threshold())\n                    ^^^^^^^^^^^^^^^^\nAttributeError: module 'gc' has no attribute 'set_threshold'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_list_index_modifing_operand with self.assertRaises(ValueError): AssertionError: ValueError not ",
+      "count": 1,
+      "exampleIds": [
+        "test_list.ListTest.test_list_index_modifing_operand"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_list.py\", line 254, in test_list_index_modifing_operand\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_listDerived self.module.insort_left(lst, <n>) AttributeError: <str> object has no attribute <st",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestInsortC.test_listDerived"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 325, in test_listDerived\n    self.module.insort_left(lst, 10)\nAttributeError: 'NoneType' object has no attribute 'insort_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_literal_eval_str_int_limit with self.assertRaises(SyntaxError) as err_ctx: AssertionError: Synt",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.ASTHelpers_Test.test_literal_eval_str_int_limit"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 1301, in test_literal_eval_str_int_limit\n    with self.assertRaises(SyntaxError) as err_ctx:\nAssertionError: SyntaxError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_locale_caching self.check_en_US_iso88591() File <str>, line <n>, in check_en_US_iso88591 self.a",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_locale_caching"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2130, in test_locale_caching\n    self.check_en_US_iso88591()\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2139, in check_en_US_iso88591\n    self.assertTrue(re.match(b'\\xc5', b'\\xe5', re.L|re.I))\nAssertionError: None is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_locale_compiled self.assertTrue(p.match(b<str>)) AssertionError: None is not true",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_locale_compiled"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2175, in test_locale_compiled\n    self.assertTrue(p.match(b'\\xe5\\xe5'))\nAssertionError: None is not true"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_memory_error_in_subinterp rc, _, err = script_helper.assert_python_ok(<str>, code) ^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.test_memory_error_in_subinterp"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1826, in test_memory_error_in_subinterp\n    rc, _, err = script_helper.assert_python_ok(\"-c\", code)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 408, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 389, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_method_descriptor_flag self.assertTrue(_testcapi.MethodDescriptorBase.__flags__ & Py_TPFLAGS_ME",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_method_descriptor_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 630, in test_method_descriptor_flag\n    self.assertTrue(_testcapi.MethodDescriptorBase.__flags__ & Py_TPFLAGS_METHOD_DESCRIPTOR)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'MethodDescriptorBase'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_multiline_compiler_error_points_to_the_end self._check_error( File <str>, line <n>, in _check_e",
+      "count": 1,
+      "exampleIds": [
+        "test_syntax.SyntaxTestCase.test_multiline_compiler_error_points_to_the_end"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2426, in test_multiline_compiler_error_points_to_the_end\n    self._check_error(\n  File \"/work/suites/cpython/Lib/test/test_syntax.py\", line 2043, in _check_error\n    self.assertEqual(err.lineno, lineno)\nAssertionError: 1 != 3"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_mutating_iteration_delete with self.assertRaises(RuntimeError): AssertionError: RuntimeError no",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_mutating_iteration_delete"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 530, in test_mutating_iteration_delete\n    with self.assertRaises(RuntimeError):\nAssertionError: RuntimeError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_mutating_iteration_delete_over_items with self.assertRaises(RuntimeError): AssertionError: Runt",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_mutating_iteration_delete_over_items"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 548, in test_mutating_iteration_delete_over_items\n    with self.assertRaises(RuntimeError):\nAssertionError: RuntimeError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_mutating_iteration_delete_over_values with self.assertRaises(RuntimeError): AssertionError: Run",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_mutating_iteration_delete_over_values"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 539, in test_mutating_iteration_delete_over_values\n    with self.assertRaises(RuntimeError):\nAssertionError: RuntimeError not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_new_builtins_issue_43102 self.assertEqual(new_func.__globals__[<str>], {}) AssertionError: {<st",
+      "count": 1,
+      "exampleIds": [
+        "test_collections.TestNamedTuple.test_new_builtins_issue_43102"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_collections.py\", line 702, in test_new_builtins_issue_43102\n    self.assertEqual(new_func.__globals__['__builtins__'], {})\nAssertionError: {'__name__': 'builtins', '__doc__': None, [5808 chars]or'>} != {}\nDiff is 6319 characters long. Set self.maxDiff to None to see it."
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_ensure_ascii_flag infile = self._create_infile(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_no_ensure_ascii_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 202, in test_no_ensure_ascii_flag\n    infile = self._create_infile('{\"key\":\"💩\"}')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_no_indent process = subprocess.run(args, input=input_, capture_output=True, text=True, check=Tr",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_no_indent"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 181, in test_no_indent\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_non_ascii_infile infile = self._create_infile(data) ^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_non_ascii_infile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 117, in test_non_ascii_infile\n    infile = self._create_infile(data)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_non_sequence for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestErrorHandlingC.test_non_sequence"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 359, in test_non_sequence\n    for f in (self.module.bisect_left, self.module.bisect_right,\n              ^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect_left'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_oob_indexing_dictiter_iternextitem self.assertRaises(RuntimeError, iter_and_mutate) AssertionEr",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_oob_indexing_dictiter_iternextitem"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 1396, in test_oob_indexing_dictiter_iternextitem\n    self.assertRaises(RuntimeError, iter_and_mutate)\nAssertionError: RuntimeError not raised by iter_and_mutate"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_order self.assertFalse(f2.alive) AssertionError: True is not false",
+      "count": 1,
+      "exampleIds": [
+        "test_weakref.FinalizeTestCase.test_order"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2080, in test_order\n    self.assertFalse(f2.alive)\nAssertionError: True is not false"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_possible_set_operations with self.assertWarnsRegex(FutureWarning, <str>) as w: AssertionError: ",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_possible_set_operations"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 1216, in test_possible_set_operations\n    with self.assertWarnsRegex(FutureWarning, 'Possible set difference') as w:\nAssertionError: FutureWarning not triggered"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_qualname self.assertEqual(type(d).__name__, n + <str>) AssertionError: <str> != <str> - getset_",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_qualname"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 4846, in test_qualname\n    self.assertEqual(type(d).__name__, n + '_descriptor')\nAssertionError: 'getset_descriptor' != 'member_descriptor'\n- getset_descriptor\n? ^ ^^ ^\n+ member_descriptor\n? ^ ^^ ^"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_range_constructor_error_messages with self.assertRaisesRegex( AssertionError: <str> does not ma",
+      "count": 1,
+      "exampleIds": [
+        "test_range.RangeTest.test_range_constructor_error_messages"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_range.py\", line 95, in test_range_constructor_error_messages\n    with self.assertRaisesRegex(\nAssertionError: \"range expected at least 1 argument, got 0\" does not match \"range() missing 1 required positional argument: 'a'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_recursive_repr self.assertRegex(repr(d), ^^^^^^^ RecursionError: maximum recursion depth exceed",
+      "count": 1,
+      "exampleIds": [
+        "test_defaultdict.TestDefaultDict.test_recursive_repr"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_defaultdict.py\", line 136, in test_recursive_repr\n    self.assertRegex(repr(d),\n                     ^^^^^^^\nRecursionError: maximum recursion depth exceeded"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_refcycle old_garbage = gc.garbage[:] ^^^^^^^^^^ AttributeError: module <str> has no attribute <",
+      "count": 1,
+      "exampleIds": [
+        "test_generators.FinalizationTest.test_refcycle"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_generators.py\", line 72, in test_refcycle\n    old_garbage = gc.garbage[:]\n                  ^^^^^^^^^^\nAttributeError: module 'gc' has no attribute 'garbage'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_regression_gh94675 p.start() File <str>, line <n>, in start self._popen = self._Popen(self) ^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_regression_gh94675"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 2621, in test_regression_gh94675\n    p.start()\n  File \"/work/suites/cpython/Lib/multiprocessing/process.py\", line 121, in start\n    self._popen = self._Popen(self)\n                  ^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/context.py\", line 224, in _Popen\n    return _default_context.get_context().Process._Popen(process_obj)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/context.py\", line 282, in _Popen\n    return Popen(process_obj)\n           ^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/multiprocessing/popen_fork.py\", line 19, in __init__\n    self._launch(process_obj)\n  File \"/work/suites/cpython/Lib/multiprocessing/popen_fork.py\", line 66, in _launch\n    self.pid = os.fork()\n               ^^^^^^^^^\nAttributeError: module 'os' has no attribute 'fork'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_repeat_id_preserving self.assertEqual(id(a), id(a * <n>)) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_bytes.BytesTest.test_repeat_id_preserving"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 1272, in test_repeat_id_preserving\n    self.assertEqual(id(a), id(a * 1))\nAssertionError: 1591 != 1599"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_repeat_minmax_overflow self.assertRaises(OverflowError, re.compile, r<str> % <n>**<n>) Assertio",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_repeat_minmax_overflow"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 1987, in test_repeat_minmax_overflow\n    self.assertRaises(OverflowError, re.compile, r\".{%d}\" % 2**128)\nAssertionError: OverflowError not raised by compile"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_resize_forbidden self.assertRaises(BufferError, resize, <n>) AssertionError: BufferError not ra",
+      "count": 1,
+      "exampleIds": [
+        "test_bytes.ByteArrayTest.test_resize_forbidden"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 1739, in test_resize_forbidden\n    self.assertRaises(BufferError, resize, 11)\nAssertionError: BufferError not raised by resize"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_scanstring self.assertEqual( AssertionError: Tuples differ: (<str>, <n>) != (<str>, <n>) First ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_scanstring.TestCScanstring.test_scanstring"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 8, in test_scanstring\n    self.assertEqual(\nAssertionError: Tuples differ: ('z𝄠x', 6) != ('z𝄠x', 5)\n\nFirst differing element 1:\n6\n5\n\n- ('z𝄠x', 6)\n?         ^\n\n+ ('z𝄠x', 5)\n?         ^"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_Set_hash_matches_frozenset self.assertEqual(hash(fs), Set._hash(fs), msg=s) AssertionError: <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_collections.TestCollectionABCs.test_Set_hash_matches_frozenset"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_collections.py\", line 1842, in test_Set_hash_matches_frozenset\n    self.assertEqual(hash(fs), Set._hash(fs), msg=s)\nAssertionError: 133146708735736 != -1572407560 : {}"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_setdefault_atomic self.assertEqual(hashed1.eq_count + hashed2.eq_count, <n>) AssertionError: <n",
+      "count": 1,
+      "exampleIds": [
+        "test_dict.DictTest.test_setdefault_atomic"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_dict.py\", line 435, in test_setdefault_atomic\n    self.assertEqual(hashed1.eq_count + hashed2.eq_count, 1)\nAssertionError: 2 != 1"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_setvectorcall from _testcapi import function_setvectorcall ImportError: cannot import name <str",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_setvectorcall"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 799, in test_setvectorcall\n    from _testcapi import function_setvectorcall\nImportError: cannot import name 'function_setvectorcall' from '_testcapi' (/opt/elide/lib/resources/python/python-home/lib/graalpy25.0/modules/_testcapi.graalpy250-312-native-aarch64-linux.so)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_setvectorcall_load_attr_specialization_deopt from _testcapi import function_setvectorcall Impor",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_setvectorcall_load_attr_specialization_deopt"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 826, in test_setvectorcall_load_attr_specialization_deopt\n    from _testcapi import function_setvectorcall\nImportError: cannot import name 'function_setvectorcall' from '_testcapi' (/opt/elide/lib/resources/python/python-home/lib/graalpy25.0/modules/_testcapi.graalpy250-312-native-aarch64-linux.so)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_setvectorcall_load_attr_specialization_skip from _testcapi import function_setvectorcall Import",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_setvectorcall_load_attr_specialization_skip"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 810, in test_setvectorcall_load_attr_specialization_skip\n    from _testcapi import function_setvectorcall\nImportError: cannot import name 'function_setvectorcall' from '_testcapi' (/opt/elide/lib/resources/python/python-home/lib/graalpy25.0/modules/_testcapi.graalpy250-312-native-aarch64-linux.so)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_slots self.assertEqual(Counted.counter, <n>) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_descr.ClassPropertiesAndMethods.test_slots"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 1246, in test_slots\n    self.assertEqual(Counted.counter, 0)\nAssertionError: 3 != 0"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_sort_keys_flag infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_sort_keys_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 157, in test_sort_keys_flag\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_source_segment_padded self.assertEqual( AssertionError: <str> != <str> def fun(self) -> None: -",
+      "count": 1,
+      "exampleIds": [
+        "test_ast.test_ast.EndPositionTests.test_source_segment_padded"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 2462, in test_source_segment_padded\n    self.assertEqual(\nAssertionError: '    def fun(self) -> None:\\n        \"ЖЖЖ' != '    def fun(self) -> None:\\n        \"ЖЖЖЖЖ\"'\n      def fun(self) -> None:\n-         \"ЖЖЖ\n+         \"ЖЖЖЖЖ\"\n?             +++"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_stdin_stdout process = subprocess.run(args, input=self.data, capture_output=True, text=True, ch",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_stdin_stdout"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 91, in test_stdin_stdout\n    process = subprocess.run(args, input=self.data, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_surrogates assertScan(<str>, <str>) File <str>, line <n>, in assertScan self.assertEqual(scanst",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_scanstring.TestCScanstring.test_surrogates"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 98, in test_surrogates\n    assertScan('\"z\\\\ud834\\udd20x12345\"', 'z\\ud834\\udd20x12345')\n  File \"/work/suites/cpython/Lib/test/test_json/test_scanstring.py\", line 91, in assertScan\n    self.assertEqual(scanstring(given, 1, True),\nAssertionError: Tuples differ: ('z𝄠x12345', 16) != ('z\\ud834\\udd20x12345', 16)\n\nFirst differing element 0:\n'z𝄠x12345'\n'z\\ud834\\udd20x12345'\n\n- ('z𝄠x12345', 16)\n+ ('z\\ud834\\udd20x12345', 16)"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_symbolic_groups_errors self.checkPatternError(b<str>, File <str>, line <n>, in checkPatternErro",
+      "count": 1,
+      "exampleIds": [
+        "test_re.ReTests.test_symbolic_groups_errors"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 287, in test_symbolic_groups_errors\n    self.checkPatternError(b'(?P<\\xc2\\xb5>x)',\n  File \"/work/suites/cpython/Lib/test/test_re.py\", line 50, in checkPatternError\n    with self.assertRaises(re.error) as cm:\nAssertionError: error not raised"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_symmetric_difference self.assertEqual(len(i), len(self.items) + len(self.items2)) AssertionErro",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_symmetric_difference"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 141, in test_symmetric_difference\n    self.assertEqual(len(i), len(self.items) + len(self.items2))\nAssertionError: 6 != 5"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_syntax_warning_infinite_recursion_in_file with temp_cwd(): File <str>, line <n>, in __enter__ r",
+      "count": 1,
+      "exampleIds": [
+        "test_fstring.TestCase.test_syntax_warning_infinite_recursion_in_file"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_fstring.py\", line 1877, in test_syntax_warning_infinite_recursion_in_file\n    with temp_cwd():\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 537, in temp_cwd\n    with temp_dir(path=name, quiet=quiet) as temp_path:\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 475, in temp_dir\n    os.mkdir(path)\nPermissionError: [Errno 13] Permission denied: 'tempcwd'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_tab process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True) ^^",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_tab"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 189, in test_tab\n    process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_union self.assertEqual(len(u), len(self.items) + len(self.items2)) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_union"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 87, in test_union\n    self.assertEqual(len(u), len(self.items) + len(self.items2))\nAssertionError: 6 != 5"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vectorcall (_testcapi.MethodDescriptorBase(), (<n>,), {}, True), ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_vectorcall"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 738, in test_vectorcall\n    (_testcapi.MethodDescriptorBase(), (0,), {}, True),\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'MethodDescriptorBase'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vectorcall_flag self.assertTrue(_testcapi.MethodDescriptorBase.__flags__ & Py_TPFLAGS_HAVE_VECT",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_vectorcall_flag"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 640, in test_vectorcall_flag\n    self.assertTrue(_testcapi.MethodDescriptorBase.__flags__ & Py_TPFLAGS_HAVE_VECTORCALL)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'MethodDescriptorBase'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vectorcall_override f = _testcapi.MethodDescriptorNopGet() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ A",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_vectorcall_override"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 667, in test_vectorcall_override\n    f = _testcapi.MethodDescriptorNopGet()\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'MethodDescriptorNopGet'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vectorcall_override_on_mutable_class TestType = _testcapi.make_vectorcall_class() ^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_vectorcall_override_on_mutable_class"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 672, in test_vectorcall_override_on_mutable_class\n    TestType = _testcapi.make_vectorcall_class()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'make_vectorcall_class'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vectorcall_override_with_subclass SuperType = _testcapi.make_vectorcall_class() ^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_call.TestPEP590.test_vectorcall_override_with_subclass"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_call.py\", line 682, in test_vectorcall_override_with_subclass\n    SuperType = _testcapi.make_vectorcall_class()\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module '_testcapi' has no attribute 'make_vectorcall_class'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_vsBuiltinSort f = self.module.insort_right ^^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: <str> objec",
+      "count": 1,
+      "exampleIds": [
+        "test_bisect.TestInsortC.test_vsBuiltinSort"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 311, in test_vsBuiltinSort\n    f = self.module.insort_right\n        ^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'insort_right'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_weak_destroy_and_mutate_while_iterating self.assertNotIn(u, s) AssertionError: <str> unexpected",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_weak_destroy_and_mutate_while_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 391, in test_weak_destroy_and_mutate_while_iterating\n    self.assertNotIn(u, s)\nAssertionError: 'Z' unexpectedly found in {<weakref at 1081320323; to 'UserString' at 1660792887>, <weakref at 232249741; to 'UserString' at 711638693>, <weakref at 1142161741; to 'UserString' at 223796600>, <weakref at 1122627987; to 'UserString' at 573371406>, <weakref at 821550600; to 'UserString' at 401579007>, <weakref at 1280628223; to 'UserString' at 498178593>, <weakref at 1763695718; to 'UserString' at 811790103>, <weakref at 1479125297; to 'UserString' at 791839612>, <weakref at 1791768244; to 'UserString' at 189633880>, <weakref at 97079954; to 'UserString' at 1322936565>, <weakref at 1151137483; to 'UserString' at 1406526522>, <weakref at 1983243758; to 'UserString' at 1205385778>, <weakref at 1003046674; to 'UserString' at 87896533>, <weakref at 121287640; to 'UserString' at 345777745>, <weakref at 434085163; to 'UserString' at 1666116157>, <weakref at 1405594895; to 'UserString' at 426230053>, <weakref at 791065449; to 'UserString' at 1075536785>, <weakref at 942580106; to 'UserString' at 460326311>, <weakref at 620452354; to 'UserString' at 1823723061>, <weakref at 1807827033; to 'UserString' at 43277491>, <weakref at 862541212; to 'UserString' at 1840234885>, <weakref at 1287941058; to 'UserString' at 78439903>, <weakref at 1517781116; to 'UserString' at 2116062351>, <weakref at 1029968500; to 'UserString' at 1695134541>, <weakref at 1135074734; to 'UserString' at 2040061889>, <weakref at 271353411; to 'UserString' at 105262913>, <weakref at 1698359433; to 'UserString' at 273220430>, <weakref at 447284306; to 'UserString' at 1397488041>, <weakref at 1094311115; to 'UserString' at 1673518973>, <weakref at 1631152645; to 'UserString' at 679281853>, <weakref at 167939313; to 'UserString' at 308069193>, <weakref at 380151031; to 'UserString' at 1117010926>, <weakref at 50523896; to 'UserString' at 177090807>, <weakref at 1065432672; to 'UserString' at 705332188>, <weakref at 1433146718; to 'UserString' at 822509704>, <weakref at 1538435564; to 'UserString' at 765126107>, <weakref at 2028455837; to 'UserString' at 1177467216>, <weakref at 1445517682; to 'UserString' at 143580871>, <weakref at 871496364; to 'UserString' at 1711585171>, <weakref at 732871709; to 'UserString' at 780259035>, <weakref at 509348748; to 'UserString' at 147508296>, <weakref at 1725848774; to 'UserString' at 673912259>, <weakref at 1978773657; to 'UserString' at 1847631881>, <weakref at 390455493; to 'UserString' at 942328904>, <weakref at 1972662554; to 'UserString' at 1351278444>, <weakref at 297540489; to 'UserString' at 1177479719>, <weakref at 1653608209; to 'UserString' at 1395425821>, <weakref at 1413241698; to 'UserString' at 1655039937>, <weakref at 727154821; to 'UserString' at 1854406625>, <weakref at 1681054619; to 'UserString' at 808997946>, <weakref at 917794035; to 'UserString' at 1176475857>, <weakref at 1350260444; to 'UserString' at 736329358>}"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_weak_destroy_while_iterating self.assertEqual(len(s), len(items)) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_weakset.TestWeakSet.test_weak_destroy_while_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakset.py\", line 367, in test_weak_destroy_while_iterating\n    self.assertEqual(len(s), len(items))\nAssertionError: 3 != 2"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_weakref p = weakref.proxy(d) ^^^^^^^^^^^^^^^^ TypeError: cannot create weak reference to <str> ",
+      "count": 1,
+      "exampleIds": [
+        "test_deque.TestSubclass.test_weakref"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_deque.py\", line 866, in test_weakref\n    p = weakref.proxy(d)\n        ^^^^^^^^^^^^^^^^\nTypeError: cannot create weak reference to 'collections.deque' object"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_writing_in_place infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in ",
+      "count": 1,
+      "exampleIds": [
+        "test_json.test_tool.TestTool.test_writing_in_place"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 136, in test_writing_in_place\n    infile = self._create_infile()\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 97, in _create_infile\n    with open(infile, \"w\", encoding=\"utf-8\") as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_29_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testCbrt self.assertRaises(TypeError, math.cbrt) ^^^^^^^^^ AttributeError: module <str> has no attri",
+      "count": 1,
+      "exampleIds": [
+        "test_math.MathTests.testCbrt"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_math.py\", line 390, in testCbrt\n    self.assertRaises(TypeError, math.cbrt)\n                                 ^^^^^^^^^\nAttributeError: module 'math' has no attribute 'cbrt'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testDel self.assertEqual([<str>], x) AssertionError: Lists differ: [<str>] != [] First list contains",
+      "count": 1,
+      "exampleIds": [
+        "test_class.ClassTests.testDel"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_class.py\", line 472, in testDel\n    self.assertEqual([\"crab people, crab people\"], x)\nAssertionError: Lists differ: ['crab people, crab people'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'crab people, crab people'\n\n- ['crab people, crab people']\n+ []"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testExp2 self.assertRaises(TypeError, math.exp2) ^^^^^^^^^ AttributeError: module <str> has no attri",
+      "count": 1,
+      "exampleIds": [
+        "test_math.MathTests.testExp2"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_math.py\", line 520, in testExp2\n    self.assertRaises(TypeError, math.exp2)\n                                 ^^^^^^^^^\nAttributeError: module 'math' has no attribute 'exp2'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testLeaks self.assertEqual(Foo.count, <n>) AssertionError: <n> != <n>",
+      "count": 1,
+      "exampleIds": [
+        "test_scope.ScopeTests.testLeaks"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_scope.py\", line 478, in testLeaks\n    self.assertEqual(Foo.count, 0)\nAssertionError: 100 != 0"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testObjectAttributeAccessErrorMessages with self.assertRaisesRegex(AttributeError, error_msg): Asser",
+      "count": 1,
+      "exampleIds": [
+        "test_class.ClassTests.testObjectAttributeAccessErrorMessages"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_class.py\", line 698, in testObjectAttributeAccessErrorMessages\n    with self.assertRaisesRegex(AttributeError, error_msg):\nAssertionError: \"'A' object has no attribute 'x'\" does not match \"A has no attribute 'x'\""
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testRaising fp = open(TESTFN, <str>, encoding=<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionE",
+      "count": 1,
+      "exampleIds": [
+        "test_exceptions.ExceptionTests.testRaising"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 65, in testRaising\n    fp = open(TESTFN, 'w', encoding=\"utf-8\")\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_43_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in testTypeAttributeAccessErrorMessages with self.assertRaisesRegex(AttributeError, error_msg): Asserti",
+      "count": 1,
+      "exampleIds": [
+        "test_class.ClassTests.testTypeAttributeAccessErrorMessages"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_class.py\", line 683, in testTypeAttributeAccessErrorMessages\n    with self.assertRaisesRegex(AttributeError, error_msg):\nAssertionError: \"type object 'A' has no attribute 'x'\" does not match \"'A' object has no attribute 'x'\""
+      ]
+    }
+  ],
+  "byFeature": []
+}
