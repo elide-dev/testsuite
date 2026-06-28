@@ -42,6 +42,7 @@ test("loads cpython-core workload from registry.toml", () => {
   expect(py!.adapter).toBe("cpython-core");
   expect(py!.path).toBe("suites/cpython");
   expect(py!.settings.manifest).toBe("manifests/cpython-core.toml");
+  expect(py!.settings.elideRunArgs).toEqual(["--sandbox", "--allow-read", "--allow-write"]);
 });
 
 test("loads javac-jtreg workload from registry.toml", () => {

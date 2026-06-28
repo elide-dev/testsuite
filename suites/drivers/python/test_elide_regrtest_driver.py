@@ -1,5 +1,7 @@
 import io
+import importlib
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -29,6 +31,35 @@ RealFakeReTest.__module__ = "test.test_re"
 
 
 class DriverNormalizationTests(unittest.TestCase):
+    def test_install_cpython_test_package_does_not_add_cpython_lib_to_sys_path(self):
+        with tempfile.TemporaryDirectory() as root:
+            root_path = Path(root)
+            test_dir = root_path / "Lib" / "test"
+            test_dir.mkdir(parents=True)
+            (test_dir / "__init__.py").write_text("ORIGIN = 'cpython-tests'\n")
+            (test_dir / "test_sample.py").write_text("VALUE = 42\n")
+
+            saved_path = list(sys.path)
+            saved_modules = {
+                name: sys.modules[name]
+                for name in list(sys.modules)
+                if name == "test" or name.startswith("test.")
+            }
+            for name in saved_modules:
+                sys.modules.pop(name, None)
+
+            try:
+                driver.install_cpython_test_package(root)
+                self.assertNotIn(str(root_path / "Lib"), sys.path)
+                self.assertEqual(importlib.import_module("test").ORIGIN, "cpython-tests")
+                self.assertEqual(importlib.import_module("test.test_sample").VALUE, 42)
+            finally:
+                sys.path[:] = saved_path
+                for name in list(sys.modules):
+                    if name == "test" or name.startswith("test."):
+                        sys.modules.pop(name, None)
+                sys.modules.update(saved_modules)
+
     def test_normalize_unittest_id_strips_test_package_prefix(self):
         self.assertEqual(driver.normalize_unittest_id("test.test_re"), "test_re")
         self.assertEqual(

@@ -1,7 +1,9 @@
 import argparse
 import fnmatch
 import importlib
+import importlib.util
 import json
+import os
 import sys
 import time
 import unittest
@@ -59,6 +61,27 @@ def filter_suite(suite, skip_patterns):
     return filtered, skipped
 
 
+def install_cpython_test_package(cpython_root):
+    test_dir = os.path.join(cpython_root, "Lib", "test")
+    if not os.path.isdir(test_dir):
+        raise FileNotFoundError("CPython test package not found: " + test_dir)
+
+    existing = sys.modules.get("test")
+    if existing is not None and hasattr(existing, "__path__"):
+        paths = list(existing.__path__)
+        if test_dir not in paths:
+            existing.__path__ = [test_dir] + paths
+        return
+
+    init_file = os.path.join(test_dir, "__init__.py")
+    spec = importlib.util.spec_from_file_location("test", init_file, submodule_search_locations=[test_dir])
+    if spec is None or spec.loader is None:
+        raise ImportError("Unable to load CPython test package from " + test_dir)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["test"] = module
+    spec.loader.exec_module(module)
+
+
 class JsonResult(unittest.TextTestResult):
     def _case_id(self, test):
         return case_id(test)
@@ -100,18 +123,26 @@ def main():
     parser.add_argument("--progress-stderr", action="store_true")
     parser.add_argument("modules", nargs="+")
     args = parser.parse_args()
-    sys.path.insert(0, args.cpython_root + "/Lib")
+    install_cpython_test_package(args.cpython_root)
 
     ok = True
     for module_name in args.modules:
         started = time.monotonic()
         try:
             if args.progress_stderr:
-                emit_progress("start " + module_name)
+                emit_progress("importing " + module_name)
             module = importlib.import_module("test." + module_name)
+            if args.progress_stderr:
+                emit_progress("loading " + module_name)
             suite = unittest.defaultTestLoader.loadTestsFromModule(module)
+            if args.progress_stderr:
+                emit_progress("filtering " + module_name)
             suite, _ = filter_suite(suite, args.skip)
+            if args.progress_stderr:
+                emit_progress("running " + module_name)
             result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0).run(suite)
+            if args.progress_stderr:
+                emit_progress("done " + module_name)
             ok = ok and result.wasSuccessful()
         except unittest.SkipTest as exc:
             emit({"module": module_name, "case": module_name, "status": "skip", "message": str(exc), "durationMs": int((time.monotonic() - started) * 1000)})

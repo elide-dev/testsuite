@@ -63,6 +63,13 @@ function progressEnabled(ctx: AdapterContext): boolean {
   return Boolean(ctx.log || ctx.verbose);
 }
 
+function configuredElideRunArgs(ctx: AdapterContext): string[] {
+  const raw = ctx.settings.elideRunArgs;
+  if (raw === undefined) return [];
+  if (!Array.isArray(raw)) throw new Error("cpython-core settings.elideRunArgs must be an array");
+  return raw.map(String).filter(Boolean);
+}
+
 function startProgress(ctx: AdapterContext, label: string, currentActivity: () => string | undefined): () => void {
   if (!progressEnabled(ctx)) return () => {};
   const started = performance.now();
@@ -89,6 +96,37 @@ function runnerErrorResult(message: string, durationMs = 0): TestResult {
       category: "runner",
       runner: "regrtest",
       subtest: "<runner>",
+    },
+  };
+}
+
+function moduleFromActivity(activity: string): string {
+  const phase = activity.match(/^(?:importing|loading|filtering|running) (test_[^\s]+)$/);
+  if (phase) return phase[1]!;
+  return activity.split(".")[0] ?? "<runner>";
+}
+
+function idFromActivity(activity: string): string {
+  const phase = activity.match(/^(importing|loading|filtering|running) (test_[^\s]+)$/);
+  if (phase) return `${phase[2]}::<${phase[1]}>`;
+  return activity;
+}
+
+function activityTimeoutResult(activity: string, durationMs: number, timeoutMs: number): TestResult {
+  const module = moduleFromActivity(activity);
+  const id = idFromActivity(activity);
+  return {
+    kind: "test",
+    id,
+    status: "error",
+    message: `CPython driver timed out after ${timeoutMs}ms while ${activity}`,
+    durationMs,
+    meta: {
+      suite: "cpython-core",
+      upstreamPath: module,
+      category: module,
+      runner: "regrtest",
+      subtest: id,
     },
   };
 }
@@ -139,9 +177,11 @@ async function* runCpythonShard(
 ): AsyncIterable<TestResult> {
   const started = performance.now();
   const progress = progressEnabled(ctx);
+  const elideRunArgs = configuredElideRunArgs(ctx);
   const proc = Bun.spawn([
     ctx.elidePath,
     "run",
+    ...elideRunArgs,
     driver,
     "--",
     "--cpython-root",
@@ -156,6 +196,12 @@ async function* runCpythonShard(
     stderr: "pipe",
   });
   let activeCase: string | undefined;
+  let activeSince = performance.now();
+  const setActiveCase = (activity: string | undefined): void => {
+    if (activity === activeCase) return;
+    activeCase = activity;
+    activeSince = performance.now();
+  };
   const stopProgress = startProgress(
     ctx,
     `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`,
@@ -163,15 +209,30 @@ async function* runCpythonShard(
   );
   const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
     ? (line) => {
-        if (line.startsWith("progress: ") || ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+        if (line.startsWith("progress: ")) {
+          const activity = line.slice("progress: ".length);
+          setActiveCase(activity.startsWith("done ") ? undefined : activity);
+          process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+          return;
+        }
+        if (ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
       }
     : undefined);
 
   let timedOut = false;
+  let timedOutActivity: string | undefined;
+  const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 60_000);
   const timer = setTimeout(() => {
     timedOut = true;
     proc.kill("SIGKILL");
   }, timeoutMs);
+  const caseTimer = setInterval(() => {
+    if (!activeCase) return;
+    if (performance.now() - activeSince < caseTimeoutMs) return;
+    timedOut = true;
+    timedOutActivity = activeCase;
+    proc.kill("SIGKILL");
+  }, Math.min(1_000, Math.max(100, caseTimeoutMs / 10)));
 
   let parsedCount = 0;
   let stdout = "";
@@ -180,12 +241,12 @@ async function* runCpythonShard(
   const emitLine = function* (line: string): Iterable<TestResult> {
     const record = parseCpythonRecord(line);
     if (record?.status === "running") {
-      activeCase = record.case || record.module;
+      setActiveCase(record.case || record.module);
       return;
     }
     const parsed = record ? parseCpythonLine(line) : null;
     if (!parsed) return;
-    if (activeCase === parsed.id) activeCase = undefined;
+    if (activeCase === parsed.id) setActiveCase(undefined);
     parsedCount++;
     yield remapCpythonSkip(parsed, skip);
   };
@@ -211,9 +272,14 @@ async function* runCpythonShard(
 
   const [exitCode, stderrText] = await Promise.all([proc.exited, stderr]);
   clearTimeout(timer);
+  clearInterval(caseTimer);
   stopProgress();
   const durationMs = Math.round(performance.now() - started);
   if (timedOut) {
+    if (timedOutActivity) {
+      yield activityTimeoutResult(timedOutActivity, durationMs, caseTimeoutMs);
+      return;
+    }
     yield runnerErrorResult("CPython driver timed out", durationMs);
     return;
   }

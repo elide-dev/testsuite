@@ -94,7 +94,7 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
     include: [],
     skipGlobs: ["test_re.ReTests.test_look_behind_overflow"],
     threads: 1,
-    settings: { manifest, timeoutMs: 5_000 },
+    settings: { manifest, timeoutMs: 5_000, elideRunArgs: ["--sandbox", "--allow-write"] },
     workspacePath: join(root, "workspace"),
   };
 
@@ -108,10 +108,15 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   ]);
   const argv = readFileSync(argsLog, "utf8").trim().split("\n");
   expect(argv).toContain("run");
+  expect(argv).toContain("--sandbox");
+  expect(argv).toContain("--allow-write");
   expect(argv).toContain("--");
   expect(argv).toContain("--cpython-root");
   expect(argv).toContain("--skip");
   expect(argv).toContain("test_re.ReTests.test_look_behind_overflow");
+  expect(argv.indexOf("--sandbox")).toBeGreaterThan(argv.indexOf("run"));
+  expect(argv.indexOf("--allow-write")).toBeGreaterThan(argv.indexOf("--sandbox"));
+  expect(argv.indexOf("--allow-write")).toBeLessThan(argv.indexOf("--"));
   expect(argv.indexOf("--skip")).toBeGreaterThan(argv.indexOf("--cpython-root"));
   expect(argv.indexOf("--skip")).toBeLessThan(argv.indexOf("test_re"));
 });
@@ -162,7 +167,8 @@ test("passes CPython progress flag and forwards progress stderr under --log", as
     `#!/usr/bin/env bash
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
-printf 'progress: start test_re\\n' >&2
+printf 'progress: importing test_re\\n' >&2
+sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"running"}\\n'
 sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
@@ -191,8 +197,9 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
 
   const argv = readFileSync(argsLog, "utf8").trim().split("\n");
   expect(argv).toContain("--progress-stderr");
-  expect(writes).toContain("progress: start test_re");
+  expect(writes).toContain("progress: importing test_re");
   expect(writes).toContain("progress: still running CPython shard");
+  expect(writes).toContain("active importing test_re");
   expect(writes).toContain("active test_re.ReTests.test_basic");
 });
 
@@ -243,6 +250,47 @@ printf '{"module":"test_re","case":"test_re.Streaming.test_second","status":"pas
     done: false,
   });
   await expect(iterator.next()).resolves.toEqual({ value: undefined, done: true });
+});
+
+test("times out the active CPython case instead of hanging the shard indefinitely", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+printf '{"module":"test_re","case":"test_re.Hangs.test_forever","status":"running"}\\n'
+exec sleep 5
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000, caseTimeoutMs: 50 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  const results = await collect(runCpythonCore(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "test_re.Hangs.test_forever",
+      status: "error",
+      message: expect.stringContaining("timed out after 50ms"),
+      meta: expect.objectContaining({
+        upstreamPath: "test_re",
+        subtest: "test_re.Hangs.test_forever",
+      }),
+    }),
+  ]);
 });
 
 test("shards CPython modules across worker processes", async () => {

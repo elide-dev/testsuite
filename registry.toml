@@ -19,6 +19,8 @@ path = "suites/cpython"
   [workload.settings]
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 600000
+  caseTimeoutMs = 60000
+  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
 
 [[workload]]
 id = "javac-jtreg"
