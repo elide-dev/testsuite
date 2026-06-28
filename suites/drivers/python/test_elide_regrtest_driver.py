@@ -2,6 +2,7 @@ import io
 import importlib
 import sys
 import tempfile
+import types
 import unittest
 from pathlib import Path
 
@@ -31,6 +32,52 @@ RealFakeReTest.__module__ = "test.test_re"
 
 
 class DriverNormalizationTests(unittest.TestCase):
+    def test_install_tracemalloc_compat_adds_missing_is_tracing(self):
+        saved = sys.modules.get("tracemalloc")
+        fake = types.ModuleType("tracemalloc")
+        sys.modules["tracemalloc"] = fake
+        try:
+            driver.install_tracemalloc_compat()
+
+            self.assertFalse(fake.is_tracing())
+        finally:
+            if saved is None:
+                sys.modules.pop("tracemalloc", None)
+            else:
+                sys.modules["tracemalloc"] = saved
+
+    def test_install_tracemalloc_compat_preserves_existing_is_tracing(self):
+        saved = sys.modules.get("tracemalloc")
+        fake = types.ModuleType("tracemalloc")
+        fake.is_tracing = lambda: True
+        sys.modules["tracemalloc"] = fake
+        try:
+            driver.install_tracemalloc_compat()
+
+            self.assertTrue(fake.is_tracing())
+        finally:
+            if saved is None:
+                sys.modules.pop("tracemalloc", None)
+            else:
+                sys.modules["tracemalloc"] = saved
+
+    def test_sanitize_cpython_lib_removes_preexisting_path(self):
+        with tempfile.TemporaryDirectory() as root:
+            root_path = Path(root)
+            lib_path = root_path / "Lib"
+            lib_path.mkdir()
+
+            saved_path = list(sys.path)
+            try:
+                sys.path.insert(0, str(lib_path))
+                self.assertIn(str(lib_path), sys.path)
+
+                driver.sanitize_cpython_lib_from_sys_path(root)
+
+                self.assertNotIn(str(lib_path), sys.path)
+            finally:
+                sys.path[:] = saved_path
+
     def test_install_cpython_test_package_does_not_add_cpython_lib_to_sys_path(self):
         with tempfile.TemporaryDirectory() as root:
             root_path = Path(root)

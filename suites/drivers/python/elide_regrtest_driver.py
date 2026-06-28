@@ -6,7 +6,69 @@ import json
 import os
 import sys
 import time
+
+
+def sanitize_cpython_lib_from_sys_path(cpython_root):
+    cpython_lib = os.path.realpath(os.path.abspath(os.path.join(cpython_root, "Lib")))
+    cwd = os.getcwd()
+    sys.path[:] = [
+        path
+        for path in sys.path
+        if os.path.realpath(os.path.abspath(path or cwd)) != cpython_lib
+    ]
+
+
+def sanitize_cpython_lib_from_argv():
+    for index, arg in enumerate(sys.argv):
+        if arg == "--cpython-root" and index + 1 < len(sys.argv):
+            sanitize_cpython_lib_from_sys_path(sys.argv[index + 1])
+            return
+        if arg.startswith("--cpython-root="):
+            sanitize_cpython_lib_from_sys_path(arg.split("=", 1)[1])
+            return
+
+
+sanitize_cpython_lib_from_argv()
+
 import unittest
+
+
+class CpythonTestPackageFinder:
+    def __init__(self, test_dir):
+        self.test_dir = os.path.realpath(os.path.abspath(test_dir))
+
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname == "test":
+            init_file = os.path.join(self.test_dir, "__init__.py")
+            if not os.path.isfile(init_file):
+                return None
+            return importlib.util.spec_from_file_location("test", init_file, submodule_search_locations=[self.test_dir])
+        if not fullname.startswith("test."):
+            return None
+
+        parts = fullname.split(".")[1:]
+        package_init = os.path.join(self.test_dir, *parts, "__init__.py")
+        if os.path.isfile(package_init):
+            return importlib.util.spec_from_file_location(
+                fullname,
+                package_init,
+                submodule_search_locations=[os.path.dirname(package_init)],
+            )
+
+        module_file = os.path.join(self.test_dir, *parts) + ".py"
+        if os.path.isfile(module_file):
+            return importlib.util.spec_from_file_location(fullname, module_file)
+
+        return None
+
+
+def install_tracemalloc_compat():
+    try:
+        tracemalloc = importlib.import_module("tracemalloc")
+    except ImportError:
+        return
+    if not hasattr(tracemalloc, "is_tracing"):
+        tracemalloc.is_tracing = lambda: False
 
 
 def emit(record):
@@ -62,15 +124,22 @@ def filter_suite(suite, skip_patterns):
 
 
 def install_cpython_test_package(cpython_root):
-    test_dir = os.path.join(cpython_root, "Lib", "test")
+    sanitize_cpython_lib_from_sys_path(cpython_root)
+    install_tracemalloc_compat()
+    test_dir = os.path.realpath(os.path.abspath(os.path.join(cpython_root, "Lib", "test")))
     if not os.path.isdir(test_dir):
         raise FileNotFoundError("CPython test package not found: " + test_dir)
 
+    sys.meta_path[:] = [
+        finder
+        for finder in sys.meta_path
+        if not isinstance(finder, CpythonTestPackageFinder)
+    ]
+    sys.meta_path.insert(0, CpythonTestPackageFinder(test_dir))
+
     existing = sys.modules.get("test")
     if existing is not None and hasattr(existing, "__path__"):
-        paths = list(existing.__path__)
-        if test_dir not in paths:
-            existing.__path__ = [test_dir] + paths
+        existing.__path__ = [test_dir]
         return
 
     init_file = os.path.join(test_dir, "__init__.py")

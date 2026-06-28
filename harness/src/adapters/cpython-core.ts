@@ -1,3 +1,4 @@
+import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
@@ -183,10 +184,13 @@ async function* runCpythonShard(
   driverSkipArgs: string[],
   skip: Array<(value: string) => boolean>,
   timeoutMs: number,
+  shardIndex: number,
 ): AsyncIterable<TestResult> {
   const started = performance.now();
   const progress = progressEnabled(ctx);
   const elideRunArgs = configuredElideRunArgs(ctx);
+  const cwd = join(ctx.workspacePath, `shard-${shardIndex}`);
+  mkdirSync(cwd, { recursive: true });
   const proc = Bun.spawn([
     ctx.elidePath,
     "run",
@@ -199,7 +203,7 @@ async function* runCpythonShard(
     ...driverSkipArgs,
     ...modules,
   ], {
-    cwd: ctx.repoRoot,
+    cwd,
     env: process.env,
     stdout: "pipe",
     stderr: "pipe",
@@ -313,7 +317,7 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
   const shards = shardItems(modules, ctx.threads);
   yield* mergeAsyncIterables(
-    shards.map((shard) => runCpythonShard(ctx, driver, shard, driverSkipArgs, skip, timeoutMs)),
+    shards.map((shard, index) => runCpythonShard(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
   );
 }
 

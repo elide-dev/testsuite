@@ -1,5 +1,5 @@
 import { test, expect, spyOn } from "bun:test";
-import { chmodSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import picomatch from "picomatch";
@@ -162,6 +162,39 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   const args = readFileSync(argsLog, "utf8");
   expect(args).toContain("test_re\n");
   expect(args).not.toContain("test_json\n");
+});
+
+test("runs CPython shards from writable workspace directories", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const cwdLog = join(root, "cwd.log");
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  const workspacePath = join(root, "workspace");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+set -euo pipefail
+pwd > ${JSON.stringify(cwdLog)}
+printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath,
+  };
+
+  await collect(runCpythonCore(ctx));
+
+  expect(realpathSync(readFileSync(cwdLog, "utf8").trim())).toBe(realpathSync(join(workspacePath, "shard-0")));
 });
 
 test("passes CPython progress flag and forwards progress stderr under --log", async () => {
