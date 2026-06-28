@@ -26,26 +26,27 @@ quarantined until the runtime surface is ready.
 - [x] Pure stdlib metadata/API: `test_abstract_numbers`, `test_dataclasses`, `test_dictviews`, `test_ordered_dict`, `test_module`, `test_structseq`, `test_errno`, `test_stat`, `test_warnings`, `test_strftime`, `test_strptime`, `test_unparse`, `test_tabnanny`, `test_http_cookies`, `test_http_cookiejar`, `test_robotparser` - 16 modules
 - [x] Compression: `test_zlib`, `test_gzip`, `test_bz2`, `test_lzma` - 4 modules
 - [x] Sandboxed file I/O and archives: `test_genericpath`, `test_posixpath`, `test_glob`, `test_tempfile`, `test_filecmp`, `test_fileinput`, `test_fileutils`, `test_unicode_file`, `test_unicode_file_functions`, `test_zipapp`, `test_zipfile` - 11 modules
+- [x] Exploratory full-suite remainder: all other top-level CPython `Lib/test/test_*` modules/packages - 209 modules
 
-Enabled total: 229 CPython test modules.
+Enabled total: 438 CPython test modules.
 
 ### Next Domains
 
-- [ ] Light async, timing, and local threading: `test_asyncgen`, `test_coroutines`, `test_atexit`, `test_time`, `test_timeit`, `test_threading_local`
-- [ ] Broader filesystem/archive behavior: remaining concrete `test_ntpath` and `test_pathlib` cases, `test_zipfile64`, `test_tarfile`, `test_shutil`
+- [ ] Classify full-suite failures into harness gaps, expected platform/runtime limitations, and Elide implementation defects.
+- [ ] Split the exploratory full-suite remainder into stable permanent groups after ratcheting and quarantine review.
 
-### Quarantined For Now
+### Historically Quarantined, Now Enabled For Exploration
 
-- [ ] Process and multiprocessing: `test_subprocess`, `test_multiprocessing_*`, `test_fork1`, `test_wait3`, `test_wait4`, `test_popen`
-- [ ] Asyncio subprocess/network-heavy coverage: `test_asyncio/test_subprocess.py`, socket/server/SSL asyncio cases
-- [ ] Network and TLS: `test_socket`, `test_ssl`, `test_httplib`, `test_httpservers`, `test_urllib*`, `test_xmlrpc*`, mail/news/ftp/telnet suites
-- [ ] Native/platform surfaces: `test_ctypes`, `test_capi`, `test_readline`, `test_curses`, `test_tkinter`, `test_dbm*`, platform-specific POSIX/Windows/macOS suites
-- [ ] Stress/perf/crasher/leak suites: `test_bigmem`, `test_bigaddrspace`, `test_crashers`, `leakers`, `test_perf_profiler`, `test_longexp`
+- [x] Process and multiprocessing: `test_subprocess`, `test_multiprocessing_*`, `test_fork1`, `test_wait3`, `test_wait4`, `test_popen`
+- [x] Asyncio subprocess/network-heavy coverage: `test_asyncio/test_subprocess.py`, socket/server/SSL asyncio cases
+- [x] Network and TLS: `test_socket`, `test_ssl`, `test_httplib`, `test_httpservers`, `test_urllib*`, `test_xmlrpc*`, mail/news/ftp/telnet suites
+- [x] Native/platform surfaces: `test_ctypes`, `test_capi`, `test_readline`, `test_curses`, `test_tkinter`, `test_dbm*`, platform-specific POSIX/Windows/macOS suites
+- [x] Stress/perf/crasher/leak suites: `test_bigmem`, `test_bigaddrspace`, `test_crashers`, leakers-adjacent modules, `test_perf_profiler`, `test_longexp`
 
 ### Coverage Accounting
 
 - Enabled against top-level CPython `Lib/test` modules/packages in the checkout:
-  229 / 438 = 52.3%.
+  438 / 438 = 100.0%.
 
 This is a module-count denominator, not a case-count denominator. CPython only
 materializes reliable case counts after importing and running each module, and

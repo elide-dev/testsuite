@@ -8,7 +8,7 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_unicode_file_functions.py", line 67, in setUp
     os.mkdir(os_helper.TESTFN)
-PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_37_tmpæ'`
 example test: `test_unicode_file_functions.UnicodeFileTests.test_directory`
 
 ### 19 × `Traceback (most recent call last): File <str>, line <n>, in setUp with open(os_helper.TESTFN, <str>, encoding=<str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
@@ -18,8 +18,25 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_configparser.py", line 1098, in setUp
     with open(os_helper.TESTFN, 'w', encoding="utf-8") as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_132_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_57_tmpæ'`
 example test: `test_configparser.MultilineValuesTestCase.test_basic`
+
+### 14 × `Traceback (most recent call last): File <str>, line <n>, in setUp setup_test_dir() File <str>, line <n>, in setup_test_dir os.mkdir(dirname) PermissionError: [E`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dbm.py", line 162, in setUp
+    setup_test_dir()
+  File "/work/suites/cpython/Lib/test/test_dbm.py", line 37, in setup_test_dir
+    os.mkdir(dirname)
+PermissionError: [Errno 13] Permission denied: '@test_127_tmpæ'`
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dbm.py", line 203, in setUp
+    setup_test_dir()
+  File "/work/suites/cpython/Lib/test/test_dbm.py", line 37, in setup_test_dir
+    os.mkdir(dirname)
+PermissionError: [Errno 13] Permission denied: '@test_127_tmpæ'`
+example test: `test_dbm.TestCase_dumb.test_anydbm_access`
 
 ### 13 × `Traceback (most recent call last): File <str>, line <n>, in setUp (self.module.bisect_right, [], <n>, <n>), ^^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: <str> objec`
 
@@ -47,7 +64,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_array.py", line 482, in test_filewrite
     f = open(os_helper.TESTFN, 'wb')
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_41_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
 example test: `test_array.ByteTest.test_filewrite`
 
 ### 13 × `Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, array.array, File <str>, li`
@@ -67,7 +84,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_array.py", line 473, in test_fromfile_ioerror
     f = open(os_helper.TESTFN, 'wb')
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_41_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
 example test: `test_array.ByteTest.test_fromfile_ioerror`
 
 ### 13 × `Traceback (most recent call last): File <str>, line <n>, in test_reverse_iterator_picking d = pickle.dumps((itorig, orig), proto) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
@@ -87,7 +104,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_array.py", line 451, in test_tofromfile
     f = open(os_helper.TESTFN, 'wb')
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_41_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
 example test: `test_array.ByteTest.test_tofromfile`
 
 ### 13 × `Traceback (most recent call last): File <str>, line <n>, in test_weakref p = weakref.proxy(s) ^^^^^^^^^^^^^^^^ TypeError: cannot create weak reference to <str> `
@@ -99,6 +116,13 @@ distinct messages:
         ^^^^^^^^^^^^^^^^
 TypeError: cannot create weak reference to 'array.array' object`
 example test: `test_array.ByteTest.test_weakref`
+
+### 12 × `AttributeError(<str>)`
+
+distinct messages:
+- `AttributeError("module '_asyncio' has no attribute 'Future'")`
+- `AttributeError("module 'sys' has no attribute 'monitoring'")`
+example test: `test_types`
 
 ### 12 × `Traceback (most recent call last): File <str>, line <n>, in setUp self.mktemp(<str>, <str>) File <str>, line <n>, in mktemp os.makedirs(base) File <str>, line <`
 
@@ -123,6 +147,12 @@ AssertionError: 'cannot use a unicode array' not found in "'str' object cannot b
     self.assertIn("cannot use a unicode array", str(cm.exception))
 AssertionError: 'cannot use a unicode array' not found in 'must be real number, not str'`
 example test: `test_array.ByteTest.test_initialize_with_unicode`
+
+### 8 × `PermissionError(<n>, <str>)`
+
+distinct messages:
+- `PermissionError(13, 'Permission denied')`
+example test: `test_http_cookiejar`
 
 ### 7 × `Traceback (most recent call last): File <str>, line <n>, in test_incremental_surrogatepass data = <str>.encode(self.encoding, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 
@@ -187,12 +217,6 @@ AssertionError: b'\x0[15 chars]x00\xff\xfd\x00\x00\x00]' != b'\x0[15 chars]x00\x
     self.assertEqual("[\uDC80]".encode(self.encoding, "namereplace"),
 AssertionError: b'[\x00\x00\x00\xfd\xff\x00\x00]\x00\x00\x00' != b'[\x00\x00\x00\\\x00\x00\x00u\x00\x00\x0`
 example test: `test_codecs.UTF16BETest.test_lone_surrogates`
-
-### 5 × `PermissionError(<n>, <str>)`
-
-distinct messages:
-- `PermissionError(13, 'Permission denied')`
-example test: `test_http_cookiejar`
 
 ### 5 × `Traceback (most recent call last): File <str>, line <n>, in setUp os.mkdir(self.pkgname) PermissionError: [Errno <n>] Permission denied: <str>`
 
@@ -434,6 +458,14 @@ AssertionError: "meth_varargs\(\) takes no keyword arguments" does not match "Me
 AssertionError: "meth_varargs\(\) takes no keyword arguments" does not match "MethStatic.meth_varargs() got an unexpected keyword argument 'k'"`
 example test: `test_call.TestCallingConventions.test_varargs_error_kw`
 
+### 4 × `ModuleNotFoundError(<str>)`
+
+distinct messages:
+- `ModuleNotFoundError("No module named '_testinternalcapi'")`
+- `ModuleNotFoundError("No module named '_symtable'")`
+- `ModuleNotFoundError("No module named 'audioop'")`
+example test: `test_peepholer`
+
 ### 4 × `Traceback (most recent call last): File <str>, line <n>, in runTest raise self.failureException(self.format_failure(new.getvalue())) AssertionError: Failed doct`
 
 distinct messages:
@@ -507,6 +539,16 @@ binascii.Error: IllegalArgumentException: Input byte array has wrong 4-byte endi
 Java stack trace:
 java.la`
 example test: `test_binascii.ArrayBinASCIITest.test_base64invalid`
+
+### 4 × `Traceback (most recent call last): File <str>, line <n>, in test_byval result = dll._testfunc_byval(ptin, byref(ptout)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_as_parameter.py", line 149, in test_byval
+    result = dll._testfunc_byval(ptin, byref(ptout))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotImplementedError: Passing structs by value is not supported`
+example test: `test_ctypes.test_as_parameter.AsParamNestedWrapperTestCase.test_byval`
 
 ### 4 × `Traceback (most recent call last): File <str>, line <n>, in test_empty_string f = getattr(binascii, func) ^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: module <str> h`
 
@@ -587,6 +629,26 @@ distinct messages:
 AttributeError: module 'binascii' has no attribute 'a2b_qp'`
 example test: `test_binascii.ArrayBinASCIITest.test_returned_value`
 
+### 4 × `Traceback (most recent call last): File <str>, line <n>, in test_struct_return_2H s2h = dll.ret_2h_func(self.wrap(inp)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ NotImple`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_as_parameter.py", line 171, in test_struct_return_2H
+    s2h = dll.ret_2h_func(self.wrap(inp))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotImplementedError: Passing structs by value is not supported on NFI bac`
+example test: `test_ctypes.test_as_parameter.AsParamNestedWrapperTestCase.test_struct_return_2H`
+
+### 4 × `Traceback (most recent call last): File <str>, line <n>, in test_struct_return_8H s8i = dll.ret_8i_func(self.wrap(inp)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ NotImple`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_as_parameter.py", line 191, in test_struct_return_8H
+    s8i = dll.ret_8i_func(self.wrap(inp))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotImplementedError: Passing structs by value is not supported on NFI bac`
+example test: `test_ctypes.test_as_parameter.AsParamNestedWrapperTestCase.test_struct_return_8H`
+
 ### 4 × `Traceback (most recent call last): File <str>, line <n>, in test_unicode_a2b a2b = getattr(binascii, fa) ^^^^^^^^^^^^^^^^^^^^^ AttributeError: module <str> has `
 
 distinct messages:
@@ -625,12 +687,6 @@ distinct messages:
 OSError: [Errno 22] Invalid argument: "Feature not supported on 'java' POSIX backend: Sending arbitrary signals to child processes. Can`
 example test: `test_unittest.test_break.TestBreak.testRemoveResult`
 
-### 3 × `AttributeError(<str>)`
-
-distinct messages:
-- `AttributeError("module '_asyncio' has no attribute 'Future'")`
-example test: `test_types`
-
 ### 3 × `Traceback (most recent call last): File <str>, line <n>, in decorator return func(*args) ^^^^^^^^^^^ File <str>, line <n>, in test_unpickle_module_race os.mkdir`
 
 distinct messages:
@@ -650,7 +706,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_linecache.py", line 323, in setUp
     with open(fname, 'w', encoding='utf-8') as source:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_40_tmpæ.1'`
+PermissionError: [Errno 13] Permission denied: '@test_38_tmpæ.1'`
 example test: `test_linecache.LineCacheInvalidationTests.test_checkcache_for_deleted_file`
 
 ### 3 × `Traceback (most recent call last): File <str>, line <n>, in test_check_encoding_errors proc = assert_python_failure(<str>, <str>, <str>, code) ^^^^^^^^^^^^^^^^^`
@@ -799,7 +855,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4110, in test_dump_closed_file
     f = open(TESTFN, "wb")
         ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_66_tmpæ'`
 example test: `test_pickle.CPickleTests.test_dump_closed_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_dump_text_file f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permissio`
@@ -809,7 +865,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4148, in test_dump_text_file
     f = open(TESTFN, "w")
         ^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_66_tmpæ'`
 example test: `test_pickle.CPickleTests.test_dump_text_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_errors self.assertEqual(raw.decode(<str>, <str>), expected) AssertionError: <str> != <str> - � `
@@ -885,7 +941,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4118, in test_load_closed_file
     f = open(TESTFN, "wb")
         ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_66_tmpæ'`
 example test: `test_pickle.CPickleTests.test_load_closed_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_load_global self.assertEqual(self.loads(b<str>), <n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
@@ -1200,6 +1256,86 @@ distinct messages:
 - `CPython driver timed out after 60000ms while test_htmlparser.HTMLParserTestCase.test_eof_no_quadratic_complexity`
 example test: `test_htmlparser.HTMLParserTestCase.test_eof_no_quadratic_complexity`
 
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_as_completed Traceback (most recent call last): File <str>, line <n>, in _find_test`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_as_completed
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+            `
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_as_completed`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_deadlock Traceback (most recent call last): File <str>, line <n>, in _find_test_pat`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_deadlock
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^`
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_deadlock`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_future Traceback (most recent call last): File <str>, line <n>, in _find_test_path `
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_future
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^`
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_future`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_init Traceback (most recent call last): File <str>, line <n>, in _find_test_path mo`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_init
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^`
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_init`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_process_pool Traceback (most recent call last): File <str>, line <n>, in _find_test`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_process_pool
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+            `
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_process_pool`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_shutdown Traceback (most recent call last): File <str>, line <n>, in _find_test_pat`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_shutdown
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^`
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_shutdown`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_thread_pool Traceback (most recent call last): File <str>, line <n>, in _find_test_`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_thread_pool
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             `
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_thread_pool`
+
+### 1 × `ImportError: Failed to import test module: test.test_concurrent_futures.test_wait Traceback (most recent call last): File <str>, line <n>, in _find_test_path mo`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_concurrent_futures.test_wait
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^`
+example test: `unittest.loader._FailedTest.test.test_concurrent_futures.test_wait`
+
 ### 1 × `ImportError: Failed to import test module: test.test_email.test_email Traceback (most recent call last): File <str>, line <n>, in _find_test_path module = self.`
 
 distinct messages:
@@ -1390,11 +1526,17 @@ Traceback (most recent call last):
              ^^^^^^^^^^^^^^^^^^`
 example test: `unittest.loader._FailedTest.test.test_zipfile.test_core`
 
-### 1 × `ModuleNotFoundError(<str>)`
+### 1 × `SystemError: bad argument to internal function PyTuple_Size The above exception was the direct cause of the following exception: Traceback (most recent call las`
 
 distinct messages:
-- `ModuleNotFoundError("No module named '_symtable'")`
-example test: `test_symtable`
+- `SystemError: bad argument to internal function PyTuple_Size
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 2009, in test_row_no_description
+    self.assertEqual(row.keys`
+example test: `test_sqlite3.test_dbapi.RowTests.test_row_no_description`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in cleanup ast.AST._fields = old_value ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute of immutab`
 
@@ -1416,6 +1558,46 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_strptime.py", line 864, in test_TimeRE_recreation_timezone
     tm = _strptime._s`
 example test: `test_strptime.CacheTests.test_TimeRE_recreation_timezone`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in setUp port = socket_helper.bind_port(sock) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in bi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_nntplib.py", line 1589, in setUp
+    port = socket_helper.bind_port(sock)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/support/socket_helper.py", line 99, in bind_port
+    if sock.getsocko`
+example test: `test_nntplib.LocalServerTests.test_starttls`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in setUpClass python_exe = stack.enter_context(support.setup_venv_with_pip_setuptools_wheel(<str>)) ^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_peg_generator/test_c_parser.py", line 102, in setUpClass
+    python_exe = stack.enter_context(support.setup_venv_with_pip_setuptools_wheel("venv"))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+example test: `setUpClass (test.test_peg_generator.test_c_parser.TestCParser)`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in setUpModule f = open(TESTFN, <str>, buffering=<n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionError: `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_largefile.py", line 284, in setUpModule
+    f = open(TESTFN, 'wb', buffering=0)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
+example test: `setUpModule (test.test_largefile)`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in setUpModule subprocess.run([shell_true]).returncode == <n>): ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_subprocess.py", line 79, in setUpModule
+    subprocess.run([shell_true]).returncode == 0):
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py", line 549, in ru`
+example test: `setUpModule (test.test_subprocess)`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test___builtins__ self.assertIs(self.b.__builtins__, builtins_dict) ^^^^^^^^^^^^^^^^^^^ AttributeErr`
 
@@ -1503,6 +1685,34 @@ distinct messages:
     self.assertEqual(ac`
 example test: `test_future_stmt.test_future.AnnotationsFutureTestCase.test_annotations`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_anon class Y(Structure): TypeError: unexpected type`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_anon.py", line 12, in test_anon
+    class Y(Structure):
+TypeError: unexpected type`
+example test: `test_ctypes.test_anon.AnonTest.test_anon`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_anon_bitfields class Y(Structure): TypeError: unexpected type`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 244, in test_anon_bitfields
+    class Y(Structure):
+TypeError: unexpected type`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_anon_bitfields`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_append_mode_tell with self.open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 661, in test_append_mode_tell
+    with self.open(os_helper.TESTFN, "wb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_append_mode_tell`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_arg_parsing for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^`
 
 distinct messages:
@@ -1532,6 +1742,16 @@ distinct messages:
 AssertionError: array('B') is not an instance of <class 'collections.abc.MutableSequence'>`
 example test: `test_array.MiscTest.test_array_is_sequence`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_array_writes check(self.FileIO(os_helper.TESTFN, <str>)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Per`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 752, in test_array_writes
+    check(self.FileIO(os_helper.TESTFN, "w"))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_array_writes`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ascii self.assertTypedEqual(ascii(WithRepr(StrSubclass(<str>))), StrSubclass(<str>)) File <str>`
 
 distinct messages:
@@ -1560,6 +1780,26 @@ distinct messages:
         ^^^^^^^^^^^^^^^
 TypeError: cannot set '_fields' attribute of immutable type 'ast.AST'`
 example test: `test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_asyncio_1 asyncio = import_helper.import_module(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ F`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2261, in test_asyncio_1
+    asyncio = import_helper.import_module('asyncio')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/support/import_helper.py", line 7`
+example test: `test_coroutines.CoroAsyncIOCompatTest.test_asyncio_1`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_atexit_instances res = script_helper.assert_python_ok(<str>, code) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_atexit.py", line 45, in test_atexit_instances
+    res = script_helper.assert_python_ok("-c", code)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line `
+example test: `test_atexit.FunctionalTest.test_atexit_instances`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_attr_syntax self._run_check(<str>, [(<str>, <str>, [(<str>, <str>)])]) File <str>, line <n>, in`
 
@@ -1630,6 +1870,15 @@ distinct messages:
   File "/opt/elide/lib/resources/python/python-home/lib/python3.12/encodings/euc_jis_2004.p`
 example test: `test_codecs.BasicUnicodeTest.test_bad_encode_args`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bad_length class T(Array): OverflowError: The <str> attribute is too large`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_arrays.py", line 189, in test_bad_length
+    class T(Array):
+OverflowError: The '_length_' attribute is too large`
+example test: `test_ctypes.test_arrays.ArrayTestCase.test_bad_length`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_badbom self.assertRaises(UnicodeError, f.read) AssertionError: UnicodeError not raised by read`
 
 distinct messages:
@@ -1676,6 +1925,28 @@ distinct messages:
     return context.handle('asse`
 example test: `test_codeccallbacks.CodecCallbackTest.test_badhandlerresults`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_basic mv = memoryview(MyBuffer()) ^^^^^^^^^^^^^^^^^^^^^^ TypeError: memoryview: a bytes-like ob`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4467, in test_basic
+    mv = memoryview(MyBuffer())
+         ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: memoryview: a bytes-like object is required, not 'MyBuffer'`
+example test: `test_buffer.TestPythonBufferProtocol.test_basic`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_basic self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 54, in test_basic
+    self.do_test("test_basic")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resour`
+example test: `test_audit.AuditTest.test_basic`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_basics (b, size) = codecs.getencoder(encoding)(s) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ NotImplemented`
 
 distinct messages:
@@ -1706,6 +1977,39 @@ AssertionError: 'BN' != ''
 - BN`
 example test: `test_unicodedata.UnicodeFunctionsTest.test_bidirectional`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_block_add_hook self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 57, in test_block_add_hook
+    self.do_test("test_block_add_hook")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/op`
+example test: `test_audit.AuditTest.test_block_add_hook`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_block_add_hook_baseexception self.do_test(<str>) File <str>, line <n>, in do_test with subproce`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 60, in test_block_add_hook_baseexception
+    self.do_test("test_block_add_hook_baseexception")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^`
+example test: `test_audit.AuditTest.test_block_add_hook_baseexception`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_blocks_at_first_code_line stdout, stderr = self.run_pdb_module(script, commands) ^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2635, in test_blocks_at_first_code_line
+    stdout, stderr = self.run_pdb_module(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py"`
+example test: `test_pdb.PdbTestCase.test_blocks_at_first_code_line`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bmp_characters self.assertEqual(unicodedata.lookup(name), char) ^^^^^^^^^^^^^^^^^^^^^^^^ KeyErr`
 
 distinct messages:
@@ -1715,6 +2019,24 @@ distinct messages:
                      ^^^^^^^^^^^^^^^^^^^^^^^^
 KeyError: "undefined character name 'ARABIC PEPET'"`
 example test: `test_ucn.UnicodeNamesTest.test_bmp_characters`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bpo_45813_1 with self.assertWarns(RuntimeWarning): AssertionError: RuntimeWarning not triggered`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2207, in test_bpo_45813_1
+    with self.assertWarns(RuntimeWarning):
+AssertionError: RuntimeWarning not triggered`
+example test: `test_coroutines.CoroutineTest.test_bpo_45813_1`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bpo_45813_2 with self.assertWarns(RuntimeWarning): AssertionError: RuntimeWarning not triggered`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2216, in test_bpo_45813_2
+    with self.assertWarns(RuntimeWarning):
+AssertionError: RuntimeWarning not triggered`
+example test: `test_coroutines.CoroutineTest.test_bpo_45813_2`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_break_continue_in_except_star_block_valid def test_break_continue_in_except_star_block_valid(se`
 
@@ -1735,6 +2057,16 @@ distinct messages:
     with self.assertRaisesRegex(SyntaxError, self.MSG):
 A`
 example test: `test_except_star.TestBreakContinueReturnInExceptStarBlock.test_break_in_except_star`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_breakpoint stdout, stderr = self.run_pdb_module(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2566, in test_breakpoint
+    stdout, stderr = self.run_pdb_module(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2142, in`
+example test: `test_pdb.PdbTestCase.test_breakpoint`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_broken_invalid_end_tag self._run_check(html, expected) File <str>, line <n>, in _run_check self`
 
@@ -1766,6 +2098,36 @@ distinct messages:
 AssertionError: b'x' is not an instance of <class 'collections.abc.Buffer'>`
 example test: `test_collections.TestCollectionABCs.test_Buffer`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_buffer_flags with memoryview._from_flags(mutable, inspect.BufferFlags.WRITABLE) as mv: ^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4553, in test_buffer_flags
+    with memoryview._from_flags(mutable, inspect.BufferFlags.WRITABLE) as mv:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'memoryview' `
+example test: `test_buffer.TestPythonBufferProtocol.test_buffer_flags`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_buffered_file_io with self.open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 584, in test_buffered_file_io
+    with self.open(os_helper.TESTFN, "wb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_buffered_file_io`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_BufferedIOBase_destructor self._check_base_destructor(self.BufferedIOBase) File <str>, line <n>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 733, in test_BufferedIOBase_destructor
+    self._check_base_destructor(self.BufferedIOBase)
+  File "/work/suites/cpython/Lib/test/test_io.py", line 724, in _check_base_destructor
+    self.assertEqual(record, [`
+example test: `test_io.CIOTest.test_BufferedIOBase_destructor`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bug_40736 with self.assertRaisesRegex(TypeError, <str>): AssertionError: <str> does not match <`
 
 distinct messages:
@@ -1782,8 +2144,59 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_codecs.py", line 720, in test_bug691291
     with open(os_helper.TESTFN, 'wb') as fp:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_34_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_32_tmpæ'`
 example test: `test_codecs.UTF16Test.test_bug691291`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_build self.check_build(<str>) File <str>, line <n>, in check_build with support.setup_venv_with`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 31, in test_build
+    self.check_build('_testcppext')
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 54, in check_build
+    with support.setup_venv_with_pip_setuptools_wheel(`
+example test: `test_cppext.TestCPPExt.test_build`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_build_cpp03 self.check_build(<str>, std=<str>) File <str>, line <n>, in check_build with suppor`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 34, in test_build_cpp03
+    self.check_build('_testcpp03ext', std='c++03')
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 54, in check_build
+    with support.setup_venv_with_`
+example test: `test_cppext.TestCPPExt.test_build_cpp03`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_build_cpp11 self.check_build(<str>, std=<str>) File <str>, line <n>, in check_build with suppor`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 38, in test_build_cpp11
+    self.check_build('_testcpp11ext', std='c++11')
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 54, in check_build
+    with support.setup_venv_with_`
+example test: `test_cppext.TestCPPExt.test_build_cpp11`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_build_limited self.check_build(<str>, limited=True) File <str>, line <n>, in check_build with s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 47, in test_build_limited
+    self.check_build('_testcppext_limited', limited=True)
+  File "/work/suites/cpython/Lib/test/test_cppext/__init__.py", line 54, in check_build
+    with support.setup_v`
+example test: `test_cppext.TestCPPExt.test_build_limited`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_byte self.check_type(c_byte, <n>) File <str>, line <n>, in check_type result = PROTO(self.callb`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 41, in test_byte
+    self.check_type(c_byte, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+         `
+example test: `test_ctypes.test_callbacks.Callbacks.test_byte`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_bytearray_join_with_misbehaving_iterator self.assertRaises(BufferError, array.join, iterator())`
 
@@ -1793,6 +2206,131 @@ distinct messages:
     self.assertRaises(BufferError, array.join, iterator())
 AssertionError: BufferError not raised by join`
 example test: `test_builtin.BuiltinTest.test_bytearray_join_with_misbehaving_iterator`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_c_buffer mv = buf.__buffer__(<n>) ^^^^^^^^^^^^^^^^^ AttributeError: <str> object has no attribu`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4588, in test_c_buffer
+    mv = buf.__buffer__(0)
+         ^^^^^^^^^^^^^^^^^
+AttributeError: 'testBufType' object has no attribute '__buffer__'`
+example test: `test_buffer.TestPythonBufferProtocol.test_c_buffer`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_c_char self.assertIn(<str>, repr(c_char.from_param(b<str>))) AssertionError: <str> not found in`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bytes.py", line 15, in test_c_char
+    self.assertIn('xbd', repr(c_char.from_param(b"\xbd")))
+AssertionError: 'xbd' not found in "<cparam 'c' ('\\x4d5e881a')>"`
+example test: `test_ctypes.test_bytes.BytesTest.test_c_char`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_call_builtins mv = ba.__buffer__(<n>) ^^^^^^^^^^^^^^^^ AttributeError: <str> object has no attr`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4578, in test_call_builtins
+    mv = ba.__buffer__(0)
+         ^^^^^^^^^^^^^^^^
+AttributeError: 'bytearray' object has no attribute '__buffer__'`
+example test: `test_buffer.TestPythonBufferProtocol.test_call_builtins`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_backward_index self.assertEqual(self.encode(<str> + self.unmappedunicode + <str>, ^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 155, in test_callback_backward_index
+    self.assertEqual(self.encode('abcd' + self.unmappedunicode + 'efgh',
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LookupError`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_backward_index`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_forward_index self.assertEqual(self.encode(<str> + self.unmappedunicode + <str>, ^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 163, in test_callback_forward_index
+    self.assertEqual(self.encode('abcd' + self.unmappedunicode + 'efgh',
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LookupError:`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_forward_index`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_index_outofbound self.assertRaises(IndexError, self.encode, self.unmappedunicode, File`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 170, in test_callback_index_outofbound
+    self.assertRaises(IndexError, self.encode, self.unmappedunicode,
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", `
+example test: `test_codecencodings_tw.Test_Big5.test_callback_index_outofbound`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_large_struct func(s, CALLBACK(functools.partial(callback, check))) NotImplementedError`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 288, in test_callback_large_struct
+    func(s, CALLBACK(functools.partial(callback, check)))
+NotImplementedError: Passing structs by value is not supported on NFI backend`
+example test: `test_ctypes.test_callbacks.SampleCallbacksTestCase.test_callback_large_struct`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_long_index self.assertEqual(self.encode(<str> + self.unmappedunicode + <str>, ^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 130, in test_callback_long_index
+    self.assertEqual(self.encode('abcd' + self.unmappedunicode + 'efgh',
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LookupError: un`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_long_index`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_None_index self.assertRaises(TypeError, self.encode, self.unmappedunicode, File <str>,`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 143, in test_callback_None_index
+    self.assertRaises(TypeError, self.encode, self.unmappedunicode,
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 77`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_None_index`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_returns_bytes enc = self.encode(<str> + self.unmappedunicode + <str>, <str>)[<n>] ^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 114, in test_callback_returns_bytes
+    enc = self.encode("abc" + self.unmappedunicode + "def", "test.cjktest")[0]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loo`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_returns_bytes`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_too_many_args self.assertEqual(cb(*args1), CTYPES_MAX_ARGCOUNT) ^^^^^^^^^^ NotImplemen`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 309, in test_callback_too_many_args
+    self.assertEqual(cb(*args1), CTYPES_MAX_ARGCOUNT)
+                     ^^^^^^^^^^
+NotImplementedError: ctypes function call could not obtain function `
+example test: `test_ctypes.test_callbacks.SampleCallbacksTestCase.test_callback_too_many_args`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callback_wrong_objects self.assertRaises(TypeError, self.encode, self.unmappedunicode, File <st`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 123, in test_callback_wrong_objects
+    self.assertRaises(TypeError, self.encode, self.unmappedunicode,
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line`
+example test: `test_codecencodings_tw.Test_Big5.test_callback_wrong_objects`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callbacks result = f(self.wrap(-<n>), self.wrap(cb)) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeError`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_as_parameter.py", line 86, in test_callbacks
+    result = f(self.wrap(-10), self.wrap(cb))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Don't know how to convert parameter 1`
+example test: `test_ctypes.test_as_parameter.AsParamNestedWrapperTestCase.test_callbacks`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_callbacks self.assertEqual( AssertionError: <str> != <str> -   +  [<<n>>][<<n>>][<<n>>]`
 
@@ -1814,6 +2352,18 @@ distinct messages:
 AssertionError: TypeError not raised`
 example test: `test_typing.RETests.test_cannot_subclass`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_cantrace self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 79, in test_cantrace
+    self.do_test("test_cantrace")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/`
+example test: `test_audit.AuditTest.test_cantrace`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_carloverre_multi_inherit_invalid self.fail(<str>) AssertionError: setattr through indirect base`
 
 distinct messages:
@@ -1833,6 +2383,17 @@ distinct messages:
   File "/work/suite`
 example test: `test_htmlparser.HTMLParserTestCase.test_cdata_section`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_char self.check_type(c_char, b<str>) File <str>, line <n>, in check_type result = PROTO(self.ca`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 93, in test_char
+    self.check_type(c_char, b"x")
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+       `
+example test: `test_ctypes.test_callbacks.Callbacks.test_char`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_checkcache with open(source_name, <str>, encoding=<str>) as source: ^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 
 distinct messages:
@@ -1840,8 +2401,38 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_linecache.py", line 167, in test_checkcache
     with open(source_name, 'w', encoding='utf-8') as source:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_40_tmpæ.py'`
+PermissionError: [Errno 13] Permission denied: '@test_38_tmpæ.py'`
 example test: `test_linecache.LineCacheTests.test_checkcache`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_checkline_after_reset with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Perm`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2905, in test_checkline_after_reset
+    with open(os_helper.TESTFN, "w") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.ChecklineTests.test_checkline_after_reset`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_checkline_before_debugging with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2899, in test_checkline_before_debugging
+    with open(os_helper.TESTFN, "w") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.ChecklineTests.test_checkline_before_debugging`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_checkline_is_not_executable with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2919, in test_checkline_is_not_executable
+    with open(os_helper.TESTFN, "w") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.ChecklineTests.test_checkline_is_not_executable`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_class_property self.assertEqual(A.__doc__, <str>) AssertionError: <bound method ? of <class <st`
 
@@ -1870,6 +2461,56 @@ distinct messages:
 AssertionError: TypeError not raised by func`
 example test: `test_decorators.TestDecorators.test_classmethod`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_clear_executing with self.assertRaises(RuntimeError): AssertionError: RuntimeError not raised`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 93, in test_clear_executing
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised`
+example test: `test_frame.ClearTest.test_clear_executing`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_clear_executing_generator f = next(gen) ^^^^^^^^^ File <str>, line <n>, in g with self.assertRa`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 115, in test_clear_executing_generator
+    f = next(gen)
+        ^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 107, in g
+    with self.assertRaises(RuntimeError):
+AssertionError: Runt`
+example test: `test_frame.ClearTest.test_clear_executing_generator`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_clear_generator self.assertTrue(endly) AssertionError: False is not true`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 85, in test_clear_generator
+    self.assertTrue(endly)
+AssertionError: False is not true`
+example test: `test_frame.ClearTest.test_clear_generator`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_clear_locals self.assertEqual(outer.f_locals, {}) AssertionError: {<str>: <n>, <str>: <function`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 190, in test_clear_locals
+    self.assertEqual(outer.f_locals, {})
+AssertionError: {'y': 6, 'inner': <function FrameAttrsTest[61 chars]': 5} != {}
++ {}
+- {'inner': <function FrameAttrsTest.make_frames.<loca`
+example test: `test_frame.FrameAttrsTest.test_clear_locals`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_clear_locals self.assertIs(None, wr()) AssertionError: None is not <test.test_frame.ClearTest.t`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 56, in test_clear_locals
+    self.assertIs(None, wr())
+AssertionError: None is not <test.test_frame.ClearTest.test_clear_locals.<locals>.C object at 0x6cc524a8>`
+example test: `test_frame.ClearTest.test_clear_locals`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_cli_file_input res, _ = script_helper.run_python_until_end(<str>, <str>, filename) ^^^^^^^^^^^^`
 
 distinct messages:
@@ -1879,6 +2520,36 @@ distinct messages:
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/work/suites/cpython`
 example test: `test_ast.test_ast.ASTMainTests.test_cli_file_input`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_cli_on_disk_db out = self.expect_success(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_cli.py", line 58, in test_cli_on_disk_db
+    out = self.expect_success(TESTFN, "create table t(t)")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_sqlite3`
+example test: `test_sqlite3.test_cli.CommandLineInterface.test_cli_on_disk_db`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_close_flushes with self.open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ P`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 739, in test_close_flushes
+    with self.open(os_helper.TESTFN, "wb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_close_flushes`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_closefd_attr with self.open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Pe`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 782, in test_closefd_attr
+    with self.open(os_helper.TESTFN, "wb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_closefd_attr`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_cmp_err for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ At`
 
@@ -2015,6 +2686,26 @@ AssertionError: SyntaxError not raised : source=def f():  [x async for x in aran
  mode=single`
 example test: `test_builtin.BuiltinTest.test_compile_top_level_await_invalid_cases`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_config_vars_depend_on_site_initialization site_config_vars = json.loads(venv.run(<str>, script)`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 535, in test_config_vars_depend_on_site_initialization
+    site_config_vars = json.loads(venv.run('-c', script).stdout)
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpyt`
+example test: `test_sysconfig.TestSysConfig.test_config_vars_depend_on_site_initialization`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_config_vars_recalculation_after_site_initialization config_vars = json.loads(venv.run(<str>, <s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 564, in test_config_vars_recalculation_after_site_initialization
+    config_vars = json.loads(venv.run('-S', '-c', script).stdout)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work`
+example test: `test_sysconfig.TestSysConfig.test_config_vars_recalculation_after_site_initialization`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_constant_tuples self.check_src_roundtrip(ast.Constant(value=(<n>,), kind=None), <str>) File <st`
 
 distinct messages:
@@ -2053,6 +2744,16 @@ distinct messages:
     with self.assertRaisesRegex(SyntaxEr`
 example test: `test_except_star.TestBreakContinueReturnInExceptStarBlock.test_continue_in_except_star_block_invalid`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_convert_result_error result = ctypes_func() ^^^^^^^^^^^^^ NotImplementedError: ctypes function `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 328, in test_convert_result_error
+    result = ctypes_func()
+             ^^^^^^^^^^^^^
+NotImplementedError: ctypes function call could not obtain function pointer`
+example test: `test_ctypes.test_callbacks.SampleCallbacksTestCase.test_convert_result_error`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_copy encodings.ascii.StreamReader, encodings.ascii.StreamWriter) ^^^^^^^^^^^^^^^ AttributeError`
 
 distinct messages:
@@ -2083,6 +2784,16 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_copy.py", line 834, in _check_copy_weakdict
     self.assertEqual(len(v), `
 example test: `test_copy.TestCopy.test_copy_weakvaluedict`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_corotype_1 self.assertIn(<str>, ct.send.__doc__) File <str>, line <n>, in assertIn if member no`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 957, in test_corotype_1
+    self.assertIn('into coroutine', ct.send.__doc__)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 1149, in assertIn
+    if member n`
+example test: `test_coroutines.CoroutineTest.test_corotype_1`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_correctly_rounded_true_division self.check_truediv(m*DBL_MIN_OVERFLOW + n, m) File <str>, line `
 
@@ -2135,6 +2846,46 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 336`
 example test: `test_source_encoding.FileSourceEncodingTest.test_crcrlf`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_creating_pointer_in_dunder_init_1 class Sub(CtBase): File <str>, line <n>, in __init__ ptr_base`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 116, in test_creating_pointer_in_dunder_init_1
+    class Sub(CtBase):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 103, in __init__
+    ptr_ba`
+example test: `test_ctypes.test_c_simple_type_meta.PyCSimpleTypeAsMetaclassTest.test_creating_pointer_in_dunder_init_1`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_creating_pointer_in_dunder_init_2 self.assertIsInstance(POINTER(Sub), p_meta) ^^^^^^^^^^^^ Type`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 151, in test_creating_pointer_in_dunder_init_2
+    self.assertIsInstance(POINTER(Sub), p_meta)
+                          ^^^^^^^^^^^^
+TypeError: _type_ must have storage info`
+example test: `test_ctypes.test_c_simple_type_meta.PyCSimpleTypeAsMetaclassTest.test_creating_pointer_in_dunder_init_2`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_creating_pointer_in_dunder_new_1 class Sub(CtBase): File <str>, line <n>, in __new__ ptr_bases `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 50, in test_creating_pointer_in_dunder_new_1
+    class Sub(CtBase):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 36, in __new__
+    ptr_bases `
+example test: `test_ctypes.test_c_simple_type_meta.PyCSimpleTypeAsMetaclassTest.test_creating_pointer_in_dunder_new_1`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_creating_pointer_in_dunder_new_2 self.assertIsInstance(POINTER(Sub), p_meta) ^^^^^^^^^^^^ TypeE`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_c_simple_type_meta.py", line 86, in test_creating_pointer_in_dunder_new_2
+    self.assertIsInstance(POINTER(Sub), p_meta)
+                          ^^^^^^^^^^^^
+TypeError: _type_ must have storage info`
+example test: `test_ctypes.test_c_simple_type_meta.PyCSimpleTypeAsMetaclassTest.test_creating_pointer_in_dunder_new_2`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_crlf out = self.check_script_output(src, br<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File `
 
 distinct messages:
@@ -2144,6 +2895,16 @@ distinct messages:
           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 336, in c`
 example test: `test_source_encoding.FileSourceEncodingTest.test_crlf`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ctx_mgr_rollback_if_commit_failed proc = subprocess.Popen( ^^^^^^^^^^^^^^^^^ File <str>, line <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 1924, in test_ctx_mgr_rollback_if_commit_failed
+    proc = subprocess.Popen(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py", line`
+example test: `test_sqlite3.test_dbapi.MultiprocessTests.test_ctx_mgr_rollback_if_commit_failed`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_custom_find_class self.assertEqual(loads(b<str>), (<str>, <str>)) AssertionError: <built-in fun`
 
@@ -2173,6 +2934,16 @@ distinct messages:
                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'zlib.error' object has no attribute`
 example test: `test_codecs.TransformCodecTest.test_custom_zlib_error_is_noted`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_customreplace_encode self.assertEqual(self.encode(sin, ^^^^^^^^^^^^^^^^ LookupError: unknown er`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 107, in test_customreplace_encode
+    self.assertEqual(self.encode(sin,
+                     ^^^^^^^^^^^^^^^^
+LookupError: unknown error handler name 'test.xmlcharnamereplace'`
+example test: `test_codecencodings_tw.Test_Big5.test_customreplace_encode`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_cycle_through_dict for o in gc.get_objects(): ^^^^^^^^^^^^^^^^ AttributeError: module <str> has`
 
@@ -2222,7 +2993,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_base64.py", line 785, in test_decode
     with open(os_helper.TESTFN, 'wb') as fp:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_37_tmpæ'`
 example test: `test_base64.TestMain.test_decode`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_decode_unicode self.assertRaises(TypeError, decoder, <str>) File <str>, line <n>, in assertRais`
@@ -2350,6 +3121,16 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_descr.py",`
 example test: `test_descr.ClassPropertiesAndMethods.test_descrdoc`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_destructor f = MyFileIO(os_helper.TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionErr`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 688, in test_destructor
+    f = MyFileIO(os_helper.TESTFN, "wb")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_destructor`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_dict_clear self.assertNotIn(<str>, repr(od)) ^^^^^^^^ KeyError: <str>`
 
 distinct messages:
@@ -2369,6 +3150,16 @@ distinct messages:
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/elide/lib/resources/python/py`
 example test: `test_runpy.RunPathTestCase.test_directory_compiled`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_disallow_instantiation support.check_disallow_instantiation(self, type(select.poll())) ^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_select.py", line 95, in test_disallow_instantiation
+    support.check_disallow_instantiation(self, type(select.poll()))
+                                                    ^^^^^^^^^^^^^
+AttributeError: module 'select' has `
+example test: `test_select.SelectTestCase.test_disallow_instantiation`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_docstring_copy2 self.assertEqual(p2.__doc__, <str>) AssertionError: <str> != <str> - doc <n> + `
 
@@ -2390,6 +3181,17 @@ distinct messages:
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/work/suites/cpython/Lib/test/support/script_helper.`
 example test: `test_zipimport_support.ZipSupportTests.test_doctest_main_issue4197`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_double self.check_type(c_double, <n>) File <str>, line <n>, in check_type result = PROTO(self.c`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 84, in test_double
+    self.check_type(c_double, 3.14)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+   `
+example test: `test_ctypes.test_callbacks.Callbacks.test_double`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_double_coding_line self.check_script_output(src, br<str>) File <str>, line <n>, in check_script`
 
@@ -2421,6 +3223,16 @@ distinct messages:
 NotImplementedError: readbuffer_encode`
 example test: `test_codecs.ReadBufferTest.test_empty`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_empty_file stdout, _ = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2880, in test_empty_file
+    stdout, _ = self.run_pdb_script(script, commands)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in run_pdb_s`
+example test: `test_pdb.PdbTestCase.test_empty_file`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_empty_groups_removed self.doSplitTest( File <str>, line <n>, in doSplitTest self.doSplitTestNam`
 
 distinct messages:
@@ -2438,7 +3250,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_base64.py", line 773, in test_encode_file
     with open(os_helper.TESTFN, 'wb') as fp:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_37_tmpæ'`
 example test: `test_base64.TestMain.test_encode_file`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_encode_from_stdin with script_helper.spawn_python(<str>, <str>, <str>) as proc: ^^^^^^^^^^^^^^^`
@@ -2557,6 +3369,16 @@ distinct messages:
   File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", lin`
 example test: `test_codecs.UTF16ExTest.test_errors`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_errors_in_command stdout, _ = self.run_pdb_script(<str>, commands + <str>) ^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2714, in test_errors_in_command
+    stdout, _ = self.run_pdb_script('pass', commands + '\n')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", li`
+example test: `test_pdb.PdbTestCase.test_errors_in_command`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_eval_builtins_mapping self.assertEqual(eval(code, ns), <n>) ^^^^^^^^^^^^^^ File <str>, line <n>`
 
 distinct messages:
@@ -2648,6 +3470,16 @@ distinct messages:
     with self.assertRaises(TypeError):
 NotImplementedError: try star`
 example test: `test_except_star.TestInvalidExceptStar.test_except_star_invalid_exception_type`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_excepthook returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 85, in test_excepthook
+    returncode, events, stderr = self.run_python("test_excepthook")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audi`
+example test: `test_audit.AuditTest.test_excepthook`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_exception_group_except_star_Exception_not_wrapped self.doSplitTest( File <str>, line <n>, in do`
 
@@ -2768,6 +3600,45 @@ distinct messages:
 UnboundLocalError: local variable 'tes' referenced before assignment`
 example test: `test_except_star.TestExceptStarExceptionGroupSubclass.test_falsy_exception_group_subclass`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fatal_coro_warning self.assertIn(<str>, str(cm.unraisable.exc_value)) ^^^^^^^^^^^^^^^^^^^^^^^ A`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2135, in test_fatal_coro_warning
+    self.assertIn("was never awaited", str(cm.unraisable.exc_value))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' objec`
+example test: `test_coroutines.CoroutineTest.test_fatal_coro_warning`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fcntl_bad_file fcntl.fcntl(-<n>, fcntl.F_SETFL, os.O_NONBLOCK) AttributeError: module <str> has`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 106, in test_fcntl_bad_file
+    fcntl.fcntl(-1, fcntl.F_SETFL, os.O_NONBLOCK)
+AttributeError: module 'fcntl' has no attribute 'fcntl'`
+example test: `test_fcntl.TestFcntl.test_fcntl_bad_file`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fcntl_file_descriptor self.f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 94, in test_fcntl_file_descriptor
+    self.f = open(TESTFN, 'wb')
+             ^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_31_tmpæ'`
+example test: `test_fcntl.TestFcntl.test_fcntl_file_descriptor`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fcntl_fileno self.f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 82, in test_fcntl_fileno
+    self.f = open(TESTFN, 'wb')
+             ^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_31_tmpæ'`
+example test: `test_fcntl.TestFcntl.test_fcntl_fileno`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_file_parse f = open(filename, <str>, encoding=<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Per`
 
 distinct messages:
@@ -2775,7 +3646,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 122, in test_file_parse
     f = open(filename, "w", encoding="cp1252")
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_138_tmpæ.py'`
+PermissionError: [Errno 13] Permission denied: '@test_85_tmpæ.py'`
 example test: `test_source_encoding.MiscSourceEncodingTest.test_file_parse`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_file_parse_error_multiline with open(TESTFN, <str>) as fd: ^^^^^^^^^^^^^^^^^^ PermissionError: `
@@ -2785,7 +3656,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 153, in test_file_parse_error_multiline
     with open(TESTFN, "wb") as fd:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_138_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_85_tmpæ'`
 example test: `test_source_encoding.MiscSourceEncodingTest.test_file_parse_error_multiline`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fileclosed os.remove(os_helper.TESTFN) FileNotFoundError: [Errno <n>] No such file or directory`
@@ -2794,7 +3665,7 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_bool.py", line 261, in test_fileclosed
     os.remove(os_helper.TESTFN)
-FileNotFoundError: [Errno 2] No such file or directory: '@test_33_tmpæ'`
+FileNotFoundError: [Errno 2] No such file or directory: '@test_31_tmpæ'`
 example test: `test_bool.BoolTest.test_fileclosed`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_filename_in_syntaxerror with temp_cwd() as cwd: File <str>, line <n>, in __enter__ return next(`
@@ -2816,6 +3687,48 @@ distinct messages:
     unpickler.find_class('builtins', 'str.upper')
 TypeError: 'NoneType' object has no attribute 'str.upper'`
 example test: `test_pickle.CUnpicklerTests.test_find_class`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_find_function_empty_file self._assert_find_function(b<str>, <str>, None) File <str>, line <n>, `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2160, in test_find_function_empty_file
+    self._assert_find_function(b'', 'foo', None)
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2151, in _assert_find_function
+    with open(os_helper.TESTFN, `
+example test: `test_pdb.PdbTestCase.test_find_function_empty_file`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_find_function_found self._assert_find_function( File <str>, line <n>, in _assert_find_function `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2163, in test_find_function_found
+    self._assert_find_function(
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2151, in _assert_find_function
+    with open(os_helper.TESTFN, 'wb') as f:
+         ^`
+example test: `test_pdb.PdbTestCase.test_find_function_found`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_find_function_found_with_bom self._assert_find_function( File <str>, line <n>, in _assert_find_`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2196, in test_find_function_found_with_bom
+    self._assert_find_function(
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2151, in _assert_find_function
+    with open(os_helper.TESTFN, 'wb') as f:
+ `
+example test: `test_pdb.PdbTestCase.test_find_function_found_with_bom`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_find_function_found_with_encoding_cookie self._assert_find_function( File <str>, line <n>, in _`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2179, in test_find_function_found_with_encoding_cookie
+    self._assert_find_function(
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2151, in _assert_find_function
+    with open(os_helper.TESTFN, '`
+example test: `test_pdb.PdbTestCase.test_find_function_found_with_encoding_cookie`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_first_coding_line self.check_script_output(src, br<str>) File <str>, line <n>, in check_script_`
 
@@ -2854,6 +3767,46 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 336, in check_script_output
     res`
 example test: `test_source_encoding.FileSourceEncodingTest.test_first_non_utf8_coding_line`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_float self.check_type(c_float, math.e) File <str>, line <n>, in check_type result = PROTO(self.`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 80, in test_float
+    self.check_type(c_float, math.e)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+   `
+example test: `test_ctypes.test_callbacks.Callbacks.test_float`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_flock self.f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permission `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 147, in test_flock
+    self.f = open(TESTFN, 'wb+')
+             ^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_31_tmpæ'`
+example test: `test_fcntl.TestFcntl.test_flock`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_flush_error_on_close self.check_flush_error_on_close(os_helper.TESTFN, <str>, buffering=<n>) Fi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 837, in test_flush_error_on_close
+    self.check_flush_error_on_close(os_helper.TESTFN, 'wb', buffering=0)
+  File "/work/suites/cpython/Lib/test/test_io.py", line 822, in check_flush_error_on_close
+    f = sel`
+example test: `test_io.CIOTest.test_flush_error_on_close`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_for_2 with self.assertRaisesRegex( AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1592, in test_for_2
+    with self.assertRaisesRegex(
+AssertionError: "async for' requires an object.*__aiter__.*tuple" does not match "'async for' requires object with __aiter__ method, got tuple"`
+example test: `test_coroutines.CoroutineTest.test_for_2`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_frame_resurrect self.assertTrue(frame) ^^^^^ UnboundLocalError: local variable <str> referenced`
 
@@ -2904,6 +3857,17 @@ distinct messages:
     test.ass`
 example test: `test_unicode.UnicodeTest.test_free_after_iterating`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_from_addressW self.assertEqual(sz[:], <str>) AssertionError: <str> != <str> - f   + foo`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_arrays.py", line 124, in test_from_addressW
+    self.assertEqual(sz[:], "foo")
+AssertionError: 'f\x00\x00' != 'foo'
+- f  
++ foo`
+example test: `test_ctypes.test_arrays.ArrayTestCase.test_from_addressW`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_from_format self.assertEqual(PyBytes_FromFormat(b<str>, c_int(<n>)), AssertionError: b<str> != `
 
 distinct messages:
@@ -2913,6 +3877,70 @@ distinct messages:
 AssertionError: b'c=\xc3\xbf' != b'c=\xff'`
 example test: `test_bytes.BytesTest.test_from_format`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_fspath_support check_path_succeeds(FakePath(os_helper.TESTFN)) File <str>, line <n>, in check_p`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 965, in test_fspath_support
+    check_path_succeeds(FakePath(os_helper.TESTFN))
+  File "/work/suites/cpython/Lib/test/test_io.py", line 959, in check_path_succeeds
+    with self.open(path, "w", encoding="utf-8`
+example test: `test_io.CIOTest.test_fspath_support`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_12 with self.assertRaisesRegex(ValueError, AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 737, in test_func_12
+    with self.assertRaisesRegex(ValueError,
+AssertionError: "coroutine already executing" does not match "generator already executing"`
+example test: `test_coroutines.CoroutineTest.test_func_12`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_13 with self.assertRaisesRegex( AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 746, in test_func_13
+    with self.assertRaisesRegex(
+AssertionError: "can't send non-None value to a just-started coroutine" does not match "can't send non-None value to a just-started generator"`
+example test: `test_coroutines.CoroutineTest.test_func_13`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_14 with self.assertRaisesRegex(RuntimeError, AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 764, in test_func_14
+    with self.assertRaisesRegex(RuntimeError,
+AssertionError: "coroutine ignored GeneratorExit" does not match "generator ignored GeneratorExit"`
+example test: `test_coroutines.CoroutineTest.test_func_14`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_2 with self.assertRaisesRegex( AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 549, in test_func_2
+    with self.assertRaisesRegex(
+AssertionError: "coroutine raised StopIteration" does not match "generator raised StopIteration"`
+example test: `test_coroutines.CoroutineTest.test_func_2`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_7 with self.assertRaisesRegex( AssertionError: TypeError not raised`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 638, in test_func_7
+    with self.assertRaisesRegex(
+AssertionError: TypeError not raised`
+example test: `test_coroutines.CoroutineTest.test_func_7`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_func_9 with self.assertWarnsRegex( AssertionError: RuntimeWarning not triggered`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 662, in test_func_9
+    with self.assertWarnsRegex(
+AssertionError: RuntimeWarning not triggered`
+example test: `test_coroutines.CoroutineTest.test_func_9`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_garbage_collect_test_after_run_TestSuite self.assert_garbage_collect_test_after_run(unittest.Te`
 
 distinct messages:
@@ -2921,6 +3949,37 @@ distinct messages:
     self.assert_garbage_collect_test_after_run(unittest.TestSuite)
   File "/work/suites/cpython/Lib/test/test_unittest/test_suite.py", lin`
 example test: `test_unittest.test_suite.Test_TestSuite.test_garbage_collect_test_after_run_TestSuite`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_garbage_collection f = self.FileIO(os_helper.TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 793, in test_garbage_collection
+    f = self.FileIO(os_helper.TESTFN, "wb")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_garbage_collection`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_gc returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>, l`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 132, in test_gc
+    returncode, events, stderr = self.run_python("test_gc")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 39, in run_`
+example test: `test_audit.AuditTest.test_gc`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_general script_helper.run_test_script(script) File <str>, line <n>, in run_test_script proc = s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_atexit.py", line 13, in test_general
+    script_helper.run_test_script(script)
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 300, in run_test_script
+    proc = subprocess.run(args)
+           ^^^^^^`
+example test: `test_atexit.GeneralTest.test_general`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_generator_del_cleanup_exc_state self._check_generator_cleanup_exc_state(do_del) File <str>, lin`
 
@@ -2958,6 +4017,24 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_exceptions.py", line 1047, in _check_generator_cleanup_e`
 example test: `test_exceptions.ExceptionTests.test_generator_throw_cleanup_exc_state`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_get_config_h_filename self.assertTrue(os.path.isfile(config_h), config_h) AssertionError: False`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 353, in test_get_config_h_filename
+    self.assertTrue(os.path.isfile(config_h), config_h)
+AssertionError: False is not true : include/python3.12/pyconfig.h`
+example test: `test_sysconfig.TestSysConfig.test_get_config_h_filename`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_get_makefile_filename self.assertTrue(os.path.isfile(makefile), makefile) AssertionError: False`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 596, in test_get_makefile_filename
+    self.assertTrue(os.path.isfile(makefile), makefile)
+AssertionError: False is not true : lib/python3.12/config-3.12-aarch64-linux/Makefile`
+example test: `test_sysconfig.MakefileTests.test_get_makefile_filename`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_get_only for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ A`
 
 distinct messages:
@@ -2967,6 +4044,26 @@ distinct messages:
               ^^^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'NoneType' object has no attribute 'bisect_left'`
 example test: `test_bisect.TestErrorHandlingC.test_get_only`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_gh_93696_frozen_list with open(<str>, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^ PermissionError: [Er`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2863, in test_gh_93696_frozen_list
+    with open('gh93696.py', 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'gh93696.py'`
+example test: `test_pdb.PdbTestCase.test_gh_93696_frozen_list`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_gh_94215_crash stdout, stderr = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2826, in test_gh_94215_crash
+    stdout, stderr = self.run_pdb_script(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117`
+example test: `test_pdb.PdbTestCase.test_gh_94215_crash`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_gh129093 self.assertEqual(f<str>, <str>) AssertionError: <str> != <str> - 1True + <n>!=<n>=True`
 
@@ -3057,6 +4154,16 @@ distinct messages:
 AssertionError: '\n<![315 chars]mily:Courier; border:medium;}\n        .diff_h[103422 chars]tml>' != '\n<![315 chars]mily: Menlo, Consolas, M`
 example test: `test_difflib.TestSFpatches.test_html_diff`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_http returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Fi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 147, in test_http
+    returncode, events, stderr = self.run_python("test_http_client")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.p`
+example test: `test_audit.AuditTest.test_http`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_implicit_files_with_compiled_importlib assert importlib.import_module(<str>).val == <str> ^^^^^`
 
 distinct messages:
@@ -3099,6 +4206,25 @@ AssertionError: '2QE-' != '\ud901'
 + �`
 example test: `test_codecs.UTF7Test.test_incremental_surrogatepass`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_incrementalencoder_del_segfault with self.assertRaises(AttributeError): AssertionError: Attribu`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 282, in test_incrementalencoder_del_segfault
+    with self.assertRaises(AttributeError):
+AssertionError: AttributeError not raised`
+example test: `test_codecencodings_tw.Test_Big5.test_incrementalencoder_del_segfault`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_incrementalencoder_error_callback self.assertEqual(e.encode(inv, True), b<str>) ^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 224, in test_incrementalencoder_error_callback
+    self.assertEqual(e.encode(inv, True), b'called')
+                     ^^^^^^^^^^^^^^^^^^^
+LookupError: unknown error handler name 'test.increme`
+example test: `test_codecencodings_tw.Test_Big5.test_incrementalencoder_error_callback`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_indent process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)`
 
 distinct messages:
@@ -3107,6 +4233,15 @@ distinct messages:
     process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True)
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 example test: `test_json.test_tool.TestTool.test_indent`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_indentation_error self.assertEqual(output.splitlines()[<n>:], [ AssertionError: Lists differ: [`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_code_module.py", line 88, in test_indentation_error
+    self.assertEqual(output.splitlines()[1:], [
+AssertionError: Lists differ: ['  F[19 chars]ne 1', '    1', '    ^', 'IndentationError: unexpected indent'] != ['  F[19 c`
+example test: `test_code_module.TestInteractiveConsole.test_indentation_error`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_infile_outfile infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c`
 
@@ -3139,6 +4274,24 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_future_stmt/test_future.py", line 169, in assertAnnotationEq`
 example test: `test_future_stmt.test_future.AnnotationsFutureTestCase.test_infinity_numbers`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_inherit_but_return_something_else self.assertEqual(rb_call_count, <n>) AssertionError: <n> != <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4653, in test_inherit_but_return_something_else
+    self.assertEqual(rb_call_count, 1)
+AssertionError: 0 != 1`
+example test: `test_buffer.TestPythonBufferProtocol.test_inherit_but_return_something_else`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_inheritance_releasebuffer self.assertEqual(rb_call_count, <n>) AssertionError: <n> != <n>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4624, in test_inheritance_releasebuffer
+    self.assertEqual(rb_call_count, 1)
+AssertionError: 0 != 1`
+example test: `test_buffer.TestPythonBufferProtocol.test_inheritance_releasebuffer`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_init_override self.check_note(CustomInit, <str>) File <str>, line <n>, in check_note with self.`
 
 distinct messages:
@@ -3170,6 +4323,36 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_codecs.py", line 2994, in check_note
     with self.assertNoted("encoding", exc_type,`
 example test: `test_codecs.ExceptionNotesTest.test_instance_attribute`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_int self.check_type(c_int, <n>) File <str>, line <n>, in check_type result = PROTO(self.callbac`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 55, in test_int
+    self.check_type(c_int, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+           `
+example test: `test_ctypes.test_callbacks.Callbacks.test_int`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_interact_on_disk_file out, err = self.run_cli(TESTFN, commands=(<str>,)) ^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_cli.py", line 146, in test_interact_on_disk_file
+    out, err = self.run_cli(TESTFN, commands=("CREATE TABLE t(t);",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites`
+example test: `test_sqlite3.test_cli.InteractiveSession.test_interact_on_disk_file`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ints self.assertEqual(getattr(b, name), func(byref(b), name.encode(<str>))) AssertionError: <n>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 41, in test_ints
+    self.assertEqual(getattr(b, name), func(byref(b), name.encode('ascii')))
+AssertionError: 1 != -1`
+example test: `test_ctypes.test_bitfields.C_Test.test_ints`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_invalid_bracketed_hosts self.assertRaises(ValueError, urllib.parse.urlsplit, <str>) AssertionEr`
 
@@ -3253,8 +4436,27 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_codecs.py", line 729, in test_invalid_modes
     codecs.open(os_helper.TESTFN, mode, encoding=self.encoding)
-FileNotFoundError: [Errno 2] No such file or directory: '@test_34_tmpæ'`
+FileNotFoundError: [Errno 2] No such file or directory: '@test_32_tmpæ'`
 example test: `test_codecs.UTF16Test.test_invalid_modes`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_invalid_newline self.open(os_helper.TESTFN, <str>, encoding=<str>, newline=<str>) PermissionErr`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 942, in test_invalid_newline
+    self.open(os_helper.TESTFN, 'w', encoding="utf-8", newline='invalid')
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_invalid_newline`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_invalid_operations with self.open(os_helper.TESTFN, <str>, encoding=<str>) as fp: ^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 432, in test_invalid_operations
+    with self.open(os_helper.TESTFN, "w", encoding="utf-8") as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@t`
+example test: `test_io.CIOTest.test_invalid_operations`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_invalid_start_byte self.assertCorrectUTF8Decoding(bytes([byte]), <str>, File <str>, line <n>, i`
 
@@ -3304,8 +4506,29 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_plistlib.py", line 448, in test_io
     with open(os_helper.TESTFN, 'wb') as fp:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_60_tmpæ'`
 example test: `test_plistlib.TestPlistlib.test_io`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_IOBase_destructor self._check_base_destructor(self.IOBase) File <str>, line <n>, in _check_base`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 727, in test_IOBase_destructor
+    self._check_base_destructor(self.IOBase)
+  File "/work/suites/cpython/Lib/test/test_io.py", line 724, in _check_base_destructor
+    self.assertEqual(record, [1, 2, 3])
+Assert`
+example test: `test_io.CIOTest.test_IOBase_destructor`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue_7959 live = [x for x in gc.get_objects() ^^^^^^^^^^^^^^^^ AttributeError: module <str> ha`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 134, in test_issue_7959
+    live = [x for x in gc.get_objects()
+                       ^^^^^^^^^^^^^^^^
+AttributeError: module 'gc' has no attribute 'get_objects'`
+example test: `test_ctypes.test_callbacks.Callbacks.test_issue_7959`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_linked_list_by_clear self.check_runtime_error_issue119004(dict1, dict2) File`
 
@@ -3343,6 +4566,68 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 806, in check_runtime_error`
 example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_size_by_delete_key`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue13120 with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionErro`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2293, in test_issue13120
+    with open(os_helper.TESTFN, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.PdbTestCase.test_issue13120`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue13183 with open(<str>, <str>) as f: ^^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2281, in test_issue13183
+    with open('bar.py', 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'bar.py'`
+example test: `test_pdb.PdbTestCase.test_issue13183`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue16180 stdout, stderr = self.run_pdb_script( ^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2352, in test_issue16180
+    stdout, stderr = self.run_pdb_script(
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in run_pdb_script
+    with open(file`
+example test: `test_pdb.PdbTestCase.test_issue16180`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue26053 stdout, stderr = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2369, in test_issue26053
+    stdout, stderr = self.run_pdb_script(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in`
+example test: `test_pdb.PdbTestCase.test_issue26053`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue34266 check(<str>, <str>) File <str>, line <n>, in check stdout, _ = self.run_pdb_script(<`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2744, in test_issue34266
+    check('\\', 'No escaped character')
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2738, in check
+    stdout, _ = self.run_pdb_script('pass', commands + '\n')
+          `
+example test: `test_pdb.PdbTestCase.test_issue34266`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue36250 with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionErro`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2319, in test_issue36250
+    with open(os_helper.TESTFN, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.PdbTestCase.test_issue36250`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue41287 self.assertEqual(doc, <str>, AssertionError: <str> != <str> - This is a subclass of `
 
 distinct messages:
@@ -3354,6 +4639,58 @@ AssertionError: 'This is a subclass of property' != 'issue 41287 is fixed'
 + issue 41287 is fixe`
 example test: `test_property.PropertySubclassTests.test_issue41287`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue42383 with os_helper.temp_cwd() as cwd: File <str>, line <n>, in __enter__ return next(sel`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2788, in test_issue42383
+    with os_helper.temp_cwd() as cwd:
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^`
+example test: `test_pdb.PdbTestCase.test_issue42383`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue42384 with os_helper.temp_cwd() as cwd: File <str>, line <n>, in __enter__ return next(sel`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2755, in test_issue42384
+    with os_helper.temp_cwd() as cwd:
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^`
+example test: `test_pdb.PdbTestCase.test_issue42384`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue46434 stdout, stderr = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2246, in test_issue46434
+    stdout, stderr = self.run_pdb_script(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in`
+example test: `test_pdb.PdbTestCase.test_issue46434`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue58956 with open(<str>, <str>) as f: ^^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2396, in test_issue58956
+    with open('bar.py', 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'bar.py'`
+example test: `test_pdb.PdbTestCase.test_issue58956`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue7964 with open(os_helper.TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PermissionError`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2219, in test_issue7964
+    with open(os_helper.TESTFN, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_55_tmpæ'`
+example test: `test_pdb.PdbTestCase.test_issue7964`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_iterparse with open(TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permis`
 
 distinct messages:
@@ -3361,7 +4698,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 653, in test_iterparse
     with open(TESTFN, "wb") as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.ElementTreeTest.test_iterparse`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_join_overflow self.assertRaises(OverflowError, <str>.join, seq) File <str>, line <n>, in assert`
@@ -3440,6 +4777,16 @@ distinct messages:
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: float() got an unexpected keyword argument 'newarg'`
 example test: `test_float.GeneralFloatCases.test_keywords_in_subclass`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_large_file_ops with self.open(os_helper.TESTFN, <str>, <n>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 641, in test_large_file_ops
+    with self.open(os_helper.TESTFN, "w+b", 0) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_large_file_ops`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_len_only for f in (self.module.bisect_left, self.module.bisect_right, ^^^^^^^^^^^^^^^^^^^^^^^ A`
 
@@ -3537,6 +4884,86 @@ distinct messages:
 AssertionError: None is not true`
 example test: `test_re.ReTests.test_locale_compiled`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_locals_clear_locals self.assertEqual(outer.f_locals, {}) AssertionError: {<str>: <n>, <str>: <f`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_frame.py", line 200, in test_locals_clear_locals
+    self.assertEqual(outer.f_locals, {})
+AssertionError: {'y': 6, 'inner': <function FrameAttrsTest[61 chars]': 5} != {}
++ {}
+- {'inner': <function FrameAttrsTest.make_frame`
+example test: `test_frame.FrameAttrsTest.test_locals_clear_locals`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_lockf_exclusive self.f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] P`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 161, in test_lockf_exclusive
+    self.f = open(TESTFN, 'wb+')
+             ^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_31_tmpæ'`
+example test: `test_fcntl.TestFcntl.test_lockf_exclusive`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_lockf_share self.f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_fcntl.py", line 173, in test_lockf_share
+    self.f = open(TESTFN, 'wb+')
+             ^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_31_tmpæ'`
+example test: `test_fcntl.TestFcntl.test_lockf_share`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_long self.check_type(c_long, <n>) File <str>, line <n>, in check_type result = PROTO(self.callb`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 62, in test_long
+    self.check_type(c_long, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+         `
+example test: `test_ctypes.test_callbacks.Callbacks.test_long`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_longdouble self.check_type(c_longdouble, <n>) File <str>, line <n>, in check_type result = PROT`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 89, in test_longdouble
+    self.check_type(c_longdouble, 3.14)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(`
+example test: `test_ctypes.test_callbacks.Callbacks.test_longdouble`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_longlong self.assertEqual((x.a, x.b, x.c), (-<n>, <n>, -<n>)) AssertionError: Tuples differ: (-`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 71, in test_longlong
+    self.assertEqual((x.a, x.b, x.c), (-1, 7, -1))
+AssertionError: Tuples differ: (-1, -1, -1) != (-1, 7, -1)
+
+First differing element 1:
+-1
+7
+
+- (-1, -1, -1)
+?      ^^
+`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_longlong`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_longlong self.check_type(c_longlong, <n>) File <str>, line <n>, in check_type result = PROTO(se`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 70, in test_longlong
+    self.check_type(c_longlong, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+ `
+example test: `test_ctypes.test_callbacks.Callbacks.test_longlong`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_longstrings uni.encode(enc, err) LookupError: unknown error handler name <str>`
 
 distinct messages:
@@ -3545,6 +4972,18 @@ distinct messages:
     uni.encode(enc, err)
 LookupError: unknown error handler name 'test.strict'`
 example test: `test_codeccallbacks.CodecCallbackTest.test_longstrings`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_marshal self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 65, in test_marshal
+    self.do_test("test_marshal")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/re`
+example test: `test_audit.AuditTest.test_marshal`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_match__supertype self.doSplitTest( File <str>, line <n>, in doSplitTest self.doSplitTestNamed(e`
 
@@ -3635,6 +5074,224 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/sup`
 example test: `test_exceptions.ExceptionTests.test_memory_error_in_subinterp`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_assign self.assertRaises(ValueError, m2.__setitem__, <n>, lo-<n>) AssertionError: Va`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3030, in test_memoryview_assign
+    self.assertRaises(ValueError, m2.__setitem__, 0, lo-1)
+AssertionError: ValueError not raised by __setitem__`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_assign`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_cast_1D_ND nd = ndarray(titems, shape=tshape, format=tfmt) ^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 2794, in test_memoryview_cast_1D_ND
+    nd = ndarray(titems, shape=tshape, format=tfmt)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_struct.StructError: argument out of range`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_cast_1D_ND`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_cast_invalid self.assertRaises(NotImplementedError, m.__setitem__, <n>, <n>) File <s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 2646, in test_memoryview_cast_invalid
+    self.assertRaises(NotImplementedError, m.__setitem__, 0, 8)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 778, in asse`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_cast_invalid`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_multidim_c self.assertEqual(v, nd1) File <str>, line <n>, in assertEqual ass`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3476, in test_memoryview_compare_multidim_c
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(fi`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_multidim_c`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_multidim_fortran self.assertEqual(v, nd1) File <str>, line <n>, in assertEqu`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3542, in test_memoryview_compare_multidim_fortran
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_f`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_multidim_fortran`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_multidim_mixed self.assertEqual(v, nd1) File <str>, line <n>, in assertEqual`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3613, in test_memoryview_compare_multidim_mixed
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_fun`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_multidim_mixed`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_multidim_suboffsets self.assertEqual(v, nd1) File <str>, line <n>, in assert`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3770, in test_memoryview_compare_multidim_suboffsets
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertio`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_multidim_suboffsets`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_multidim_zero_strides self.assertEqual(v, nd1) File <str>, line <n>, in asse`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3734, in test_memoryview_compare_multidim_zero_strides
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assert`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_multidim_zero_strides`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_ndim_one self.assertEqual(v, nd1) File <str>, line <n>, in assertEqual asser`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3324, in test_memoryview_compare_ndim_one
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(firs`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_ndim_one`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_ndim_zero self.assertEqual(v, w) File <str>, line <n>, in assertEqual assert`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3282, in test_memoryview_compare_ndim_zero
+    self.assertEqual(v, w)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(first`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_ndim_zero`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_not_equal self.assertEqual(a, x) File <str>, line <n>, in assertEqual assert`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3879, in test_memoryview_compare_not_equal
+    self.assertEqual(a, x)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(first`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_not_equal`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_random_formats self.assertEqual(m, nd) File <str>, line <n>, in assertEqual `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3450, in test_memoryview_compare_random_formats
+    self.assertEqual(m, nd)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_random_formats`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_special_cases self.assertNotEqual(memoryview(nd), nd) File <str>, line <n>, `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3220, in test_memoryview_compare_special_cases
+    self.assertNotEqual(memoryview(nd), nd)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 891, in assertNotEqual
+`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_special_cases`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_compare_zero_strides self.assertEqual(v, nd1) File <str>, line <n>, in assertEqual a`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3422, in test_memoryview_compare_zero_strides
+    self.assertEqual(v, nd1)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_compare_zero_strides`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_construction self.verify(m, obj=ex, File <str>, line <n>, in verify item1 = get_poin`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 2390, in test_memoryview_construction
+    self.verify(m, obj=ex,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^
+Name`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_construction`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_from_static_exporter self.verify(y, obj=x, File <str>, line <n>, in verify item1 = g`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4345, in test_memoryview_from_static_exporter
+    self.verify(y, obj=x,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_from_static_exporter`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_get_contiguous self.assertRaises(TypeError, get_contiguous, {}, PyBUF_READ, <str>) ^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3979, in test_memoryview_get_contiguous
+    self.assertRaises(TypeError, get_contiguous, {}, PyBUF_READ, 'F')
+                                 ^^^^^^^^^^^^^^
+NameError: name 'get_contiguous' is not defined`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_get_contiguous`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_hash self.assertRaises(ValueError, m.__hash__) AssertionError: ValueError not raised`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4168, in test_memoryview_hash
+    self.assertRaises(ValueError, m.__hash__)
+AssertionError: ValueError not raised by __hash__`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_hash`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_release self.assertRaises(BufferError, m.release) AssertionError: BufferError not ra`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4188, in test_memoryview_release
+    self.assertRaises(BufferError, m.release)
+AssertionError: BufferError not raised by release`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_release`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_slice self.assertRaises(NotImplementedError, m.__getitem__, File <str>, line <n>, in`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3087, in test_memoryview_slice
+    self.assertRaises(NotImplementedError, m.__getitem__,
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 778, in assertRaises
+    `
+example test: `test_buffer.TestBufferProtocol.test_memoryview_slice`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_struct_module self.assertIsNot(struct_err, None) AssertionError: unexpectedly identi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 2574, in test_memoryview_struct_module
+    self.assertIsNot(struct_err, None)
+AssertionError: unexpectedly identical: None`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_struct_module`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_memoryview_tobytes self.assertEqual(m, nd) File <str>, line <n>, in assertEqual assertion_func(`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 3952, in test_memoryview_tobytes
+    self.assertEqual(m, nd)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 885, in assertEqual
+    assertion_func(first, second,`
+example test: `test_buffer.TestBufferProtocol.test_memoryview_tobytes`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_method_checksum self.assertEqual(result, self.expectedchecksum) AssertionError: <str> != <str> `
 
 distinct messages:
@@ -3664,6 +5321,59 @@ distinct messages:
 AssertionError: "min expected at least 1 argument, got 0" does not match "min() missing 1 required positional argument: 'a'"`
 example test: `test_builtin.BuiltinTest.test_min`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_mmap self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 82, in test_mmap
+    self.do_test("test_mmap")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resource`
+example test: `test_audit.AuditTest.test_mmap`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_module_is_run_as_main stdout, stderr = self.run_pdb_module(script, commands) ^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2552, in test_module_is_run_as_main
+    stdout, stderr = self.run_pdb_module(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", li`
+example test: `test_pdb.PdbTestCase.test_module_is_run_as_main`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_module_without_a_main os.mkdir(module_name) PermissionError: [Errno <n>] Permission denied: <st`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2585, in test_module_without_a_main
+    os.mkdir(module_name)
+PermissionError: [Errno 13] Permission denied: 't_main'`
+example test: `test_pdb.PdbTestCase.test_module_without_a_main`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_monkeypatch self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 73, in test_monkeypatch
+    self.do_test("test_monkeypatch")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elid`
+example test: `test_audit.AuditTest.test_monkeypatch`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_multi_close f = self.open(os_helper.TESTFN, <str>, buffering=<n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 859, in test_multi_close
+    f = self.open(os_helper.TESTFN, "wb", buffering=0)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_multi_close`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_multiline_compiler_error_points_to_the_end self._check_error( File <str>, line <n>, in _check_e`
 
 distinct messages:
@@ -3684,6 +5394,15 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_codecs.py", line 2994, in check_note
     with self.assertNoted("encoding", ex`
 example test: `test_codecs.ExceptionNotesTest.test_multiple_args`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_multiple_inheritance_buffer_last self.assertEqual(mv.tobytes(), b<str>) AssertionError: b<str> `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4723, in test_multiple_inheritance_buffer_last
+    self.assertEqual(mv.tobytes(), b"hello A")
+AssertionError: b'hello' != b'hello A'`
+example test: `test_buffer.TestPythonBufferProtocol.test_multiple_inheritance_buffer_last`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_multiple_matches_named def test_multiple_matches_named(self): NotImplementedError: try star`
 
@@ -3760,6 +5479,151 @@ distinct messages:
 KeyError: "undefined character name 'ARABIC PEPET'"`
 example test: `test_unicodedata.UnicodeFunctionsTest.test_name_inverse_lookup`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_exceptions self.assertRaises(TypeError, c, [<n>], shape=[<n>], format={}) File <str>, l`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1150, in test_ndarray_exceptions
+    self.assertRaises(TypeError, c, [1], shape=[1], format={})
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 778, in assertRais`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_exceptions`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_format_scalar self.verify(nd, obj=None, File <str>, line <n>, in verify item1 = get_poi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1316, in test_ndarray_format_scalar
+    self.verify(nd, obj=None,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^
+Nam`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_format_scalar`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_format_shape self.verify(nd, obj=None, File <str>, line <n>, in verify item1 = get_poin`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1328, in test_ndarray_format_shape
+    self.verify(nd, obj=None,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^
+Name`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_format_shape`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_format_strides self.verify(nd, obj=None, File <str>, line <n>, in verify item1 = get_po`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1349, in test_ndarray_format_strides
+    self.verify(nd, obj=None,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^
+Na`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_format_strides`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_get_pointer self.assertEqual(nd[i], get_pointer(nd, [i])) ^^^^^^^^^^^ NameError: name <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 2073, in test_ndarray_get_pointer
+    self.assertEqual(nd[i], get_pointer(nd, [i]))
+                            ^^^^^^^^^^^
+NameError: name 'get_pointer' is not defined`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_get_pointer`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_getbuf self.verify_getbuf(ex1, ex1, req|bits) File <str>, line <n>, in verify_getbuf se`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1099, in test_ndarray_getbuf
+    self.verify_getbuf(ex1, ex1, req|bits)
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1026, in verify_getbuf
+    self.verify(nd, obj=ex,
+  File "/work/suites/c`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_getbuf`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_index_getitem_single self.assertEqual(nd[i], items[i]) AssertionError: <n> != -<n>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1484, in test_ndarray_index_getitem_single
+    self.assertEqual(nd[i], items[i])
+AssertionError: 14334980866678808833 != -4111763207030742783`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_index_getitem_single`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_index_setitem_single self.assertEqual(nd.tolist(), items) AssertionError: Lists differ:`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1534, in test_ndarray_index_setitem_single
+    self.assertEqual(nd.tolist(), items)
+AssertionError: Lists differ: [(14975242998719620380, 8323265578368929138[177 chars]138)] != [(-3471501074989931236, 8323`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_index_setitem_single`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_multidim self.verify(nd, obj=None, File <str>, line <n>, in verify item1 = get_pointer(`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1378, in test_ndarray_multidim
+    self.verify(nd, obj=None,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^
+NameErro`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_multidim`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_random mvlist = mv.tolist() ^^^^^^^^^^^ IndexError: invalid buffer access`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1902, in test_ndarray_random
+    mvlist = mv.tolist()
+             ^^^^^^^^^^^
+IndexError: invalid buffer access`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_random`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_random_slice_assign self.assertEqual(ml.tolist(), xllist) ^^^^^^^^^^^ IndexError: inval`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1978, in test_ndarray_random_slice_assign
+    self.assertEqual(ml.tolist(), xllist)
+                     ^^^^^^^^^^^
+IndexError: invalid buffer access`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_random_slice_assign`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_sequence self.assertEqual(v, items[i]) AssertionError: Tuples differ: (<n>, <n>, <n>) !`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1614, in test_ndarray_sequence
+    self.assertEqual(v, items[i])
+AssertionError: Tuples differ: (17076249869624095654, 3814478532206239034, 17205378267233356665) != (-1370494204085455962, 38144785322062390`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_sequence`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_slice_assign_single self.verify(mv, obj=ex, File <str>, line <n>, in verify item1 = get`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1848, in test_ndarray_slice_assign_single
+    self.verify(mv, obj=ex,
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 842, in verify
+    item1 = get_pointer(result, ind)
+            ^^^^^^^^^^^`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_slice_assign_single`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ndarray_slice_invalid self.assertRaises(NotImplementedError, mv.__getitem__, File <str>, line <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 1656, in test_ndarray_slice_invalid
+    self.assertRaises(NotImplementedError, mv.__getitem__,
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/case.py", line 778, in assertRaise`
+example test: `test_buffer.TestBufferProtocol.test_ndarray_slice_invalid`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_negative_zero self.assertEqual(f<str>, <str>) ^^^^^^^^^ ValueError: Invalid conversion specific`
 
 distinct messages:
@@ -3770,6 +5634,15 @@ distinct messages:
 ValueError: Invalid conversion specification`
 example test: `test_format.FormatTest.test_negative_zero`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_nested class ANON_U(Union): TypeError: unexpected type`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_anon.py", line 55, in test_nested
+    class ANON_U(Union):
+TypeError: unexpected type`
+example test: `test_ctypes.test_anon.AnonTest.test_nested`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_nested try: NotImplementedError: try star`
 
 distinct messages:
@@ -3778,6 +5651,21 @@ distinct messages:
     try:
 NotImplementedError: try star`
 example test: `test_exception_variations.ExceptStarTestCases.test_nested`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_nested_comp self.assertEqual( AssertionError: Tuples differ: ([[<n>, <n>], [<n>, <n>]], []) != `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2069, in test_nested_comp
+    self.assertEqual(
+AssertionError: Tuples differ: ([[11, 12], [21, 22]], []) != ([], [[11, 12], [21, 22]])
+
+First differing element 0:
+[[11, 12], [21, 22]]
+[]
+
+- ([[11, 12]`
+example test: `test_coroutines.CoroutineTest.test_nested_comp`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_nested_else hit_inner_else = False NotImplementedError: try star`
 
@@ -3972,6 +5860,16 @@ distinct messages:
 UnicodeDecodeError: 'utf_7' codec can't decode byte 0x41 in p`
 example test: `test_codecs.UTF7Test.test_nonbmp`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_not_in_gc returncode, _, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 257, in test_not_in_gc
+    returncode, _, stderr = self.run_python("test_not_in_gc")
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.py", line `
+example test: `test_audit.AuditTest.test_not_in_gc`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_oob_indexing_dictiter_iternextitem self.assertRaises(RuntimeError, iter_and_mutate) AssertionEr`
 
 distinct messages:
@@ -3980,6 +5878,18 @@ distinct messages:
     self.assertRaises(RuntimeError, iter_and_mutate)
 AssertionError: RuntimeError not raised by iter_and_mutate`
 example test: `test_dict.DictTest.test_oob_indexing_dictiter_iternextitem`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open self.do_test(<str>, os_helper.TESTFN) File <str>, line <n>, in do_test with subprocess.Pop`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 76, in test_open
+    self.do_test("test_open", os_helper.TESTFN)
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/`
+example test: `test_audit.AuditTest.test_open`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open self.write_testfile() File <str>, line <n>, in write_testfile fp = open(TESTFN, <str>, enc`
 
@@ -4003,6 +5913,87 @@ distinct messages:
          ^^^`
 example test: `test_builtin.BuiltinTest.test_open_default_encoding`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_undecodable_uri with contextlib.closing(sqlite.connect(uri, uri=True)) as cx: ^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 736, in test_open_undecodable_uri
+    with contextlib.closing(sqlite.connect(uri, uri=True)) as cx:
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_undecodable_uri`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_unquoted_uri with contextlib.closing(sqlite.connect(uri, uri=True)) as cx: ^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 707, in test_open_unquoted_uri
+    with contextlib.closing(sqlite.connect(uri, uri=True)) as cx:
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to op`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_unquoted_uri`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_uri with contextlib.closing(sqlite.connect(uri, uri=True)) as cx: ^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 698, in test_open_uri
+    with contextlib.closing(sqlite.connect(uri, uri=True)) as cx:
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open databa`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_uri`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_uri_readonly sqlite.connect(path).close() ^^^^^^^^^^^^^^^^^^^^ sqlite3.OperationalError: u`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 720, in test_open_uri_readonly
+    sqlite.connect(path).close()
+    ^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_uri_readonly`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_with_path_like_object with contextlib.closing(sqlite.connect(path)) as cx: ^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 677, in test_open_with_path_like_object
+    with contextlib.closing(sqlite.connect(path)) as cx:
+                            ^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open databa`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_with_path_like_object`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_open_with_undecodable_path with contextlib.closing(sqlite.connect(path)) as cx: ^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sqlite3/test_dbapi.py", line 689, in test_open_with_undecodable_path
+    with contextlib.closing(sqlite.connect(path)) as cx:
+                            ^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open databa`
+example test: `test_sqlite3.test_dbapi.OpenTests.test_open_with_undecodable_path`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_opener with self.open(os_helper.TESTFN, <str>, encoding=<str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 890, in test_opener
+    with self.open(os_helper.TESTFN, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_111_tmpæ'`
+example test: `test_io.CIOTest.test_opener`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_opener_invalid_fd fd = os_helper.make_bad_fd() ^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 917, in test_opener_invalid_fd
+    fd = os_helper.make_bad_fd()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/support/os_helper.py", line 163, in make_bad_fd
+    file = open(TESTFN, "w`
+example test: `test_io.CIOTest.test_opener_invalid_fd`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_operator_compare_digest self._test_compare_digest(operator_compare_digest) File <str>, line <n>`
 
 distinct messages:
@@ -4022,6 +6013,67 @@ distinct messages:
 AssertionError: TypeError not raised`
 example test: `test_typing.UnionTests.test_optional_isinstance_type_error`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_origin_tracking self.assertIsNone(coro.cr_origin) ^^^^^^^^^^^^^^ AttributeError: <str> object h`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2313, in test_origin_tracking
+    self.assertIsNone(coro.cr_origin)
+                      ^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'cr_origin'`
+example test: `test_coroutines.OriginTrackingTest.test_origin_tracking`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_origin_tracking_warning msg = check(<n>, f<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2372, in test_origin_tracking_warning
+    msg = check(0, f"coroutine '{corofn.__qualname__}' was never awaited")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work`
+example test: `test_coroutines.OriginTrackingTest.test_origin_tracking_warning`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_output_file_when_changing_directory assert_python_ok( File <str>, line <n>, in assert_python_ok`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_profile.py", line 120, in test_output_file_when_changing_directory
+    assert_python_ok(
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 166, in assert_python_ok
+    return _assert_python(True, *args,`
+example test: `test_profile.ProfileTest.test_output_file_when_changing_directory`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_package_without_a_main os.makedirs(modpath) File <str>, line <n>, in makedirs makedirs(head, ex`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2599, in test_package_without_a_main
+    os.makedirs(modpath)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/os.py", line 215, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/op`
+example test: `test_pdb.PdbTestCase.test_package_without_a_main`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_parse_makefile with open(TESTFN, <str>) as makefile: ^^^^^^^^^^^^^^^^^ PermissionError: [Errno `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 600, in test_parse_makefile
+    with open(TESTFN, "w") as makefile:
+         ^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '@test_127_tmpæ'`
+example test: `test_sysconfig.MakefileTests.test_parse_makefile`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_paths_depend_on_site_initialization site_paths = json.loads(venv.run(<str>, script).stdout) ^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 583, in test_paths_depend_on_site_initialization
+    site_paths = json.loads(venv.run('-c', script).stdout)
+                            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/suppo`
+example test: `test_sysconfig.TestSysConfig.test_paths_depend_on_site_initialization`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdb_issue4201 p = spawn_python(script_name) ^^^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in `
 
 distinct messages:
@@ -4033,6 +6085,56 @@ distinct messages:
     if n`
 example test: `test_zipimport_support.ZipSupportTests.test_pdb_issue4201`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdbrc_alias stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=pdbrc, remove_home=True) `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2467, in test_pdbrc_alias
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc=pdbrc, remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "`
+example test: `test_pdb.PdbTestCase.test_pdbrc_alias`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdbrc_basic stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=pdbrc, remove_home=True) `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2430, in test_pdbrc_basic
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc=pdbrc, remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "`
+example test: `test_pdb.PdbTestCase.test_pdbrc_basic`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdbrc_commands stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=pdbrc, remove_home=Tru`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2501, in test_pdbrc_commands
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc=pdbrc, remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Fil`
+example test: `test_pdb.PdbTestCase.test_pdbrc_commands`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdbrc_empty_line stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=pdbrc, remove_home=T`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2448, in test_pdbrc_empty_line
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc=pdbrc, remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  F`
+example test: `test_pdb.PdbTestCase.test_pdbrc_empty_line`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pdbrc_semicolon stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=pdbrc, remove_home=Tr`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2483, in test_pdbrc_semicolon
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc=pdbrc, remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Fi`
+example test: `test_pdb.PdbTestCase.test_pdbrc_semicolon`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pickle encodings.ascii.StreamReader, encodings.ascii.StreamWriter) ^^^^^^^^^^^^^^^ AttributeErr`
 
 distinct messages:
@@ -4042,6 +6144,18 @@ distinct messages:
     ^^^^^^^^^^^^^^^
 AttributeError: module 'encodings' has no attribute 'ascii'`
 example test: `test_codecs.StreamRecoderTest.test_pickle`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pickle self.do_test(<str>) File <str>, line <n>, in do_test with subprocess.Popen( ^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 70, in test_pickle
+    self.do_test("test_pickle")
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 23, in do_test
+    with subprocess.Popen(
+         ^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/reso`
+example test: `test_audit.AuditTest.test_pickle`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pickle z = pickle.dumps(c, proto) ^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _reduce_ex st`
 
@@ -4233,6 +6347,17 @@ distinct messages:
     proc = subprocess.run(cmd`
 example test: `test_runpy.TestExit.test_pymain_run_stdin`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_pyobject self.check_type(py_object, o) File <str>, line <n>, in check_type result = PROTO(self.`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 102, in test_pyobject
+    self.check_type(py_object, o)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+  `
+example test: `test_ctypes.test_callbacks.Callbacks.test_pyobject`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_qualname self.assertEqual(type(d).__name__, n + <str>) AssertionError: <str> != <str> - getset_`
 
 distinct messages:
@@ -4296,6 +6421,17 @@ distinct messages:
 AssertionError: "range expected at least 1 argument, got 0" does not match "range() missing 1 required positional argument: 'a'"`
 example test: `test_range.RangeTest.test_range_constructor_error_messages`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_RawIOBase_destructor self._check_base_destructor(self.RawIOBase) File <str>, line <n>, in _chec`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 730, in test_RawIOBase_destructor
+    self._check_base_destructor(self.RawIOBase)
+  File "/work/suites/cpython/Lib/test/test_io.py", line 724, in _check_base_destructor
+    self.assertEqual(record, [1, 2, 3])
+`
+example test: `test_io.CIOTest.test_RawIOBase_destructor`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_readline self.assertEqual( AssertionError: <str> != <str> - aaaaaaau2028xxx + aaaaaaa`
 
 distinct messages:
@@ -4318,6 +6454,15 @@ AssertionError: 'foo\n|bar\r\n|baz\r|spamICg-eg|gs' != 'foo\n|bar\r\n|baz\r|spam
   |bar
   |baz- |spamICg`
 example test: `test_codecs.UTF7Test.test_readline`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_readrc_kwarg stdout, stderr = self.run_pdb_script(script, <str>, pdbrc=<str>, remove_home=True)`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2509, in test_readrc_kwarg
+    stdout, stderr = self.run_pdb_script(script, 'q\n', pdbrc='invalid', remove_home=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+example test: `test_pdb.PdbTestCase.test_readrc_kwarg`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_recursive_repr self.assertRegex(repr(d), ^^^^^^^ RecursionError: maximum recursion depth exceed`
 
@@ -4349,6 +6494,62 @@ distinct messages:
     return _asse`
 example test: `test_structseq.StructSeqTest.test_reference_cycle`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_relative_imports os.mkdir(self.module_name) PermissionError: [Errno <n>] Permission denied: <st`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2646, in test_relative_imports
+    os.mkdir(self.module_name)
+PermissionError: [Errno 13] Permission denied: 't_main'`
+example test: `test_pdb.PdbTestCase.test_relative_imports`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_relative_imports_on_plain_module os.mkdir(self.module_name) PermissionError: [Errno <n>] Permis`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2684, in test_relative_imports_on_plain_module
+    os.mkdir(self.module_name)
+PermissionError: [Errno 13] Permission denied: 't_main'`
+example test: `test_pdb.PdbTestCase.test_relative_imports_on_plain_module`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_release_buffer with memoryview(wr) as mv: ^^^^^^^^^^^^^^ TypeError: memoryview: a bytes-like ob`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4507, in test_release_buffer
+    with memoryview(wr) as mv:
+         ^^^^^^^^^^^^^^
+TypeError: memoryview: a bytes-like object is required, not 'WhatToRelease'`
+example test: `test_buffer.TestPythonBufferProtocol.test_release_buffer`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_release_buffer_with_exception_set b.extend(A()) TypeError: can't extend bytearray with A`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4782, in test_release_buffer_with_exception_set
+    b.extend(A())
+TypeError: can't extend bytearray with A`
+example test: `test_buffer.TestPythonBufferProtocol.test_release_buffer_with_exception_set`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_release_saves_reference smuggled_buffer.tobytes() AttributeError: <str> object has no attribute`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4690, in test_release_saves_reference
+    smuggled_buffer.tobytes()
+AttributeError: 'NoneType' object has no attribute 'tobytes'`
+example test: `test_buffer.TestPythonBufferProtocol.test_release_saves_reference`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_release_saves_reference_no_subclassing with memoryview(c) as mv: ^^^^^^^^^^^^^ TypeError: memor`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4703, in test_release_saves_reference_no_subclassing
+    with memoryview(c) as mv:
+         ^^^^^^^^^^^^^
+TypeError: memoryview: a bytes-like object is required, not 'C'`
+example test: `test_buffer.TestPythonBufferProtocol.test_release_saves_reference_no_subclassing`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_reload_namespace_changed self.assertEqual(ns, expected) AssertionError: {<str>__doc__<str>__pac`
 
 distinct messages:
@@ -4364,7 +6565,7 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_bytes.py", line 1272, in test_repeat_id_preserving
     self.assertEqual(id(a), id(a * 1))
-AssertionError: 1599 != 1607`
+AssertionError: 1591 != 1599`
 example test: `test_bytes.BytesTest.test_repeat_id_preserving`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_reraise_all_named try: NotImplementedError: try star`
@@ -4467,6 +6668,16 @@ distinct messages:
 NotImplementedError: try star`
 example test: `test_except_star.TestBreakContinueReturnInExceptStarBlock.test_return_in_except_star_block_valid`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_run self.profilermodule.run(<str>, filename=TESTFN) File <str>, line <n>, in run return _Utils(`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_profile.py", line 92, in test_run
+    self.profilermodule.run("int('1')", filename=TESTFN)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/profile.py", line 93, in run
+    return _Utils(Profile).run(stat`
+example test: `test_profile.ProfileTest.test_run`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_run_module self._check_module(depth) File <str>, line <n>, in _check_module forget(mod_name) Fi`
 
 distinct messages:
@@ -4477,6 +6688,16 @@ distinct messages:
     forget(mod_name)
   File "/work/suites/cpython/Lib/test/support/impo`
 example test: `test_runpy.RunModuleTestCase.test_run_module`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_run_module stdout, stderr = self.run_pdb_module(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2540, in test_run_module
+    stdout, stderr = self.run_pdb_module(script, commands)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2142, in`
+example test: `test_pdb.PdbTestCase.test_run_module`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_run_module_alter_sys self._check_module(depth, alter_sys=True) File <str>, line <n>, in _check_`
 
@@ -4563,6 +6784,26 @@ distinct messages:
   `
 example test: `test_runpy.RunModuleTestCase.test_run_package_in_namespace_package`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_run_profile_as_module assert_python_failure(<str>, self.profilermodule.__name__, <str>) File <s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_profile.py", line 104, in test_run_profile_as_module
+    assert_python_failure('-m', self.profilermodule.__name__, '-m')
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 177, in assert_python_failure
+ `
+example test: `test_profile.ProfileTest.test_run_profile_as_module`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_runctx self.profilermodule.runctx(<str>, globals(), locals(), File <str>, line <n>, in runctx r`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_profile.py", line 98, in test_runctx
+    self.profilermodule.runctx("testfunc()", globals(), locals(),
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/profile.py", line 101, in runctx
+    return _Utils(P`
+example test: `test_profile.ProfileTest.test_runctx`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_safe_interpolation with self.assertRaises(TypeError): AssertionError: TypeError not raised`
 
 distinct messages:
@@ -4571,6 +6812,16 @@ distinct messages:
     with self.assertRaises(TypeError):
 AssertionError: TypeError not raised`
 example test: `test_configparser.ConfigParserTestCaseLegacyInterpolation.test_safe_interpolation`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_same_buffer_returned with memoryview(wr) as mv: ^^^^^^^^^^^^^^ TypeError: memoryview: a bytes-l`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_buffer.py", line 4532, in test_same_buffer_returned
+    with memoryview(wr) as mv:
+         ^^^^^^^^^^^^^^
+TypeError: memoryview: a bytes-like object is required, not 'WhatToRelease'`
+example test: `test_buffer.TestPythonBufferProtocol.test_same_buffer_returned`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_scanstring self.assertEqual( AssertionError: Tuples differ: (<str>, <n>) != (<str>, <n>) First `
 
@@ -4733,6 +6984,45 @@ distinct messages:
 ImportError: cannot import name 'function_setvectorcall' from '_testcapi' (/opt/elide/lib/resources/p`
 example test: `test_call.TestPEP590.test_setvectorcall_load_attr_specialization_skip`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_short self.check_type(c_short, <n>) File <str>, line <n>, in check_type result = PROTO(self.cal`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 48, in test_short
+    self.check_type(c_short, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+       `
+example test: `test_ctypes.test_callbacks.Callbacks.test_short`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_shorts self.assertEqual(getattr(b, name), func(byref(b), name.encode(<str>))) AssertionError: <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 54, in test_shorts
+    self.assertEqual(getattr(b, name), func(byref(b), name.encode('ascii')))
+AssertionError: 1 != 0`
+example test: `test_ctypes.test_bitfields.C_Test.test_shorts`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_shutdown res = script_helper.assert_python_ok(<str>, code) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_atexit.py", line 27, in test_shutdown
+    res = script_helper.assert_python_ok("-c", code)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 166, in `
+example test: `test_atexit.FunctionalTest.test_shutdown`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_signed self.assertEqual((c_typ, x.a, x.b, x.c), (c_typ, -<n>, <n>, <n>)) AssertionError: Tuples`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 97, in test_signed
+    self.assertEqual((c_typ, x.a, x.b, x.c), (c_typ, -1, 0, 0))
+AssertionError: Tuples differ: (<class 'ctypes.c_byte'>, -1, -1, -1) != (<class 'ctypes.c_byte'>, -1, 0, 0)`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_signed`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_simpleops self.assertEqual(str(cm.exception), <str>) AssertionError: <str> != <str> - list.inde`
 
 distinct messages:
@@ -4762,6 +7052,16 @@ distinct messages:
 AssertionError: 3 != 0`
 example test: `test_descr.ClassPropertiesAndMethods.test_slots`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_socket returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ File `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 120, in test_socket
+    returncode, events, stderr = self.run_python("test_socket")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.py", line`
+example test: `test_audit.AuditTest.test_socket`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sort_keys_flag infile = self._create_infile() ^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in _c`
 
 distinct messages:
@@ -4784,6 +7084,17 @@ AssertionError: '    def fun(self) -> None:\n        "ЖЖЖ' != '    def fun(se
 -   `
 example test: `test_ast.test_ast.EndPositionTests.test_source_segment_padded`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_spec stdout, _ = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Fi`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2214, in test_spec
+    stdout, _ = self.run_pdb_script(script, commands)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in run_pdb_script
+`
+example test: `test_pdb.PdbTestCase.test_spec`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_specifier_z_error with self.assertRaisesRegex(ValueError, error_msg): AssertionError: <str> doe`
 
 distinct messages:
@@ -4793,6 +7104,25 @@ distinct messages:
 AssertionError: "Invalid format specifier '.*z.*'" does not match "Invalid conversion specification"`
 example test: `test_format.FormatTest.test_specifier_z_error`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sqlite3 returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Fil`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 162, in test_sqlite3
+    returncode, events, stderr = self.run_python("test_sqlite3")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.py", l`
+example test: `test_audit.AuditTest.test_sqlite3`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_srcdir self.assertTrue(os.path.isdir(srcdir), srcdir) AssertionError: False is not true : /work`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 465, in test_srcdir
+    self.assertTrue(os.path.isdir(srcdir), srcdir)
+AssertionError: False is not true : /work/lib/python3.12/config-3.12-aarch64-linux`
+example test: `test_sysconfig.TestSysConfig.test_srcdir`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_stdin_stdout process = subprocess.run(args, input=self.data, capture_output=True, text=True, ch`
 
 distinct messages:
@@ -4801,6 +7131,47 @@ distinct messages:
     process = subprocess.run(args, input=self.data, capture_output=True, text=True, check=True)
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 example test: `test_json.test_tool.TestTool.test_stdin_stdout`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_step_into_botframe stdout, _ = self.run_pdb_script(script, commands) ^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2414, in test_step_into_botframe
+    stdout, _ = self.run_pdb_script(script, commands)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_pdb.py", line 2117, in r`
+example test: `test_pdb.PdbTestCase.test_step_into_botframe`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_step_overflow self.assertEqual(a[<n>::sys.maxsize], u<str>) AssertionError: <str> != <str> -   `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_arrays.py", line 81, in test_step_overflow
+    self.assertEqual(a[3::sys.maxsize], u"X")
+AssertionError: '\x00' != 'X'
+-  
++ X`
+example test: `test_ctypes.test_arrays.ArrayTestCase.test_step_overflow`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_streamreader data = func(sizehint) ^^^^^^^^^^^^^^ TypeError: <str> not supported between instan`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/multibytecodec_support.py", line 239, in test_streamreader
+    data = func(sizehint)
+           ^^^^^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'NoneType' and 'int'`
+example test: `test_codecencodings_tw.Test_Big5.test_streamreader`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_struct_struct del ctypes._pointer_type_cache[TestStructure] ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_byteswap.py", line 218, in test_struct_struct
+    del ctypes._pointer_type_cache[TestStructure]
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: <class 'test.test_ctypes.test_byteswap.Test.test_struc`
+example test: `test_ctypes.test_byteswap.Test.test_struct_struct`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_surrogates assertScan(<str>, <str>) File <str>, line <n>, in assertScan self.assertEqual(scanst`
 
@@ -4842,6 +7213,44 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/support/testcase.py", line 79, in assertExceptionI`
 example test: `test_except_star.TestExceptStarCleanup.test_sys_exception_restored`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sys_getframe returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 180, in test_sys_getframe
+    returncode, events, stderr = self.run_python("test_sys_getframe")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/te`
+example test: `test_audit.AuditTest.test_sys_getframe`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sys_getframemodulename returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 192, in test_sys_getframemodulename
+    returncode, events, stderr = self.run_python("test_sys_getframemodulename")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/w`
+example test: `test_audit.AuditTest.test_sys_getframemodulename`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sys_monitoring_register_callback returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 263, in test_sys_monitoring_register_callback
+    returncode, events, stderr = self.run_python("test_sys_monitoring_register_callback")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+example test: `test_audit.AuditTest.test_sys_monitoring_register_callback`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_sysexcepthook_indentation_error self.assertEqual(traceback.format_exception(self.sysmod.last_ex`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_code_module.py", line 171, in test_sysexcepthook_indentation_error
+    self.assertEqual(traceback.format_exception(self.sysmod.last_exc), [
+AssertionError: Lists differ: ['  F[27 chars] '    1\n', '    ^\n', 'IndentationEr`
+example test: `test_code_module.TestInteractiveConsole.test_sysexcepthook_indentation_error`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_tab process = subprocess.run(args, input=input_, capture_output=True, text=True, check=True) ^^`
 
 distinct messages:
@@ -4860,6 +7269,16 @@ distinct messages:
 TypeError: 'rot_13' encoder returned 'str' instead of 'bytes'; use codecs.encode() to encode to arbitra`
 example test: `test_codecs.TransformCodecTest.test_text_to_binary_denylists_text_transforms`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_TextIOBase_destructor self._check_base_destructor(self.TextIOBase) File <str>, line <n>, in _ch`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_io.py", line 736, in test_TextIOBase_destructor
+    self._check_base_destructor(self.TextIOBase)
+  File "/work/suites/cpython/Lib/test/test_io.py", line 724, in _check_base_destructor
+    self.assertEqual(record, [1, 2, 3]`
+example test: `test_io.CIOTest.test_TextIOBase_destructor`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_third_coding_line self.check_script_output(src, br<str>) File <str>, line <n>, in check_script_`
 
 distinct messages:
@@ -4869,6 +7288,16 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 336, in check_script_output
     res = script_helpe`
 example test: `test_source_encoding.FileSourceEncodingTest.test_third_coding_line`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_threading returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 205, in test_threading
+    returncode, events, stderr = self.run_python("test_threading")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_audit.`
+example test: `test_audit.AuditTest.test_threading`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_timezone strp_output = _strptime._strptime_time(<str>, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 
@@ -4887,7 +7316,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_source_encoding.py", line 166, in test_tokenizer_fstring_warning_in_first_line
     with open(TESTFN, "w") as fd:
          ^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_138_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_85_tmpæ'`
 example test: `test_source_encoding.MiscSourceEncodingTest.test_tokenizer_fstring_warning_in_first_line`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_truncated_large_data check(self.build(b<str> + s.to_bytes(<n>, <str>))) File <str>, line <n>, i`
@@ -4981,6 +7410,113 @@ distinct messages:
 NotImplementedError: try star`
 example test: `test_grammar.GrammarTests.test_try_star`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ubyte self.check_type(c_ubyte, <n>) File <str>, line <n>, in check_type result = PROTO(self.cal`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 45, in test_ubyte
+    self.check_type(c_ubyte, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+       `
+example test: `test_ctypes.test_callbacks.Callbacks.test_ubyte`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_uint self.check_type(c_uint, <n>) File <str>, line <n>, in check_type result = PROTO(self.callb`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 59, in test_uint
+    self.check_type(c_uint, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+         `
+example test: `test_ctypes.test_callbacks.Callbacks.test_uint`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_uint32_swap_big_endian self.assertEqual(b, b<str>) AssertionError: bytearray(b<str>) != b<str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 294, in test_uint32_swap_big_endian
+    self.assertEqual(b, b'\xab\xcd\xef\x12')
+AssertionError: bytearray(b'\x00\x00\x00\x02') != b'\xab\xcd\xef\x12'`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_uint32_swap_big_endian`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_uint32_swap_little_endian self.assertEqual(b, b<str>) AssertionError: bytearray(b<str>) != b<st`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 280, in test_uint32_swap_little_endian
+    self.assertEqual(b, b'\xef\xcd\xab\x21')
+AssertionError: bytearray(b'\x02\x00\x00\x00') != b'\xef\xcd\xab!'`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_uint32_swap_little_endian`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_uint64 x.a = <n> ^^^ OverflowError: Python int too large to convert to Java long`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 265, in test_uint64
+    x.a = 0xFEDCBA9876543211
+    ^^^
+OverflowError: Python int too large to convert to Java long`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_uint64`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ulong self.check_type(c_ulong, <n>) File <str>, line <n>, in check_type result = PROTO(self.cal`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 66, in test_ulong
+    self.check_type(c_ulong, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+       `
+example test: `test_ctypes.test_callbacks.Callbacks.test_ulong`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ulonglong self.assertEqual((x.a, x.b, x.c), (<n>, <n>, <n>)) AssertionError: Tuples differ: (<n`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 83, in test_ulonglong
+    self.assertEqual((x.a, x.b, x.c), (1, 7, 1))
+AssertionError: Tuples differ: (7, 7, 7) != (1, 7, 1)
+
+First differing element 0:
+7
+1
+
+- (7, 7, 7)
++ (1, 7, 1)`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_ulonglong`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ulonglong self.check_type(c_ulonglong, <n>) File <str>, line <n>, in check_type result = PROTO(`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 75, in test_ulonglong
+    self.check_type(c_ulonglong, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)`
+example test: `test_ctypes.test_callbacks.Callbacks.test_ulonglong`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unawaited_warning_during_shutdown assert_python_ok(<str>, code) File <str>, line <n>, in assert`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2433, in test_unawaited_warning_during_shutdown
+    assert_python_ok("-c", code)
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 166, in assert_python_ok
+    return _assert_python`
+example test: `test_coroutines.UnawaitedWarningDuringShutdownTest.test_unawaited_warning_during_shutdown`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unawaited_warning_when_module_broken self.assertEqual(repr(cm.unraisable.object), coro_repr) ^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 2413, in test_unawaited_warning_when_module_broken
+    self.assertEqual(repr(cm.unraisable.object), coro_repr)
+                          ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no at`
+example test: `test_coroutines.OriginTrackingTest.test_unawaited_warning_when_module_broken`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unexpected_end_of_data self.assertCorrectUTF8Decoding(bytes.fromhex(seq), <str>, File <str>, li`
 
 distinct messages:
@@ -4990,6 +7526,42 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_unicode.py", line 2039, in assertCorrectUTF8Decoding
     se`
 example test: `test_unicode.UnicodeTest.test_unexpected_end_of_data`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unicode_buffer self.assertEqual(b[:], <str>) AssertionError: <str> != <str> - a    + abc `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_buffers.py", line 42, in test_unicode_buffer
+    self.assertEqual(b[:], "abc\0")
+AssertionError: 'a\x00\x00\x00' != 'abc\x00'
+- a   
++ abc `
+example test: `test_ctypes.test_buffers.StringBufferTestCase.test_unicode_buffer`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unicode_conversion self.assertEqual(b[:], <str>) AssertionError: <str> != <str> - a    + abc `
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_buffers.py", line 57, in test_unicode_conversion
+    self.assertEqual(b[:], "abc\0")
+AssertionError: 'a\x00\x00\x00' != 'abc\x00'
+- a   
++ abc `
+example test: `test_ctypes.test_buffers.StringBufferTestCase.test_unicode_conversion`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unicode_error self.assertTrue(output.startswith(<str>), output) AssertionError: False is not tr`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_code_module.py", line 104, in test_unicode_error
+    self.assertTrue(output.startswith('UnicodeEncodeError: '), output)
+AssertionError: False is not true : 
+now exiting InteractiveConsole...
+
+
+Stdout:
+<MagicMock name='stdo`
+example test: `test_code_module.TestInteractiveConsole.test_unicode_error`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unicode_escape self.assertEqual(codecs.unicode_escape_decode(r<str>), (<str>, <n>)) ^^^^^^^^^^^`
 
@@ -5019,6 +7591,35 @@ distinct messages:
 AssertionError: TypeError not raised`
 example test: `test_typing.UnionTests.test_union_isinstance_type_error`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_union_struct del ctypes._pointer_type_cache[TestUnion] ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^ Ke`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_byteswap.py", line 351, in test_union_struct
+    del ctypes._pointer_type_cache[TestUnion]
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: <class 'test.test_ctypes.test_byteswap.Test.test_union_struct.<`
+example test: `test_ctypes.test_byteswap.Test.test_union_struct`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unraisablehook returncode, events, stderr = self.run_python(<str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_audit.py", line 94, in test_unraisablehook
+    returncode, events, stderr = self.run_python("test_unraisablehook")
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/te`
+example test: `test_audit.AuditTest.test_unraisablehook`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_unsigned self.assertEqual((c_typ, x.a, x.b, x.c), (c_typ, <n>, <n>, <n>)) AssertionError: Tuple`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_bitfields.py", line 113, in test_unsigned
+    self.assertEqual((c_typ, x.a, x.b, x.c), (c_typ, 7, 0, 0))
+AssertionError: Tuples differ: (<class 'ctypes.c_ubyte'>, 255, 255, 255) != (<class 'ctypes.c_ubyte'>, 7,`
+example test: `test_ctypes.test_bitfields.BitFieldTest.test_unsigned`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_urlsplit_normalization denorm_chars = [ ^ File <str>, line <n>, in <listcomp> if unicodedata.de`
 
 distinct messages:
@@ -5030,6 +7631,28 @@ distinct messages:
     if unicodedata.decomposition(c)
       `
 example test: `test_urlparse.UrlParseTestCase.test_urlsplit_normalization`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_user_similar self.assertEqual(user_path, expected) AssertionError: <str> != <str> - ?/.local/li`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_sysconfig.py", line 400, in test_user_similar
+    self.assertEqual(user_path, expected)
+AssertionError: '?/.local/lib/python3.12' != 'lib/python3?/.local12'
+- ?/.local/lib/python3.12
++ lib/python3?/.local12`
+example test: `test_sysconfig.TestSysConfig.test_user_similar`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_ushort self.check_type(c_ushort, <n>) File <str>, line <n>, in check_type result = PROTO(self.c`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 52, in test_ushort
+    self.check_type(c_ushort, 42)
+  File "/work/suites/cpython/Lib/test/test_ctypes/test_callbacks.py", line 23, in check_type
+    result = PROTO(self.callback)(arg)
+     `
+example test: `test_ctypes.test_callbacks.Callbacks.test_ushort`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_utf8_bom self.check_script_output(src, br<str>) File <str>, line <n>, in check_script_output re`
 
@@ -5179,6 +7802,54 @@ distinct messages:
              `
 example test: `test_strptime.StrptimeTests.test_weekday`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_with_11 run_async(foo()) File <str>, line <n>, in run_async buffer.append(coro.send(None)) ^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1467, in test_with_11
+    run_async(foo())
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 45, in run_async
+    buffer.append(coro.send(None))
+                  ^^^^^^^^^^^^^^^
+  File "`
+example test: `test_coroutines.CoroutineTest.test_with_11`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_with_13 with self.assertRaises(ZeroDivisionError): AssertionError: ZeroDivisionError not raised`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1508, in test_with_13
+    with self.assertRaises(ZeroDivisionError):
+AssertionError: ZeroDivisionError not raised`
+example test: `test_coroutines.CoroutineTest.test_with_13`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_with_6 with self.assertRaisesRegex( AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1308, in test_with_6
+    with self.assertRaisesRegex(
+AssertionError: "'async with' received an object from __aenter__ that does not implement __await__: int" does not match "object int can't be used i`
+example test: `test_coroutines.CoroutineTest.test_with_6`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_with_7 self.assertRegex( AssertionError: Regex didn<str>async with<str>t be used in <str> expre`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1331, in test_with_7
+    self.assertRegex(
+AssertionError: Regex didn't match: "'async with' received an object from __aexit__ that does not implement __await__: int" not found in "object int can't be `
+example test: `test_coroutines.CoroutineTest.test_with_7`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_with_8 with self.assertRaisesRegex( AssertionError: <str> does not match <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_coroutines.py", line 1356, in test_with_8
+    with self.assertRaisesRegex(
+AssertionError: "'async with' received an object from __aexit__ that does not implement __await__: int" does not match "object int can't be used in`
+example test: `test_coroutines.CoroutineTest.test_with_8`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_wrapped_descriptor_inside_classmethod self.assertEqual(Class.outer(), <str>) ^^^^^^^^^^^^^ Type`
 
 distinct messages:
@@ -5206,7 +7877,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4022, in test_write_to_binary_file
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_binary_file_with_bom with open(TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^ PermissionError`
@@ -5216,7 +7887,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4049, in test_write_to_binary_file_with_bom
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file_with_bom`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_binary_file_with_encoding with open(TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^ Permission`
@@ -5226,7 +7897,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4031, in test_write_to_binary_file_with_encoding
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file_with_encoding`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_filename tree.write(TESTFN) File <str>, line <n>, in write with _get_writer(file_or_fi`
@@ -5246,7 +7917,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 3989, in test_write_to_filename_as_unicode
     with open(TESTFN, 'w') as f:
          ^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_filename_as_unicode`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_filename_with_encoding tree.write(TESTFN, encoding=<str>) File <str>, line <n>, in wri`
@@ -5266,7 +7937,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4001, in test_write_to_text_file
     with open(TESTFN, 'w', encoding='utf-8') as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_140_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_text_file`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_user_binary_writer_with_bom self.assertEqual(raw.getvalue(), AssertionError: b<str> !=`
@@ -5308,6 +7979,16 @@ distinct messages:
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/elide/lib/resources/python/pyth`
 example test: `test_runpy.RunPathTestCase.test_zipfile_compiled`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testAcceptTimeout socket_helper.bind_port(self.sock, self.localhost) File <str>, line <n>, in bind_p`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_timeout.py", line 235, in testAcceptTimeout
+    socket_helper.bind_port(self.sock, self.localhost)
+  File "/work/suites/cpython/Lib/test/support/socket_helper.py", line 99, in bind_port
+    if sock.getsockopt(socket.SOL_SO`
+example test: `test_timeout.TCPTimeoutTestCase.testAcceptTimeout`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in testCbrt self.assertRaises(TypeError, math.cbrt) ^^^^^^^^^ AttributeError: module <str> has no attri`
 
@@ -5369,6 +8050,26 @@ distinct messages:
 AssertionError: <Handlers.SIG_IGN: 1> == <Handlers.SIG_IGN: 1>`
 example test: `test_unittest.test_break.TestBreakSignalIgnored.testMainInstallsHandler`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testMoreThan64kFiles with zipfile.ZipFile(TESTFN, mode=<str>, allowZip64=True) as zipf: ^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_zipfile64.py", line 94, in testMoreThan64kFiles
+    with zipfile.ZipFile(TESTFN, mode="w", allowZip64=True) as zipf:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resources/python/pytho`
+example test: `test_zipfile64.OtherTests.testMoreThan64kFiles`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testMoreThan64kFilesAppend with zipfile.ZipFile(TESTFN, mode=<str>, allowZip64=False) as zipf: ^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_zipfile64.py", line 108, in testMoreThan64kFilesAppend
+    with zipfile.ZipFile(TESTFN, mode="w", allowZip64=False) as zipf:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/elide/lib/resources/pyt`
+example test: `test_zipfile64.OtherTests.testMoreThan64kFilesAppend`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in testObjectAttributeAccessErrorMessages with self.assertRaisesRegex(AttributeError, error_msg): Asser`
 
 distinct messages:
@@ -5385,7 +8086,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_exceptions.py", line 65, in testRaising
     fp = open(TESTFN, 'w', encoding="utf-8")
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_45_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_43_tmpæ'`
 example test: `test_exceptions.ExceptionTests.testRaising`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in testRemoveHandlerAsDecorator self.assertNotEqual(signal.getsignal(signal.SIGINT), default_handler) A`
@@ -5396,6 +8097,36 @@ distinct messages:
     self.assertNotEqual(signal.getsignal(signal.SIGINT), default_handler)
 AssertionError: <Handlers.SIG_IGN: 1> == <Handlers.SIG_IGN: 1>`
 example test: `test_unittest.test_break.TestBreakSignalIgnored.testRemoveHandlerAsDecorator`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testSend socket_helper.bind_port(serv, self.localhost) File <str>, line <n>, in bind_port if sock.ge`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_timeout.py", line 242, in testSend
+    socket_helper.bind_port(serv, self.localhost)
+  File "/work/suites/cpython/Lib/test/support/socket_helper.py", line 99, in bind_port
+    if sock.getsockopt(socket.SOL_SOCKET, socket.S`
+example test: `test_timeout.TCPTimeoutTestCase.testSend`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testSendall socket_helper.bind_port(serv, self.localhost) File <str>, line <n>, in bind_port if sock`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_timeout.py", line 261, in testSendall
+    socket_helper.bind_port(serv, self.localhost)
+  File "/work/suites/cpython/Lib/test/support/socket_helper.py", line 99, in bind_port
+    if sock.getsockopt(socket.SOL_SOCKET, socke`
+example test: `test_timeout.TCPTimeoutTestCase.testSendall`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in testSendto socket_helper.bind_port(serv, self.localhost) File <str>, line <n>, in bind_port if sock.`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_timeout.py", line 251, in testSendto
+    socket_helper.bind_port(serv, self.localhost)
+  File "/work/suites/cpython/Lib/test/support/socket_helper.py", line 99, in bind_port
+    if sock.getsockopt(socket.SOL_SOCKET, socket`
+example test: `test_timeout.TCPTimeoutTestCase.testSendto`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in testTypeAttributeAccessErrorMessages with self.assertRaisesRegex(AttributeError, error_msg): Asserti`
 
@@ -5416,3 +8147,50 @@ distinct messages:
     return runner.run(main)
            ^^^^^^^^^^^^^^`
 example test: `test_contextlib_async.TestAsyncExitStack.test_async_exit_exception_chaining`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in wrapper return f(self, maxsize) ^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_hash self.assertNotEq`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1122, in wrapper
+    return f(self, maxsize)
+           ^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_bigmem.py", line 572, in test_hash
+    self.assertNotEqual(h1, hash(s))
+AssertionErr`
+example test: `test_bigmem.StrTest.test_hash`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in wrapper return f(self, maxsize) ^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_lstrip self.assertTru`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1122, in wrapper
+    return f(self, maxsize)
+           ^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_bigmem.py", line 273, in test_lstrip
+    self.assertTrue(stripped is s)
+AssertionErr`
+example test: `test_bigmem.BytesTest.test_lstrip`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in wrapper return f(self, maxsize) ^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_rstrip self.assertTru`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1122, in wrapper
+    return f(self, maxsize)
+           ^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_bigmem.py", line 345, in test_rstrip
+    self.assertTrue(stripped is s)
+AssertionErr`
+example test: `test_bigmem.BytesTest.test_rstrip`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in wrapper return f(self, maxsize) ^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_slice_and_getitem sel`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1122, in wrapper
+    return f(self, maxsize)
+           ^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_bigmem.py", line 530, in test_slice_and_getitem
+    self.assertRaises(IndexError, op`
+example test: `test_bigmem.StrTest.test_slice_and_getitem`
