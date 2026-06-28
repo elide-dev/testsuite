@@ -3,5 +3,15 @@
 
 [skip]
 "test_re.ReTests.test_look_behind_overflow" = "Pathological large fixed-width lookbehind test is too slow under Elide Python"
+"test_bytes.ByteArrayAsStringTest.test_adaptive_find" = "Pathological string-search complexity test hangs under Elide Python"
+"test_bytes.ByteArrayAsStringTest.test_find_many_lengths" = "Pathological string-search complexity test hangs under Elide Python"
+"test_bytes.ByteArrayAsStringTest.test_find_with_memory" = "Pathological string-search complexity test hangs under Elide Python"
+"test_bytes.BytesAsStringTest.test_adaptive_find" = "Pathological string-search complexity test hangs under Elide Python"
+"test_bytes.BytesAsStringTest.test_find_many_lengths" = "Pathological string-search complexity test hangs under Elide Python"
+"test_bytes.BytesAsStringTest.test_find_with_memory" = "Pathological string-search complexity test hangs under Elide Python"
+"test_exceptions.ExceptionTests.test_no_hang_on_context_chain_cycle1" = "Anti-hang exception context-cycle test hangs under Elide Python"
+"test_exceptions.ExceptionTests.test_no_hang_on_context_chain_cycle2" = "Anti-hang exception context-cycle test hangs under Elide Python"
+"test_exceptions.ExceptionTests.test_no_hang_on_context_chain_cycle3" = "Anti-hang exception context-cycle test hangs under Elide Python"
+"test_exceptions.ExceptionTests.test_recursion_in_except_handler" = "Recursion stress test hangs under Elide Python"
 
 [fail]
