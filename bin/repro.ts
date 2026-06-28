@@ -109,8 +109,9 @@ function sourceRootForCase(suiteId: string, suitePath: string, id: string): Case
   }
   if (suiteId === "cpython-core") {
     const moduleName = id.split(".")[0] ?? id;
-    const rel = `Lib/test/${moduleName}.py`;
-    return { id, include: moduleName, sourceRoots: [join(suitePath, rel)] };
+    const file = join(suitePath, `Lib/test/${moduleName}.py`);
+    const directory = join(suitePath, `Lib/test/${moduleName}`);
+    return { id, include: moduleName, sourceRoots: [existsSync(file) ? file : directory] };
   }
   if (suiteId === "wpt-wintertc") {
     const rel = id.split(" :: ")[0] ?? id;
@@ -199,6 +200,25 @@ function baselineScript(suiteId: string, includes: string[]): string {
       "",
     ].join("\n");
   }
+  if (suiteId === "cpython-core") {
+    return [
+      "#!/usr/bin/env bash",
+      "set -euo pipefail",
+      "",
+      'root="${TESTSUITE_ROOT:-}"',
+      'if [[ -z "$root" ]]; then',
+      '  root="$(cd "$(dirname "$0")" && pwd)"',
+      '  if [[ ! -f "$root/package.json" ]]; then',
+      '    echo "Set TESTSUITE_ROOT=/path/to/elide testsuite checkout." >&2',
+      "    exit 2",
+      "  fi",
+      "fi",
+      'python="${PYTHON312:-python3.12}"',
+      'cd "$root"',
+      `exec "$python" suites/drivers/python/elide_regrtest_driver.py --cpython-root suites/cpython ${includes.map((include) => JSON.stringify(include)).join(" ")}`,
+      "",
+    ].join("\n");
+  }
   return [
     "#!/usr/bin/env bash",
     "set -euo pipefail",
@@ -206,6 +226,16 @@ function baselineScript(suiteId: string, includes: string[]): string {
     "exit 2",
     "",
   ].join("\n");
+}
+
+function baselineReadmeSnippet(suiteId: string, name: string): string {
+  if (suiteId === "javac-jtreg") {
+    return `TESTSUITE_ROOT=/path/to/testsuite JDK25_HOME=/path/to/graalvm-jdk-25.0.3 ./${name}/baseline.sh`;
+  }
+  if (suiteId === "cpython-core") {
+    return `TESTSUITE_ROOT=/path/to/testsuite PYTHON312=python3.12 ./${name}/baseline.sh`;
+  }
+  return `TESTSUITE_ROOT=/path/to/testsuite ./${name}/baseline.sh`;
 }
 
 async function zipDirectory(sourceDir: string, zipPath: string): Promise<void> {
@@ -273,7 +303,7 @@ async function main(): Promise<number> {
       "Compare against the baseline runtime/compiler:",
       "",
       "```bash",
-      `TESTSUITE_ROOT=/path/to/testsuite JDK25_HOME=/path/to/graalvm-jdk-25.0.3 ./${name}/baseline.sh`,
+      baselineReadmeSnippet(options.suite, name),
       "```",
       "",
       "The script uses the testsuite harness so the invocation matches CI and local reports.",
