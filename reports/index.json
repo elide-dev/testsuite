@@ -4,10 +4,10 @@
       "workload": "cpython-core",
       "semver": "1.3.5+20260628.3b80cf3",
       "digest": "3583aceded8e",
-      "pass": 10135,
-      "total": 11523,
+      "pass": 10490,
+      "total": 11960,
       "regressions": 0,
-      "finishedAt": "2026-06-28T03:22:08.350Z",
+      "finishedAt": "2026-06-28T03:26:28.872Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/cpython-core"
     },
     {

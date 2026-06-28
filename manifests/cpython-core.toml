@@ -260,3 +260,55 @@ include = [
 ]
 reason = "Hash, hashlib, and HMAC API compliance without process or file-backed digest cases."
 tags = ["python312", "pure-core", "stdlib", "crypto"]
+
+[[group]]
+id = "pure-stdlib-metadata"
+include = [
+  "test_abstract_numbers",
+  "test_dataclasses",
+  "test_dictviews",
+  "test_ordered_dict",
+  "test_module",
+  "test_structseq",
+  "test_errno",
+  "test_stat",
+  "test_warnings",
+  "test_strftime",
+  "test_strptime",
+  "test_unparse",
+  "test_tabnanny",
+  "test_http_cookies",
+  "test_http_cookiejar",
+  "test_robotparser",
+]
+reason = "Low-risk stdlib API, metadata, parser, and formatting coverage."
+tags = ["python312", "pure-core", "stdlib"]
+
+[[group]]
+id = "compression"
+include = [
+  "test_zlib",
+  "test_gzip",
+  "test_bz2",
+  "test_lzma",
+]
+reason = "Compression module API coverage."
+tags = ["python312", "stdlib", "compression"]
+
+[[group]]
+id = "sandboxed-file-io"
+include = [
+  "test_genericpath",
+  "test_posixpath",
+  "test_glob",
+  "test_tempfile",
+  "test_filecmp",
+  "test_fileinput",
+  "test_fileutils",
+  "test_unicode_file",
+  "test_unicode_file_functions",
+  "test_zipapp",
+  "test_zipfile",
+]
+reason = "Filesystem and archive coverage enabled with Elide sandbox read/write grants."
+tags = ["python312", "stdlib", "filesystem"]

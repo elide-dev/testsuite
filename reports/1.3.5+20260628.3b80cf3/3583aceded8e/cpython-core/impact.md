@@ -2,6 +2,15 @@
 
 ## By root-cause signature
 
+### 30 × `Traceback (most recent call last): File <str>, line <n>, in setUp os.mkdir(os_helper.TESTFN) PermissionError: [Errno <n>] Permission denied: <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_unicode_file_functions.py", line 67, in setUp
+    os.mkdir(os_helper.TESTFN)
+PermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'`
+example test: `test_unicode_file_functions.UnicodeFileTests.test_directory`
+
 ### 19 × `Traceback (most recent call last): File <str>, line <n>, in setUp with open(os_helper.TESTFN, <str>, encoding=<str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 
 distinct messages:
@@ -9,7 +18,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_configparser.py", line 1098, in setUp
     with open(os_helper.TESTFN, 'w', encoding="utf-8") as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_81_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_132_tmpæ'`
 example test: `test_configparser.MultilineValuesTestCase.test_basic`
 
 ### 13 × `Traceback (most recent call last): File <str>, line <n>, in setUp (self.module.bisect_right, [], <n>, <n>), ^^^^^^^^^^^^^^^^^^^^^^^^ AttributeError: <str> objec`
@@ -91,6 +100,17 @@ distinct messages:
 TypeError: cannot create weak reference to 'array.array' object`
 example test: `test_array.ByteTest.test_weakref`
 
+### 12 × `Traceback (most recent call last): File <str>, line <n>, in setUp self.mktemp(<str>, <str>) File <str>, line <n>, in mktemp os.makedirs(base) File <str>, line <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_glob.py", line 29, in setUp
+    self.mktemp('a', 'D')
+  File "/work/suites/cpython/Lib/test/test_glob.py", line 24, in mktemp
+    os.makedirs(base)
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/os.py",`
+example test: `test_glob.GlobTests.test_escape`
+
 ### 12 × `Traceback (most recent call last): File <str>, line <n>, in test_initialize_with_unicode self.assertIn(<str>, str(cm.exception)) AssertionError: <str> not found`
 
 distinct messages:
@@ -167,6 +187,12 @@ AssertionError: b'\x0[15 chars]x00\xff\xfd\x00\x00\x00]' != b'\x0[15 chars]x00\x
     self.assertEqual("[\uDC80]".encode(self.encoding, "namereplace"),
 AssertionError: b'[\x00\x00\x00\xfd\xff\x00\x00]\x00\x00\x00' != b'[\x00\x00\x00\\\x00\x00\x00u\x00\x00\x0`
 example test: `test_codecs.UTF16BETest.test_lone_surrogates`
+
+### 5 × `PermissionError(<n>, <str>)`
+
+distinct messages:
+- `PermissionError(13, 'Permission denied')`
+example test: `test_http_cookiejar`
 
 ### 5 × `Traceback (most recent call last): File <str>, line <n>, in setUp os.mkdir(self.pkgname) PermissionError: [Errno <n>] Permission denied: <str>`
 
@@ -599,6 +625,12 @@ distinct messages:
 OSError: [Errno 22] Invalid argument: "Feature not supported on 'java' POSIX backend: Sending arbitrary signals to child processes. Can`
 example test: `test_unittest.test_break.TestBreak.testRemoveResult`
 
+### 3 × `AttributeError(<str>)`
+
+distinct messages:
+- `AttributeError("module '_asyncio' has no attribute 'Future'")`
+example test: `test_types`
+
 ### 3 × `Traceback (most recent call last): File <str>, line <n>, in decorator return func(*args) ^^^^^^^^^^^ File <str>, line <n>, in test_unpickle_module_race os.mkdir`
 
 distinct messages:
@@ -654,18 +686,6 @@ distinct messages:
     os.kill(pid, signal.SIGINT)
 OSError: [Errno 22] Invalid argument: "Feature not supported on 'java' POSIX backend: Sending arbitrary signals to child processes. Ca`
 example test: `test_unittest.test_break.TestBreak.testInstallHandler`
-
-### 2 × `AttributeError(<str>)`
-
-distinct messages:
-- `AttributeError("module '_asyncio' has no attribute 'Future'")`
-example test: `test_types`
-
-### 2 × `PermissionError(<n>, <str>)`
-
-distinct messages:
-- `PermissionError(13, 'Permission denied')`
-example test: `test_netrc`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_capitalize_nonascii self.checkequal(<str>, File <str>, line <n>, in checkequal self.assertEqual`
 
@@ -779,7 +799,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4110, in test_dump_closed_file
     f = open(TESTFN, "wb")
         ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
 example test: `test_pickle.CPickleTests.test_dump_closed_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_dump_text_file f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permissio`
@@ -789,7 +809,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4148, in test_dump_text_file
     f = open(TESTFN, "w")
         ^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
 example test: `test_pickle.CPickleTests.test_dump_text_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_errors self.assertEqual(raw.decode(<str>, <str>), expected) AssertionError: <str> != <str> - � `
@@ -847,6 +867,17 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/support/__init__.py", line 1830, in check_free_after_iterating`
 example test: `test_bytes.ByteArrayTest.test_free_after_iterating`
 
+### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_highly_nested_subclass self.assertEqual(deleted, list(reversed(range(<n>)))) AssertionError: Li`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 519, in test_highly_nested_subclass
+    self.assertEqual(deleted, list(reversed(range(100))))
+AssertionError: Lists differ: [] != [99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 8[343 chars]1, 0]
+
+Second li`
+example test: `test_ordered_dict.CPythonBuiltinDictTests.test_highly_nested_subclass`
+
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_load_closed_file f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permis`
 
 distinct messages:
@@ -854,7 +885,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/pickletester.py", line 4118, in test_load_closed_file
     f = open(TESTFN, "wb")
         ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'`
 example test: `test_pickle.CPickleTests.test_load_closed_file`
 
 ### 2 × `Traceback (most recent call last): File <str>, line <n>, in test_load_global self.assertEqual(self.loads(b<str>), <n>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
@@ -1349,6 +1380,16 @@ Traceback (most recent call last):
              ^^^^^^^^^`
 example test: `unittest.loader._FailedTest.test.test_unittest.testmock.testwith`
 
+### 1 × `ImportError: Failed to import test module: test.test_zipfile.test_core Traceback (most recent call last): File <str>, line <n>, in _find_test_path module = self`
+
+distinct messages:
+- `ImportError: Failed to import test module: test.test_zipfile.test_core
+Traceback (most recent call last):
+  File "/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^`
+example test: `unittest.loader._FailedTest.test.test_zipfile.test_core`
+
 ### 1 × `ModuleNotFoundError(<str>)`
 
 distinct messages:
@@ -1364,6 +1405,17 @@ distinct messages:
     ^^^^^^^^^^^^^^^
 TypeError: cannot set '_fields' attribute of immutable type 'ast.AST'`
 example test: `test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in inner return func(*args, **kwds) ^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_TimeRE_recreation`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1000, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 864, in test_TimeRE_recreation_timezone
+    tm = _strptime._s`
+example test: `test_strptime.CacheTests.test_TimeRE_recreation_timezone`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test___builtins__ self.assertIs(self.b.__builtins__, builtins_dict) ^^^^^^^^^^^^^^^^^^^ AttributeErr`
 
@@ -1931,6 +1983,15 @@ False
 - (True, '`
 example test: `test_builtin.BuiltinTest.test_compile`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_compile self.assertTrue(found, <str> % AssertionError: None is not true : Matching failed on <s`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 173, in test_compile
+    self.assertTrue(found, "Matching failed on '%s' using '%s' regex" %
+AssertionError: None is not true : Matching failed on '%G' using '(?P<G>\d\d\d\d)' regex`
+example test: `test_strptime.TimeRETests.test_compile`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_compile_top_level_await co = compile(source, ^^^^^^^^^^^^^^^ File <str>, line <n> a = await asy`
 
 distinct messages:
@@ -1953,6 +2014,16 @@ distinct messages:
 AssertionError: SyntaxError not raised : source=def f():  [x async for x in arange(10)]
  mode=single`
 example test: `test_builtin.BuiltinTest.test_compile_top_level_await_invalid_cases`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_constant_tuples self.check_src_roundtrip(ast.Constant(value=(<n>,), kind=None), <str>) File <st`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_unparse.py", line 425, in test_constant_tuples
+    self.check_src_roundtrip(ast.Constant(value=(1,), kind=None), "(1,)")
+  File "/work/suites/cpython/Lib/test/test_unparse.py", line 150, in check_src_roundtrip
+    code1, c`
+example test: `test_unparse.UnparseTestCase.test_constant_tuples`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_context_new_1 with self.assertRaisesRegex(TypeError, <str>): AssertionError: <str> does not mat`
 
@@ -2113,6 +2184,15 @@ distinct messages:
 AttributeError: module 'gc' has no attribute 'get_objects'`
 example test: `test_descr.ClassPropertiesAndMethods.test_cycle_through_dict`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_day_of_week_calculation result = _strptime._strptime_time(time.strftime(format_string, self.tim`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 692, in test_day_of_week_calculation
+    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+example test: `test_strptime.CalculationTests.test_day_of_week_calculation`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_debug_expressions_are_raw_strings self.assertEqual(f<str>, <str>\\\\N{OX}\<str>) AssertionError`
 
 distinct messages:
@@ -2269,6 +2349,16 @@ distinct messages:
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/work/suites/cpython/Lib/test/test_descr.py",`
 example test: `test_descr.ClassPropertiesAndMethods.test_descrdoc`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_dict_clear self.assertNotIn(<str>, repr(od)) ^^^^^^^^ KeyError: <str>`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 640, in test_dict_clear
+    self.assertNotIn('NULL', repr(od))
+                             ^^^^^^^^
+KeyError: 'spam'`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_dict_clear`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_directory_compiled compiled_name = py_compile.compile(script_name, doraise=True) ^^^^^^^^^^^^^^`
 
@@ -2785,6 +2875,15 @@ distinct messages:
     test.asser`
 example test: `test_dict.DictTest.test_free_after_iterating`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, self.OrderedDict) File <str`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 684, in test_free_after_iterating
+    support.check_free_after_iterating(self, iter, self.OrderedDict)
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1830, in check_free_after_itera`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_free_after_iterating`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, self.type2test) File <str>,`
 
 distinct messages:
@@ -2890,6 +2989,15 @@ distinct messages:
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/work/suites/cpython/Lib/test/test_`
 example test: `test_bisect.TestDocExampleC.test_grades`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_gregorian_calculation result = _strptime._strptime_time(time.strftime(format_string, self.time_`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 677, in test_gregorian_calculation
+    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+example test: `test_strptime.CalculationTests.test_gregorian_calculation`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_handle_frame_object_in_creation thresholds = gc.get_threshold() ^^^^^^^^^^^^^^^^^^ AttributeErr`
 
@@ -3196,8 +3304,44 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_plistlib.py", line 448, in test_io
     with open(os_helper.TESTFN, 'wb') as fp:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_124_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'`
 example test: `test_plistlib.TestPlistlib.test_io`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_linked_list_by_clear self.check_runtime_error_issue119004(dict1, dict2) File`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 841, in test_issue119004_change_linked_list_by_clear
+    self.check_runtime_error_issue119004(dict1, dict2)
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 806, in check_runtime_err`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_linked_list_by_clear`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_linked_list_by_delete_key self.check_runtime_error_issue119004(dict1, dict2)`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 855, in test_issue119004_change_linked_list_by_delete_key
+    self.check_runtime_error_issue119004(dict1, dict2)
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 806, in check_runtim`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_linked_list_by_delete_key`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_size_by_clear self.check_runtime_error_issue119004(dict1, dict2) File <str>,`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 815, in test_issue119004_change_size_by_clear
+    self.check_runtime_error_issue119004(dict1, dict2)
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 806, in check_runtime_error_issu`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_size_by_clear`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_size_by_delete_key self.check_runtime_error_issue119004(dict1, dict2) File <`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 828, in test_issue119004_change_size_by_delete_key
+    self.check_runtime_error_issue119004(dict1, dict2)
+  File "/work/suites/cpython/Lib/test/test_ordered_dict.py", line 806, in check_runtime_error`
+example test: `test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_size_by_delete_key`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_issue41287 self.assertEqual(doc, <str>, AssertionError: <str> != <str> - This is a subclass of `
 
@@ -3217,7 +3361,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 653, in test_iterparse
     with open(TESTFN, "wb") as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.ElementTreeTest.test_iterparse`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_join_overflow self.assertRaises(OverflowError, <str>.join, seq) File <str>, line <n>, in assert`
@@ -3238,6 +3382,16 @@ distinct messages:
     process = subprocess.run(args, input=self.jsonlines_raw, capture_output=True, text=True, check=True)
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
 example test: `test_json.test_tool.TestTool.test_jsonlines`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_julian_calculation result = _strptime._strptime_time(time.strftime(format_string, self.time_tup`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 667, in test_julian_calculation
+    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ `
+example test: `test_strptime.CalculationTests.test_julian_calculation`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_jump_threading for inst in dis.get_instructions(f): ^^^^^^^^^^^^^^^^^^^^^^^ File <str>, line <n`
 
@@ -3401,6 +3555,26 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_except_star.py", line 241, in doSplitTest
     self.doSplitTestNamed(exc, T, match_template, rest_template`
 example test: `test_except_star.TestExceptStarSplitSemantics.test_match__supertype`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_match_args self.assertEqual(time.struct_time.__match_args__, expected_args) ^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_structseq.py", line 201, in test_match_args
+    self.assertEqual(time.struct_time.__match_args__, expected_args)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'time.struct_time' object has no attribu`
+example test: `test_structseq.StructSeqTest.test_match_args`
+
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_match_args_with_unnamed_fields self.assertEqual(os.stat_result.__match_args__, expected_args) ^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_structseq.py", line 207, in test_match_args_with_unnamed_fields
+    self.assertEqual(os.stat_result.__match_args__, expected_args)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'os.stat_result' object `
+example test: `test_structseq.StructSeqTest.test_match_args_with_unnamed_fields`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_match_single_type self.doSplitTest( File <str>, line <n>, in doSplitTest self.doSplitTestNamed(`
 
@@ -4165,6 +4339,16 @@ distinct messages:
 AttributeError: module 'gc' has no attribute 'garbage'`
 example test: `test_generators.FinalizationTest.test_refcycle`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_reference_cycle script_helper.assert_python_ok(<str>, textwrap.dedent(r<str><str>/work/suites/c`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_structseq.py", line 214, in test_reference_cycle
+    script_helper.assert_python_ok("-c", textwrap.dedent(r"""
+  File "/work/suites/cpython/Lib/test/support/script_helper.py", line 166, in assert_python_ok
+    return _asse`
+example test: `test_structseq.StructSeqTest.test_reference_cycle`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_reload_namespace_changed self.assertEqual(ns, expected) AssertionError: {<str>__doc__<str>__pac`
 
 distinct messages:
@@ -4180,7 +4364,7 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_bytes.py", line 1272, in test_repeat_id_preserving
     self.assertEqual(id(a), id(a * 1))
-AssertionError: 1591 != 1599`
+AssertionError: 1599 != 1607`
 example test: `test_bytes.BytesTest.test_repeat_id_preserving`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_reraise_all_named try: NotImplementedError: try star`
@@ -4686,6 +4870,16 @@ distinct messages:
     res = script_helpe`
 example test: `test_source_encoding.FileSourceEncodingTest.test_third_coding_line`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_timezone strp_output = _strptime._strptime_time(<str>, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 440, in test_timezone
+    strp_output = _strptime._strptime_time("UTC", "%Z")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/suites/cpython/Lib/_strptime.py", line 647, in _strptim`
+example test: `test_strptime.StrptimeTests.test_timezone`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_tokenizer_fstring_warning_in_first_line with open(TESTFN, <str>) as fd: ^^^^^^^^^^^^^^^^^ Permi`
 
 distinct messages:
@@ -4974,6 +5168,17 @@ distinct messages:
 AssertionError: False != True`
 example test: `test_xml_etree.BasicElementTest.test_weakref`
 
+### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_weekday self.roundtrip(<str>, <n>) File <str>, line <n>, in roundtrip strp_output = _strptime._`
+
+distinct messages:
+- `Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 371, in test_weekday
+    self.roundtrip('%u', 6)
+  File "/work/suites/cpython/Lib/test/test_strptime.py", line 304, in roundtrip
+    strp_output = _strptime._strptime_time(strf_output, fmt)
+             `
+example test: `test_strptime.StrptimeTests.test_weekday`
+
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_wrapped_descriptor_inside_classmethod self.assertEqual(Class.outer(), <str>) ^^^^^^^^^^^^^ Type`
 
 distinct messages:
@@ -5001,7 +5206,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4022, in test_write_to_binary_file
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_binary_file_with_bom with open(TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^ PermissionError`
@@ -5011,7 +5216,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4049, in test_write_to_binary_file_with_bom
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file_with_bom`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_binary_file_with_encoding with open(TESTFN, <str>) as f: ^^^^^^^^^^^^^^^^^^ Permission`
@@ -5021,7 +5226,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4031, in test_write_to_binary_file_with_encoding
     with open(TESTFN, 'wb') as f:
          ^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_binary_file_with_encoding`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_filename tree.write(TESTFN) File <str>, line <n>, in write with _get_writer(file_or_fi`
@@ -5041,7 +5246,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 3989, in test_write_to_filename_as_unicode
     with open(TESTFN, 'w') as f:
          ^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_filename_as_unicode`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_filename_with_encoding tree.write(TESTFN, encoding=<str>) File <str>, line <n>, in wri`
@@ -5061,7 +5266,7 @@ distinct messages:
   File "/work/suites/cpython/Lib/test/test_xml_etree.py", line 4001, in test_write_to_text_file
     with open(TESTFN, 'w', encoding='utf-8') as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'`
+PermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'`
 example test: `test_xml_etree.IOTest.test_write_to_text_file`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_write_to_user_binary_writer_with_bom self.assertEqual(raw.getvalue(), AssertionError: b<str> !=`

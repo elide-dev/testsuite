@@ -23,14 +23,16 @@ quarantined until the runtime surface is ready.
 - [x] Low-risk stdlib utilities: `test_argparse`, `test_calendar`, `test_colorsys`, `test_difflib`, `test_fnmatch`, `test_getopt`, `test_graphlib`, `test_ipaddress`, `test_optparse`, `test_queue`, `test_reprlib`, `test_sched`, `test_secrets`, `test_shlex`, `test_userdict`, `test_userlist`, `test_userstring`, `test_uu`, `test_xdrlib` - 19 modules
 - [x] Path strings and pure pathlib: `test_ntpath`, `test_pathlib` - 2 modules; concrete filesystem cases are skipped until sandboxed file I/O is enabled
 - [x] Hashing and HMAC: `test_hash`, `test_hashlib`, `test_hmac` - 3 modules; subprocess, threaded, big-memory, and file-backed digest cases are skipped
+- [x] Pure stdlib metadata/API: `test_abstract_numbers`, `test_dataclasses`, `test_dictviews`, `test_ordered_dict`, `test_module`, `test_structseq`, `test_errno`, `test_stat`, `test_warnings`, `test_strftime`, `test_strptime`, `test_unparse`, `test_tabnanny`, `test_http_cookies`, `test_http_cookiejar`, `test_robotparser` - 16 modules
+- [x] Compression: `test_zlib`, `test_gzip`, `test_bz2`, `test_lzma` - 4 modules
+- [x] Sandboxed file I/O and archives: `test_genericpath`, `test_posixpath`, `test_glob`, `test_tempfile`, `test_filecmp`, `test_fileinput`, `test_fileutils`, `test_unicode_file`, `test_unicode_file_functions`, `test_zipapp`, `test_zipfile` - 11 modules
 
-Enabled total: 198 CPython test modules.
+Enabled total: 229 CPython test modules.
 
 ### Next Domains
 
-- [ ] Compression: `test_zlib`, `test_gzip`, `test_bz2`, `test_lzma`
 - [ ] Light async, timing, and local threading: `test_asyncgen`, `test_coroutines`, `test_atexit`, `test_time`, `test_timeit`, `test_threading_local`
-- [ ] Sandboxed file I/O and filesystem behavior: `test_genericpath`, `test_posixpath`, remaining concrete `test_ntpath` and `test_pathlib` cases, `test_glob`, `test_tempfile`, `test_filecmp`, `test_fileinput`, `test_fileutils`, `test_unicode_file`, `test_unicode_file_functions`, `test_zipfile`, `test_tarfile`, `test_shutil`
+- [ ] Broader filesystem/archive behavior: remaining concrete `test_ntpath` and `test_pathlib` cases, `test_zipfile64`, `test_tarfile`, `test_shutil`
 
 ### Quarantined For Now
 
@@ -43,7 +45,7 @@ Enabled total: 198 CPython test modules.
 ### Coverage Accounting
 
 - Enabled against top-level CPython `Lib/test` modules/packages in the checkout:
-  198 / 433 = 45.7%.
+  229 / 438 = 52.3%.
 
 This is a module-count denominator, not a case-count denominator. CPython only
 materializes reliable case counts after importing and running each module, and

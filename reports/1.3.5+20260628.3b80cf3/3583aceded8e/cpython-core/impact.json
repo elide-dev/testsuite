@@ -1,6 +1,20 @@
 {
   "bySignature": [
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in setUp os.mkdir(os_helper.TESTFN) PermissionError: [Errno <n>] Permission denied: <str>",
+      "count": 30,
+      "exampleIds": [
+        "test_unicode_file_functions.UnicodeFileTests.test_directory",
+        "test_unicode_file_functions.UnicodeFileTests.test_failures",
+        "test_unicode_file_functions.UnicodeFileTests.test_listdir",
+        "test_unicode_file_functions.UnicodeFileTests.test_normalize",
+        "test_unicode_file_functions.UnicodeFileTests.test_open"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_unicode_file_functions.py\", line 67, in setUp\n    os.mkdir(os_helper.TESTFN)\nPermissionError: [Errno 13] Permission denied: '@test_39_tmpæ'"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in setUp with open(os_helper.TESTFN, <str>, encoding=<str>) as f: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
       "count": 19,
       "exampleIds": [
@@ -11,7 +25,7 @@
         "test_configparser.MultilineValuesTestCase.test_case_sensitivity_mapping_access"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_configparser.py\", line 1098, in setUp\n    with open(os_helper.TESTFN, 'w', encoding=\"utf-8\") as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_81_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_configparser.py\", line 1098, in setUp\n    with open(os_helper.TESTFN, 'w', encoding=\"utf-8\") as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_132_tmpæ'"
       ]
     },
     {
@@ -127,6 +141,20 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in setUp self.mktemp(<str>, <str>) File <str>, line <n>, in mktemp os.makedirs(base) File <str>, line <",
+      "count": 12,
+      "exampleIds": [
+        "test_glob.GlobTests.test_escape",
+        "test_glob.GlobTests.test_glob_bytes_directory_with_trailing_slash",
+        "test_glob.GlobTests.test_glob_directory_names",
+        "test_glob.GlobTests.test_glob_directory_with_trailing_slash",
+        "test_glob.GlobTests.test_glob_empty_pattern"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_glob.py\", line 29, in setUp\n    self.mktemp('a', 'D')\n  File \"/work/suites/cpython/Lib/test/test_glob.py\", line 24, in mktemp\n    os.makedirs(base)\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/os.py\", line 215, in makedirs\n    makedirs(head, exist_ok=exist_ok)\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/os.py\", line 225, in makedirs\n    mkdir(name, mode)\nPermissionError: [Errno 13] Permission denied: '@test_33_tmpæ_dir'"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_initialize_with_unicode self.assertIn(<str>, str(cm.exception)) AssertionError: <str> not found",
       "count": 12,
       "exampleIds": [
@@ -189,6 +217,20 @@
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_codecs.py\", line 395, in test_lone_surrogates\n    self.assertEqual(\"[\\uDC80]\".encode(self.encoding, \"namereplace\"),\nAssertionError: b'\\xff\\xfe[\\x00\\xfd\\xff]\\x00' != b'\\xff\\xfe[\\x00\\\\\\x00u\\x00d\\x00c\\x008\\x000\\x00]\\x00'",
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_codecs.py\", line 395, in test_lone_surrogates\n    self.assertEqual(\"[\\uDC80]\".encode(self.encoding, \"namereplace\"),\nAssertionError: b'\\x0[15 chars]x00\\xff\\xfd\\x00\\x00\\x00]' != b'\\x0[15 chars]x00\\x00\\\\\\x00\\x00\\x00u\\x00\\x00\\x00d\\x00\\x00\\x0[37 chars]x00]'",
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_codecs.py\", line 395, in test_lone_surrogates\n    self.assertEqual(\"[\\uDC80]\".encode(self.encoding, \"namereplace\"),\nAssertionError: b'[\\x00\\x00\\x00\\xfd\\xff\\x00\\x00]\\x00\\x00\\x00' != b'[\\x00\\x00\\x00\\\\\\x00\\x00\\x00u\\x00\\x00\\x00d\\x00\\x00\\x00c\\[46 chars]\\x00'"
+      ]
+    },
+    {
+      "signature": "PermissionError(<n>, <str>)",
+      "count": 5,
+      "exampleIds": [
+        "test_http_cookiejar",
+        "test_netrc",
+        "test_uu",
+        "test_zipapp",
+        "test_stat"
+      ],
+      "samples": [
+        "PermissionError(13, 'Permission denied')"
       ]
     },
     {
@@ -606,6 +648,18 @@
       ]
     },
     {
+      "signature": "AttributeError(<str>)",
+      "count": 3,
+      "exampleIds": [
+        "test_types",
+        "test_dataclasses",
+        "test_int"
+      ],
+      "samples": [
+        "AttributeError(\"module '_asyncio' has no attribute 'Future'\")"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in decorator return func(*args) ^^^^^^^^^^^ File <str>, line <n>, in test_unpickle_module_race os.mkdir",
       "count": 3,
       "exampleIds": [
@@ -614,7 +668,7 @@
         "test_pickle.PyUnpicklerTests.test_unpickle_module_race"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/support/threading_helper.py\", line 66, in decorator\n    return func(*args)\n           ^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 1581, in test_unpickle_module_race\n    os.mkdir(TESTFN)\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/support/threading_helper.py\", line 66, in decorator\n    return func(*args)\n           ^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 1581, in test_unpickle_module_race\n    os.mkdir(TESTFN)\nPermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'"
       ]
     },
     {
@@ -664,28 +718,6 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_unittest/test_break.py\", line 59, in testInstallHandler\n    os.kill(pid, signal.SIGINT)\nOSError: [Errno 22] Invalid argument: \"Feature not supported on 'java' POSIX backend: Sending arbitrary signals to child processes. Can only send KILL and TERM signals\""
-      ]
-    },
-    {
-      "signature": "AttributeError(<str>)",
-      "count": 2,
-      "exampleIds": [
-        "test_types",
-        "test_int"
-      ],
-      "samples": [
-        "AttributeError(\"module '_asyncio' has no attribute 'Future'\")"
-      ]
-    },
-    {
-      "signature": "PermissionError(<n>, <str>)",
-      "count": 2,
-      "exampleIds": [
-        "test_netrc",
-        "test_uu"
-      ],
-      "samples": [
-        "PermissionError(13, 'Permission denied')"
       ]
     },
     {
@@ -776,7 +808,7 @@
         "test_pickle.PyPickleTests.test_dump_closed_file"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4110, in test_dump_closed_file\n    f = open(TESTFN, \"wb\")\n        ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4110, in test_dump_closed_file\n    f = open(TESTFN, \"wb\")\n        ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'"
       ]
     },
     {
@@ -787,7 +819,7 @@
         "test_pickle.PyPickleTests.test_dump_text_file"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4148, in test_dump_text_file\n    f = open(TESTFN, \"w\")\n        ^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4148, in test_dump_text_file\n    f = open(TESTFN, \"w\")\n        ^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'"
       ]
     },
     {
@@ -847,6 +879,17 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_highly_nested_subclass self.assertEqual(deleted, list(reversed(range(<n>)))) AssertionError: Li",
+      "count": 2,
+      "exampleIds": [
+        "test_ordered_dict.CPythonBuiltinDictTests.test_highly_nested_subclass",
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_highly_nested_subclass"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 519, in test_highly_nested_subclass\n    self.assertEqual(deleted, list(reversed(range(100))))\nAssertionError: Lists differ: [] != [99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 8[343 chars]1, 0]\n\nSecond list contains 100 additional elements.\nFirst extra element 0:\n99\n\nDiff is 695 characters long. Set self.maxDiff to None to see it."
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_load_closed_file f = open(TESTFN, <str>) ^^^^^^^^^^^^^^^^^^ PermissionError: [Errno <n>] Permis",
       "count": 2,
       "exampleIds": [
@@ -854,7 +897,7 @@
         "test_pickle.PyPickleTests.test_load_closed_file"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4118, in test_load_closed_file\n    f = open(TESTFN, \"wb\")\n        ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/pickletester.py\", line 4118, in test_load_closed_file\n    f = open(TESTFN, \"wb\")\n        ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_136_tmpæ'"
       ]
     },
     {
@@ -1030,8 +1073,8 @@
         "test_importlib.test_api.Source_ReloadTests.test_reload_location_changed"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 251, in test_reload_location_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': '', '__file_[26 chars].py'} != {'__n[14 chars], '__package__': '', '__file__': '/tmp/tmp3xqr[46 chars]None}\n+ {'__cached__': None,\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmp3xqrwuer/spam.py',\n   '__name__': 'spam',\n   '__package__': ''}",
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 251, in test_reload_location_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': '', '__file_[26 chars].py'} != {'__n[14 chars], '__package__': '', '__file__': '/tmp/tmp_x62[102 chars]None}\n+ {'__cached__': '/tmp/tmp_x62jig5/__pycache__/spam.graalpy250-312.opt-1.pyc',\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmp_x62jig5/spam.py',\n   '__name__': 'spam',\n   '__package__': ''}"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 251, in test_reload_location_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': '', '__file_[26 chars].py'} != {'__n[14 chars], '__package__': '', '__file__': '/tmp/tmpys3a[46 chars]None}\n+ {'__cached__': None,\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmpys3auqyv/spam.py',\n   '__name__': 'spam',\n   '__package__': ''}",
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 251, in test_reload_location_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': '', '__file_[26 chars].py'} != {'__n[14 chars], '__package__': '', '__file__': '/tmp/tmp4ufu[102 chars]None}\n+ {'__cached__': '/tmp/tmp4ufusyf8/__pycache__/spam.graalpy250-312.opt-1.pyc',\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmp4ufusyf8/spam.py',\n   '__name__': 'spam',\n   '__package__': ''}"
       ]
     },
     {
@@ -1121,7 +1164,7 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 23, in wrapper\n    return ctx.run(func, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 313, in test_context_getset_4\n    with self.assertRaisesRegex(ValueError, 'different Context'):\nAssertionError: ValueError not raised",
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 23, in wrapper\n    return ctx.run(func, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 177, in test_context_run_4\n    self.assertEqual(ctx1, returned_ctx)\nAssertionError: <_contextvars.Context object at 0x781dddd2> != <_contextvars.Context object at 0x7fb75a98>"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 23, in wrapper\n    return ctx.run(func, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_context.py\", line 177, in test_context_run_4\n    self.assertEqual(ctx1, returned_ctx)\nAssertionError: <_contextvars.Context object at 0x559c3a23> != <_contextvars.Context object at 0xb4924d3>"
       ]
     },
     {
@@ -1193,7 +1236,7 @@
         "unittest.loader._FailedTest.test.test_pydoc.test_pydoc"
       ],
       "samples": [
-        "ImportError: Failed to import test module: test.test_pydoc.test_pydoc\nTraceback (most recent call last):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 396, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 339, in _get_module_from_name\n    __import__(name)\n  File \"/work/suites/cpython/Lib/test/test_pydoc/test_pydoc.py\", line 1091, in <module>\n    class PydocImportTest(PydocBaseTest):\n  File \"/work/suites/cpython/Lib/test/test_pydoc/test_pydoc.py\", line 1155, in PydocImportTest\n    @os_helper.skip_unless_working_chmod\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 275, in skip_unless_working_chmod\n    ok = can_chmod()\n         ^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 254, in can_chmod\n    with open(TESTFN, \"wb\") as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "ImportError: Failed to import test module: test.test_pydoc.test_pydoc\nTraceback (most recent call last):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 396, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 339, in _get_module_from_name\n    __import__(name)\n  File \"/work/suites/cpython/Lib/test/test_pydoc/test_pydoc.py\", line 1091, in <module>\n    class PydocImportTest(PydocBaseTest):\n  File \"/work/suites/cpython/Lib/test/test_pydoc/test_pydoc.py\", line 1155, in PydocImportTest\n    @os_helper.skip_unless_working_chmod\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 275, in skip_unless_working_chmod\n    ok = can_chmod()\n         ^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/os_helper.py\", line 254, in can_chmod\n    with open(TESTFN, \"wb\") as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -1327,6 +1370,16 @@
       ]
     },
     {
+      "signature": "ImportError: Failed to import test module: test.test_zipfile.test_core Traceback (most recent call last): File <str>, line <n>, in _find_test_path module = self",
+      "count": 1,
+      "exampleIds": [
+        "unittest.loader._FailedTest.test.test_zipfile.test_core"
+      ],
+      "samples": [
+        "ImportError: Failed to import test module: test.test_zipfile.test_core\nTraceback (most recent call last):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 396, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/loader.py\", line 339, in _get_module_from_name\n    __import__(name)\n  File \"/work/suites/cpython/Lib/test/test_zipfile/test_core.py\", line 14, in <module>\n    import unittest.mock as mock\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/unittest/mock.py\", line 26, in <module>\n    import asyncio\n  File \"/work/suites/cpython/Lib/asyncio/__init__.py\", line 8, in <module>\n    from .base_events import *\n  File \"/work/suites/cpython/Lib/asyncio/base_events.py\", line 42, in <module>\n    from . import futures\n  File \"/work/suites/cpython/Lib/asyncio/futures.py\", line 430, in <module>\n    Future = _CFuture = _asyncio.Future\nAttributeError: module '_asyncio' has no attribute 'Future'"
+      ]
+    },
+    {
       "signature": "ModuleNotFoundError(<str>)",
       "count": 1,
       "exampleIds": [
@@ -1344,6 +1397,16 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ast/test_ast.py\", line 74, in cleanup\n    ast.AST._fields = old_value\n    ^^^^^^^^^^^^^^^\nTypeError: cannot set '_fields' attribute of immutable type 'ast.AST'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in inner return func(*args, **kwds) ^^^^^^^^^^^^^^^^^^^ File <str>, line <n>, in test_TimeRE_recreation",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.CacheTests.test_TimeRE_recreation_timezone"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1000, in inner\n    return func(*args, **kwds)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 864, in test_TimeRE_recreation_timezone\n    tm = _strptime._strptime_time(time.tzname[0], '%Z')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 561, in _strptime\n    if (time.tzname[0] == time.tzname[1] and\n                          ~~~~~~~~~~~^^^\nIndexError: tuple index out of range"
       ]
     },
     {
@@ -1927,6 +1990,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_compile self.assertTrue(found, <str> % AssertionError: None is not true : Matching failed on <s",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.TimeRETests.test_compile"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 173, in test_compile\n    self.assertTrue(found, \"Matching failed on '%s' using '%s' regex\" %\nAssertionError: None is not true : Matching failed on '%G' using '(?P<G>\\d\\d\\d\\d)' regex"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_compile_top_level_await co = compile(source, ^^^^^^^^^^^^^^^ File <str>, line <n> a = await asy",
       "count": 1,
       "exampleIds": [
@@ -1944,6 +2017,16 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_builtin.py\", line 490, in test_compile_top_level_await_invalid_cases\n    with self.assertRaises(\nAssertionError: SyntaxError not raised : source=def f():  [x async for x in arange(10)]\n mode=single"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_constant_tuples self.check_src_roundtrip(ast.Constant(value=(<n>,), kind=None), <str>) File <st",
+      "count": 1,
+      "exampleIds": [
+        "test_unparse.UnparseTestCase.test_constant_tuples"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_unparse.py\", line 425, in test_constant_tuples\n    self.check_src_roundtrip(ast.Constant(value=(1,), kind=None), \"(1,)\")\n  File \"/work/suites/cpython/Lib/test/test_unparse.py\", line 150, in check_src_roundtrip\n    code1, code2 = self.get_source(code1, code2)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_unparse.py\", line 146, in get_source\n    code1 = ast.unparse(ast.parse(code1))\n                        ^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/ast.py\", line 52, in parse\n    return compile(source, filename, mode, flags,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: expected Module node, got Constant"
       ]
     },
     {
@@ -2107,6 +2190,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_day_of_week_calculation result = _strptime._strptime_time(time.strftime(format_string, self.tim",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.CalculationTests.test_day_of_week_calculation"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 692, in test_day_of_week_calculation\n    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 561, in _strptime\n    if (time.tzname[0] == time.tzname[1] and\n                          ~~~~~~~~~~~^^^\nIndexError: tuple index out of range"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_debug_expressions_are_raw_strings self.assertEqual(f<str>, <str>\\\\\\\\N{OX}\\<str>) AssertionError",
       "count": 1,
       "exampleIds": [
@@ -2254,6 +2347,16 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 3248, in test_descrdoc\n    check(FileIO.closed, \"True if the file is closed\") # getset descriptor\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_descr.py\", line 3247, in check\n    self.assertEqual(descr.__doc__, what)\nAssertionError: None != 'True if the file is closed'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_dict_clear self.assertNotIn(<str>, repr(od)) ^^^^^^^^ KeyError: <str>",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_dict_clear"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 640, in test_dict_clear\n    self.assertNotIn('NULL', repr(od))\n                             ^^^^^^^^\nKeyError: 'spam'"
       ]
     },
     {
@@ -2787,6 +2890,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, self.OrderedDict) File <str",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_free_after_iterating"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 684, in test_free_after_iterating\n    support.check_free_after_iterating(self, iter, self.OrderedDict)\n  File \"/work/suites/cpython/Lib/test/support/__init__.py\", line 1830, in check_free_after_iterating\n    test.assertTrue(done)\nAssertionError: False is not true"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_free_after_iterating support.check_free_after_iterating(self, iter, self.type2test) File <str>,",
       "count": 1,
       "exampleIds": [
@@ -2833,7 +2946,7 @@
         "test_exceptions.ExceptionTests.test_generator_del_cleanup_exc_state"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1065, in test_generator_del_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_del)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x6b246fcb> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1065, in test_generator_del_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_del)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x7a459845> is not None"
       ]
     },
     {
@@ -2843,7 +2956,7 @@
         "test_exceptions.ExceptionTests.test_generator_next_cleanup_exc_state"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1075, in test_generator_next_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_next)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x2cb1521e> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1075, in test_generator_next_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_next)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x55a1b9c0> is not None"
       ]
     },
     {
@@ -2853,7 +2966,7 @@
         "test_exceptions.ExceptionTests.test_generator_send_cleanup_exc_state"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1085, in test_generator_send_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_send)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x20ef4456> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1085, in test_generator_send_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_send)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x554d9db9> is not None"
       ]
     },
     {
@@ -2863,7 +2976,7 @@
         "test_exceptions.ExceptionTests.test_generator_throw_cleanup_exc_state"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1055, in test_generator_throw_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_throw)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x4da47e3> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1055, in test_generator_throw_cleanup_exc_state\n    self._check_generator_cleanup_exc_state(do_throw)\n  File \"/work/suites/cpython/Lib/test/test_exceptions.py\", line 1047, in _check_generator_cleanup_exc_state\n    self.assertIsNone(obj)\nAssertionError: <test.test_exceptions.ExceptionTests._check_generator_cleanup_exc_state.<locals>.MyObj object at 0x6b20d3ae> is not None"
       ]
     },
     {
@@ -2894,6 +3007,16 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 398, in test_grades\n    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 398, in <listcomp>\n    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]\n              ^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_bisect.py\", line 395, in grade\n    i = self.module.bisect(breakpoints, score)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'bisect'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_gregorian_calculation result = _strptime._strptime_time(time.strftime(format_string, self.time_",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.CalculationTests.test_gregorian_calculation"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 677, in test_gregorian_calculation\n    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 561, in _strptime\n    if (time.tzname[0] == time.tzname[1] and\n                          ~~~~~~~~~~~^^^\nIndexError: tuple index out of range"
       ]
     },
     {
@@ -2963,7 +3086,7 @@
         "test_importlib.resources.test_files.ImplicitContextFilesTests.test_implicit_files_with_compiled_importlib"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/resources/test_files.py\", line 185, in test_implicit_files_with_compiled_importlib\n    assert importlib.import_module('frozenpkg').val == 'resources are the best'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/importlib/__init__.py\", line 90, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/tmp7n8egkef/frozenpkg/__init__.py\", line 3, in <module>\n    val = res.files().joinpath('res.txt').read_text(encoding='utf-8')\n  File \"/work/suites/cpython/Lib/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpjuvtnicr/c_resources/res.txt'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/resources/test_files.py\", line 185, in test_implicit_files_with_compiled_importlib\n    assert importlib.import_module('frozenpkg').val == 'resources are the best'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/importlib/__init__.py\", line 90, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/tmpqx5rk9m7/frozenpkg/__init__.py\", line 3, in <module>\n    val = res.files().joinpath('res.txt').read_text(encoding='utf-8')\n  File \"/work/suites/cpython/Lib/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpecg_46iz/c_resources/res.txt'"
       ]
     },
     {
@@ -3203,7 +3326,47 @@
         "test_plistlib.TestPlistlib.test_io"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 448, in test_io\n    with open(os_helper.TESTFN, 'wb') as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_124_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 448, in test_io\n    with open(os_helper.TESTFN, 'wb') as fp:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_linked_list_by_clear self.check_runtime_error_issue119004(dict1, dict2) File",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_linked_list_by_clear"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 841, in test_issue119004_change_linked_list_by_clear\n    self.check_runtime_error_issue119004(dict1, dict2)\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 806, in check_runtime_error_issue119004\n    self.assertRaisesRegex(RuntimeError, msg, operator.eq, dict1, dict2)\nAssertionError: RuntimeError not raised by eq"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_linked_list_by_delete_key self.check_runtime_error_issue119004(dict1, dict2)",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_linked_list_by_delete_key"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 855, in test_issue119004_change_linked_list_by_delete_key\n    self.check_runtime_error_issue119004(dict1, dict2)\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 806, in check_runtime_error_issue119004\n    self.assertRaisesRegex(RuntimeError, msg, operator.eq, dict1, dict2)\nAssertionError: RuntimeError not raised by eq"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_size_by_clear self.check_runtime_error_issue119004(dict1, dict2) File <str>,",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_size_by_clear"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 815, in test_issue119004_change_size_by_clear\n    self.check_runtime_error_issue119004(dict1, dict2)\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 806, in check_runtime_error_issue119004\n    self.assertRaisesRegex(RuntimeError, msg, operator.eq, dict1, dict2)\nAssertionError: RuntimeError not raised by eq"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_issue119004_change_size_by_delete_key self.check_runtime_error_issue119004(dict1, dict2) File <",
+      "count": 1,
+      "exampleIds": [
+        "test_ordered_dict.CPythonOrderedDictSubclassTests.test_issue119004_change_size_by_delete_key"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 828, in test_issue119004_change_size_by_delete_key\n    self.check_runtime_error_issue119004(dict1, dict2)\n  File \"/work/suites/cpython/Lib/test/test_ordered_dict.py\", line 806, in check_runtime_error_issue119004\n    self.assertRaisesRegex(RuntimeError, msg, operator.eq, dict1, dict2)\nAssertionError: RuntimeError not raised by eq"
       ]
     },
     {
@@ -3223,7 +3386,7 @@
         "test_xml_etree.ElementTreeTest.test_iterparse"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 653, in test_iterparse\n    with open(TESTFN, \"wb\") as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 653, in test_iterparse\n    with open(TESTFN, \"wb\") as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -3244,6 +3407,16 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_json/test_tool.py\", line 146, in test_jsonlines\n    process = subprocess.run(args, input=self.jsonlines_raw, capture_output=True, text=True, check=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 548, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/work/suites/cpython/Lib/subprocess.py\", line 1885, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_julian_calculation result = _strptime._strptime_time(time.strftime(format_string, self.time_tup",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.CalculationTests.test_julian_calculation"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 667, in test_julian_calculation\n    result = _strptime._strptime_time(time.strftime(format_string, self.time_tuple),\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 561, in _strptime\n    if (time.tzname[0] == time.tzname[1] and\n                          ~~~~~~~~~~~^^^\nIndexError: tuple index out of range"
       ]
     },
     {
@@ -3414,6 +3587,26 @@
       ],
       "samples": [
         "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_except_star.py\", line 366, in test_match__supertype\n    self.doSplitTest(\n  File \"/work/suites/cpython/Lib/test/test_except_star.py\", line 241, in doSplitTest\n    self.doSplitTestNamed(exc, T, match_template, rest_template)\n  File \"/work/suites/cpython/Lib/test/test_except_star.py\", line 205, in doSplitTestNamed\n    self.assertExceptionIsLike(match, match_template)\n  File \"/work/suites/cpython/Lib/test/support/testcase.py\", line 76, in assertExceptionIsLike\n    self.fail(f\"expected an exception like {template!r}, got None\")\nAssertionError: expected an exception like ExceptionGroup('st', [BlockingIOError('io')]), got None"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_match_args self.assertEqual(time.struct_time.__match_args__, expected_args) ^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_structseq.StructSeqTest.test_match_args"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_structseq.py\", line 201, in test_match_args\n    self.assertEqual(time.struct_time.__match_args__, expected_args)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'time.struct_time' object has no attribute '__match_args__'. Did you mean: '__getnewargs__'?"
+      ]
+    },
+    {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_match_args_with_unnamed_fields self.assertEqual(os.stat_result.__match_args__, expected_args) ^",
+      "count": 1,
+      "exampleIds": [
+        "test_structseq.StructSeqTest.test_match_args_with_unnamed_fields"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_structseq.py\", line 207, in test_match_args_with_unnamed_fields\n    self.assertEqual(os.stat_result.__match_args__, expected_args)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'os.stat_result' object has no attribute '__match_args__'. Did you mean: '__getnewargs__'?"
       ]
     },
     {
@@ -3783,7 +3976,7 @@
         "test_contextlib.ContextManagerTestCase.test_nokeepref"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_contextlib.py\", line 350, in test_nokeepref\n    with woohoo(A(), b=A()):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_contextlib.py\", line 346, in woohoo\n    self.assertIsNone(a())\nAssertionError: <test.test_contextlib.ContextManagerTestCase.test_nokeepref.<locals>.A object at 0x46707095> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_contextlib.py\", line 350, in test_nokeepref\n    with woohoo(A(), b=A()):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/test_contextlib.py\", line 346, in woohoo\n    self.assertIsNone(a())\nAssertionError: <test.test_contextlib.ContextManagerTestCase.test_nokeepref.<locals>.A object at 0x376a9c07> is not None"
       ]
     },
     {
@@ -4187,13 +4380,23 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_reference_cycle script_helper.assert_python_ok(<str>, textwrap.dedent(r<str><str>/work/suites/c",
+      "count": 1,
+      "exampleIds": [
+        "test_structseq.StructSeqTest.test_reference_cycle"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_structseq.py\", line 214, in test_reference_cycle\n    script_helper.assert_python_ok(\"-c\", textwrap.dedent(r\"\"\"\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 166, in assert_python_ok\n    return _assert_python(True, *args, **env_vars)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 149, in _assert_python\n    res, cmd_line = run_python_until_end(*args, **env_vars)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 96, in run_python_until_end\n    env_required = interpreter_requires_environment()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/test/support/script_helper.py\", line 52, in interpreter_requires_environment\n    subprocess.check_call([sys.executable, '-E',\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py\", line 409, in check_call\n    retcode = call(*popenargs, **kwargs)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py\", line 390, in call\n    with Popen(*popenargs, **kwargs) as p:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py\", line 1029, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/subprocess.py\", line 1940, in _execute_child\n    self.pid = _fork_exec(\n               ^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_reload_namespace_changed self.assertEqual(ns, expected) AssertionError: {<str>__doc__<str>__pac",
       "count": 1,
       "exampleIds": [
         "test_importlib.test_api.Frozen_ReloadTests.test_reload_namespace_changed"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 335, in test_reload_namespace_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': 'spam', '__f[92 chars]None} != {'__n[14 chars], '__package__': 'spam', '__file__': '/tmp/tmp[112 chars]None}\n+ {'__cached__': None,\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmp9wjx9ygw/spam/__init__.py',\n   '__name__': 'spam',\n   '__package__': 'spam',\n   '__path__': ['/tmp/tmp9wjx9ygw/spam'],\n   'eggs': None}"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_importlib/test_api.py\", line 335, in test_reload_namespace_changed\n    self.assertEqual(ns, expected)\nAssertionError: {'__n[14 chars], '__doc__': None, '__package__': 'spam', '__f[92 chars]None} != {'__n[14 chars], '__package__': 'spam', '__file__': '/tmp/tmp[112 chars]None}\n+ {'__cached__': None,\n- {'__doc__': None,\n? ^\n\n+  '__doc__': None,\n? ^\n\n   '__file__': '/tmp/tmpqzl1ieaj/spam/__init__.py',\n   '__name__': 'spam',\n   '__package__': 'spam',\n   '__path__': ['/tmp/tmpqzl1ieaj/spam'],\n   'eggs': None}"
       ]
     },
     {
@@ -4203,7 +4406,7 @@
         "test_bytes.BytesTest.test_repeat_id_preserving"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 1272, in test_repeat_id_preserving\n    self.assertEqual(id(a), id(a * 1))\nAssertionError: 1591 != 1599"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_bytes.py\", line 1272, in test_repeat_id_preserving\n    self.assertEqual(id(a), id(a * 1))\nAssertionError: 1599 != 1607"
       ]
     },
     {
@@ -4717,6 +4920,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_timezone strp_output = _strptime._strptime_time(<str>, <str>) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.StrptimeTests.test_timezone"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 440, in test_timezone\n    strp_output = _strptime._strptime_time(\"UTC\", \"%Z\")\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 561, in _strptime\n    if (time.tzname[0] == time.tzname[1] and\n                          ~~~~~~~~~~~^^^\nIndexError: tuple index out of range"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_tokenizer_fstring_warning_in_first_line with open(TESTFN, <str>) as fd: ^^^^^^^^^^^^^^^^^ Permi",
       "count": 1,
       "exampleIds": [
@@ -4733,7 +4946,7 @@
         "test_plistlib.TestBinaryPlistlib.test_truncated_large_data"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 985, in test_truncated_large_data\n    check(self.build(b'\\x4f\\x13' + s.to_bytes(8, 'big')))\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 972, in check\n    with open(os_helper.TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_124_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 985, in test_truncated_large_data\n    check(self.build(b'\\x4f\\x13' + s.to_bytes(8, 'big')))\n  File \"/work/suites/cpython/Lib/test/test_plistlib.py\", line 972, in check\n    with open(os_helper.TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_134_tmpæ'"
       ]
     },
     {
@@ -5017,6 +5230,16 @@
       ]
     },
     {
+      "signature": "Traceback (most recent call last): File <str>, line <n>, in test_weekday self.roundtrip(<str>, <n>) File <str>, line <n>, in roundtrip strp_output = _strptime._",
+      "count": 1,
+      "exampleIds": [
+        "test_strptime.StrptimeTests.test_weekday"
+      ],
+      "samples": [
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 371, in test_weekday\n    self.roundtrip('%u', 6)\n  File \"/work/suites/cpython/Lib/test/test_strptime.py\", line 304, in roundtrip\n    strp_output = _strptime._strptime_time(strf_output, fmt)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 647, in _strptime_time\n    tt = _strptime(data_string, format)[0]\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/suites/cpython/Lib/_strptime.py\", line 432, in _strptime\n    raise ValueError(\"time data %r does not match format %r\" %\nValueError: time data '%u' does not match format '%u'"
+      ]
+    },
+    {
       "signature": "Traceback (most recent call last): File <str>, line <n>, in test_wrapped_descriptor_inside_classmethod self.assertEqual(Class.outer(), <str>) ^^^^^^^^^^^^^ Type",
       "count": 1,
       "exampleIds": [
@@ -5043,7 +5266,7 @@
         "test_xml_etree.IOTest.test_write_to_binary_file"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4022, in test_write_to_binary_file\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4022, in test_write_to_binary_file\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5053,7 +5276,7 @@
         "test_xml_etree.IOTest.test_write_to_binary_file_with_bom"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4049, in test_write_to_binary_file_with_bom\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4049, in test_write_to_binary_file_with_bom\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5063,7 +5286,7 @@
         "test_xml_etree.IOTest.test_write_to_binary_file_with_encoding"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4031, in test_write_to_binary_file_with_encoding\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4031, in test_write_to_binary_file_with_encoding\n    with open(TESTFN, 'wb') as f:\n         ^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5073,7 +5296,7 @@
         "test_xml_etree.IOTest.test_write_to_filename"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3970, in test_write_to_filename\n    tree.write(TESTFN)\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 717, in write\n    with _get_writer(file_or_filename, encoding) as (write, declared_encoding):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 748, in _get_writer\n    with open(file_or_filename, \"w\", encoding=encoding,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3970, in test_write_to_filename\n    tree.write(TESTFN)\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 717, in write\n    with _get_writer(file_or_filename, encoding) as (write, declared_encoding):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 748, in _get_writer\n    with open(file_or_filename, \"w\", encoding=encoding,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5083,7 +5306,7 @@
         "test_xml_etree.IOTest.test_write_to_filename_as_unicode"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3989, in test_write_to_filename_as_unicode\n    with open(TESTFN, 'w') as f:\n         ^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3989, in test_write_to_filename_as_unicode\n    with open(TESTFN, 'w') as f:\n         ^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5093,7 +5316,7 @@
         "test_xml_etree.IOTest.test_write_to_filename_with_encoding"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3977, in test_write_to_filename_with_encoding\n    tree.write(TESTFN, encoding='utf-8')\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 717, in write\n    with _get_writer(file_or_filename, encoding) as (write, declared_encoding):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 748, in _get_writer\n    with open(file_or_filename, \"w\", encoding=encoding,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 3977, in test_write_to_filename_with_encoding\n    tree.write(TESTFN, encoding='utf-8')\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 717, in write\n    with _get_writer(file_or_filename, encoding) as (write, declared_encoding):\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/opt/elide/lib/resources/python/python-home/lib/python3.12/xml/etree/ElementTree.py\", line 748, in _get_writer\n    with open(file_or_filename, \"w\", encoding=encoding,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
@@ -5103,7 +5326,7 @@
         "test_xml_etree.IOTest.test_write_to_text_file"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4001, in test_write_to_text_file\n    with open(TESTFN, 'w', encoding='utf-8') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_142_tmpæ'"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_xml_etree.py\", line 4001, in test_write_to_text_file\n    with open(TESTFN, 'w', encoding='utf-8') as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 13] Permission denied: '@test_159_tmpæ'"
       ]
     },
     {
