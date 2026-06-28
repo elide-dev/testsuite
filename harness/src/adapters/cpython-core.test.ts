@@ -163,6 +163,7 @@ test("passes CPython progress flag and forwards progress stderr under --log", as
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
 printf 'progress: start test_re\\n' >&2
+printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"running"}\\n'
 sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
 `,
@@ -192,6 +193,7 @@ printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}
   expect(argv).toContain("--progress-stderr");
   expect(writes).toContain("progress: start test_re");
   expect(writes).toContain("progress: still running CPython shard");
+  expect(writes).toContain("active test_re.ReTests.test_basic");
 });
 
 test("streams CPython results before the driver exits", async () => {

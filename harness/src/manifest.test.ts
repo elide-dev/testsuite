@@ -61,6 +61,24 @@ test("javac langtools manifest defaults to broad compiler coverage without unsup
   expect(include).not.toContain("tools/javac/modules");
 });
 
+test("cpython manifest entries exist in the checked-out CPython suite", () => {
+  const suiteRoot = `${import.meta.dir}/../../suites/cpython`;
+  if (!existsSync(suiteRoot)) return;
+
+  const manifest = loadManifest(`${import.meta.dir}/../../manifests/cpython-core.toml`);
+  const groups = new Map(manifest.groups.map((group) => [group.id, group.include]));
+
+  expect(groups.get("language-object-model")).toContain("test_compile");
+  expect(groups.get("containers-algorithms")).toContain("test_itertools");
+  expect(groups.get("numbers")).toContain("test_decimal");
+
+  for (const module of manifest.groups.flatMap((group) => group.include)) {
+    const file = join(suiteRoot, "Lib/test", `${module}.py`);
+    const directory = join(suiteRoot, "Lib/test", module);
+    expect(existsSync(file) || existsSync(directory)).toBe(true);
+  }
+});
+
 test("wintertc WPT manifest includes checked-out paths when the suite exists", () => {
   const suiteRoot = `${import.meta.dir}/../../suites/wpt`;
   if (!existsSync(suiteRoot)) return;

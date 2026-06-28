@@ -13,15 +13,19 @@ interface CpythonRecord {
   durationMs?: number;
 }
 
-export function parseCpythonLine(line: string): TestResult | null {
+function parseCpythonRecord(line: string): CpythonRecord | null {
   const s = line.trim();
   if (!s) return null;
-  let r: CpythonRecord;
   try {
-    r = JSON.parse(s) as CpythonRecord;
+    return JSON.parse(s) as CpythonRecord;
   } catch {
     return null;
   }
+}
+
+export function parseCpythonLine(line: string): TestResult | null {
+  const r = parseCpythonRecord(line);
+  if (!r) return null;
   if (r.status === "running") return null;
   return {
     kind: "test",
@@ -59,13 +63,15 @@ function progressEnabled(ctx: AdapterContext): boolean {
   return Boolean(ctx.log || ctx.verbose);
 }
 
-function startProgress(ctx: AdapterContext, label: string): () => void {
+function startProgress(ctx: AdapterContext, label: string, currentActivity: () => string | undefined): () => void {
   if (!progressEnabled(ctx)) return () => {};
   const started = performance.now();
   process.stderr.write(`${ctx.logPrefix ?? ""}progress: start ${label}\n`);
   const interval = setInterval(() => {
     const seconds = Math.round((performance.now() - started) / 1000);
-    process.stderr.write(`${ctx.logPrefix ?? ""}progress: still running ${label} (${seconds}s)\n`);
+    const current = currentActivity();
+    const suffix = current ? `; active ${current}` : "";
+    process.stderr.write(`${ctx.logPrefix ?? ""}progress: still running ${label}${suffix} (${seconds}s)\n`);
   }, Number(ctx.settings.progressIntervalMs ?? 10_000));
   return () => clearInterval(interval);
 }
@@ -149,7 +155,12 @@ async function* runCpythonShard(
     stdout: "pipe",
     stderr: "pipe",
   });
-  const stopProgress = startProgress(ctx, `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`);
+  let activeCase: string | undefined;
+  const stopProgress = startProgress(
+    ctx,
+    `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`,
+    () => activeCase,
+  );
   const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
     ? (line) => {
         if (line.startsWith("progress: ") || ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
@@ -167,8 +178,14 @@ async function* runCpythonShard(
   let pending = "";
   const decoder = new TextDecoder();
   const emitLine = function* (line: string): Iterable<TestResult> {
-    const parsed = parseCpythonLine(line);
+    const record = parseCpythonRecord(line);
+    if (record?.status === "running") {
+      activeCase = record.case || record.module;
+      return;
+    }
+    const parsed = record ? parseCpythonLine(line) : null;
     if (!parsed) return;
+    if (activeCase === parsed.id) activeCase = undefined;
     parsedCount++;
     yield remapCpythonSkip(parsed, skip);
   };
