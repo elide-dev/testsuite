@@ -2,17 +2,17 @@
 
 - Image digest: `c8be44d98f1f086fee340d19c5e6d66e4c88f5d593213d47783361b87bcaf657`
 - Suite version: `6c48f4ed707bf0b15f9b6098de30db8aae6fa40f`
-- Ran: 2026-06-28T00:45:52.993Z → 2026-06-28T00:51:34.446Z
+- Ran: 2026-06-28T01:21:27.024Z → 2026-06-28T01:27:56.248Z
 
 ## Summary
 
 ![Pass-rate chart](./pass-rate.svg)
 
-**Pass rate: 2901/2937 (98.77%)**
+**Pass rate: 2903/2937 (98.84%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 2901 | 3 | 29 | 4 | 0 | 0 |
+| 2903 | 3 | 27 | 4 | 0 | 0 |
 
 ## Observed cases (2933)
 

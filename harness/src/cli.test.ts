@@ -318,6 +318,61 @@ test("does not persist or count transient progress results", async () => {
   }
 });
 
+test("ratchet mode prunes stale expected failures before writing reports", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cli-ratchet-prune-"));
+  const adapterId = "fixture-ratchet-prune";
+  const adapter: Adapter = {
+    id: adapterId,
+    kind: "test",
+    async *run(): AsyncIterable<Result> {
+      yield { kind: "test", id: "stale failure", status: "pass" };
+      yield { kind: "test", id: "current failure", status: "fail" };
+    },
+  };
+  ADAPTERS[adapterId] = adapter;
+  try {
+    writeFixtureElide(root);
+    await writeHarnessFixture(root, adapterId, ["alpha"]);
+    writeFileSync(
+      join(root, "expectations", "alpha.ratchet.toml"),
+      '# generated\n[fail]\n"stale failure" = ""\n"current failure" = ""\n',
+    );
+
+    const code = await main({
+      ...parseArgs([
+        "run",
+        "alpha",
+        "--registry",
+        join(root, "registry.toml"),
+        "--repo-root",
+        root,
+        "--elide-path",
+        join(root, "elide"),
+        "--digest",
+        "abcdef1234567890",
+        "--suite-root",
+        join(root, "suites"),
+        "--reports",
+        join(root, "reports"),
+        "--expectations",
+        join(root, "expectations"),
+        "--ratchet",
+      ]),
+      log: false,
+    });
+
+    expect(code).toBe(0);
+    const ratchet = readFileSync(join(root, "expectations", "alpha.ratchet.toml"), "utf8");
+    expect(ratchet).not.toContain("stale failure");
+    expect(ratchet).toContain("current failure");
+    const summary = JSON.parse(readFileSync(join(root, "reports", "1.2.3", "abcdef123456", "alpha", "summary.json"), "utf8"));
+    expect(summary.regressions).toEqual([]);
+    expect(summary.newPasses).toEqual([]);
+  } finally {
+    delete ADAPTERS[adapterId];
+  }
+});
+
 test("updates README compatibility summary only when requested", async () => {
   const root = mkdtempSync(join(tmpdir(), "cli-readme-summary-"));
   const adapterId = "fixture-readme-summary";

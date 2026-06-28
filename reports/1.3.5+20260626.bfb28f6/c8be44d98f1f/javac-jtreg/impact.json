@@ -16,18 +16,14 @@
     },
     {
       "signature": "<str> timed out after <n> ms (elapsed time including timeout handling <n> ms)",
-      "count": 4,
+      "count": 2,
       "exampleIds": [
         "tools/javac/cast/intersection/IntersectionTypeCastTest.java",
-        "tools/javac/file/zip/T6836682.java",
-        "tools/javac/lambda/LambdaParserTest.java",
-        "tools/javac/lambda/MethodReferenceParserTest.java"
+        "tools/javac/file/zip/T6836682.java"
       ],
       "samples": [
-        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120295 ms)",
-        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120296 ms)",
-        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120360 ms)",
-        "'/work/.harness/work/javac-jtreg/jtreg-run-LTVMgT/wrapper-jdk/bin/java' timed out after 120000 ms (elapsed time including timeout handling 120246 ms)"
+        "'/work/.harness/work/javac-jtreg/jtreg-run-JW8MFD/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240518 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-JW8MFD/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240188 ms)"
       ]
     },
     {

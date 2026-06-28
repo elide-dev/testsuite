@@ -292,6 +292,15 @@ test("passes adapter threads through to jtreg concurrency", async () => {
   expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-concurrency:3\n");
 });
 
+test("passes configured jtreg timeout factor through to jtreg", async () => {
+  const { ctx, logs } = setupJtregFixture();
+  ctx.settings.jtregTimeoutFactor = 2;
+
+  await collect(runJavacJtreg(ctx));
+
+  expect(readFileSync(logs.jtregArgsLog, "utf8")).toContain("-timeoutFactor:2\n");
+});
+
 test("streams jtreg summary results before the process exits", async () => {
   const { ctx, logs } = setupJtregFixture("streaming");
   ctx.log = true;

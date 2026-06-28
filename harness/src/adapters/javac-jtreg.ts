@@ -386,10 +386,15 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const jtregLangtoolsRoot = createSparseLangtoolsRoot(ctx, runRoot, tests);
   const jtreg = String(ctx.settings.jtregPath ?? "jtreg");
   const concurrency = Math.max(1, Math.trunc(ctx.threads) || 1);
+  const timeoutFactor = Number(ctx.settings.jtregTimeoutFactor ?? 1);
+  const jtregTimeoutArgs = Number.isFinite(timeoutFactor) && timeoutFactor > 0
+    ? [`-timeoutFactor:${timeoutFactor}`]
+    : [];
   const argv = [
     jtreg,
     "-verbose:summary",
     `-concurrency:${concurrency}`,
+    ...jtregTimeoutArgs,
     "-retain:fail,error",
     `-jdk:${wrapperJdk}`,
     `-w:${workDir}`,
