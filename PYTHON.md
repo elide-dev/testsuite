@@ -16,16 +16,21 @@ quarantined until the runtime surface is ready.
 - [x] Pure language/object model: `test_bool`, `test_bytes`, `test_tuple`, `test_list`, `test_dict`, `test_set`, `test_slice`, `test_range`, `test_class`, `test_descr`, `test_super`, `test_metaclass`, `test_exceptions`, `test_generators`, `test_yield_from`, `test_fstring`, `test_patma`, `test_scope`, `test_call`, `test_compile`, `test_syntax` - 21 modules
 - [x] Core algorithms/containers: `test_collections`, `test_deque`, `test_defaultdict`, `test_heapq`, `test_bisect`, `test_itertools`, `test_functools`, `test_operator`, `test_copy`, `test_copyreg`, `test_enum`, `test_weakref`, `test_weakset` - 13 modules
 - [x] Numbers: `test_int`, `test_long`, `test_float`, `test_complex`, `test_math`, `test_cmath`, `test_decimal`, `test_fractions`, `test_statistics`, `test_random`, `test_array`, `test_struct` - 12 modules
+- [x] Language leftovers: `test_augassign`, `test_baseexception`, `test_binop`, `test_compare`, `test_contains`, `test_decorators`, `test_dict_version`, `test_dictcomps`, `test_dynamic`, `test_dynamicclassattribute`, `test_enumerate`, `test_eof`, `test_except_star`, `test_exception_group`, `test_exception_hierarchy`, `test_exception_variations`, `test_extcall`, `test_flufl`, `test_format`, `test_funcattrs`, `test_future_stmt`, `test_generator_stop`, `test_genericalias`, `test_genericclass`, `test_genexps`, `test_global`, `test_grammar`, `test_index`, `test_int_literal`, `test_isinstance`, `test_iter`, `test_iterlen`, `test_keyword`, `test_keywordonlyarg`, `test_listcomps`, `test_named_expressions`, `test_numeric_tower`, `test_opcodes`, `test_positional_only_arg`, `test_pow`, `test_print`, `test_property`, `test_raise`, `test_richcmp`, `test_setcomps`, `test_sort`, `test_source_encoding`, `test_string_literals`, `test_subclassinit`, `test_type_aliases`, `test_type_annotations`, `test_type_comments`, `test_type_params`, `test_unary`, `test_unicode_identifiers`, `test_unpack`, `test_unpack_ex`, `test_with` - 58 modules
+- [x] Text, Unicode, codecs: `test_string`, `test_textwrap`, `test_unicode`, `test_ucn`, `test_unicodedata`, `test_codecs`, `test_codeccallbacks`, `test_charmapcodec`, `test_multibytecodec`, `test_stringprep`, `test_base64`, `test_binascii`, `test_quopri`, `test_tokenize`, `test_utf8_mode`, `test_utf8source`, `test_univnewlines` - 17 modules
+- [x] Pure data formats: `test_csv`, `test_configparser`, `test_tomllib`, `test_plistlib`, `test_marshal`, `test_pickle`, `test_picklebuffer`, `test_pickletools`, `test_html`, `test_htmlparser`, `test_email`, `test_xml_etree`, `test_xml_dom_minicompat`, `test_minidom`, `test_sax`, `test_pulldom`, `test_urlparse`, `test_netrc`, `test_mailcap`, `test_mimetypes`, `test_gettext` - 21 modules
+- [x] Import, compile, introspection: `test_importlib`, `test_pkg`, `test_pkgutil`, `test_runpy`, `test_modulefinder`, `test_py_compile`, `test_compileall`, `test_zipimport`, `test_zipimport_support`, `test_linecache`, `test_symtable`, `test_dis`, `test_code`, `test_codeop`, `test_traceback`, `test_pprint`, `test_inspect`, `test_types`, `test_typing`, `test_abc`, `test_context`, `test_contextlib`, `test_contextlib_async`, `test_unittest`, `test_doctest`, `test_pyclbr`, `test_pydoc`, `test_site` - 28 modules
+- [x] Low-risk stdlib utilities: `test_argparse`, `test_calendar`, `test_colorsys`, `test_difflib`, `test_fnmatch`, `test_getopt`, `test_graphlib`, `test_ipaddress`, `test_optparse`, `test_queue`, `test_reprlib`, `test_sched`, `test_secrets`, `test_shlex`, `test_userdict`, `test_userlist`, `test_userstring`, `test_uu`, `test_xdrlib` - 19 modules
+- [x] Path strings and pure pathlib: `test_ntpath`, `test_pathlib` - 2 modules; concrete filesystem cases are skipped until sandboxed file I/O is enabled
+- [x] Hashing and HMAC: `test_hash`, `test_hashlib`, `test_hmac` - 3 modules; subprocess, threaded, big-memory, and file-backed digest cases are skipped
 
-Enabled total: 50 CPython test modules.
+Enabled total: 198 CPython test modules.
 
 ### Next Domains
 
-- [ ] Text, Unicode, codecs: `test_string`, `test_textwrap`, `test_unicode`, `test_ucn`, `test_unicodedata`, `test_codecs`, `test_codeccallbacks`, `test_stringprep`, `test_base64`, `test_binascii`, `test_quopri`, `test_tokenize`
-- [ ] Pure data formats: `test_csv`, `test_configparser`, `test_tomllib`, `test_plistlib`, `test_marshal`, `test_pickle`, `test_pickletools`, `test_html`, `test_htmlparser`, `test_email`, `test_xml_etree`, `test_xml_dom_minicompat`
-- [ ] Import, compile, module system: `test_importlib`, `test_pkg`, `test_pkgutil`, `test_runpy`, `test_modulefinder`, `test_py_compile`, `test_compileall`, `test_zipimport`, `test_linecache`, `test_symtable`, `test_dis`
-- [ ] Testing, introspection, debugging support: `test_unittest`, `test_doctest`, `test_traceback`, `test_pprint`, `test_reprlib`, `test_inspect`, `test_types`, `test_typing`, `test_abc`, `test_contextlib`, `test_contextlib_async`
-- [ ] Filesystem-oriented pure stdlib, after temp-file behavior is settled: `test_pathlib`, `test_posixpath`, `test_ntpath`, `test_genericpath`, `test_fnmatch`, `test_glob`, `test_tempfile`, `test_filecmp`, `test_zipfile`, `test_tarfile`, `test_shutil`
+- [ ] Compression: `test_zlib`, `test_gzip`, `test_bz2`, `test_lzma`
+- [ ] Light async, timing, and local threading: `test_asyncgen`, `test_coroutines`, `test_atexit`, `test_time`, `test_timeit`, `test_threading_local`
+- [ ] Sandboxed file I/O and filesystem behavior: `test_genericpath`, `test_posixpath`, remaining concrete `test_ntpath` and `test_pathlib` cases, `test_glob`, `test_tempfile`, `test_filecmp`, `test_fileinput`, `test_fileutils`, `test_unicode_file`, `test_unicode_file_functions`, `test_zipfile`, `test_tarfile`, `test_shutil`
 
 ### Quarantined For Now
 
@@ -38,7 +43,7 @@ Enabled total: 50 CPython test modules.
 ### Coverage Accounting
 
 - Enabled against top-level CPython `Lib/test` modules/packages in the checkout:
-  50 / 433 = 11.5%.
+  198 / 433 = 45.7%.
 
 This is a module-count denominator, not a case-count denominator. CPython only
 materializes reliable case counts after importing and running each module, and
