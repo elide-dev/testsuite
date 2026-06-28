@@ -1,0 +1,53 @@
+{
+  "bySignature": [
+    {
+      "signature": "system error (exit code <n>)",
+      "count": 25,
+      "exampleIds": [
+        "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
+        "tools/javac/annotations/neg/8171322/TypeVariableAsAnnotationTest.java",
+        "tools/javac/annotations/repeatingAnnotations/generatedInRepeating/GeneratedInRepeating.java",
+        "tools/javac/annotations/typeAnnotations/failures/TypeVariableMissingTA.java",
+        "tools/javac/annotations/typeAnnotations/packageanno/PackageProcessor.java"
+      ],
+      "samples": [
+        "system error (exit code 3)"
+      ]
+    },
+    {
+      "signature": "<str> timed out after <n> ms (elapsed time including timeout handling <n> ms)",
+      "count": 2,
+      "exampleIds": [
+        "tools/javac/file/zip/T6836682.java",
+        "tools/javac/lambda/LambdaParserTest.java"
+      ],
+      "samples": [
+        "'/work/.harness/work/javac-jtreg/jtreg-run-NDttrQ/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240186 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-NDttrQ/wrapper-jdk/bin/java' timed out after 240000 ms (elapsed time including timeout handling 240171 ms)"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=<n>",
+      "count": 2,
+      "exampleIds": [
+        "tools/javac/ClassPathTest/ClassPathTest.java",
+        "tools/javac/platform/PlatformProviderTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=1",
+        "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=2"
+      ]
+    },
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/completionDeps/DepsAndDocLint.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
+      ]
+    }
+  ],
+  "byFeature": []
+}

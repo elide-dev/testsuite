@@ -2,32 +2,20 @@
 
 - Image digest: `3583aceded8e8e4cab8248f08f245aa6859ce893f81e9de5c52097863c70b4cb`
 - Suite version: `7c999be49dee7f12703e4b2e07e990544fabd40e`
-- Ran: 2026-06-28T03:34:16.043Z → 2026-06-28T03:35:40.962Z
+- Ran: 2026-06-28T03:50:18.894Z → 2026-06-28T03:51:43.962Z
 
 ## Summary
 
 ![Pass-rate chart](./pass-rate.svg)
 
-**Pass rate: 11337/13250 (85.56%)**
+**Pass rate: 2931/3351 (87.47%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 11337 | 414 | 749 | 750 | 0 | 0 |
+| 2931 | 121 | 155 | 144 | 0 | 0 |
 
-## Observed cases (12500)
+## Observed cases (3207)
 
-- `test_defaultdict.TestDefaultDict.test_basic` — pass
-- `test_defaultdict.TestDefaultDict.test_callable_arg` — pass
-- `test_defaultdict.TestDefaultDict.test_copy` — pass
-- `test_defaultdict.TestDefaultDict.test_deep_copy` — pass
-- `test_defaultdict.TestDefaultDict.test_keyerror_without_factory` — pass
-- `test_defaultdict.TestDefaultDict.test_missing` — pass
-- `test_defaultdict.TestDefaultDict.test_pickling` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_raise_base_exception` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_raise_exception` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_raise_generator_exit` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_raise_stop_iteration` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_return` — pass
 - `test_bool.BoolTest.test_blocked` — pass
 - `test_bool.BoolTest.test_bool_called_at_least_once` — pass
 - `test_bool.BoolTest.test_bool_new` — pass
@@ -37,24 +25,10 @@
 - `test_bool.BoolTest.test_contains` — pass
 - `test_bool.BoolTest.test_convert` — pass
 - `test_bool.BoolTest.test_convert_to_bool` — pass
-- `test_list.ListTest.test_addmul` — pass
-- `test_list.ListTest.test_append` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_work` — pass
-- `test_tuple.TupleTest.test_addmul` — pass
-- `test_tuple.TupleTest.test_bigrepeat` — pass
-- `test_yield_from.TestInterestingEdgeCases.test_close_and_throw_yield` — pass
-- `test_yield_from.TestPEP380Operation.test_attempted_yield_from_loop` — pass
-- `test_yield_from.TestPEP380Operation.test_attempting_to_send_to_non_generator` — pass
-- `test_bisect.TestBisectC.test_backcompatibility` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
 - `test_bool.BoolTest.test_fileclosed` — error — Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_bool.py", line 261, in test_fileclosed
     os.remove(os_helper.TESTFN)
-FileNotFoundError: [Errno 2] No such file or directory: '@test_31_tmpæ'
+FileNotFoundError: [Errno 2] No such file or directory: '@test_32_tmpæ'
 
 - `test_bool.BoolTest.test_float` — pass
 - `test_bool.BoolTest.test_format` — pass
@@ -65,80 +39,9 @@ FileNotFoundError: [Errno 2] No such file or directory: '@test_31_tmpæ'
 - `test_bool.BoolTest.test_isinstance` — pass
 - `test_bool.BoolTest.test_issubclass` — pass
 - `test_bool.BoolTest.test_keyword_args` — pass
-- `test_bisect.TestBisectC.test_insort` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
 - `test_bool.BoolTest.test_marshal` — pass
 - `test_bool.BoolTest.test_math` — pass
 - `test_bool.BoolTest.test_operator` — pass
-- `test_range.RangeTest.test_attributes` — pass
-- `test_tuple.TupleTest.test_constructors` — pass
-- `test_tuple.TupleTest.test_contains` — pass
-- `test_tuple.TupleTest.test_contains_fake` — pass
-- `test_tuple.TupleTest.test_contains_order` — pass
-- `test_tuple.TupleTest.test_count` — pass
-- `test_slice.SliceTest.test_cmp` — pass
-- `test_slice.SliceTest.test_constructor` — pass
-- `test_slice.SliceTest.test_copy` — pass
-- `test_bisect.TestBisectC.test_insort_keynotNone` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_keyword_args` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_large_pyrange` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_large_range` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_range.RangeTest.test_comparison` — pass
-- `test_range.RangeTest.test_contains` — pass
-- `test_range.RangeTest.test_count` — pass
-- `test_range.RangeTest.test_empty` — pass
-- `test_range.RangeTest.test_exhausted_iterator_pickling` — pass
-- `test_range.RangeTest.test_index` — pass
-- `test_range.RangeTest.test_invalid_invocation` — pass
-- `test_bisect.TestBisectC.test_lookups_with_key_function` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_range.RangeTest.test_issue11845` — pass
-- `test_bisect.TestBisectC.test_lt_returns_non_bool` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_lt_returns_notimplemented` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_negative_lo` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
 - `test_bool.BoolTest.test_pickle` — pass
 - `test_bool.BoolTest.test_picklevalues` — pass
 - `test_bool.BoolTest.test_real_and_imag` — pass
@@ -148,118 +51,19 @@ AttributeError: 'NoneType' object has no attribute 'bisect_right'
 - `test_bool.BoolTest.test_string` — pass
 - `test_bool.BoolTest.test_subclass` — pass
 - `test_bool.BoolTest.test_types` — pass
-- `test_bisect.TestBisectC.test_optionalSlicing` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_precomputed` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectC.test_random` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 35, in setUp
-    (self.module.bisect_right, [], 1, 0),
-     ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_right'
-
-- `test_bisect.TestBisectPython.test_backcompatibility` — pass
-- `test_bisect.TestBisectPython.test_insort` — pass
-- `test_bisect.TestBisectPython.test_insort_keynotNone` — pass
-- `test_bisect.TestBisectPython.test_keyword_args` — pass
-- `test_bisect.TestBisectPython.test_large_pyrange` — pass
-- `test_bisect.TestBisectPython.test_large_range` — pass
-- `test_bisect.TestBisectPython.test_lookups_with_key_function` — pass
-- `test_bisect.TestBisectPython.test_lt_returns_non_bool` — pass
-- `test_bisect.TestBisectPython.test_lt_returns_notimplemented` — pass
-- `test_bisect.TestBisectPython.test_negative_lo` — pass
-- `test_bisect.TestBisectPython.test_optionalSlicing` — pass
-- `test_bisect.TestBisectPython.test_precomputed` — pass
-- `test_bisect.TestBisectPython.test_random` — pass
-- `test_bisect.TestDocExampleC.test_colors` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 405, in test_colors
-    bisect_left = self.module.bisect_left
-                  ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestDocExampleC.test_grades` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 398, in test_grades
-    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 398, in <listcomp>
-    result = [grade(score) for score in [33, 99, 77, 70, 89, 90, 100]]
-              ^^^^^^^^^^^^
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 395, in grade
-    i = self.module.bisect(breakpoints, score)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect'
-
-- `test_bisect.TestDocExamplePython.test_colors` — pass
-- `test_bisect.TestDocExamplePython.test_grades` — pass
-- `test_bisect.TestErrorHandlingC.test_arg_parsing` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 380, in test_arg_parsing
-    for f in (self.module.bisect_left, self.module.bisect_right,
-              ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestErrorHandlingC.test_cmp_err` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 375, in test_cmp_err
-    for f in (self.module.bisect_left, self.module.bisect_right,
-              ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestErrorHandlingC.test_get_only` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 369, in test_get_only
-    for f in (self.module.bisect_left, self.module.bisect_right,
-              ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestErrorHandlingC.test_len_only` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 364, in test_len_only
-    for f in (self.module.bisect_left, self.module.bisect_right,
-              ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestErrorHandlingC.test_non_sequence` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 359, in test_non_sequence
-    for f in (self.module.bisect_left, self.module.bisect_right,
-              ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'bisect_left'
-
-- `test_bisect.TestErrorHandlingPython.test_arg_parsing` — pass
-- `test_bisect.TestErrorHandlingPython.test_cmp_err` — pass
-- `test_bisect.TestErrorHandlingPython.test_get_only` — pass
-- `test_bisect.TestErrorHandlingPython.test_len_only` — pass
-- `test_bisect.TestErrorHandlingPython.test_non_sequence` — pass
-- `test_bisect.TestInsortC.test_backcompatibility` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 316, in test_backcompatibility
-    self.assertEqual(self.module.insort, self.module.insort_right)
-                     ^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'insort'
-
-- `test_bisect.TestInsortC.test_listDerived` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 325, in test_listDerived
-    self.module.insort_left(lst, 10)
-AttributeError: 'NoneType' object has no attribute 'insort_left'
-
-- `test_yield_from.TestPEP380Operation.test_broken_getattr_handling` — pass
-- `test_yield_from.TestPEP380Operation.test_catching_exception_from_subgen_and_returning` — pass
-- `test_bisect.TestInsortC.test_vsBuiltinSort` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_bisect.py", line 311, in test_vsBuiltinSort
-    f = self.module.insort_right
-        ^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'insort_right'
-
-- `test_bisect.TestInsortPython.test_backcompatibility` — pass
-- `test_bisect.TestInsortPython.test_listDerived` — pass
-- `test_bisect.TestInsortPython.test_vsBuiltinSort` — pass
-- `test_class.ClassTests.testBadTypeReturned` — pass
-- `test_class.ClassTests.testBinaryOps` — pass
-- `test_class.ClassTests.testClassWithExtCall` — pass
-- `test_class.ClassTests.testConstructorErrorMessages` — pass
+- `test_tuple.TupleTest.test_addmul` — pass
+- `test_tuple.TupleTest.test_bigrepeat` — pass
+- `test_tuple.TupleTest.test_constructors` — pass
+- `test_tuple.TupleTest.test_contains` — pass
+- `test_tuple.TupleTest.test_contains_fake` — pass
+- `test_tuple.TupleTest.test_contains_order` — pass
+- `test_tuple.TupleTest.test_count` — pass
+- `test_list.ListTest.test_addmul` — pass
+- `test_list.ListTest.test_append` — pass
+- `test_dict.DictTest.test_bad_key` — pass
+- `test_dict.DictTest.test_bool` — pass
+- `test_dict.DictTest.test_clear` — pass
+- `test_dict.DictTest.test_constructor` — pass
 - `test_tuple.TupleTest.test_free_after_iterating` — fail — Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/seq_tests.py", line 430, in test_free_after_iterating
     support.check_free_after_iterating(self, iter, self.type2test)
@@ -268,6 +72,7 @@ AttributeError: 'NoneType' object has no attribute 'insort_right'
 AssertionError: False is not true
 
 - `test_tuple.TupleTest.test_getitem` — pass
+- `test_re.ExternalTests.test_re_benchmarks` — pass
 - `test_tuple.TupleTest.test_getitem_error` — pass
 - `test_tuple.TupleTest.test_getitemoverwriteiter` — pass
 - `test_tuple.TupleTest.test_getslice` — pass
@@ -282,44 +87,6 @@ AssertionError: FAIL hash(()) == 3527539 != 5740354900026072187
 - `test_tuple.TupleTest.test_iadd` — pass
 - `test_tuple.TupleTest.test_imul` — pass
 - `test_tuple.TupleTest.test_index` — pass
-- `test_range.RangeTest.test_iterator_pickling` — pass
-- `test_range.RangeTest.test_iterator_pickling_overflowing_index` — pass
-- `test_range.RangeTest.test_iterator_setstate` — pass
-- `test_range.RangeTest.test_iterator_unpickle_compat` — pass
-- `test_range.RangeTest.test_large_exhausted_iterator_pickling` — pass
-- `test_range.RangeTest.test_large_operands` — pass
-- `test_range.RangeTest.test_large_range` — pass
-- `test_range.RangeTest.test_odd_bug` — pass
-- `test_exception_variations.ExceptStarTestCases.test_nested` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 425, in test_nested
-    try:
-NotImplementedError: try star
-
-- `test_exception_variations.ExceptStarTestCases.test_nested_else` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 444, in test_nested_else
-    hit_inner_else = False
-NotImplementedError: try star
-
-- `test_exception_variations.ExceptStarTestCases.test_nested_else_mixed1` — fail — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 539, in test_nested_else_mixed1
-    self.assertTrue(hit_inner_else)
-AssertionError: False is not true
-
-- `test_exception_variations.ExceptStarTestCases.test_nested_else_mixed2` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 549, in test_nested_else_mixed2
-    hit_inner_else = False
-NotImplementedError: try star
-
-- `test_exception_variations.ExceptStarTestCases.test_nested_mixed1` — fail — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 486, in test_nested_mixed1
-    self.assertTrue(hit_inner_except)
-AssertionError: False is not true
-
-- `test_exception_variations.ExceptStarTestCases.test_nested_mixed2` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 495, in test_nested_mixed2
-    hit_inner_finally = False
-NotImplementedError: try star
-
 - `test_tuple.TupleTest.test_iterator_pickle` — pass
 - `test_tuple.TupleTest.test_keyword_args` — pass
 - `test_tuple.TupleTest.test_keywords_in_subclass` — error — Traceback (most recent call last):
@@ -335,97 +102,173 @@ TypeError: tuple() got an unexpected keyword argument 'newarg'
 - `test_tuple.TupleTest.test_pickle` — pass
 - `test_tuple.TupleTest.test_repeat` — pass
 - `test_tuple.TupleTest.test_repr` — pass
-- `test_slice.SliceTest.test_cycle` — pass
-- `test_slice.SliceTest.test_deepcopy` — pass
-- `test_slice.SliceTest.test_hash` — pass
-- `test_exception_variations.ExceptStarTestCases.test_try_except` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 363, in test_try_except
-    hit_except = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_container_iterator` — pass
+- `test_dict.DictTest.test_contains` — pass
+- `test_dict.DictTest.test_copy` — pass
+- `test_dict.DictTest.test_copy_fuzz` — pass
+- `test_dict.DictTest.test_copy_maintains_tracking` — pass
+- `test_dict.DictTest.test_copy_noncompact` — pass
+- `test_dict.DictTest.test_dict_contain_use_after_free` — pass
+- `test_dict.DictTest.test_dict_copy_order` — pass
+- `test_dict.DictTest.test_dictitems_contains_use_after_free` — pass
+- `test_dict.DictTest.test_dictview_mixed_set_operations` — pass
+- `test_dict.DictTest.test_dictview_set_operations_on_items` — pass
+- `test_dict.DictTest.test_dictview_set_operations_on_keys` — pass
+- `test_dict.DictTest.test_empty_presized_dict_in_freelist` — pass
+- `test_dict.DictTest.test_eq` — pass
+- `test_dict.DictTest.test_equal_operator_modifying_operand` — pass
+- `test_dict.DictTest.test_errors_in_view_containment_check` — pass
+- `test_tuple.TupleTest.test_repr_large` — pass
+- `test_tuple.TupleTest.test_reversed_pickle` — pass
+- `test_tuple.TupleTest.test_subscript` — pass
+- `test_tuple.TupleTest.test_truth` — pass
+- `test_tuple.TupleTest.test_tupleresizebug` — pass
+- `test_descr.AAAPTypesLongInitTest.test_pytype_long_ready` — pass
+- `test_descr.ClassPropertiesAndMethods.test_abstractmethods` — pass
+- `test_descr.ClassPropertiesAndMethods.test_altmro` — pass
+- `test_descr.ClassPropertiesAndMethods.test_assign_slice` — pass
+- `test_descr.ClassPropertiesAndMethods.test_attr_raise_through_property` — pass
+- `test_dict.DictTest.test_free_after_iterating` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 1285, in test_free_after_iterating
+    support.check_free_after_iterating(self, iter, dict)
+  File "/work/suites/cpython/Lib/test/support/__init__.py", line 1830, in check_free_after_iterating
+    test.assertTrue(done)
+AssertionError: False is not true
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_else` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 384, in test_try_except_else
-    hit_else = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_fromkeys` — pass
+- `test_dict.DictTest.test_fromkeys_operator_modifying_dict_operand` — pass
+- `test_dict.DictTest.test_fromkeys_operator_modifying_set_operand` — pass
+- `test_dict.DictTest.test_get` — pass
+- `test_dict.DictTest.test_getitem` — pass
+- `test_dict.DictTest.test_init_use_after_free` — pass
+- `test_dict.DictTest.test_instance_dict_getattr_str_subclass` — pass
+- `test_dict.DictTest.test_invalid_keyword_arguments` — pass
+- `test_dict.DictTest.test_itemiterator_pickling` — pass
+- `test_dict.DictTest.test_items` — pass
+- `test_dict.DictTest.test_items_symmetric_difference` — pass
+- `test_dict.DictTest.test_iterator_pickling` — pass
+- `test_dict.DictTest.test_keys` — pass
+- `test_dict.DictTest.test_keys_contained` — pass
+- `test_dict.DictTest.test_len` — pass
+- `test_descr.ClassPropertiesAndMethods.test_basic_inheritance` — pass
+- `test_descr.ClassPropertiesAndMethods.test_binary_operator_override` — pass
+- `test_descr.ClassPropertiesAndMethods.test_bound_method_repr` — pass
+- `test_descr.ClassPropertiesAndMethods.test_bpo25750` — pass
+- `test_descr.ClassPropertiesAndMethods.test_buffer_inheritance` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_bad_integer` — pass
+- `test_dict.DictTest.test_literal_constructor` — pass
+- `test_dict.DictTest.test_merge_and_mutate` — pass
+- `test_dict.DictTest.test_merge_operator` — pass
+- `test_dict.DictTest.test_missing` — pass
+- `test_dict.DictTest.test_mutating_iteration` — pass
+- `test_dict.DictTest.test_mutating_iteration_delete` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 530, in test_mutating_iteration_delete
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_else_finally` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 301, in test_try_except_else_finally
-    hit_finally = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_mutating_iteration_delete_over_items` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 548, in test_mutating_iteration_delete_over_items
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_else_finally_no_exception` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 319, in test_try_except_else_finally_no_exception
-    hit_finally = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_mutating_iteration_delete_over_values` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 539, in test_mutating_iteration_delete_over_values
+    with self.assertRaises(RuntimeError):
+AssertionError: RuntimeError not raised
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_else_no_exception` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 398, in test_try_except_else_no_exception
-    hit_else = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_mutating_lookup` — pass
+- `test_dict.DictTest.test_object_set_item_single_instance_non_str_key` — pass
+- `test_dict.DictTest.test_oob_indexing_dictiter_iternextitem` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 1396, in test_oob_indexing_dictiter_iternextitem
+    self.assertRaises(RuntimeError, iter_and_mutate)
+AssertionError: RuntimeError not raised by iter_and_mutate
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_finally` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 336, in test_try_except_finally
-    hit_finally = False
-NotImplementedError: try star
+- `test_dict.DictTest.test_pop` — pass
+- `test_descr.ClassPropertiesAndMethods.test_builtin_bases` — pass
+- `test_descr.ClassPropertiesAndMethods.test_builtin_function_or_method` — pass
+- `test_descr.ClassPropertiesAndMethods.test_carloverre` — pass
+- `test_descr.ClassPropertiesAndMethods.test_carloverre_multi_inherit_invalid` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_descr.py", line 4436, in test_carloverre_multi_inherit_invalid
+    self.fail("setattr through indirect base types should be rejected")
+AssertionError: setattr through indirect base types should be rejected
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_finally_no_exception` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 350, in test_try_except_finally_no_exception
-    hit_finally = False
-NotImplementedError: try star
+- `test_descr.ClassPropertiesAndMethods.test_carloverre_multi_inherit_valid` — pass
+- `test_descr.ClassPropertiesAndMethods.test_classic` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_copy_location` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_dump` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_dump_incomplete` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_dump_indent` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_elif_stmt_start_position` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_elif_stmt_start_position_with_else` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_fix_missing_locations` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_get_docstring` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_get_docstring_none` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_increment_lineno` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_increment_lineno_on_module` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_iter_child_nodes` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_iter_fields` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_level_as_none` — pass
+- `test_descr.ClassPropertiesAndMethods.test_classic_comparisons` — pass
+- `test_descr.ClassPropertiesAndMethods.test_classmethods` — pass
+- `test_descr.ClassPropertiesAndMethods.test_compattr` — pass
+- `test_descr.ClassPropertiesAndMethods.test_consistency_with_epg` — pass
+- `test_descr.ClassPropertiesAndMethods.test_copy_setstate` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_complex` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_malformed_dict_nodes` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_malformed_lineno` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_str_int_limit` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_ast/test_ast.py", line 1301, in test_literal_eval_str_int_limit
+    with self.assertRaises(SyntaxError) as err_ctx:
+AssertionError: SyntaxError not raised
 
-- `test_exception_variations.ExceptStarTestCases.test_try_except_no_exception` — error — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_exception_variations.py", line 373, in test_try_except_no_exception
-    hit_except = False
-NotImplementedError: try star
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_syntax_errors` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_literal_eval_trailing_ws` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_multi_line_docstring_col_offset_and_lineno_issue16806` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_parse` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_parse_in_error` — pass
+- `test_metaclass.__test__.doctests` — pass
+- `test_dict.DictTest.test_popitem` — pass
+- `test_dict.DictTest.test_reentrant_insertion` — pass
+- `test_dict.DictTest.test_repr` — pass
+- `test_dict.DictTest.test_repr_deep` — pass
+- `test_dict.DictTest.test_resize1` — pass
+- `test_dict.DictTest.test_resize2` — pass
+- `test_dict.DictTest.test_reverse_iterator_for_empty_dict` — pass
+- `test_dict.DictTest.test_reverse_iterator_for_shared_shared_dicts` — pass
+- `test_dict.DictTest.test_reversed` — pass
+- `test_dict.DictTest.test_reverseitemiterator_pickling` — pass
+- `test_dict.DictTest.test_reverseiterator_pickling` — pass
+- `test_dict.DictTest.test_reversevaluesiterator_pickling` — pass
+- `test_dict.DictTest.test_setdefault` — pass
+- `test_dict.DictTest.test_setdefault_atomic` — fail — Traceback (most recent call last):
+  File "/work/suites/cpython/Lib/test/test_dict.py", line 435, in test_setdefault_atomic
+    self.assertEqual(hashed1.eq_count + hashed2.eq_count, 1)
+AssertionError: 2 != 1
 
-- `test_exception_variations.ExceptStarTestCases.test_try_finally_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_nested` — pass
-- `test_exception_variations.ExceptTestCases.test_nested_else` — pass
-- `test_exception_variations.ExceptTestCases.test_nested_exception_in_else` — pass
-- `test_exception_variations.ExceptTestCases.test_nested_exception_in_except` — pass
-- `test_exception_variations.ExceptTestCases.test_nested_exception_in_finally_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_nested_exception_in_finally_with_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_else` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_else_finally` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_else_finally_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_else_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_finally` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_finally_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_try_except_no_exception` — pass
-- `test_exception_variations.ExceptTestCases.test_try_finally_no_exception` — pass
-- `test_range.RangeTest.test_pickling` — pass
-- `test_range.RangeTest.test_range` — pass
-- `test_range.RangeTest.test_range_constructor_error_messages` — fail — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_range.py", line 95, in test_range_constructor_error_messages
-    with self.assertRaisesRegex(
-AssertionError: "range expected at least 1 argument, got 0" does not match "range() missing 1 required positional argument: 'a'"
-
-- `test_scope.ScopeTests.testBoundAndFree` — pass
-- `test_scope.ScopeTests.testCellIsArgAndEscapes` — pass
-- `test_scope.ScopeTests.testCellIsKwonlyArg` — pass
-- `test_scope.ScopeTests.testCellIsLocalAndEscapes` — pass
-- `test_scope.ScopeTests.testClassAndGlobal` — pass
-- `test_scope.ScopeTests.testClassNamespaceOverridesClosure` — pass
-- `test_scope.ScopeTests.testComplexDefinitions` — pass
-- `test_scope.ScopeTests.testEvalExecFreeVars` — pass
-- `test_scope.ScopeTests.testEvalFreeVars` — pass
-- `test_scope.ScopeTests.testExtraNesting` — pass
-- `test_scope.ScopeTests.testFreeVarInMethod` — pass
-- `test_scope.ScopeTests.testFreeingCell` — pass
-- `test_scope.ScopeTests.testGlobalInParallelNestedFunctions` — pass
-- `test_scope.ScopeTests.testLambdas` — pass
-- `test_class.ClassTests.testDel` — fail — Traceback (most recent call last):
-  File "/work/suites/cpython/Lib/test/test_class.py", line 472, in testDel
-    self.assertEqual(["crab people, crab people"], x)
-AssertionError: Lists differ: ['crab people, crab people'] != []
-
-First list contains 1 additional elements.
-First extra element 0:
-'crab people, crab people'
-
-- ['crab people, crab people']
-+ []
-
-- `test_class.ClassTests.testForExceptionsRaisedInInstanceGetattr2` — pass
-- …and 12300 more
+- `test_dict.DictTest.test_setitem_atomic_at_resize` — pass
+- `test_dict.DictTest.test_store_evilattr` — pass
+- `test_ast.test_ast.ASTHelpers_Test.test_recursion_direct` — pass
+- `test_dict.DictTest.test_str_nonstr` — pass
+- `test_dict.DictTest.test_string_keys_can_track_values` — pass
+- `test_dict.DictTest.test_tuple_keyerror` — pass
+- `test_dict.DictTest.test_update` — pass
+- `test_dict.DictTest.test_values` — pass
+- `test_bytes.AssortedBytesTest.test_compare_bytes_to_bytearray` — pass
+- `test_bytes.AssortedBytesTest.test_doc` — pass
+- `test_bytes.AssortedBytesTest.test_format` — pass
+- `test_bytes.AssortedBytesTest.test_from_bytearray` — pass
+- `test_dict.DictTest.test_valuesiterator_pickling` — pass
+- `test_dict.DictTest.test_views_mapping` — pass
+- `test_dict.GeneralMappingTests.test_bool` — pass
+- `test_dict.GeneralMappingTests.test_constructor` — pass
+- `test_dict.GeneralMappingTests.test_get` — pass
+- `test_dict.GeneralMappingTests.test_getitem` — pass
+- `test_dict.GeneralMappingTests.test_items` — pass
+- `test_dict.GeneralMappingTests.test_keys` — pass
+- `test_dict.GeneralMappingTests.test_len` — pass
+- `test_dict.GeneralMappingTests.test_pop` — pass
+- `test_dict.GeneralMappingTests.test_popitem` — pass
+- `test_dict.GeneralMappingTests.test_read` — pass
+- `test_dict.GeneralMappingTests.test_setdefault` — pass
+- …and 3007 more

@@ -5,4 +5,8 @@
 
 | regressed | fixed | added | removed | still failing |
 |---:|---:|---:|---:|---:|
-| 0 | 0 | 8830 | 180 | 287 |
+| 0 | 1 | 1321 | 2534 | 111 |
+
+## ✅ Fixed (1)
+
+- `test_exceptions.ExceptionTests.test_generator_del_cleanup_exc_state`
