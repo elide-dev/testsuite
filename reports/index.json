@@ -1,6 +1,16 @@
 {
   "runs": [
     {
+      "workload": "cpython-core",
+      "semver": "1.3.5+20260628.3b80cf3",
+      "digest": "3583aceded8e",
+      "pass": 11193,
+      "total": 12964,
+      "regressions": 0,
+      "finishedAt": "2026-06-28T05:56:31.805Z",
+      "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/cpython-core"
+    },
+    {
       "workload": "test262",
       "semver": "1.3.5+20260628.3b80cf3",
       "digest": "3583aceded8e",
@@ -19,16 +29,6 @@
       "regressions": 0,
       "finishedAt": "2026-06-28T04:32:57.657Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/javac-jtreg"
-    },
-    {
-      "workload": "cpython-core",
-      "semver": "1.3.5+20260628.3b80cf3",
-      "digest": "3583aceded8e",
-      "pass": 2207,
-      "total": 2545,
-      "regressions": 0,
-      "finishedAt": "2026-06-28T04:26:23.786Z",
-      "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/cpython-core"
     },
     {
       "workload": "wpt-wintertc",
