@@ -2,7 +2,7 @@
 
 ## By root-cause signature
 
-### 190 × `system error (exit code <n>)`
+### 40 × `system error (exit code <n>)`
 
 distinct messages:
 - `system error (exit code 3)`
@@ -17,8 +17,8 @@ example test: `tools/javac/completionDeps/DepsAndDocLint.java`
 ### 2 × `<str> timed out after <n> ms (elapsed time including timeout handling <n> ms)`
 
 distinct messages:
-- `'/work/.harness/work/javac-jtreg/jtreg-run-rxnl3v/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300207 ms)`
-- `'/work/.harness/work/javac-jtreg/jtreg-run-rxnl3v/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300169 ms)`
+- `'/work/.harness/work/javac-jtreg/jtreg-run-yw3gW8/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300204 ms)`
+- `'/work/.harness/work/javac-jtreg/jtreg-run-yw3gW8/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300180 ms)`
 example test: `tools/javac/file/zip/T6836682.java`
 
 ### 1 × `Execution failed: ʼmain' threw exception: java.lang.AssertionError: The compiler output should have one line only`

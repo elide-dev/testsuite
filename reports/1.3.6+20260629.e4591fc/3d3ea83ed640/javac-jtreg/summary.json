@@ -6,15 +6,15 @@
       "semver": "1.3.6+20260629.e4591fc",
       "digest": "3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06"
     },
-    "startedAt": "2026-06-29T17:17:11.609Z",
-    "finishedAt": "2026-06-29T17:26:27.561Z",
+    "startedAt": "2026-06-29T19:54:29.718Z",
+    "finishedAt": "2026-06-29T20:04:28.512Z",
     "suiteVersion": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
   },
   "counts": {
-    "pass": 3732,
+    "pass": 3654,
     "fail": 6,
-    "skip": 4,
-    "error": 192,
+    "skip": 232,
+    "error": 42,
     "total": 3934
   },
   "regressions": [],

@@ -87,7 +87,7 @@
         "test_weakref.FinalizeTestCase.test_all_freed"
       ],
       "samples": [
-        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2108, in test_all_freed\n    self.assertIsNone(wr_callback())\nAssertionError: <function FinalizeTestCase.test_all_freed.<locals>.callback at 0x6f81f2fd> is not None"
+        "Traceback (most recent call last):\n  File \"/work/suites/cpython/Lib/test/test_weakref.py\", line 2108, in test_all_freed\n    self.assertIsNone(wr_callback())\nAssertionError: <function FinalizeTestCase.test_all_freed.<locals>.callback at 0x2ae0d66b> is not None"
       ]
     },
     {

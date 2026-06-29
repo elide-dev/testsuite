@@ -8,24 +8,24 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'node:test'                                   │
 │                                                                             │
-│ In file test/parallel/test-assert-esm-cjs-message-verify.j`
-- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│TypeError: Cannot load module: 'node:test'                                   │
-│                                                                             │
 │ In file test/parallel/test-assert-checktag.js:3:18:       `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'node:test'                                   │
 │                                                                             │
-│ In file test/parallel/test-assert-deep-with-error.js:4:18:`
+│ In file test/parallel/test-assert-fail.js:5:18:           `
+- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│TypeError: Cannot load module: 'node:test'                                   │
+│                                                                             │
+│ In file test/parallel/test-assert-class.js:8:18:          `
+- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│TypeError: Cannot load module: 'node:test'                                   │
+│                                                                             │
+│ In file test/parallel/test-assert-esm-cjs-message-verify.j`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'node:test'                                   │
 │                                                                             │
 │ In file test/parallel/test-assert-class-destructuring.js:7`
-- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│TypeError: Cannot load module: 'node:test'                                   │
-│                                                                             │
-│ In file test/parallel/test-assert-fail.js:5:18:           `
-example test: `test/parallel/test-assert-esm-cjs-message-verify.js`
+example test: `test/parallel/test-assert-checktag.js`
 
 ### 217 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │java.lang.UnsupportedOperationException: util.inspect() is not yet │ │implement`
 
@@ -58,11 +58,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │SyntaxError: Variable "Buffer" has already been declared                     │
 │                                                                             │
-│ In file test/parallel/test-buffer-alloc.js:1:1:           `
+│ In file test/parallel/test-buffer-bytelength.js:1:1:      `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │SyntaxError: Variable "Buffer" has already been declared                     │
 │                                                                             │
-│ In file test/parallel/test-buffer-bytelength.js:1:1:      `
+│ In file test/parallel/test-buffer-alloc.js:1:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │SyntaxError: Variable "Buffer" has already been declared                     │
 │                                                                             │
@@ -75,7 +75,7 @@ distinct messages:
 │SyntaxError: Variable "Buffer" has already been declared                     │
 │                                                                             │
 │ In file test/parallel/test-buffer-isutf8.js:1:1:          `
-example test: `test/parallel/test-buffer-alloc.js`
+example test: `test/parallel/test-buffer-bytelength.js`
 
 ### 65 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Cannot load module: <str> │ │ │ │ In file <loc>: │ │ ╭─ │ │ <n> │ │ `
 
@@ -141,11 +141,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Got unwanted exception: {}                                   │
 │                                                                             │
-│ In file test/parallel/test-buffer-no-negative-allocation.j`
+│ In file test/parallel/test-buffer-over-max-length.js:14:1:`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Got unwanted exception: {}                                   │
 │                                                                             │
-│ In file test/parallel/test-buffer-over-max-length.js:14:1:`
+│ In file test/parallel/test-buffer-no-negative-allocation.j`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Got unwanted exception: {}                                   │
 │                                                                             │
@@ -166,11 +166,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'prototype' of undefined                     │
 │                                                                             │
-│ In file test/parallel/test-fs-stream-construct-compat-erro`
+│ In file test/parallel/test-fs-stream-construct-compat-grac`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'prototype' of undefined                     │
 │                                                                             │
-│ In file test/parallel/test-fs-stream-construct-compat-grac`
+│ In file test/parallel/test-fs-stream-construct-compat-erro`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'prototype' of undefined                     │
 │                                                                             │
@@ -187,11 +187,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: setTimeout is not defined                                    │
 │                                                                             │
-│ In file test/parallel/test-fs-promises-watch.js:404:3:    `
+│ In file test/parallel/test-fs-promises-watch-iterator.js:4`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: setTimeout is not defined                                    │
 │                                                                             │
-│ In file test/parallel/test-fs-promises-watch-iterator.js:4`
+│ In file test/parallel/test-fs-promises-watch.js:404:3:    `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: setTimeout is not defined                                    │
 │                                                                             │
@@ -208,11 +208,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Missing expected exception                                   │
 │                                                                             │
-│ In file test/parallel/test-buffer-readint.js:17:7:        `
+│ In file test/parallel/test-buffer-readuint.js:17:7:       `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Missing expected exception                                   │
 │                                                                             │
-│ In file test/parallel/test-buffer-readuint.js:17:7:       `
+│ In file test/parallel/test-buffer-readint.js:17:7:        `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: Missing expected exception                                   │
 │                                                                             │
@@ -225,7 +225,7 @@ distinct messages:
 │AssertionError: Missing expected exception                                   │
 │                                                                             │
 │ In file test/parallel/test-dns-setservers-type-check.js:26`
-example test: `test/parallel/test-buffer-readint.js`
+example test: `test/parallel/test-buffer-readuint.js`
 
 ### 14 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │java.lang.UnsupportedOperationException: process.nextTick() is not yet │ │imple`
 
@@ -270,11 +270,11 @@ distinct messages:
 │                                                                             │
 │ In file test/parallel/test-diagnostics-channel-tracing-cha`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│TypeError: Cannot load module: 'diagnostics_channel'                         │
+│TypeError: Cannot load module: 'async_hooks'                                 │
 │                                                                             │
 │ In file test/parallel/test-diagnostics-channel-tracing-cha`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│TypeError: Cannot load module: 'async_hooks'                                 │
+│TypeError: Cannot load module: 'diagnostics_channel'                         │
 │                                                                             │
 │ In file test/parallel/test-diagnostics-channel-tracing-cha`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
@@ -289,11 +289,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'async_hooks'                                 │
 │                                                                             │
-│ In file test/parallel/test-async-hooks-correctly-switch-pr`
+│ In file test/parallel/test-async-hooks-enable-before-promi`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'async_hooks'                                 │
 │                                                                             │
-│ In file test/parallel/test-async-hooks-enable-before-promi`
+│ In file test/parallel/test-async-hooks-correctly-switch-pr`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot load module: 'diagnostics_channel'                         │
 │                                                                             │
@@ -306,7 +306,7 @@ distinct messages:
 │TypeError: Cannot load module: 'diagnostics_channel'                         │
 │                                                                             │
 │ In file test/parallel/test-diagnostics-channel-tracing-cha`
-example test: `test/parallel/test-async-hooks-correctly-switch-promise-hook.js`
+example test: `test/parallel/test-async-hooks-enable-before-promise-resolve.js`
 
 ### 11 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Cannot load module: <str> │ │ │ │ In file <loc>: │ │ ╭─ │ │ <n> │ re`
 
@@ -380,7 +380,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │java.lang.UnsupportedOperationException: path.win32 is not yet implemented   │
 │                                                                             │
-│ In file test/parallel/test-path-parse-format.js           `
+│ In file test/parallel/test-path-normalize.js              `
 example test: `test/parallel/test-path-extname.js`
 
 ### 8 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: (intermediate value).on is not a function │ │ │ │ In file <loc>: │ │`
@@ -520,13 +520,13 @@ distinct messages:
 │                                                                             │
 │ In file test/parallel/test-eventsource.js:7:1:            `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│AssertionError: '.' === 'test/parallel'                                      │
-│                                                                             │
-│ In file test/parallel/test-path-dirname.js:6:1:           `
-- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: 'unknown' === 'test-path-basename.js'                        │
 │                                                                             │
 │ In file test/parallel/test-path-basename.js:6:1:          `
+- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│AssertionError: '.' === 'test/parallel'                                      │
+│                                                                             │
+│ In file test/parallel/test-path-dirname.js:6:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: 'abc' === 'abcde'                                            │
 │                                                                             │
@@ -684,7 +684,7 @@ example test: `test/parallel/test-stream-forEach.js`
 distinct messages:
 - `[EventLoop] external task threw: Error: ENOENT: no such file or directory, open 'unknown'
 com.oracle.truffle.js.runtime.UserScriptException: Error: ENOENT: no such file or directory, open 'unknown'`
-example test: `test/parallel/test-fs-read-stream-double-close.js`
+example test: `test/parallel/test-fs-read-stream-err.js`
 
 ### 4 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │java.lang.UnsupportedOperationException: process.stdout is not yet │ │implement`
 
@@ -705,7 +705,7 @@ distinct messages:
 │java.lang.UnsupportedOperationException: process.stdout is not yet           │
 │implemented                                                                  │
 │                                                           `
-example test: `test/parallel/test-console-clear.js`
+example test: `test/parallel/test-console-count.js`
 
 ### 4 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │SyntaxError: <loc> Invalid return statement return;│ │^ <loc> Expected eof but `
 
@@ -801,11 +801,11 @@ distinct messages:
 - `╭─────────────────────────────────────────────────────────────────────────────╮
 │Error: Readable.wrap() is not implemented                                    │
 │                                                                             │
-│ In file test/parallel/test-stream2-readable-wrap-proxy-met`
+│ In file test/parallel/test-stream2-readable-wrap-error.js:`
 - `╭─────────────────────────────────────────────────────────────────────────────╮
 │Error: Readable.wrap() is not implemented                                    │
 │                                                                             │
-│ In file test/parallel/test-stream2-readable-wrap-error.js:`
+│ In file test/parallel/test-stream2-readable-wrap-proxy-met`
 - `╭─────────────────────────────────────────────────────────────────────────────╮
 │Error: Readable.wrap() is not implemented                                    │
 │                                                                             │
@@ -822,11 +822,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: false == true                                                │
 │                                                                             │
-│ In file test/parallel/test-buffer-writefloat.js:12:1:     `
+│ In file test/parallel/test-buffer-writeint.js:20:3:       `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │AssertionError: false == true                                                │
 │                                                                             │
-│ In file test/parallel/test-buffer-writeint.js:20:3:       `
+│ In file test/parallel/test-buffer-writefloat.js:12:1:     `
 example test: `test/parallel/test-buffer-writedouble.js`
 
 ### 3 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │java.lang.UnsupportedOperationException: process.getuid() is not yet │ │impleme`
@@ -1022,16 +1022,16 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Console is not a constructor                                      │
 │                                                                             │
-│ In file test/parallel/test-console-log-stdio-broken-dest.j`
-- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│TypeError: Console is not a constructor                                      │
-│                                                                             │
 │ In file test/parallel/test-console-log-throw-primitive.js:`
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Console is not a constructor                                      │
 │                                                                             │
+│ In file test/parallel/test-console-log-stdio-broken-dest.j`
+- `╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│TypeError: Console is not a constructor                                      │
+│                                                                             │
 │ In file test/parallel/test-console-tty-colors-per-stream.j`
-example test: `test/parallel/test-console-log-stdio-broken-dest.js`
+example test: `test/parallel/test-console-log-throw-primitive.js`
 
 ### 3 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Creating Buffer instances is not allowed │ │ │ │ In file <loc>: │ │ `
 
@@ -1313,11 +1313,11 @@ distinct messages:
 com.oracle.truffle.js.runtime.JSException: Error: invalid char 0,undefined`
 example test: `test/parallel/test-fs-sir-writes-alot.js`
 
-### 1 × `[EventLoop] external task threw: Unexpected values provided for JSCollectionsNormalizeNodeGen@77a99673: [[B@270eadec], [byte[]] com.oracle.truffle.api.dsl.Unsup`
+### 1 × `[EventLoop] external task threw: Unexpected values provided for JSCollectionsNormalizeNodeGen@5e2a8b78: [[B@68abba54], [byte[]] com.oracle.truffle.api.dsl.Unsup`
 
 distinct messages:
-- `[EventLoop] external task threw: Unexpected values provided for JSCollectionsNormalizeNodeGen@77a99673: [[B@270eadec], [byte[]]
-com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for JSCollectionsNormalizeNodeGen@77a99673: [[B@270eadec], [byte[]]
+- `[EventLoop] external task threw: Unexpected values provided for JSCollectionsNormalizeNodeGen@5e2a8b78: [[B@68abba54], [byte[]]
+com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for JSCollectionsNormalizeNodeGen@5e2a8b78: [[B@68abba54], [byte[]]
 	at com.oracle`
 example test: `test/parallel/test-fs-read-stream-concurrent-reads.js`
 
@@ -1354,7 +1354,7 @@ example test: `test/parallel/test-stream-writev.js`
 ### 1 × `<n>/<n>/<n>, <n><loc> PM start test ╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Cannot read property <str> of un`
 
 distinct messages:
-- `6/29/2026, 5:17:50 PM start test
+- `6/29/2026, 7:55:10 PM start test
 ╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'prototype' of undefined                     │
 │                                                                             │
@@ -1632,11 +1632,11 @@ distinct messages:
 │ In file test/parallel/test-fs-write.js:45:1:              `
 example test: `test/parallel/test-fs-write.js`
 
-### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │AssertionError: undefined === [B@6640e0ce │ │ │ │ In file <loc>: │ │ ╭─ │ │ <n>`
+### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │AssertionError: undefined === [B@39f24a8a │ │ │ │ In file <loc>: │ │ ╭─ │ │ <n>`
 
 distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│AssertionError: undefined === [B@6640e0ce                                    │
+│AssertionError: undefined === [B@39f24a8a                                    │
 │                                                                             │
 │ In file test/parallel/test-buffer-arraybuffer.js:15:1:    `
 example test: `test/parallel/test-buffer-arraybuffer.js`

@@ -2,19 +2,19 @@
 
 - Image digest: `3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06`
 - Suite version: `6c48f4ed707bf0b15f9b6098de30db8aae6fa40f`
-- Ran: 2026-06-29T17:17:11.609Z → 2026-06-29T17:26:27.561Z
+- Ran: 2026-06-29T19:54:29.718Z → 2026-06-29T20:04:28.512Z
 
 ## Summary
 
 ![Pass-rate chart](./pass-rate.svg)
 
-**Pass rate: 3732/3934 (94.87%)**
+**Pass rate: 3654/3934 (98.70%)**
 
 | pass | fail | error | skip | regressions | new passes |
 |---:|---:|---:|---:|---:|---:|
-| 3732 | 6 | 192 | 4 | 0 | 0 |
+| 3654 | 6 | 42 | 232 | 0 | 0 |
 
-## Observed cases (3930)
+## Observed cases (3702)
 
 - `tools/javac/4241573/T4241573.java` — pass
 - `tools/javac/4846262/CheckEBCDICLocaleTest.java` — pass
@@ -216,4 +216,4 @@
 - `tools/javac/CompoundBox.java` — pass
 - `tools/javac/ConditionalArgTypes_1.java` — pass
 - `tools/javac/ConditionalArgTypes_2.java` — pass
-- …and 3730 more
+- …and 3502 more

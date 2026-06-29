@@ -28,8 +28,8 @@ example test: `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 
 
 distinct messages:
 - `Request constructor: failed to parse URL ''`
-- `Request constructor: failed to parse URL '/'`
 - `Request constructor: failed to parse URL '...'`
+- `Request constructor: failed to parse URL '/'`
 - `Request constructor: failed to parse URL './'`
 example test: `fetch/api/request/request-consume-empty.any.js :: Consume request's body as text`
 
@@ -75,23 +75,23 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: get_host_info is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-dgyuSM/case.js:5262:18:          `
+│ In file ../tmp/wpt-elide-2HxHpE/case.js:5262:18:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: get_host_info is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-568xl1/case.js:5252:5:           `
+│ In file ../tmp/wpt-elide-2DITUV/case.js:5252:5:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: get_host_info is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-1dxulI/case.js:5254:17:          `
+│ In file ../tmp/wpt-elide-vWFU4P/case.js:5254:17:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: get_host_info is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-H4b7tC/case.js:5243:19:          `
+│ In file ../tmp/wpt-elide-1F2zJP/case.js:5248:5:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: get_host_info is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-u3Ek4c/case.js:5284:13:          `
+│ In file ../tmp/wpt-elide-znTeti/case.js:5284:13:          `
 example test: `fetch/api/abort/general.any.js :: <file>`
 
 ### 25 × `TextDecoderStream is not defined`
@@ -128,30 +128,30 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: run_tests is not defined                                     │
 │                                                                             │
-│ In file ../tmp/wpt-elide-DRUMDz/case.js:5277:1:           `
+│ In file ../tmp/wpt-elide-fmG6lc/case.js:5277:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: run_tests is not defined                                     │
 │                                                                             │
-│ In file ../tmp/wpt-elide-K65efi/case.js:5263:1:           `
+│ In file ../tmp/wpt-elide-FmMYZK/case.js:5263:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: run_tests is not defined                                     │
 │                                                                             │
-│ In file ../tmp/wpt-elide-0XsH7W/case.js:5305:1:           `
+│ In file ../tmp/wpt-elide-g6FE83/case.js:5305:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: run_tests is not defined                                     │
 │                                                                             │
-│ In file ../tmp/wpt-elide-2TcAjM/case.js:5275:1:           `
+│ In file ../tmp/wpt-elide-qvSYzg/case.js:5275:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: run_tests is not defined                                     │
 │                                                                             │
-│ In file ../tmp/wpt-elide-YqhlgW/case.js:5289:1:           `
+│ In file ../tmp/wpt-elide-hOletp/case.js:5304:1:           `
 example test: `fetch/api/request/request-cache-default.any.js :: <file>`
 
 ### 13 × `validateStreamFromString is not defined`
 
 distinct messages:
 - `validateStreamFromString is not defined`
-example test: `fetch/api/response/response-consume-stream.any.js :: Read empty text response's body as readableStream`
+example test: `fetch/api/response/response-clone.any.js :: Check original response's body after cloning`
 
 ### 12 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: RESOURCES_DIR is not defined │ │ │ │ In file <loc>: │ │ (source`
 
@@ -159,24 +159,24 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: RESOURCES_DIR is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-nqgNeT/case.js:5261:13:          `
+│ In file ../tmp/wpt-elide-pUsLLi/case.js:5253:18:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: RESOURCES_DIR is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-RRuA81/case.js:5253:18:          `
+│ In file ../tmp/wpt-elide-gMziIP/case.js:5261:13:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: RESOURCES_DIR is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-AdthvB/case.js:5281:11:          `
+│ In file ../tmp/wpt-elide-E6AP0i/case.js:5281:11:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: RESOURCES_DIR is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-kTSOud/case.js:5275:13:          `
+│ In file ../tmp/wpt-elide-LlVgM1/case.js:5271:13:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: RESOURCES_DIR is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-LIdsjM/case.js:5271:13:          `
-example test: `fetch/api/basic/mode-no-cors.sub.any.js :: <file>`
+│ In file ../tmp/wpt-elide-Dmwdku/case.js:5275:13:          `
+example test: `fetch/api/basic/referrer.any.js :: <file>`
 
 ### 11 × `assert_throws_js: function <str> threw object <str> (<str>) expected instance of function <str> (<str>)`
 
@@ -198,7 +198,7 @@ example test: `fetch/fetch-later/basic.https.window.js :: fetchLater() with same
 
 distinct messages:
 - `validate_expectations_custom_url is not defined`
-example test: `fetch/metadata/fetch.https.sub.any.js :: Same-origin fetch`
+example test: `fetch/metadata/fetch-preflight.https.sub.any.js :: Same-site fetch with preflight`
 
 ### 10 × `assert_equals: <n> -> <n> expected <str> but got <str>`
 
@@ -220,23 +220,23 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: dirname is not defined                                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-x9dPXs/case.js:5275:14:          `
+│ In file ../tmp/wpt-elide-s4yRcL/case.js:5275:14:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: dirname is not defined                                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-YQxZVp/case.js:5241:52:          `
+│ In file ../tmp/wpt-elide-MVYUiD/case.js:5241:52:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: dirname is not defined                                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-AQnCPO/case.js:5280:50:          `
+│ In file ../tmp/wpt-elide-WclxoB/case.js:5280:50:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: dirname is not defined                                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-M2BUi9/case.js:5244:52:          `
+│ In file ../tmp/wpt-elide-z82TTK/case.js:5244:52:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: dirname is not defined                                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-tLSNCO/case.js:5260:17:          `
+│ In file ../tmp/wpt-elide-ZM8Fw1/case.js:5260:17:          `
 example test: `fetch/api/basic/integrity.sub.any.js :: <file>`
 
 ### 6 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: parallelPromiseTest is not defined │ │ │ │ In file <loc>: │ │ (`
@@ -245,23 +245,23 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: parallelPromiseTest is not defined                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-sqCc2Z/case.js:5248:1:           `
+│ In file ../tmp/wpt-elide-pfVZBz/case.js:5248:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: parallelPromiseTest is not defined                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-liUscy/case.js:5253:1:           `
+│ In file ../tmp/wpt-elide-LENVWx/case.js:5256:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: parallelPromiseTest is not defined                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-yCYDsF/case.js:5256:1:           `
+│ In file ../tmp/wpt-elide-snhP4W/case.js:5253:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: parallelPromiseTest is not defined                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-P7BosJ/case.js:5245:1:           `
+│ In file ../tmp/wpt-elide-KuVoL1/case.js:5244:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: parallelPromiseTest is not defined                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-2GOAKN/case.js:5244:1:           `
+│ In file ../tmp/wpt-elide-7nPtsf/case.js:5245:1:           `
 example test: `fetch/fetch-later/activate-after.https.window.js :: <file>`
 
 ### 6 × `assert_throws_js: function <str> did not throw`
@@ -279,23 +279,23 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-QG6JT8/case.js:5242:1:           `
+│ In file ../tmp/wpt-elide-B4wmNd/case.js:5242:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-Tf91vG/case.js:5244:1:           `
+│ In file ../tmp/wpt-elide-BPk9ir/case.js:5244:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-lHZrHh/case.js:5245:27:          `
+│ In file ../tmp/wpt-elide-4HOrQq/case.js:5245:27:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-beLUxg/case.js:5244:1:           `
+│ In file ../tmp/wpt-elide-kGLjVq/case.js:5244:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-JNsUvY/case.js:5242:1:           `
+│ In file ../tmp/wpt-elide-WSeXnh/case.js:5242:1:           `
 example test: `encoding/api-replacement-encodings.any.js :: <file>`
 
 ### 5 × `assert_array_equals: expected property <n> to be <str> but got <str> (expected array [<str>, <str>] got [<str>, <str>])`
@@ -321,19 +321,19 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: http_content is not defined                                  │
 │                                                                             │
-│ In file ../tmp/wpt-elide-HDrUSg/case.js:5400:20:          `
+│ In file ../tmp/wpt-elide-7NC5Le/case.js:5400:20:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: http_content is not defined                                  │
 │                                                                             │
-│ In file ../tmp/wpt-elide-ViIgVH/case.js:5308:12:          `
+│ In file ../tmp/wpt-elide-pdO85W/case.js:5308:12:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: http_content is not defined                                  │
 │                                                                             │
-│ In file ../tmp/wpt-elide-pIkS6W/case.js:5319:24:          `
+│ In file ../tmp/wpt-elide-q1dmKk/case.js:5319:24:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: http_content is not defined                                  │
 │                                                                             │
-│ In file ../tmp/wpt-elide-EVP3Bk/case.js:5252:12:          `
+│ In file ../tmp/wpt-elide-58vwc2/case.js:5252:12:          `
 example test: `fetch/http-cache/cc-request.any.js :: <file>`
 
 ### 4 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Cannot read property <str> of undefined │ │ │ │ In file <loc>: │ │ (`
@@ -342,19 +342,19 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'href' of undefined                          │
 │                                                                             │
-│ In file ../tmp/wpt-elide-hHrk0x/case.js:5259:30:          `
+│ In file ../tmp/wpt-elide-WdCKrG/case.js:5259:30:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'isWorker' of undefined                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-K5jx2q/case.js:5250:8:           `
+│ In file ../tmp/wpt-elide-CPqAPT/case.js:5250:8:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'isWorker' of undefined                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-SyrGor/case.js:5272:8:           `
+│ In file ../tmp/wpt-elide-qO9wG7/case.js:5272:8:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Cannot read property 'isWindow' of undefined                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-H1yrgl/case.js:5246:4:           `
+│ In file ../tmp/wpt-elide-pL60FH/case.js:5246:4:           `
 example test: `fetch/api/basic/request-referrer.any.js :: <file>`
 
 ### 4 × `assert_throws_js: the constructor should throw function <str> threw object <str> (<str>) expected instance of function <str> (<str>)`
@@ -378,15 +378,15 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: expected_block is not defined                                │
 │                                                                             │
-│ In file ../tmp/wpt-elide-JRSv17/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-0rShor/case.js:5243:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: expected_block is not defined                                │
 │                                                                             │
-│ In file ../tmp/wpt-elide-60dooK/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-p1HNXB/case.js:5243:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: expected_block is not defined                                │
 │                                                                             │
-│ In file ../tmp/wpt-elide-2KxElq/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-E8Z4oW/case.js:5243:1:           `
 example test: `fetch/orb/tentative/nosniff.sub.any.js :: <file>`
 
 ### 3 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: idl_test is not defined │ │ │ │ In file <loc>: │ │ (source exce`
@@ -395,15 +395,15 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: idl_test is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-AjnwNq/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-1pzVRF/case.js:5243:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: idl_test is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-V8bT67/case.js:5244:1:           `
+│ In file ../tmp/wpt-elide-iCq7Ak/case.js:5244:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: idl_test is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-p5Q5nD/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-EMJfr0/case.js:5243:1:           `
 example test: `encoding/idlharness.any.js :: <file>`
 
 ### 3 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: subsetTestByKey is not defined │ │ │ │ In file <loc>: │ │ (sour`
@@ -412,15 +412,15 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTestByKey is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-R72GSL/case.js:5267:1:           `
+│ In file ../tmp/wpt-elide-aAqq6y/case.js:5267:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTestByKey is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-iEJJ4P/case.js:5260:1:           `
+│ In file ../tmp/wpt-elide-Jezk79/case.js:5260:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTestByKey is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-OnnhKl/case.js:5263:1:           `
+│ In file ../tmp/wpt-elide-GeUg24/case.js:5263:1:           `
 example test: `fetch/local-network-access/iframe.tentative.https.window.js :: <file>`
 
 ### 3 × `assert_array_equals: lengths differ, expected array [<str>, object <str>, <str>, object <str>] length <n>, got [<str>, object <str>, <str>] length <n>`
@@ -442,11 +442,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: expected_allow_fetch is not defined                          │
 │                                                                             │
-│ In file ../tmp/wpt-elide-NtPGgW/case.js:5244:1:           `
+│ In file ../tmp/wpt-elide-R6Jl2d/case.js:5244:1:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: expected_allow_fetch is not defined                          │
 │                                                                             │
-│ In file ../tmp/wpt-elide-9DrG6w/case.js:5243:1:           `
+│ In file ../tmp/wpt-elide-YBzmjG/case.js:5243:1:           `
 example test: `fetch/orb/tentative/content-range.sub.any.js :: <file>`
 
 ### 2 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: location is not defined │ │ │ │ In file <loc>: │ │ (source exce`
@@ -455,11 +455,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: location is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-eH5jIz/case.js:5242:14:          `
+│ In file ../tmp/wpt-elide-gse90Q/case.js:5242:14:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: location is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-WTGQYg/case.js:5264:13:          `
+│ In file ../tmp/wpt-elide-3prsNW/case.js:5264:13:          `
 example test: `fetch/api/redirect/redirect-back-to-original-origin.any.js :: <file>`
 
 ### 2 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: subsetTest is not defined │ │ │ │ In file <loc>: │ │ (source ex`
@@ -468,11 +468,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTest is not defined                                    │
 │                                                                             │
-│ In file ../tmp/wpt-elide-oj8IqT/case.js:5264:3:           `
+│ In file ../tmp/wpt-elide-LlbVAt/case.js:5264:3:           `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTest is not defined                                    │
 │                                                                             │
-│ In file ../tmp/wpt-elide-D7SFSS/case.js:5293:13:          `
+│ In file ../tmp/wpt-elide-c30oV5/case.js:5293:13:          `
 example test: `encoding/api-invalid-label.any.js :: <file>`
 
 ### 2 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: Request constructor: failed to parse URL <str> │ │ │ │ In file <loc>`
@@ -481,11 +481,11 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Request constructor: failed to parse URL ''                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-s4CgGw/case.js:5247:22:          `
+│ In file ../tmp/wpt-elide-0WQ3AE/case.js:5247:22:          `
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: Request constructor: failed to parse URL ''                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-dT8oxi/case.js:5242:15:          `
+│ In file ../tmp/wpt-elide-BGZyp0/case.js:5242:15:          `
 example test: `fetch/api/request/request-disturbed.any.js :: <file>`
 
 ### 2 × `assert_throws_js: function <str><str> threw object <str> (<str>) expected instance of function <str> (<str>)`
@@ -552,7 +552,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: badRequestArgTests is not defined                            │
 │                                                                             │
-│ In file ../tmp/wpt-elide-ltxRAs/case.js:5244:34:          `
+│ In file ../tmp/wpt-elide-o8hoOn/case.js:5244:34:          `
 example test: `fetch/api/request/request-error.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: BeaconDataType is not defined │ │ │ │ In file <loc>: │ │ (sourc`
@@ -561,7 +561,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: BeaconDataType is not defined                                │
 │                                                                             │
-│ In file ../tmp/wpt-elide-wfwGOy/case.js:5246:24:          `
+│ In file ../tmp/wpt-elide-0eoAOk/case.js:5246:24:          `
 example test: `fetch/fetch-later/quota/small-payload.https.window.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: createBuffer is not defined │ │ │ │ In file <loc>: │ │ (source `
@@ -570,7 +570,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: createBuffer is not defined                                  │
 │                                                                             │
-│ In file ../tmp/wpt-elide-men15m/case.js:5248:37:          `
+│ In file ../tmp/wpt-elide-FVSGn4/case.js:5248:37:          `
 example test: `encoding/streams/decode-utf8.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: decode_test is not defined │ │ │ │ In file <loc>: │ │ (source e`
@@ -579,7 +579,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: decode_test is not defined                                   │
 │                                                                             │
-│ In file ../tmp/wpt-elide-PPUPLP/case.js:5244:3:           `
+│ In file ../tmp/wpt-elide-x05uzH/case.js:5244:3:           `
 example test: `encoding/unsupported-encodings.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: forbiddenMethod is not defined │ │ │ │ In file <loc>: │ │ (sour`
@@ -588,7 +588,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: forbiddenMethod is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-V8tDMp/case.js:5265:6:           `
+│ In file ../tmp/wpt-elide-6WeM5w/case.js:5265:6:           `
 example test: `fetch/api/headers/headers-forbidden-override.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: idx is not defined │ │ │ │ In file <loc>: │ │ (source excerpt s`
@@ -597,7 +597,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: idx is not defined                                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-RLu1ym/case.js:5244:6:           `
+│ In file ../tmp/wpt-elide-SJO7xt/case.js:5244:6:           `
 example test: `fetch/api/request/request-init-priority.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: importScripts is not defined │ │ │ │ In file <loc>: │ │ (source`
@@ -606,7 +606,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: importScripts is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-fysfZ6/case.js:5239:1:           `
+│ In file ../tmp/wpt-elide-mNdZI8/case.js:5239:1:           `
 example test: `fetch/fetch-later/basic.https.worker.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: now is not defined │ │ │ │ In file <loc>: │ │ (source excerpt s`
@@ -615,7 +615,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: now is not defined                                           │
 │                                                                             │
-│ In file ../tmp/wpt-elide-7tUFNa/case.js:5251:49:          `
+│ In file ../tmp/wpt-elide-xO4QLK/case.js:5251:49:          `
 example test: `fetch/api/request/request-cache-default-conditional.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: QUOTA_PER_ORIGIN is not defined │ │ │ │ In file <loc>: │ │ (sou`
@@ -624,7 +624,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: QUOTA_PER_ORIGIN is not defined                              │
 │                                                                             │
-│ In file ../tmp/wpt-elide-RdwPsh/case.js:5245:37:          `
+│ In file ../tmp/wpt-elide-z3Lj71/case.js:5245:37:          `
 example test: `fetch/fetch-later/quota/oversized-payload.https.window.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: ranges is not defined │ │ │ │ In file <loc>: │ │ (source excerp`
@@ -633,7 +633,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: ranges is not defined                                        │
 │                                                                             │
-│ In file ../tmp/wpt-elide-FmqrxR/case.js:5328:21:          `
+│ In file ../tmp/wpt-elide-5E9rEh/case.js:5328:21:          `
 example test: `encoding/legacy-mb-schinese/gb18030/gb18030-decoder.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: requestForbiddenHeaders is not defined │ │ │ │ In file <loc>: │`
@@ -642,7 +642,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: requestForbiddenHeaders is not defined                       │
 │                                                                             │
-│ In file ../tmp/wpt-elide-xZpbLV/case.js:5257:1:           `
+│ In file ../tmp/wpt-elide-CTMVRJ/case.js:5257:1:           `
 example test: `fetch/api/basic/request-forbidden-headers.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: stringToArray is not defined │ │ │ │ In file <loc>: │ │ (source`
@@ -651,7 +651,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: stringToArray is not defined                                 │
 │                                                                             │
-│ In file ../tmp/wpt-elide-oV01uJ/case.js:5245:23:          `
+│ In file ../tmp/wpt-elide-HQ6TaD/case.js:5245:23:          `
 example test: `fetch/api/basic/text-utf8.any.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: window is not defined │ │ │ │ In file <loc>: │ │ (source excerp`
@@ -660,7 +660,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: window is not defined                                        │
 │                                                                             │
-│ In file ../tmp/wpt-elide-w0Oa0A/case.js:5368:1:           `
+│ In file ../tmp/wpt-elide-BHvgxk/case.js:5368:1:           `
 example test: `encoding/streams/realms.window.js :: <file>`
 
 ### 1 × `╭─ Script Error ──────────────────────────────────────────────────────────────╮ │TypeError: (intermediate value).createObjectURL is not a function │ │ │ │ In fi`
@@ -669,7 +669,7 @@ distinct messages:
 - `╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │TypeError: (intermediate value).createObjectURL is not a function            │
 │                                                                             │
-│ In file ../tmp/wpt-elide-FSq88t/case.js:5257:20:          `
+│ In file ../tmp/wpt-elide-2QDQuI/case.js:5257:20:          `
 example test: `fetch/api/basic/scheme-blob.sub.any.js :: <file>`
 
 ### 1 × `assert_array_equals: lengths differ, expected array [] length <n>, got [<str>] length <n>`

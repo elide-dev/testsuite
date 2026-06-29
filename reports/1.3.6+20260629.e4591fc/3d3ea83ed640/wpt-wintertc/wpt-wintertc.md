@@ -2,7 +2,7 @@
 
 - Image digest: `3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06`
 - Suite version: `1eb456f600fedad07c8cd6439796fb81db54faff`
-- Ran: 2026-06-29T17:17:11.614Z → 2026-06-29T17:17:17.644Z
+- Ran: 2026-06-29T19:54:29.725Z → 2026-06-29T19:54:35.081Z
 
 ## Summary
 
@@ -16,18 +16,18 @@
 
 ## Observed cases (2300)
 
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Sanity check` — pass
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low)` — pass
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high)` — pass
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low), in a string` — pass
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high), in a string` — pass
-- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Wrong order` — pass
 - `encoding/api-basics.any.js :: Default encodings` — pass
 - `encoding/api-basics.any.js :: Default inputs` — pass
 - `encoding/api-basics.any.js :: Encode/decode round trip: utf-8` — pass
 - `encoding/api-basics.any.js :: Decode sample: utf-16le` — pass
 - `encoding/api-basics.any.js :: Decode sample: utf-16be` — pass
 - `encoding/api-basics.any.js :: Decode sample: utf-16` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Sanity check` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Wrong order` — pass
 - `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC` — fail — assert_equals: expected "\ufffd$" but got "\ufffd"
 - `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC, character` — fail — assert_equals: expected "\ufffd$P" but got "\ufffd"
 - `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: ASCII ESC, character` — pass
@@ -173,16 +173,16 @@
 - `encoding/encodeInto.any.js :: Invalid encodeInto() destination: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", createBuffer(arrayBufferOrSharedArrayBuffer, 10))" threw object "ReferenceError: createBuffer is not defined" ("ReferenceError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
 - `encoding/encodeInto.any.js :: Invalid encodeInto() destination: SharedArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", createBuffer(arrayBufferOrSharedArrayBuffer, 10))" threw object "ReferenceError: createBuffer is not defined" ("ReferenceError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
 - `encoding/encodeInto.any.js :: encodeInto() and a detached output buffer` — fail — value of type Direct is not yet supported by structured clone
-- `encoding/api-replacement-encodings.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│ReferenceError: encodings_table is not defined                               │
+- `encoding/legacy-mb-schinese/gb18030/gb18030-decoder.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│ReferenceError: ranges is not defined                                        │
 │                                                                             │
-│ In file ../tmp/wpt-elide-QG6JT8/case.js:5242:1:                             │
+│ In file ../tmp/wpt-elide-5E9rEh/case.js:5328:21:                            │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
-│ ╭─ [js] :program                          case.js:5242:1-15                 │
+│ ╭─ [js] :program                          case.js:5328:21-26                │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-QG6JT8/case.js                                   │
+│ · elide run /tmp/wpt-elide-5E9rEh/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -190,16 +190,16 @@
 │                                                                             │
 ╰─────────────────────────────────────────────────────────────────────────────╯
 
-- `encoding/legacy-mb-schinese/gb18030/gb18030-decoder.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
-│ReferenceError: ranges is not defined                                        │
+- `encoding/api-replacement-encodings.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
+│ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-FmqrxR/case.js:5328:21:                            │
+│ In file ../tmp/wpt-elide-B4wmNd/case.js:5242:1:                             │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
-│ ╭─ [js] :program                          case.js:5328:21-26                │
+│ ╭─ [js] :program                          case.js:5242:1-15                 │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-FmqrxR/case.js                                   │
+│ · elide run /tmp/wpt-elide-B4wmNd/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -210,13 +210,13 @@
 - `encoding/api-invalid-label.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: subsetTest is not defined                                    │
 │                                                                             │
-│ In file ../tmp/wpt-elide-oj8IqT/case.js:5264:3:                             │
+│ In file ../tmp/wpt-elide-LlbVAt/case.js:5264:3:                             │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
 │ ╭─ [js] :anonymous                        case.js:5264:3-12                 │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-oj8IqT/case.js                                   │
+│ · elide run /tmp/wpt-elide-LlbVAt/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -227,13 +227,13 @@
 - `encoding/idlharness.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: idl_test is not defined                                      │
 │                                                                             │
-│ In file ../tmp/wpt-elide-AjnwNq/case.js:5243:1:                             │
+│ In file ../tmp/wpt-elide-1pzVRF/case.js:5243:1:                             │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
 │ ╭─ [js] :program                          case.js:5243:1-8                  │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-AjnwNq/case.js                                   │
+│ · elide run /tmp/wpt-elide-1pzVRF/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -244,13 +244,13 @@
 - `encoding/replacement-encodings.any.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-Tf91vG/case.js:5244:1:                             │
+│ In file ../tmp/wpt-elide-BPk9ir/case.js:5244:1:                             │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
 │ ╭─ [js] :program                          case.js:5244:1-15                 │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-Tf91vG/case.js                                   │
+│ · elide run /tmp/wpt-elide-BPk9ir/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -258,16 +258,20 @@
 │                                                                             │
 ╰─────────────────────────────────────────────────────────────────────────────╯
 
+- `encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextDecoderStream` — fail — promise_test: Unhandled rejection with value: object "TypeError: (intermediate value)[streamClass.name] is not a constructor"
+- `encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextDecoderStream` — fail — promise_test: Unhandled rejection with value: object "TypeError: (intermediate value)[streamClass.name] is not a constructor"
+- `encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextEncoderStream` — fail — promise_test: Unhandled rejection with value: object "TypeError: (intermediate value)[streamClass.name] is not a constructor"
+- `encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextEncoderStream` — fail — promise_test: Unhandled rejection with value: object "TypeError: (intermediate value)[streamClass.name] is not a constructor"
 - `encoding/single-byte-decoder.window.js :: <file>` — error — ╭─ Script Error ──────────────────────────────────────────────────────────────╮
 │ReferenceError: encodings_table is not defined                               │
 │                                                                             │
-│ In file ../tmp/wpt-elide-lHZrHh/case.js:5245:27:                            │
+│ In file ../tmp/wpt-elide-4HOrQq/case.js:5245:27:                            │
 │   (source excerpt suppressed)                                               │
 │─ Stack Trace ───────────────────────────────────────────────────────────────│
 │                                                                             │
 │ ╭─ [js] :program                          case.js:5245:27-41                │
 │ │                                                                           │
-│ · elide run /tmp/wpt-elide-lHZrHh/case.js                                   │
+│ · elide run /tmp/wpt-elide-4HOrQq/case.js                                   │
 │                                                                             │
 │─ Advice ────────────────────────────────────────────────────────────────────│
 │                                                                             │
@@ -308,8 +312,4 @@
 - `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23785` — fail — assert_equals: expected 14815 but got 59432
 - `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23786` — fail — assert_equals: expected 14963 but got 59433
 - `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23787` — fail — assert_equals: expected 14800 but got 59434
-- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23790` — fail — assert_equals: expected 15182 but got 59437
-- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23791` — fail — assert_equals: expected 15470 but got 59438
-- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23792` — fail — assert_equals: expected 15584 but got 59439
-- `encoding/legacy-mb-schinese/gbk/gbk-decoder.any.js :: gbk pointer: 23793` — fail — assert_equals: expected 11943 but got 59440
 - …and 2100 more

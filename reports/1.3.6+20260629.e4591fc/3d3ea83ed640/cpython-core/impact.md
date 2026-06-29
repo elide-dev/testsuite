@@ -85,7 +85,7 @@ distinct messages:
 - `Traceback (most recent call last):
   File "/work/suites/cpython/Lib/test/test_weakref.py", line 2108, in test_all_freed
     self.assertIsNone(wr_callback())
-AssertionError: <function FinalizeTestCase.test_all_freed.<locals>.callback at 0x6f81f2fd> is not None`
+AssertionError: <function FinalizeTestCase.test_all_freed.<locals>.callback at 0x2ae0d66b> is not None`
 example test: `test_weakref.FinalizeTestCase.test_all_freed`
 
 ### 1 × `Traceback (most recent call last): File <str>, line <n>, in test_AST_fields_NULL_check del ast.AST._fields ^^^^^^^^^^^^^^^ TypeError: cannot set <str> attribute`

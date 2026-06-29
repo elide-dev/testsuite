@@ -3,7 +3,7 @@
   <desc id="desc">1795 of 1972 tests passed.</desc>
   <rect width="720" height="170" fill="#ffffff"/>
   <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">cpython-core</text>
-  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">1795/1972 pass (91.0%)</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">1795/1972 pass (94.9%)</text>
   <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
   <rect x="40.00" y="84" width="582.56" height="28" fill="#198754"><title>pass: 1795</title></rect>
   <rect x="622.56" y="84" width="22.72" height="28" fill="#dc3545"><title>fail: 70</title></rect>

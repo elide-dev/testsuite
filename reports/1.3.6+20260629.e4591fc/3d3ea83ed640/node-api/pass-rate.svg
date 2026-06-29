@@ -3,7 +3,7 @@
   <desc id="desc">44 of 1563 tests passed.</desc>
   <rect width="720" height="170" fill="#ffffff"/>
   <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">node-api</text>
-  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">44/1563 pass (2.8%)</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">44/1563 pass (3.1%)</text>
   <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
   <rect x="40.00" y="84" width="18.02" height="28" fill="#198754"><title>pass: 44</title></rect>
   <rect x="58.02" y="84" width="551.96" height="28" fill="#dc3545"><title>fail: 1348</title></rect>

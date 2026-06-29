@@ -5,7 +5,7 @@
 
 | regressed | fixed | added | removed | still failing |
 |---:|---:|---:|---:|---:|
-| 0 | 2 | 0 | 0 | 198 |
+| 0 | 2 | 0 | 0 | 48 |
 
 ## ✅ Fixed (2)
 

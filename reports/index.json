@@ -6,18 +6,20 @@
       "digest": "3d3ea83ed640",
       "pass": 85549,
       "total": 103361,
+      "skip": 10256,
       "regressions": 0,
-      "finishedAt": "2026-06-29T17:30:40.972Z",
+      "finishedAt": "2026-06-29T20:09:19.468Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/test262"
     },
     {
       "workload": "javac-jtreg",
       "semver": "1.3.6+20260629.e4591fc",
       "digest": "3d3ea83ed640",
-      "pass": 3732,
+      "pass": 3654,
       "total": 3934,
+      "skip": 232,
       "regressions": 0,
-      "finishedAt": "2026-06-29T17:26:27.561Z",
+      "finishedAt": "2026-06-29T20:04:28.512Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/javac-jtreg"
     },
     {
@@ -26,8 +28,9 @@
       "digest": "3d3ea83ed640",
       "pass": 44,
       "total": 1563,
+      "skip": 157,
       "regressions": 0,
-      "finishedAt": "2026-06-29T17:20:23.572Z",
+      "finishedAt": "2026-06-29T19:57:46.632Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/node-api"
     },
     {
@@ -36,8 +39,9 @@
       "digest": "3d3ea83ed640",
       "pass": 1795,
       "total": 1972,
+      "skip": 80,
       "regressions": 0,
-      "finishedAt": "2026-06-29T17:18:45.193Z",
+      "finishedAt": "2026-06-29T19:56:10.369Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/cpython-core"
     },
     {
@@ -46,8 +50,9 @@
       "digest": "3d3ea83ed640",
       "pass": 835,
       "total": 2300,
+      "skip": 0,
       "regressions": 0,
-      "finishedAt": "2026-06-29T17:17:17.644Z",
+      "finishedAt": "2026-06-29T19:54:35.081Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/wpt-wintertc"
     },
     {
@@ -56,6 +61,7 @@
       "digest": "3d3ea83ed640",
       "pass": 39,
       "total": 1563,
+      "skip": 157,
       "regressions": 1367,
       "finishedAt": "2026-06-28T23:57:42.981Z",
       "reportDir": "1.3.6+20260628.e4591fc/3d3ea83ed640/node-api"
@@ -66,6 +72,7 @@
       "digest": "3583aceded8e",
       "pass": 11193,
       "total": 12964,
+      "skip": 726,
       "regressions": 0,
       "finishedAt": "2026-06-28T05:56:31.805Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/cpython-core"
@@ -76,6 +83,7 @@
       "digest": "3583aceded8e",
       "pass": 85136,
       "total": 103361,
+      "skip": 10256,
       "regressions": 0,
       "finishedAt": "2026-06-28T04:38:17.260Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/test262"
@@ -86,6 +94,7 @@
       "digest": "3583aceded8e",
       "pass": 3730,
       "total": 3934,
+      "skip": 4,
       "regressions": 0,
       "finishedAt": "2026-06-28T04:32:57.657Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/javac-jtreg"
@@ -96,6 +105,7 @@
       "digest": "3583aceded8e",
       "pass": 835,
       "total": 2300,
+      "skip": 0,
       "regressions": 0,
       "finishedAt": "2026-06-28T04:25:04.738Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/wpt-wintertc"
@@ -106,6 +116,7 @@
       "digest": "c8be44d98f1f",
       "pass": 3804,
       "total": 4564,
+      "skip": 448,
       "regressions": 0,
       "finishedAt": "2026-06-28T02:08:18.298Z",
       "reportDir": "1.3.5+20260628.3b80cf3/c8be44d98f1f/cpython-core"
@@ -116,6 +127,7 @@
       "digest": "c8be44d98f1f",
       "pass": 2903,
       "total": 2937,
+      "skip": 4,
       "regressions": 0,
       "finishedAt": "2026-06-28T01:27:56.248Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/javac-jtreg"
@@ -126,6 +138,7 @@
       "digest": "c8be44d98f1f",
       "pass": 84685,
       "total": 92276,
+      "skip": 780,
       "regressions": 0,
       "finishedAt": "2026-06-27T19:23:31.987Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/test262"
@@ -136,6 +149,7 @@
       "digest": "c8be44d98f1f",
       "pass": 458,
       "total": 1017,
+      "skip": 527,
       "regressions": 0,
       "finishedAt": "2026-06-27T19:16:00.736Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/cpython-core"
@@ -146,6 +160,7 @@
       "digest": "c8be44d98f1f",
       "pass": 53,
       "total": 64,
+      "skip": 0,
       "regressions": 0,
       "finishedAt": "2026-06-27T19:15:25.591Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/wpt-wintertc"
