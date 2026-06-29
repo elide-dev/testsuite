@@ -16,7 +16,7 @@ export async function writeSummaryJson(dir: string, meta: RunMeta, c: Comparison
 
 export interface IndexEntry {
   workload: string; semver: string; digest: string;
-  pass: number; total: number; regressions: number;
+  pass: number; total: number; skip: number; regressions: number;
   finishedAt: string; reportDir: string;
 }
 
@@ -66,6 +66,7 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
       digest: shortDigest(s.meta.elide.digest, run.digest),
       pass: s.counts.pass,
       total: s.counts.total,
+      skip: s.counts.skip ?? 0,
       regressions: s.regressions.length,
       finishedAt: s.meta.finishedAt,
       reportDir: relative(reportsDir, run.dir),
@@ -78,12 +79,14 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
 export function latestRunSummariesFromIndex(index: { runs: IndexEntry[] }): RunSummary[] {
   const latest = new Map<string, RunSummary & { finishedAt: string }>();
   for (const run of index.runs) {
-    const total = run.total || 1;
+    // Exclude skipped/muted tests from the denominator. Older index entries
+    // predate the `skip` field; treat them as skip=0 (denominator == total).
+    const scored = run.total - (run.skip ?? 0);
     const cur: RunSummary & { finishedAt: string } = {
       workload: run.workload,
       semver: run.semver,
       digest: run.digest.slice(0, 12),
-      passRate: run.pass / total,
+      passRate: scored > 0 ? run.pass / scored : 0,
       regressions: run.regressions,
       finishedAt: run.finishedAt,
     };

@@ -562,9 +562,15 @@ function loadSuiteSummaryRows(suites: string[], suiteExitCodes: number[], digest
   });
 }
 
+// Pass rate over scored (non-skipped) tests; muted areas are excluded from the denominator.
+function scoredTotal(counts: { pass: number; fail: number; error: number }): number {
+  return counts.pass + counts.fail + counts.error;
+}
+
 function passRate(summary: SuiteRunSummary | undefined): number | undefined {
-  if (!summary || summary.counts.total === 0) return undefined;
-  return summary.counts.pass / summary.counts.total;
+  if (!summary) return undefined;
+  const denom = scoredTotal(summary.counts);
+  return denom === 0 ? undefined : summary.counts.pass / denom;
 }
 
 function formatPercent(value: number | undefined): string {
@@ -629,7 +635,7 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
   const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
   const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
   const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
-  const totalTests = rows.reduce((sum, row) => sum + (row.current?.counts.total ?? 0), 0);
+  const totalTests = rows.reduce((sum, row) => sum + (row.current ? scoredTotal(row.current.counts) : 0), 0);
   const totalRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
   const totalNewPasses = rows.reduce((sum, row) => sum + (row.current?.newPasses.length ?? 0), 0);
   const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;

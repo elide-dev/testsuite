@@ -25,6 +25,7 @@ test("suite report includes pass rate, regressions, new passes", () => {
   expect(md).toContain("test262");
   expect(md).toContain("1.3.5+abc");
   expect(md).toContain("90/100");
+  expect(md).toContain("94.74%"); // 90 / (90+5+0 scored); the 5 skips are excluded from the rate
   expect(md).toContain("pass-rate.svg");
   expect(md).toContain("language/r.js default");
   expect(md).toContain("built-ins/n.js default");

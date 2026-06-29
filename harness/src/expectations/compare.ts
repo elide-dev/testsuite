@@ -47,6 +47,23 @@ export function expectedFor(exp: Expectations, filePathOrKeys: string | string[]
   return expectedForEntries(compile(exp), keys);
 }
 
+/**
+ * Tests that count toward the pass rate. Skipped/muted tests are deliberately
+ * excluded: muting a known-unsupported area should not drag the denominator,
+ * matching the Test262/WPT convention (rate over run, not over selection).
+ */
+export type ScoredCounts = { pass: number; fail: number; error: number; skip?: number; total?: number };
+
+export function scoredTotal(counts: ScoredCounts): number {
+  return counts.pass + counts.fail + counts.error;
+}
+
+/** Pass rate over scored (non-skipped) tests, in 0..1. Returns 0 when nothing scored. */
+export function passRate(counts: ScoredCounts): number {
+  const denom = scoredTotal(counts);
+  return denom ? counts.pass / denom : 0;
+}
+
 export function compare(results: TestResult[], exp: Expectations): Comparison {
   const entries = compile(exp);
   const c: Comparison = {

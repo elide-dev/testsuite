@@ -6,7 +6,7 @@ import { loadRegistry } from "./registry";
 import { resolveIdentity } from "./elide";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import type { Expectations } from "./expectations/load";
-import { compare, expectationKeysOf, expectedFor } from "./expectations/compare";
+import { compare, expectationKeysOf, expectedFor, passRate as scoredPassRate } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
@@ -305,7 +305,8 @@ export async function main(o: CliOptions): Promise<number> {
   await Bun.write(join(outDir, "impact.md"), renderImpactMd(impact));
 
   const green = comparison.regressions.length === 0;
-  const passRate = comparison.counts.total ? (comparison.counts.pass / comparison.counts.total) * 100 : 0;
+  // Pass rate is over scored (non-skipped) tests; muted areas are excluded from the denominator.
+  const passRate = scoredPassRate(comparison.counts) * 100;
   console.log(
     `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass (${passRate.toFixed(1)}%), ` +
       `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${green ? "GREEN" : "RED"}`,

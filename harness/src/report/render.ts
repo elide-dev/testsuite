@@ -1,5 +1,5 @@
 import type { RunMeta } from "../results/schema";
-import type { Comparison } from "../expectations/compare";
+import { passRate, type Comparison } from "../expectations/compare";
 
 export interface RunSummary {
   workload: string;
@@ -11,7 +11,8 @@ export interface RunSummary {
 
 export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
   const { pass, total } = c.counts;
-  const rate = total ? ((pass / total) * 100).toFixed(2) : "0.00";
+  // Rate is over scored (non-skipped) tests; the pass/total figure still shows the full selection.
+  const rate = (passRate(c.counts) * 100).toFixed(2);
   const lines: string[] = [];
   lines.push(`# ${meta.workload} — \`${meta.elide.semver}\``, "");
   lines.push(`- Image digest: \`${meta.elide.digest}\``);

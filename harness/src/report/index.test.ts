@@ -49,6 +49,7 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
         digest: "bbbbbbbbbbbb",
         pass: 8,
         total: 10,
+        skip: 0,
         regressions: 1,
         finishedAt: "2026-01-02T00:00:00.000Z",
         reportDir: "1.1.0/bbbbbbbbbbbb/alpha",
@@ -59,6 +60,7 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
         digest: "aaaaaaaaaaaa",
         pass: 1,
         total: 10,
+        skip: 0,
         regressions: 9,
         finishedAt: "2026-01-01T00:00:00.000Z",
         reportDir: "1.0.0/aaaaaaaaaaaa/alpha",
@@ -74,4 +76,24 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
       regressions: 1,
     }),
   ]);
+});
+
+test("latestRunSummariesFromIndex excludes skipped tests from the pass-rate denominator", () => {
+  const latest = latestRunSummariesFromIndex({
+    runs: [
+      {
+        workload: "javac-jtreg",
+        semver: "1.3.6",
+        digest: "3d3ea83ed640",
+        pass: 70,
+        total: 100,
+        skip: 10, // scored denominator = total - skip = 90, not 100
+        regressions: 0,
+        finishedAt: "2026-06-29T00:00:00.000Z",
+        reportDir: "1.3.6/3d3ea83ed640/javac-jtreg",
+      },
+    ],
+  });
+  // 70 / (100 - 10) = 0.777…, not the old 70/100 = 0.70.
+  expect(latest[0]!.passRate).toBeCloseTo(70 / 90, 5);
 });

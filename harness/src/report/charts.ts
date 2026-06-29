@@ -1,3 +1,4 @@
+import { passRate } from "../expectations/compare";
 import type { Comparison } from "../expectations/compare";
 import type { RunSummary } from "./render";
 
@@ -36,7 +37,8 @@ export function renderSuitePassRateSvg(workload: string, c: Comparison): string 
       return rect;
     })
     .join("\n  ");
-  const rate = c.counts.pass / total;
+  // Bar segments above show all results (incl. skip); the headline rate excludes skips.
+  const rate = passRate(c.counts);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title desc">
   <title id="title">${escapeXml(workload)} pass-rate chart</title>
   <desc id="desc">${c.counts.pass} of ${c.counts.total} tests passed.</desc>

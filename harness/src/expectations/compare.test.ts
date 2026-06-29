@@ -1,7 +1,17 @@
 import { test, expect } from "bun:test";
 import { parseExpectations } from "./load";
-import { compare } from "./compare";
+import { compare, passRate, scoredTotal } from "./compare";
 import type { TestResult } from "../results/schema";
+
+test("scoredTotal and passRate exclude skipped tests", () => {
+  const counts = { pass: 90, fail: 5, error: 5, skip: 100, total: 200 };
+  expect(scoredTotal(counts)).toBe(100); // skip excluded
+  expect(passRate(counts)).toBeCloseTo(0.9, 5); // 90 / (90+5+5), not 90/200
+});
+
+test("passRate is 0 when nothing scored (everything skipped)", () => {
+  expect(passRate({ pass: 0, fail: 0, error: 0, skip: 12, total: 12 })).toBe(0);
+});
 
 const toml = `
 [skip]
