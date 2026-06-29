@@ -97,3 +97,16 @@ test("latestRunSummariesFromIndex excludes skipped tests from the pass-rate deno
   // 70 / (100 - 10) = 0.777…, not the old 70/100 = 0.70.
   expect(latest[0]!.passRate).toBeCloseTo(70 / 90, 5);
 });
+
+test("top-level summaries omit muted workloads (node-api, wpt-wintertc)", () => {
+  const mk = (workload: string, reportDir: string) => ({
+    workload, semver: "1.3.6", digest: "3d3ea83ed640",
+    pass: 1, total: 10, skip: 0, regressions: 0,
+    finishedAt: "2026-06-29T00:00:00.000Z", reportDir,
+  });
+  const latest = latestRunSummariesFromIndex({
+    runs: [mk("test262", "a"), mk("node-api", "b"), mk("wpt-wintertc", "c"), mk("javac-jtreg", "d")],
+  });
+  // node-api and wpt-wintertc are hidden from the rolled-up summaries.
+  expect(latest.map((r) => r.workload)).toEqual(["javac-jtreg", "test262"]);
+});
