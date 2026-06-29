@@ -144,6 +144,8 @@ function suiteSupportRoots(suiteId: string, suitePath: string): string[] {
       return [join(suitePath, "resources")];
     case "cpython-core":
       return [join(suitePath, "Lib/test/support")];
+    case "node-api":
+      return [join(suitePath, "test/common"), join(suitePath, "test/fixtures")];
     default:
       return [];
   }
@@ -219,6 +221,48 @@ function baselineScript(suiteId: string, includes: string[]): string {
       "",
     ].join("\n");
   }
+  if (suiteId === "node-api") {
+    const tests = includes.map((include) => JSON.stringify(include));
+    return [
+      "#!/usr/bin/env bash",
+      "set -euo pipefail",
+      "",
+      'root="${TESTSUITE_ROOT:-}"',
+      'if [[ -z "$root" ]]; then',
+      '  root="$(cd "$(dirname "$0")" && pwd)"',
+      '  if [[ ! -f "$root/package.json" ]]; then',
+      '    echo "Set TESTSUITE_ROOT=/path/to/elide testsuite checkout." >&2',
+      "    exit 2",
+      "  fi",
+      "fi",
+      'node_bin="${NODE_BIN:-node}"',
+      'work="${NODE_BASELINE_WORK:-$root/.harness/baseline/node-api}"',
+      'rm -rf "$work"',
+      'mkdir -p "$work/node-test"',
+      'cp -R "$root/suites/node/test" "$work/test"',
+      `printf '{"type":"commonjs"}\\n' > "$work/package.json"`,
+      'export NODE_TEST_KNOWN_GLOBALS="${NODE_TEST_KNOWN_GLOBALS:-0}"',
+      'export NODE_SKIP_FLAG_CHECK="${NODE_SKIP_FLAG_CHECK:-1}"',
+      'export NODE_TEST_DIR="${NODE_TEST_DIR:-$work/node-test}"',
+      'cd "$work"',
+      "run_node_test() {",
+      "  local test_file=\"$1\"",
+      "  local flags=()",
+      "  local line flag_text flag",
+      "  while IFS= read -r line; do",
+      "    case \"$line\" in",
+      "      '// Flags: '*)",
+      "        flag_text=\"${line#// Flags: }\"",
+      "        for flag in $flag_text; do flags+=(\"$flag\"); done",
+      "        ;;",
+      "    esac",
+      "  done < <(head -n 50 \"$test_file\")",
+      '  "$node_bin" ${flags[@]+"${flags[@]}"} "$test_file"',
+      "}",
+      ...tests.map((test) => `run_node_test ${test}`),
+      "",
+    ].join("\n");
+  }
   return [
     "#!/usr/bin/env bash",
     "set -euo pipefail",
@@ -234,6 +278,9 @@ function baselineReadmeSnippet(suiteId: string, name: string): string {
   }
   if (suiteId === "cpython-core") {
     return `TESTSUITE_ROOT=/path/to/testsuite PYTHON312=python3.12 ./${name}/baseline.sh`;
+  }
+  if (suiteId === "node-api") {
+    return `TESTSUITE_ROOT=/path/to/testsuite NODE_BIN=node ./${name}/baseline.sh`;
   }
   return `TESTSUITE_ROOT=/path/to/testsuite ./${name}/baseline.sh`;
 }

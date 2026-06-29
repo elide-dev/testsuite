@@ -83,10 +83,35 @@ test("wintertc WPT manifest includes checked-out paths when the suite exists", (
   }
 });
 
-test("node-api manifest selects path and process API surfaces", () => {
+test("node-api manifest selects broad Node API surfaces", () => {
   const manifest = loadManifest(`${import.meta.dir}/../../manifests/node-api.toml`);
   const groups = new Map(manifest.groups.map((group) => [group.id, group.include]));
 
+  expect(manifest.groups.map((group) => group.id)).toEqual([
+    "assert",
+    "async-hooks",
+    "buffer",
+    "console",
+    "crypto",
+    "diagnostics-channel",
+    "dns",
+    "events",
+    "fs",
+    "module-loading",
+    "path",
+    "process",
+    "streams",
+    "timers",
+    "url",
+    "util",
+    "vm",
+    "worker-threads",
+  ]);
+  expect(groups.get("assert")).toEqual(["test/parallel/test-assert*.js"]);
+  expect(groups.get("buffer")).toEqual(["test/parallel/test-buffer*.js"]);
+  expect(groups.get("fs")).toEqual(["test/parallel/test-fs*.js", "test/parallel/test-vfs-fs*.js"]);
   expect(groups.get("path")).toEqual(["test/parallel/test-path*.js"]);
   expect(groups.get("process")).toEqual(["test/parallel/test-process*.js"]);
+  expect(groups.get("streams")).toEqual(["test/parallel/test-stream*.js"]);
+  expect(groups.get("url")).toEqual(["test/parallel/test-url*.js", "test/parallel/test-whatwg-url*.js"]);
 });

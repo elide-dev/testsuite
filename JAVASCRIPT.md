@@ -54,20 +54,48 @@ rather than JavaScript source splicing.
 
 ## Node.js Compatibility
 
-- [x] Node.js `node:path` API tests from `test/parallel/test-path*.js` - 17 files.
-- [x] Node.js `process` global/module tests from
-  `test/parallel/test-process*.js` - 93 files.
-- [ ] Node.js JavaScript API tests for other supported built-in modules.
-- [ ] Node.js runtime behavior tests that do not require unsupported process,
-  native-addon, inspector, or platform-specific behavior.
-- [ ] Node.js module loading, CommonJS/ESM interop, timers, buffers, URL,
-  events, assertions, and streams subsets.
+- [x] Assert: `test/parallel/test-assert*.js` - 14 files.
+- [x] Async hooks/storage: `test/parallel/test-async-hooks*.js`,
+  `test/parallel/test-async-local*.js` - 48 files.
+- [x] Buffer: `test/parallel/test-buffer*.js` - 69 files.
+- [x] Console: `test/parallel/test-console*.js` - 22 files.
+- [x] Crypto/WebCrypto: `test/parallel/test-crypto*.js`,
+  `test/parallel/test-webcrypto*.js` - 181 files.
+- [x] Diagnostics channel: `test/parallel/test-diagnostics-channel*.js` - 68 files.
+- [x] DNS: `test/parallel/test-dns*.js` - 30 files.
+- [x] Events: `test/parallel/test-event*.js` - 44 files.
+- [x] Filesystem/VFS: `test/parallel/test-fs*.js`,
+  `test/parallel/test-vfs-fs*.js` - 294 files.
+- [x] Module loading/CommonJS/ESM: `test/parallel/test-cjs*.js`,
+  `test/parallel/test-esm*.js`, `test/parallel/test-module*.js`,
+  `test/parallel/test-require*.js` - 57 files.
+- [x] Path: `test/parallel/test-path*.js` - 17 files.
+- [x] Process global/module: `test/parallel/test-process*.js` - 93 files.
+- [x] Streams: `test/parallel/test-stream*.js` - 247 files.
+- [x] Timers/next tick: `test/parallel/test-next-tick*.js`,
+  `test/parallel/test-timer*.js`, `test/parallel/test-timers*.js` - 67 files.
+- [x] URL/WHATWG URL: `test/parallel/test-url*.js`,
+  `test/parallel/test-whatwg-url*.js` - 45 files.
+- [x] Util: `test/parallel/test-util*.js` - 30 files.
+- [x] VM: `test/parallel/test-vm*.js` - 98 files.
+- [x] Worker threads: `test/parallel/test-worker*.js` - 139 files.
+- [ ] HTTP/HTTP2/HTTPS: `test/parallel/test-http*.js`,
+  `test/parallel/test-http2*.js`, `test/parallel/test-https*.js` - 740 files.
+  Muted from the default manifest until `node:http` and `node:net` are
+  implemented enough to avoid dominating Node API reports.
+- [ ] Net: `test/parallel/test-net*.js` - 151 files. Muted from the default
+  manifest until `node:net` has a real implementation.
+- [ ] Node.js runtime behavior tests outside the broad API slices, including
+  CLI, permissions, inspector, addon, fixture-heavy, and platform-specific
+  tests.
 
 Counts should be based on Node's test files first, then refined to case-level
 counts where the Node test runner exposes stable subtest names.
 
-Current `node-api` coverage is 110 files across the initial path and process
-surface. The slice intentionally includes tests expected to fail, especially
-process tests involving child processes, permissions, abort behavior, exact
-diagnostics, and internal bindings, so those failures can be classified and
-ratcheted.
+Current default `node-api` coverage is 1,563 unique files across broad Node core
+API surfaces. The broader tracked surface is 2,454 unique files when the muted
+HTTP/HTTP2/HTTPS and Net slices are included. The default slice intentionally
+includes tests expected to fail, especially filesystem, child process,
+permissions, worker, native crypto, module loading, exact diagnostics, and
+internal binding behavior, so failures can be classified and ratcheted in broad
+compatibility reports without networking dominating the summary.

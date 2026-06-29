@@ -1,8 +1,84 @@
 # Node.js core JavaScript API coverage. Paths are relative to the Node.js checkout.
 #
-# This starts with public API surfaces requested for Elide: node:path and
-# process/global process behavior. The adapter expands these globs against the
-# sparse Node checkout.
+# The adapter expands these globs against the sparse Node checkout. Groups are
+# broad public API surfaces first; many are expected to fail initially but give
+# reports enough shape to classify Node compatibility.
+
+[[group]]
+id = "assert"
+include = [
+  "test/parallel/test-assert*.js",
+]
+tags = ["node", "api", "assert"]
+
+[[group]]
+id = "async-hooks"
+include = [
+  "test/parallel/test-async-hooks*.js",
+  "test/parallel/test-async-local*.js",
+]
+tags = ["node", "api", "async_hooks"]
+
+[[group]]
+id = "buffer"
+include = [
+  "test/parallel/test-buffer*.js",
+]
+tags = ["node", "api", "buffer"]
+
+[[group]]
+id = "console"
+include = [
+  "test/parallel/test-console*.js",
+]
+tags = ["node", "api", "console"]
+
+[[group]]
+id = "crypto"
+include = [
+  "test/parallel/test-crypto*.js",
+  "test/parallel/test-webcrypto*.js",
+]
+tags = ["node", "api", "crypto", "webcrypto"]
+
+[[group]]
+id = "diagnostics-channel"
+include = [
+  "test/parallel/test-diagnostics-channel*.js",
+]
+tags = ["node", "api", "diagnostics_channel"]
+
+[[group]]
+id = "dns"
+include = [
+  "test/parallel/test-dns*.js",
+]
+tags = ["node", "api", "dns"]
+
+[[group]]
+id = "events"
+include = [
+  "test/parallel/test-event*.js",
+]
+tags = ["node", "api", "events"]
+
+[[group]]
+id = "fs"
+include = [
+  "test/parallel/test-fs*.js",
+  "test/parallel/test-vfs-fs*.js",
+]
+tags = ["node", "api", "fs"]
+
+[[group]]
+id = "module-loading"
+include = [
+  "test/parallel/test-cjs*.js",
+  "test/parallel/test-esm*.js",
+  "test/parallel/test-module*.js",
+  "test/parallel/test-require*.js",
+]
+tags = ["node", "api", "modules", "commonjs", "esm"]
 
 [[group]]
 id = "path"
@@ -17,3 +93,48 @@ include = [
   "test/parallel/test-process*.js",
 ]
 tags = ["node", "api", "process"]
+
+[[group]]
+id = "streams"
+include = [
+  "test/parallel/test-stream*.js",
+]
+tags = ["node", "api", "stream"]
+
+[[group]]
+id = "timers"
+include = [
+  "test/parallel/test-next-tick*.js",
+  "test/parallel/test-timer*.js",
+  "test/parallel/test-timers*.js",
+]
+tags = ["node", "api", "timers"]
+
+[[group]]
+id = "url"
+include = [
+  "test/parallel/test-url*.js",
+  "test/parallel/test-whatwg-url*.js",
+]
+tags = ["node", "api", "url", "whatwg-url"]
+
+[[group]]
+id = "util"
+include = [
+  "test/parallel/test-util*.js",
+]
+tags = ["node", "api", "util"]
+
+[[group]]
+id = "vm"
+include = [
+  "test/parallel/test-vm*.js",
+]
+tags = ["node", "api", "vm"]
+
+[[group]]
+id = "worker-threads"
+include = [
+  "test/parallel/test-worker*.js",
+]
+tags = ["node", "api", "worker_threads"]
