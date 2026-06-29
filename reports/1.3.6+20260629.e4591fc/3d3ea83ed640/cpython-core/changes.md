@@ -1,0 +1,12 @@
+# Changes — `1.3.5+20260628.3b80cf3` → `1.3.6+20260629.e4591fc`
+
+- From: `1.3.5+20260628.3b80cf3` (`3583aceded8e8e4cab8248f08f245aa6859ce893f81e9de5c52097863c70b4cb`)
+- To: `1.3.6+20260629.e4591fc` (`3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 1 | 81 | 11037 | 84 |
+
+## ✅ Fixed (1)
+
+- `test_fstring.TestCase.test_debug_in_file`

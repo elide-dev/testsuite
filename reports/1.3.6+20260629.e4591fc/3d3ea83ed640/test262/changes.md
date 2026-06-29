@@ -1,0 +1,416 @@
+# Changes — `1.3.5+20260628.3b80cf3` → `1.3.6+20260629.e4591fc`
+
+- From: `1.3.5+20260628.3b80cf3` (`3583aceded8e8e4cab8248f08f245aa6859ce893f81e9de5c52097863c70b4cb`)
+- To: `1.3.6+20260629.e4591fc` (`3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 673 | 1086 | 0 | 0 | 6883 |
+
+## ❌ Regressed (673)
+
+- `test/built-ins/Array/from/calling-from-valid-1-noStrict.js default`
+- `test/built-ins/Array/prototype/every/15.4.4.16-5-1.js default`
+- `test/built-ins/Array/prototype/find/predicate-call-this-non-strict.js default`
+- `test/built-ins/Array/prototype/findIndex/predicate-call-this-non-strict.js default`
+- `test/built-ins/Array/prototype/findLast/predicate-call-this-non-strict.js default`
+- `test/built-ins/Array/prototype/findLastIndex/predicate-call-this-non-strict.js default`
+- `test/built-ins/Map/prototype/forEach/callback-this-non-strict.js default`
+- `test/built-ins/Promise/executor-call-context-sloppy.js default`
+- `test/built-ins/Promise/prototype/then/rxn-handler-fulfilled-invoke-nonstrict.js default`
+- `test/built-ins/Promise/prototype/then/rxn-handler-rejected-invoke-nonstrict.js default`
+- `test/built-ins/RegExp/prototype/Symbol.replace/fn-invoke-this-no-strict.js default`
+- `test/built-ins/Set/prototype/forEach/this-non-strict.js default`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-if-import-value-does-not-exist.js default`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-if-import-value-does-not-exist.js strict mode`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-typeerror-import-syntax-error.js default`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-typeerror-import-syntax-error.js strict mode`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-typeerror-import-throws.js default`
+- `test/built-ins/ShadowRealm/prototype/importValue/throws-typeerror-import-throws.js strict mode`
+- `test/built-ins/String/prototype/replace/15.5.4.11-1.js default`
+- `test/built-ins/TypedArray/prototype/find/BigInt/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/find/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findIndex/BigInt/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findIndex/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findLast/BigInt/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findLast/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findLastIndex/BigInt/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArray/prototype/findLastIndex/predicate-call-this-non-strict.js default`
+- `test/built-ins/TypedArrayConstructors/from/BigInt/mapfn-this-without-thisarg-non-strict.js default`
+- `test/built-ins/TypedArrayConstructors/from/mapfn-this-without-thisarg-non-strict.js default`
+- `test/language/eval-code/direct/this-value-func-non-strict.js default`
+- `test/language/eval-code/direct/this-value-func-strict-source.js default`
+- `test/language/expressions/arrow-function/arrow/binding-tests-1.js default`
+- `test/language/expressions/arrow-function/arrow/binding-tests-2.js default`
+- `test/language/expressions/arrow-function/arrow/binding-tests-3.js default`
+- `test/language/expressions/class/class-name-ident-await-escaped-module.js default`
+- `test/language/expressions/class/class-name-ident-await-escaped-module.js strict mode`
+- `test/language/expressions/class/class-name-ident-await-module.js default`
+- `test/language/expressions/class/class-name-ident-await-module.js strict mode`
+- `test/language/expressions/class/cpn-class-expr-accessors-computed-property-name-from-await-expression.js default`
+- `test/language/expressions/class/cpn-class-expr-accessors-computed-property-name-from-await-expression.js strict mode`
+- `test/language/expressions/class/cpn-class-expr-computed-property-name-from-await-expression.js default`
+- `test/language/expressions/class/cpn-class-expr-computed-property-name-from-await-expression.js strict mode`
+- `test/language/expressions/class/cpn-class-expr-fields-computed-property-name-from-await-expression.js default`
+- `test/language/expressions/class/cpn-class-expr-fields-computed-property-name-from-await-expression.js strict mode`
+- `test/language/expressions/class/cpn-class-expr-fields-methods-computed-property-name-from-await-expression.js default`
+- `test/language/expressions/class/cpn-class-expr-fields-methods-computed-property-name-from-await-expression.js strict mode`
+- `test/language/expressions/class/elements/class-name-static-initializer-default-export.js default`
+- `test/language/expressions/class/elements/class-name-static-initializer-default-export.js strict mode`
+- `test/language/expressions/dynamic-import/assignment-expression/import-meta.js default`
+- `test/language/expressions/dynamic-import/assignment-expression/import-meta.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-arrow-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-arrow-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-arrow-function-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-arrow-function-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-arrow-function-return-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-arrow-function-return-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-return-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-function-return-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-gen-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-gen-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-async-gen-return-await-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-async-gen-return-await-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-block-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-block-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-block-labeled-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-block-labeled-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-do-while-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-do-while-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-else-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-else-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-function-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-function-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-if-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-if-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/nested-while-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/nested-while-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/dynamic-import/catch/top-level-import-catch-eval-rqstd-abrupt-typeerror.js default`
+- `test/language/expressions/dynamic-import/catch/top-level-import-catch-eval-rqstd-abrupt-typeerror.js strict mode`
+- `test/language/expressions/import.meta/import-meta-is-an-ordinary-object.js default`
+- `test/language/expressions/import.meta/import-meta-is-an-ordinary-object.js strict mode`
+- `test/language/expressions/import.meta/same-object-returned.js default`
+- `test/language/expressions/import.meta/same-object-returned.js strict mode`
+- `test/language/expressions/import.meta/syntax/goal-module-nested-function.js default`
+- `test/language/expressions/import.meta/syntax/goal-module-nested-function.js strict mode`
+- `test/language/expressions/import.meta/syntax/goal-module.js default`
+- `test/language/expressions/import.meta/syntax/goal-module.js strict mode`
+- `test/language/expressions/object/cpn-obj-lit-computed-property-name-from-await-expression.js default`
+- `test/language/expressions/object/cpn-obj-lit-computed-property-name-from-await-expression.js strict mode`
+- `test/language/expressions/tagged-template/call-expression-context-no-strict.js default`
+- `test/language/expressions/this/S11.1.1_A3.1.js default`
+- `test/language/function-code/10.4.3-1-101-s.js default`
+- `test/language/function-code/10.4.3-1-101gs.js default`
+- `test/language/function-code/10.4.3-1-45-s.js default`
+- `test/language/function-code/10.4.3-1-45gs.js default`
+- `test/language/function-code/10.4.3-1-46-s.js default`
+- `test/language/function-code/10.4.3-1-46gs.js default`
+- `test/language/function-code/10.4.3-1-47-s.js default`
+- `test/language/function-code/10.4.3-1-47gs.js default`
+- `test/language/function-code/10.4.3-1-48-s.js default`
+- `test/language/function-code/10.4.3-1-48gs.js default`
+- `test/language/function-code/10.4.3-1-49-s.js default`
+- `test/language/function-code/10.4.3-1-49gs.js default`
+- `test/language/function-code/10.4.3-1-50-s.js default`
+- `test/language/function-code/10.4.3-1-50gs.js default`
+- `test/language/function-code/10.4.3-1-51-s.js default`
+- `test/language/function-code/10.4.3-1-51gs.js default`
+- `test/language/function-code/10.4.3-1-52-s.js default`
+- `test/language/function-code/10.4.3-1-52gs.js default`
+- `test/language/function-code/10.4.3-1-53-s.js default`
+- `test/language/function-code/10.4.3-1-53gs.js default`
+- `test/language/function-code/10.4.3-1-87-s.js default`
+- `test/language/function-code/10.4.3-1-87gs.js default`
+- `test/language/function-code/10.4.3-1-90-s.js default`
+- `test/language/function-code/10.4.3-1-90gs.js default`
+- `test/language/function-code/10.4.3-1-92-s.js default`
+- `test/language/function-code/10.4.3-1-92gs.js default`
+- `test/language/function-code/10.4.3-1-95-s.js default`
+- `test/language/function-code/10.4.3-1-95gs.js default`
+- `test/language/function-code/10.4.3-1-97-s.js default`
+- `test/language/function-code/10.4.3-1-97gs.js default`
+- `test/language/module-code/comment-multi-line-html-close.js default`
+- `test/language/module-code/comment-multi-line-html-close.js strict mode`
+- `test/language/module-code/comment-single-line-html-close.js default`
+- `test/language/module-code/comment-single-line-html-close.js strict mode`
+- `test/language/module-code/comment-single-line-html-open.js default`
+- `test/language/module-code/comment-single-line-html-open.js strict mode`
+- `test/language/module-code/early-dup-top-function-async-generator.js default`
+- `test/language/module-code/early-dup-top-function-async-generator.js strict mode`
+- `test/language/module-code/early-dup-top-function-async.js default`
+- `test/language/module-code/early-dup-top-function-async.js strict mode`
+- `test/language/module-code/early-dup-top-function-generator.js default`
+- `test/language/module-code/early-dup-top-function-generator.js strict mode`
+- `test/language/module-code/early-dup-top-function.js default`
+- `test/language/module-code/early-dup-top-function.js strict mode`
+- `test/language/module-code/eval-export-cls-semi.js default`
+- `test/language/module-code/eval-export-cls-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-cls-anon-semi.js default`
+- `test/language/module-code/eval-export-dflt-cls-anon-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-cls-named-semi.js default`
+- `test/language/module-code/eval-export-dflt-cls-named-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-expr-err-eval.js default`
+- `test/language/module-code/eval-export-dflt-expr-err-eval.js strict mode`
+- `test/language/module-code/eval-export-dflt-expr-err-get-value.js default`
+- `test/language/module-code/eval-export-dflt-expr-err-get-value.js strict mode`
+- `test/language/module-code/eval-export-dflt-fun-anon-semi.js default`
+- `test/language/module-code/eval-export-dflt-fun-anon-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-fun-named-semi.js default`
+- `test/language/module-code/eval-export-dflt-fun-named-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-gen-anon-semi.js default`
+- `test/language/module-code/eval-export-dflt-gen-anon-semi.js strict mode`
+- `test/language/module-code/eval-export-dflt-gen-named-semi.js default`
+- `test/language/module-code/eval-export-dflt-gen-named-semi.js strict mode`
+- `test/language/module-code/eval-export-fun-semi.js default`
+- `test/language/module-code/eval-export-fun-semi.js strict mode`
+- `test/language/module-code/eval-export-gen-semi.js default`
+- `test/language/module-code/eval-export-gen-semi.js strict mode`
+- `test/language/module-code/eval-rqstd-abrupt.js default`
+- `test/language/module-code/eval-rqstd-abrupt.js strict mode`
+- `test/language/module-code/eval-this.js default`
+- `test/language/module-code/eval-this.js strict mode`
+- `test/language/module-code/export-default-asyncfunction-declaration-binding.js default`
+- `test/language/module-code/export-default-asyncfunction-declaration-binding.js strict mode`
+- `test/language/module-code/export-default-asyncgenerator-declaration-binding.js default`
+- `test/language/module-code/export-default-asyncgenerator-declaration-binding.js strict mode`
+- `test/language/module-code/export-default-function-declaration-binding.js default`
+- `test/language/module-code/export-default-function-declaration-binding.js strict mode`
+- `test/language/module-code/export-default-generator-declaration-binding.js default`
+- `test/language/module-code/export-default-generator-declaration-binding.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-cls.js default`
+- `test/language/module-code/instn-local-bndng-export-cls.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-const.js default`
+- `test/language/module-code/instn-local-bndng-export-const.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-fun.js default`
+- `test/language/module-code/instn-local-bndng-export-fun.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-gen.js default`
+- `test/language/module-code/instn-local-bndng-export-gen.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-let.js default`
+- `test/language/module-code/instn-local-bndng-export-let.js strict mode`
+- `test/language/module-code/instn-local-bndng-export-var.js default`
+- `test/language/module-code/instn-local-bndng-export-var.js strict mode`
+- `test/language/module-code/instn-local-bndng-for.js default`
+- `test/language/module-code/instn-local-bndng-for.js strict mode`
+- `test/language/module-code/instn-local-bndng-fun.js default`
+- `test/language/module-code/instn-local-bndng-fun.js strict mode`
+- `test/language/module-code/instn-local-bndng-gen.js default`
+- `test/language/module-code/instn-local-bndng-gen.js strict mode`
+- `test/language/module-code/instn-local-bndng-var.js default`
+- `test/language/module-code/instn-local-bndng-var.js strict mode`
+- `test/language/module-code/parse-err-hoist-lex-fun.js default`
+- `test/language/module-code/parse-err-hoist-lex-fun.js strict mode`
+- `test/language/module-code/parse-err-hoist-lex-gen.js default`
+- `test/language/module-code/parse-err-hoist-lex-gen.js strict mode`
+- `test/language/module-code/parse-export-empty.js default`
+- `test/language/module-code/parse-export-empty.js strict mode`
+- `test/language/module-code/top-level-await/await-awaits-thenable-not-callable.js default`
+- `test/language/module-code/top-level-await/await-awaits-thenable-not-callable.js strict mode`
+- …and 473 more
+
+## ✅ Fixed (1086)
+
+- `test/annexB/language/comments/multi-line-html-close.js default`
+- `test/annexB/language/comments/multi-line-html-close.js strict mode`
+- `test/annexB/language/comments/single-line-html-close-asi.js default`
+- `test/annexB/language/comments/single-line-html-close-asi.js strict mode`
+- `test/annexB/language/comments/single-line-html-close-unicode-separators.js default`
+- `test/annexB/language/comments/single-line-html-close-unicode-separators.js strict mode`
+- `test/annexB/language/comments/single-line-html-close.js default`
+- `test/annexB/language/comments/single-line-html-close.js strict mode`
+- `test/annexB/language/comments/single-line-html-open.js default`
+- `test/annexB/language/comments/single-line-html-open.js strict mode`
+- `test/annexB/language/eval-code/indirect/global-block-decl-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-block-decl-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-block-decl-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-block-decl-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-a-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-a-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-a-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-a-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-b-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-b-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-b-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-decl-b-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-stmt-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-stmt-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-stmt-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-else-stmt-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-no-else-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-no-else-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-no-else-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-if-decl-no-else-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-if-stmt-else-decl-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-stmt-else-decl-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-if-stmt-else-decl-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-if-stmt-else-decl-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-case-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-case-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-case-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-case-eval-global-skip-early-err.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-dflt-eval-global-existing-fn-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-dflt-eval-global-existing-var-no-init.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-dflt-eval-global-skip-early-err-try.js default`
+- `test/annexB/language/eval-code/indirect/global-switch-dflt-eval-global-skip-early-err.js default`
+- `test/built-ins/AggregateError/prop-desc.js default`
+- `test/built-ins/AggregateError/prop-desc.js strict mode`
+- `test/built-ins/Array/from/elements-deleted-after.js default`
+- `test/built-ins/Array/from/elements-deleted-after.js strict mode`
+- `test/built-ins/Array/from/source-array-boundary.js default`
+- `test/built-ins/Array/from/source-array-boundary.js strict mode`
+- `test/built-ins/Array/prop-desc.js default`
+- `test/built-ins/Array/prop-desc.js strict mode`
+- `test/built-ins/Array/prototype/every/15.4.4.16-7-c-iii-27.js default`
+- `test/built-ins/Array/prototype/every/15.4.4.16-7-c-iii-27.js strict mode`
+- `test/built-ins/Array/prototype/filter/15.4.4.20-9-c-iii-28.js default`
+- `test/built-ins/Array/prototype/filter/15.4.4.20-9-c-iii-28.js strict mode`
+- `test/built-ins/Array/prototype/methods-called-as-functions.js default`
+- `test/built-ins/Array/prototype/methods-called-as-functions.js strict mode`
+- `test/built-ins/Array/prototype/some/15.4.4.17-7-c-iii-26.js default`
+- `test/built-ins/Array/prototype/some/15.4.4.17-7-c-iii-26.js strict mode`
+- `test/built-ins/Array/prototype/sort/S15.4.4.11_A8.js default`
+- `test/built-ins/Array/prototype/toLocaleString/resizable-buffer.js default`
+- `test/built-ins/Array/prototype/toLocaleString/resizable-buffer.js strict mode`
+- `test/built-ins/Array/prototype/toLocaleString/user-provided-tolocalestring-grow.js default`
+- `test/built-ins/Array/prototype/toLocaleString/user-provided-tolocalestring-grow.js strict mode`
+- `test/built-ins/Array/prototype/toLocaleString/user-provided-tolocalestring-shrink.js default`
+- `test/built-ins/Array/prototype/toLocaleString/user-provided-tolocalestring-shrink.js strict mode`
+- `test/built-ins/ArrayBuffer/prop-desc.js default`
+- `test/built-ins/ArrayBuffer/prop-desc.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/absent-value-not-passed.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/absent-value-not-passed.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/for-await-iterator-next-rejected-promise-close.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/for-await-iterator-next-rejected-promise-close.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/for-await-next-rejected-promise-close.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/for-await-next-rejected-promise-close.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/iterator-result-poisoned-wrapper.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/iterator-result-poisoned-wrapper.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/next-result-poisoned-wrapper.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/next-result-poisoned-wrapper.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/yield-iterator-next-rejected-promise-close.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/yield-iterator-next-rejected-promise-close.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/yield-next-rejected-promise-close.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/next/yield-next-rejected-promise-close.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/return/absent-value-not-passed.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/return/absent-value-not-passed.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/return/return-null.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/return/return-null.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/iterator-result-rejected-promise-close.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/iterator-result-rejected-promise-close.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-null.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-null.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-result-poisoned-wrapper.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-result-poisoned-wrapper.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-get-return-undefined.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-get-return-undefined.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-poisoned-return.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-poisoned-return.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-return-not-object.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-return-not-object.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-return-object.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined-return-object.js strict mode`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined.js default`
+- `test/built-ins/AsyncFromSyncIteratorPrototype/throw/throw-undefined.js strict mode`
+- `test/built-ins/AsyncGeneratorPrototype/next/request-queue-await-order.js default`
+- `test/built-ins/AsyncGeneratorPrototype/next/request-queue-await-order.js strict mode`
+- `test/built-ins/BigInt/prop-desc.js default`
+- `test/built-ins/BigInt/prop-desc.js strict mode`
+- `test/built-ins/Boolean/prop-desc.js default`
+- `test/built-ins/Boolean/prop-desc.js strict mode`
+- `test/built-ins/DataView/dataview.js default`
+- `test/built-ins/DataView/dataview.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T1.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T2.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T3.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T3.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T4.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T4.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T5.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T5.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A1_T6.js default`
+- `test/built-ins/Date/S15.9.3.1_A1_T6.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T1.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T2.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T3.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T3.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T4.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T4.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T5.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T5.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A2_T6.js default`
+- `test/built-ins/Date/S15.9.3.1_A2_T6.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T1.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T1.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T1.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T1.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T2.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T2.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T2.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T2.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T3.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T3.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T3.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T3.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T4.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T4.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T4.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T4.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T5.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T5.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T5.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T5.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T6.1.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T6.1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A3_T6.2.js default`
+- `test/built-ins/Date/S15.9.3.1_A3_T6.2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T1.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T1.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T2.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T2.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T3.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T3.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T4.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T4.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T5.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T5.js strict mode`
+- `test/built-ins/Date/S15.9.3.1_A5_T6.js default`
+- `test/built-ins/Date/S15.9.3.1_A5_T6.js strict mode`
+- `test/built-ins/Date/coercion-order.js default`
+- `test/built-ins/Date/coercion-order.js strict mode`
+- `test/built-ins/Date/parse/without-utc-offset.js default`
+- `test/built-ins/Date/parse/without-utc-offset.js strict mode`
+- `test/built-ins/Date/prop-desc.js default`
+- `test/built-ins/Date/prop-desc.js strict mode`
+- `test/built-ins/Date/prototype/Symbol.toPrimitive/called-as-function.js default`
+- `test/built-ins/Date/prototype/Symbol.toPrimitive/called-as-function.js strict mode`
+- `test/built-ins/Date/prototype/getDate/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getDate/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getDay/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getDay/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getFullYear/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getFullYear/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getHours/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getHours/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getMilliseconds/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getMilliseconds/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getMinutes/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getMinutes/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getMonth/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getMonth/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getSeconds/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getSeconds/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/getTimezoneOffset/this-value-valid-date.js default`
+- `test/built-ins/Date/prototype/getTimezoneOffset/this-value-valid-date.js strict mode`
+- `test/built-ins/Date/prototype/setDate/arg-to-number.js default`
+- `test/built-ins/Date/prototype/setDate/arg-to-number.js strict mode`
+- `test/built-ins/Date/prototype/setDate/date-value-read-before-tonumber-when-date-is-valid.js default`
+- `test/built-ins/Date/prototype/setDate/date-value-read-before-tonumber-when-date-is-valid.js strict mode`
+- `test/built-ins/Date/prototype/setDate/new-value-time-clip.js default`
+- …and 886 more

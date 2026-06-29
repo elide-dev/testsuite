@@ -1,0 +1,73 @@
+{
+  "bySignature": [
+    {
+      "signature": "system error (exit code <n>)",
+      "count": 190,
+      "exampleIds": [
+        "tools/javac/7129225/TestImportStar.java",
+        "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
+        "tools/javac/T6411379.java",
+        "tools/javac/T6423583.java",
+        "tools/javac/T6458749.java"
+      ],
+      "samples": [
+        "system error (exit code 3)"
+      ]
+    },
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 3,
+      "exampleIds": [
+        "tools/javac/completionDeps/DepsAndDocLint.java",
+        "tools/javac/doclint/ImplicitHeadingsTest.java",
+        "tools/javac/doclint/implicitSource/ImplicitSourceTest.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
+      ]
+    },
+    {
+      "signature": "<str> timed out after <n> ms (elapsed time including timeout handling <n> ms)",
+      "count": 2,
+      "exampleIds": [
+        "tools/javac/file/zip/T6836682.java",
+        "tools/javac/lambda/LambdaParserTest.java"
+      ],
+      "samples": [
+        "'/work/.harness/work/javac-jtreg/jtreg-run-rxnl3v/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300207 ms)",
+        "'/work/.harness/work/javac-jtreg/jtreg-run-rxnl3v/wrapper-jdk/bin/java' timed out after 300000 ms (elapsed time including timeout handling 300169 ms)"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/newlines/NewLineTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.Exception: <n> errors found",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/modules/AllDefaultTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.Exception: 2 errors found"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=<n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/platform/PlatformProviderTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=2"
+      ]
+    }
+  ],
+  "byFeature": []
+}
