@@ -1,0 +1,101 @@
+{
+  "bySignature": [
+    {
+      "signature": "system error (exit code <n>)",
+      "count": 40,
+      "exampleIds": [
+        "tools/javac/7129225/TestImportStar.java",
+        "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
+        "tools/javac/T6411379.java",
+        "tools/javac/T6423583.java",
+        "tools/javac/T6458749.java"
+      ],
+      "samples": [
+        "system error (exit code 3)"
+      ]
+    },
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 3,
+      "exampleIds": [
+        "tools/javac/completionDeps/DepsAndDocLint.java",
+        "tools/javac/doclint/ImplicitHeadingsTest.java",
+        "tools/javac/doclint/implicitSource/ImplicitSourceTest.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/newlines/NewLineTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.Exception: <n> errors found",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/modules/AllDefaultTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.Exception: 2 errors found"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=<n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/platform/PlatformProviderTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=2"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: InvalidAnonymous.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/6563143/InvalidAnonymous.java"
+      ],
+      "samples": [
+        "Output does not match reference file: InvalidAnonymous.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: RepeatingTargetNotAllowed.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/repeatingAnnotations/RepeatingTargetNotAllowed.java"
+      ],
+      "samples": [
+        "Output does not match reference file: RepeatingTargetNotAllowed.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: StaticFields.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/typeAnnotations/failures/StaticFields.java"
+      ],
+      "samples": [
+        "Output does not match reference file: StaticFields.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: T6734819a.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/6734819/T6734819a.java"
+      ],
+      "samples": [
+        "Output does not match reference file: T6734819a.out, line 1"
+      ]
+    }
+  ],
+  "byFeature": []
+}
