@@ -1,0 +1,212 @@
+# Changes — `1.3.6+20260629.e4591fc` → `1.4.0+ff263a815`
+
+- From: `1.3.6+20260629.e4591fc` (`3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06`)
+- To: `1.4.0+ff263a815` (`f35eaed61d0963346bde39f3f37cf41a7f51268a1e875dc3e5cdee7123d9ee3d`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 284 | 0 | 0 | 7272 |
+
+## ✅ Fixed (284)
+
+- `test/built-ins/RegExp/property-escapes/generated/Alphabetic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Alphabetic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Assigned.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Assigned.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Case_Ignorable.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Case_Ignorable.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Cased.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Cased.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Casefolded.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Casefolded.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Casemapped.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Casemapped.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Lowercased.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Lowercased.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_NFKC_Casefolded.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_NFKC_Casefolded.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Titlecased.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Titlecased.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Uppercased.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Changes_When_Uppercased.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Diacritic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Diacritic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Emoji.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Emoji.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Emoji_Presentation.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Emoji_Presentation.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Extended_Pictographic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Extended_Pictographic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Extender.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Extender.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Cased_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Cased_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Currency_Symbol.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Currency_Symbol.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Decimal_Number.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Decimal_Number.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Letter_Number.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Letter_Number.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Lowercase_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Lowercase_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Mark.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Mark.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Math_Symbol.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Math_Symbol.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Modifier_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Modifier_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Nonspacing_Mark.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Nonspacing_Mark.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Number.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Number.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Punctuation.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Punctuation.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Symbol.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Other_Symbol.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Punctuation.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Punctuation.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Spacing_Mark.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Spacing_Mark.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Symbol.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Symbol.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Unassigned.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Unassigned.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Uppercase_Letter.js default`
+- `test/built-ins/RegExp/property-escapes/generated/General_Category_-_Uppercase_Letter.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Grapheme_Base.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Grapheme_Base.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Grapheme_Extend.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Grapheme_Extend.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/ID_Continue.js default`
+- `test/built-ins/RegExp/property-escapes/generated/ID_Continue.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/ID_Start.js default`
+- `test/built-ins/RegExp/property-escapes/generated/ID_Start.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Ideographic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Ideographic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Lowercase.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Lowercase.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Math.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Math.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Arabic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Arabic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Beria_Erfe.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Beria_Erfe.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Common.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Common.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Han.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Han.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Inherited.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Inherited.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Kannada.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Kannada.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Latin.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Latin.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Sharada.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Sharada.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Sidetic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Sidetic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tai_Yo.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tai_Yo.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tangut.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tangut.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Telugu.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Telugu.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tolong_Siki.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Tolong_Siki.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Unknown.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_-_Unknown.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Arabic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Arabic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Beria_Erfe.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Beria_Erfe.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Common.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Common.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Han.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Han.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Inherited.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Inherited.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Kannada.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Kannada.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Latin.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Latin.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Nandinagari.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Nandinagari.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Newa.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Newa.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Sharada.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Sharada.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Sidetic.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Sidetic.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Syriac.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Syriac.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tai_Yo.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tai_Yo.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tangut.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tangut.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Telugu.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Telugu.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tifinagh.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tifinagh.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tirhuta.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tirhuta.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tolong_Siki.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Tolong_Siki.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Unknown.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Script_Extensions_-_Unknown.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Unified_Ideograph.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Unified_Ideograph.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/Uppercase.js default`
+- `test/built-ins/RegExp/property-escapes/generated/Uppercase.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/XID_Continue.js default`
+- `test/built-ins/RegExp/property-escapes/generated/XID_Continue.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/XID_Start.js default`
+- `test/built-ins/RegExp/property-escapes/generated/XID_Start.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/strings/Basic_Emoji.js default`
+- `test/built-ins/RegExp/property-escapes/generated/strings/Basic_Emoji.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji.js default`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji_Modifier_Sequence.js default`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji_Modifier_Sequence.js strict mode`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji_ZWJ_Sequence.js default`
+- `test/built-ins/RegExp/property-escapes/generated/strings/RGI_Emoji_ZWJ_Sequence.js strict mode`
+- `test/built-ins/RegExp/unicodeSets/generated/rgi-emoji-17.0.js default`
+- `test/built-ins/RegExp/unicodeSets/generated/rgi-emoji-17.0.js strict mode`
+- `test/built-ins/String/prototype/toLowerCase/special_casing_conditional.js default`
+- `test/built-ins/String/prototype/toLowerCase/special_casing_conditional.js strict mode`
+- `test/built-ins/Temporal/Duration/compare/relativeto-propertybag-invalid-offset-string.js default`
+- `test/built-ins/Temporal/Duration/compare/relativeto-propertybag-invalid-offset-string.js strict mode`
+- `test/built-ins/Temporal/Duration/compare/relativeto-string-invalid.js default`
+- `test/built-ins/Temporal/Duration/compare/relativeto-string-invalid.js strict mode`
+- `test/built-ins/Temporal/Duration/from/argument-string-invalid.js default`
+- `test/built-ins/Temporal/Duration/from/argument-string-invalid.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/round/case-where-relativeto-affects-rounding-mode-half-even.js default`
+- `test/built-ins/Temporal/Duration/prototype/round/case-where-relativeto-affects-rounding-mode-half-even.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/round/relativeto-propertybag-invalid-offset-string.js default`
+- `test/built-ins/Temporal/Duration/prototype/round/relativeto-propertybag-invalid-offset-string.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/round/relativeto-string-invalid.js default`
+- `test/built-ins/Temporal/Duration/prototype/round/relativeto-string-invalid.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/round/rounding-window.js default`
+- `test/built-ins/Temporal/Duration/prototype/round/rounding-window.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/total/relativeto-propertybag-invalid-offset-string.js default`
+- `test/built-ins/Temporal/Duration/prototype/total/relativeto-propertybag-invalid-offset-string.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/total/relativeto-string-invalid.js default`
+- `test/built-ins/Temporal/Duration/prototype/total/relativeto-string-invalid.js strict mode`
+- `test/built-ins/Temporal/Duration/prototype/total/rounding-window.js default`
+- `test/built-ins/Temporal/Duration/prototype/total/rounding-window.js strict mode`
+- `test/built-ins/Temporal/Instant/from/argument-string-invalid.js default`
+- `test/built-ins/Temporal/Instant/from/argument-string-invalid.js strict mode`
+- `test/built-ins/Temporal/Instant/prototype/round/negative-instant.js default`
+- `test/built-ins/Temporal/Instant/prototype/round/negative-instant.js strict mode`
+- `test/built-ins/Temporal/Instant/prototype/round/rounding-increments.js default`
+- `test/built-ins/Temporal/Instant/prototype/round/rounding-increments.js strict mode`
+- `test/built-ins/Temporal/Instant/prototype/since/options-read-before-algorithmic-validation.js default`
+- `test/built-ins/Temporal/Instant/prototype/since/options-read-before-algorithmic-validation.js strict mode`
+- `test/built-ins/Temporal/Instant/prototype/toString/negative-instant-rounding.js default`
+- `test/built-ins/Temporal/Instant/prototype/toString/negative-instant-rounding.js strict mode`
+- …and 84 more

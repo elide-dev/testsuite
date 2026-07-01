@@ -34,7 +34,10 @@ ENV PATH=/opt/jtreg/bin:/opt/graalvm-jdk-25.0.3/bin:/opt/elide/bin:$PATH
 
 WORKDIR /opt/harness
 COPY harness/package.json harness/bun.lock ./
-COPY harness/patches ./patches
+# The postinstall hook (install-elide-host.sh) injects the custom elide host
+# into eshost, so its inputs must be present before `bun install` runs.
+COPY harness/scripts ./scripts
+COPY harness/src/eshost-elide ./src/eshost-elide
 RUN bun install --frozen-lockfile
 COPY harness/ ./
 

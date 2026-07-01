@@ -4,6 +4,6 @@
 
 | Suite | Version | Digest | Pass rate | Status |
 |---|---|---|---:|:--:|
-| cpython-core | `1.3.6+20260629.e4591fc` | `3d3ea83ed640` | 94.9% | ✅ |
-| javac-jtreg | `1.3.6+20260629.e4591fc` | `3d3ea83ed640` | 98.7% | ✅ |
-| test262 | `1.3.6+20260629.e4591fc` | `3d3ea83ed640` | 91.9% | ✅ |
+| cpython-core | `1.4.0+ff263a815` | `f35eaed61d09` | 94.2% | ✅ |
+| javac-jtreg | `1.4.0+ff263a815` | `f35eaed61d09` | 98.8% | ✅ |
+| test262 | `1.4.0+ff263a815` | `f35eaed61d09` | 92.2% | ✅ |
