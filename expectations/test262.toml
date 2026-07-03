@@ -13,5 +13,14 @@
 "test/built-ins/Atomics/**" = "SharedArrayBuffer / agents unsupported (WHIPLASH#1184)"
 "test/staging/**" = "staging area, not stable conformance"
 "test/**/*_FIXTURE.js" = "fixture support files, not standalone tests"
+"test/built-ins/Promise/allKeyed/**" = "Promise.allKeyed (joint-iteration proposal) unshipped in graal-js"
+"test/built-ins/Promise/allSettledKeyed/**" = "Promise.allSettledKeyed (joint-iteration proposal) unshipped in graal-js"
+"test/**/tco*.js" = "graal-js does not implement tail-call optimization (tail-call-optimization feature)"
+"test/language/import/import-attributes/json-*.js" = "engine: JSON modules unshipped (TypeError: JSON packages not supported)"
+"test/language/import/import-bytes/**" = "import-bytes proposal unshipped (engine lacks bytes/JSON module loading)"
+"test/language/import/import-attributes/text-*.js" = "import-text proposal unshipped (unsupported file extension)"
+"test/language/expressions/dynamic-import/import-attributes/2nd-param-with-enumeration-enumerable.js" = "engine: JSON modules unshipped (JSON fixture import)"
+"test/language/expressions/dynamic-import/import-attributes/2nd-param-with-type-text.js" = "engine: JSON modules unshipped (JSON fixture import)"
+"test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-import-source-and-export.js" = "source-phase imports (import source) unshipped in engine"
 
 [fail]
