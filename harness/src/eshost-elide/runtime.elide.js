@@ -1,16 +1,22 @@
 // eshost runtime for the Elide host. Prepended to every compiled test.
-// Provides print() (Elide lacks it) and a minimal $262.
+// The agent launches Elide with `-X polyglot.js.test262-mode=true`, which
+// exposes graal-js's native $262 (createRealm/detachArrayBuffer/evalScript/
+// gc/agent) at globalThis["$262"]; wrap it in the eshost $262 shape.
 if (typeof globalThis.print !== "function") {
   globalThis.print = function () {
     console.log(Array.prototype.join.call(arguments, " "));
   };
 }
+// Elide defines a launcher convenience global `arguments` (script args, like
+// the graal-js shell); test262 global/eval-code tests assert its absence.
+delete globalThis.arguments;
+var elideNative262 = globalThis["\x24262"];
 var $262 = {
   global: globalThis,
   destroy: function () {},
   evalScript: function (code) {
     try {
-      (0, eval)(code);
+      elideNative262.evalScript(code);
       return { type: "normal", value: undefined };
     } catch (e) {
       return { type: "throw", value: e };
@@ -26,13 +32,30 @@ var $262 = {
     return {};
   },
   source: $SOURCE,
-  createRealm: function () {
-    throw new Error("$262.createRealm not supported by the Elide host");
+  createRealm: function (options) {
+    options = options || {};
+    var realm = elideNative262.createRealm();
+    realm.evalScript($262.source);
+    realm.source = $262.source;
+    realm.getGlobal = $262.getGlobal;
+    realm.setGlobal = $262.setGlobal;
+    realm.destroy = function () {
+      if (options.destroy) {
+        options.destroy();
+      }
+    };
+    var globals = options.globals || {};
+    for (var glob in globals) {
+      realm.global[glob] = globals[glob];
+    }
+    return realm;
   },
-  detachArrayBuffer: function () {
-    throw new Error("$262.detachArrayBuffer not supported by the Elide host");
+  detachArrayBuffer: function (buffer) {
+    return elideNative262.detachArrayBuffer(buffer);
   },
   gc: function () {
-    throw new Error("$262.gc not supported by the Elide host");
+    return elideNative262.gc();
   },
+  agent: elideNative262 ? elideNative262.agent : undefined,
+  AbstractModuleSource: elideNative262 ? elideNative262.AbstractModuleSource : undefined,
 };
