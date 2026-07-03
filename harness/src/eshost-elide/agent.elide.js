@@ -90,6 +90,22 @@ class ElideAgent extends ConsoleAgent {
 
   async createChildProcess(args = [], options = {}) {
     if (args.length && typeof args[0] === "string") {
+      // test262 fixture files are ES modules by suite convention, but Elide
+      // (Node-style) treats imported `.js` as CommonJS unless the enclosing
+      // package declares `type: module`. Mark the temp dir accordingly for
+      // module-flagged tests (whose entry runs as `.mjs`, unaffected by the
+      // package type); remove the marker for script tests, whose `.js` entry
+      // must keep evaluating as a classic global script.
+      const pkg = path.join(path.dirname(args[0]), "package.json");
+      try {
+        if (this._elideModule) {
+          fs.writeFileSync(pkg, '{"type":"module"}\n');
+        } else {
+          fs.rmSync(pkg, { force: true });
+        }
+      } catch {
+        // Best-effort; without it only module-fixture tests misbehave.
+      }
       if (this._elideTestFile && this._elideTestSource) {
         try {
           this._copyFixtures(path.dirname(args[0]));

@@ -84,6 +84,44 @@ test("_copyFixtures ignores specifiers that do not name real files", () => {
   expect(existsSync(join(dst, "missing_FIXTURE.js"))).toBe(false);
 });
 
+test("createChildProcess marks the temp dir type:module only for module tests", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "elide-agent-tmp-"));
+  const entry = join(dir, "t.js");
+  writeFileSync(entry, "// entry");
+  const agent = makeAgent();
+  const spawned: string[][] = [];
+  // Stub the eshost spawn layer; only the filesystem effects are under test.
+  const consoleAgentProto = Object.getPrototypeOf(Object.getPrototypeOf(agent));
+  const original = consoleAgentProto.createChildProcess;
+  consoleAgentProto.createChildProcess = async (args: string[]) => {
+    spawned.push(args);
+    return null;
+  };
+  try {
+    agent._elideModule = true;
+    await agent.createChildProcess([entry]);
+    expect(JSON.parse(readFileSync(join(dir, "package.json"), "utf8"))).toEqual({ type: "module" });
+    // Module entry runs as a `.mjs` copy.
+    expect(spawned[0][0]).toBe(join(dir, "t.mjs"));
+
+    agent._elideModule = false;
+    await agent.createChildProcess([entry]);
+    expect(existsSync(join(dir, "package.json"))).toBe(false);
+    expect(spawned[1][0]).toBe(entry);
+  } finally {
+    consoleAgentProto.createChildProcess = original;
+  }
+});
+
+test("runtime pre-defines a global $DONE without naming Test262Error verbatim", () => {
+  const runtime = readFileSync(join(import.meta.dir, "runtime.elide.js"), "utf8");
+  expect(runtime).toContain("globalThis.$DONE");
+  expect(runtime).toContain("Test262:AsyncTestComplete");
+  // The contiguous string would trip eshost's isMissingTest262ErrorDefinition
+  // rewrite, which corrupts module tests with a duplicate ESHostError decl.
+  expect(runtime).not.toContain("Test262Error");
+});
+
 test("runtime wraps the native $262 exposed by test262-mode", () => {
   const runtime = readFileSync(
     join(import.meta.dir, "runtime.elide.js"),
