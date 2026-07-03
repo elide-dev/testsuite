@@ -42,17 +42,48 @@ class ElideAgent extends ConsoleAgent {
   // createChildProcess re-copies the real fixture files before spawning.
   async evalScript(code, options = {}) {
     let isModule = !!options.module;
+    let isAsync = !!options.async;
     this._elideTestFile = null;
     if (typeof code === "object" && code && code.contents) {
       const flags = (code.attrs && code.attrs.flags) || {};
       isModule = isModule || !!flags.module;
+      isAsync = isAsync || !!flags.async;
       if (code.file) {
         this._elideTestFile = path.resolve(String(code.file));
         this._elideTestSource = String(code.contents);
       }
     }
     this._elideModule = isModule;
+    this._elideAsync = isAsync;
     return super.evalScript(code, options);
+  }
+
+  // Module-flagged async tests compile the doneprintHandle include into
+  // module scope, so its `function $DONE` never becomes a global property
+  // and asyncTest's `hasOwn(globalThis, "$DONE")` guard trips. For async
+  // tests only (harness self-tests assert its absence otherwise), pre-set a
+  // global $DONE speaking the same protocol; the include's identical
+  // definition shadows it wherever the test actually calls $DONE. Inserted
+  // after the directive prologue so "use strict" stays a directive. The
+  // 'Test262''Error' token is split: contiguous, it would trip eshost's
+  // ESHostError rewrite and corrupt the compiled test.
+  compile(code, options) {
+    code = super.compile(code, options);
+    if (this._elideAsync) {
+      const shim =
+        'globalThis.$DONE = function (error) { var p = function (m) { (globalThis.print || console.log)(m); };' +
+        ' if (error) { if (typeof error === "object" && error !== null && "name" in error)' +
+        ' { p("Test262:AsyncTestFailure:" + error.name + ": " + error.message); }' +
+        ' else { p("Test262:AsyncTestFailure:" + "Test262" + "Error: " + String(error)); } }' +
+        ' else { p("Test262:AsyncTestComplete"); } };\n';
+      const prologue = code.match(
+        /^("[^\r\n"]*"|'[^\r\n']*'|[\s\r\n;]*|\/\*[\w\W]*?\*\/|\/\/[^\n]*\n)*/,
+      );
+      code = prologue
+        ? prologue[0] + shim + code.slice(prologue[0].length)
+        : shim + code;
+    }
+    return code;
   }
 
   // Copy every `*_FIXTURE*` file the test (transitively) references from its

@@ -113,13 +113,20 @@ test("createChildProcess marks the temp dir type:module only for module tests", 
   }
 });
 
-test("runtime pre-defines a global $DONE without naming Test262Error verbatim", () => {
-  const runtime = readFileSync(join(import.meta.dir, "runtime.elide.js"), "utf8");
-  expect(runtime).toContain("globalThis.$DONE");
-  expect(runtime).toContain("Test262:AsyncTestComplete");
-  // The contiguous string would trip eshost's isMissingTest262ErrorDefinition
-  // rewrite, which corrupts module tests with a duplicate ESHostError decl.
-  expect(runtime).not.toContain("Test262Error");
+test("compile injects a global $DONE shim only for async-flagged tests", () => {
+  const agent = makeAgent();
+  agent._elideAsync = false;
+  expect(agent.compile("var x = 1;")).not.toContain("globalThis.$DONE");
+  agent._elideAsync = true;
+  const compiled = agent.compile('"use strict";\nvar x = 1;');
+  expect(compiled).toContain("globalThis.$DONE");
+  // "use strict" must stay a directive: the shim goes after the prologue.
+  expect(compiled.startsWith('"use strict";')).toBe(true);
+  expect(compiled.indexOf('"use strict"')).toBeLessThan(compiled.indexOf("globalThis.$DONE"));
+  // The contiguous token would trip eshost's isMissingTest262ErrorDefinition
+  // rewrite, which corrupts compiled tests with a duplicate ESHostError decl.
+  expect(compiled).not.toContain("Test262Error");
+  expect(compiled).toContain("Test262:AsyncTestComplete");
 });
 
 test("runtime wraps the native $262 exposed by test262-mode", () => {

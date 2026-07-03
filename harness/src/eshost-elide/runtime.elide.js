@@ -10,22 +10,6 @@ if (typeof globalThis.print !== "function") {
 // Elide defines a launcher convenience global `arguments` (script args, like
 // the graal-js shell); test262 global/eval-code tests assert its absence.
 delete globalThis.arguments;
-// Module-flagged async tests compile the doneprintHandle include into module
-// scope, so its `function $DONE` never becomes a global property and the
-// asyncTest helper's `hasOwn(globalThis, "$DONE")` guard trips. Pre-define a
-// global $DONE speaking the same protocol; script tests and module-local
-// shadows override it with the include's identical definition.
-globalThis.$DONE = function (error) {
-  if (error) {
-    if (typeof error === "object" && error !== null && "name" in error) {
-      globalThis.print("Test262:AsyncTestFailure:" + error.name + ": " + error.message);
-    } else {
-      globalThis.print("Test262:AsyncTestFailure:" + "Test262" + "Error: " + String(error));
-    }
-  } else {
-    globalThis.print("Test262:AsyncTestComplete");
-  }
-};
 var elideNative262 = globalThis["\x24262"];
 var $262 = {
   global: globalThis,
