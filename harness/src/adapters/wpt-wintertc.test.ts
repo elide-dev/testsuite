@@ -65,6 +65,54 @@ test("WPT bridge rejects missing --test values with usage", () => {
   expect(new TextDecoder().decode(proc.stderr)).toContain("usage: wintertc-runner.js");
 });
 
+test("META parser extracts script directives from the leading comment block", async () => {
+  const runner = await import("../../../suites/drivers/wpt/wintertc-runner.js");
+  const source = [
+    "// META: global=window,worker",
+    "// META: script=/common/utils.js",
+    "// META: script=../resources/utils.js",
+    "",
+    "// plain comment",
+    "test(() => {}, 'x');",
+    "// META: script=ignored-after-code.js",
+  ].join("\n");
+  expect(runner.parseMetaScripts(source)).toEqual(["/common/utils.js", "../resources/utils.js"]);
+  expect(runner.parseMetaScripts("test(() => {}, 'x');")).toEqual([]);
+});
+
+test("META scripts resolve absolute paths against the suite root and relative against the test dir", async () => {
+  const runner = await import("../../../suites/drivers/wpt/wintertc-runner.js");
+  expect(runner.resolveMetaScript("/suite", "fetch/api/basic/a.any.js", "/common/utils.js")).toEqual({
+    path: "/suite/common/utils.js",
+    key: "/common/utils.js",
+  });
+  expect(runner.resolveMetaScript("/suite", "fetch/api/basic/a.any.js", "../resources/utils.js")).toEqual({
+    path: "/suite/fetch/api/resources/utils.js",
+    key: "/fetch/api/resources/utils.js",
+  });
+  expect(runner.resolveMetaScript("/suite", "encoding/a.any.js", "resources/encodings.js")).toEqual({
+    path: "/suite/encoding/resources/encodings.js",
+    key: "/encoding/resources/encodings.js",
+  });
+});
+
+test("META preamble inlines existing scripts, shims virtual ones, and marks missing ones", async () => {
+  const runner = await import("../../../suites/drivers/wpt/wintertc-runner.js");
+  const suite = mkdtempSync(join(tmpdir(), "wpt-meta-"));
+  mkdirSync(join(suite, "fetch/api/resources"), { recursive: true });
+  writeFileSync(join(suite, "fetch/api/resources/utils.js"), "var RESOURCES_DIR = '../resources/';\n");
+  const source = [
+    "// META: script=../resources/utils.js",
+    "// META: script=/common/sab.js",
+    "// META: script=/no/such/helper.js",
+    "test(() => {}, 'x');",
+  ].join("\n");
+  const preamble = runner.buildMetaPreamble(suite, "fetch/api/basic/a.any.js", source);
+  expect(preamble).toContain("var RESOURCES_DIR");
+  expect(preamble).toContain("const createBuffer");
+  expect(preamble).toContain("missing META script /no/such/helper.js");
+});
+
 function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
   return Array.fromAsync(items);
 }
