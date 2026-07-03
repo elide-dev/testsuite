@@ -417,6 +417,9 @@ async function runNodeApiTask(
         ...metadata.env,
         NODE_TEST_KNOWN_GLOBALS: "0",
         NODE_SKIP_FLAG_CHECK: "1",
+        // Node-parity CJS entry semantics: Elide wraps the entry file in the Node module wrapper
+        // (function scope) when this is set, matching how Node runs these test files.
+        ELIDE_CJS_ENTRY_WRAP: "1",
         NODE_API_OVERLAY_CWD: ctx.suitePath,
         NODE_TEST_DIR: workspaceTestDir,
         // The common/tmpdir.js shim derives its scratch directory from
