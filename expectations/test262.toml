@@ -22,5 +22,6 @@
 "test/language/expressions/dynamic-import/import-attributes/2nd-param-with-enumeration-enumerable.js" = "engine: JSON modules unshipped (JSON fixture import)"
 "test/language/expressions/dynamic-import/import-attributes/2nd-param-with-type-text.js" = "engine: JSON modules unshipped (JSON fixture import)"
 "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-import-source-and-export.js" = "source-phase imports (import source) unshipped in engine"
+"test/annexB/**/*emulate*-undefined*.js" = "requires $262.IsHTMLDDA host support (not exposed by graal-js test262-mode)"
 
 [fail]
