@@ -286,10 +286,12 @@ ${source}
 done();
 `);
 
-  const child = spawnSync(elide, ["run", "--quiet", out], { encoding: "utf8" });
+  const child = spawnSync(elide, ["run", "--quiet", out], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
   if (child.stdout) process.stdout.write(child.stdout);
   if (child.stderr) process.stderr.write(child.stderr);
-  process.exit(child.status ?? 1);
+  // process.exit() would drop un-drained pipe output (truncates large results at 64KiB);
+  // set exitCode and let stdout flush naturally.
+  process.exitCode = child.status ?? 1;
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
