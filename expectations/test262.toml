@@ -23,5 +23,7 @@
 "test/language/expressions/dynamic-import/import-attributes/2nd-param-with-type-text.js" = "engine: JSON modules unshipped (JSON fixture import)"
 "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-import-source-and-export.js" = "source-phase imports (import source) unshipped in engine"
 "test/annexB/**/*emulate*-undefined*.js" = "requires $262.IsHTMLDDA host support (not exposed by graal-js test262-mode)"
+"test/annexB/built-ins/RegExp/legacy-accessors/*/prop-desc.js" = "legacy-regexp proposal (accessor descriptors) unshipped in graal-js"
+"test/annexB/built-ins/RegExp/legacy-accessors/*/this-*.js" = "legacy-regexp proposal (receiver brand checks) unshipped in graal-js"
 
 [fail]
