@@ -581,6 +581,13 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
   const cur = passRate(current);
   const prev = passRate(previous);
   if (cur === undefined || prev === undefined) return ansi.dim("n/a");
+  // A pass-rate delta between different selections (a scoped --include run vs
+  // a full run) is meaningless — flag it instead of reporting a fake swing.
+  const curTotal = current ? scoredTotal(current.counts) : 0;
+  const prevTotal = previous ? scoredTotal(previous.counts) : 0;
+  if (prevTotal && Math.abs(curTotal - prevTotal) / prevTotal > 0.1) {
+    return ansi.dim("selection changed");
+  }
   const delta = (cur - prev) * 100;
   if (Math.abs(delta) < 0.05) return ansi.dim("→ 0.0pp");
   return delta > 0 ? ansi.green(`↗ +${delta.toFixed(1)}pp`) : ansi.red(`↘ ${delta.toFixed(1)}pp`);
@@ -588,29 +595,51 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
 
 function statusLabel(row: SuiteSummaryRow): string {
   if (row.rc === 2 || row.rc > 2 || !row.current) return ansi.red("🛑 ERROR");
-  const regressions = row.current.regressions.length;
-  if (row.rc === 0 && regressions === 0) return ansi.green("🟢 GREEN");
-  if (regressions > 0) return ansi.red("🔴 REGRESSED");
+  const expRegressions = row.current.regressions.length;
+  const driftRegressed = row.changes?.regressed.length ?? 0;
+  const added = row.changes?.added ?? 0;
+  const fixed = row.changes?.fixed.length ?? 0;
+  // A test that was passing and now fails (drift) is a true regression. Failures
+  // in newly-added coverage (an enabled slice) are a GAIN awaiting ratchet, not
+  // a regression.
+  if (driftRegressed > 0) return ansi.red("🔴 REGRESSED");
+  if (expRegressions > 0) {
+    if (row.changes && added >= expRegressions) return ansi.cyan("🔵 GAINED");
+    return row.changes ? ansi.yellow("🟡 RED") : ansi.red("🔴 REGRESSED");
+  }
+  if (row.rc === 0 && (fixed > 0 || added > 0)) return ansi.green("🟢 IMPROVED");
   return row.rc === 1 ? ansi.yellow("🟡 RED") : ansi.green("🟢 GREEN");
 }
 
 function changesLabel(row: SuiteSummaryRow): string {
   const parts: string[] = [];
-  if (row.current?.newPasses.length) parts.push(ansi.green(`✨ ${row.current.newPasses.length} new`));
-  if (row.current?.regressions.length) parts.push(ansi.red(`🚨 ${row.current.regressions.length} regressions`));
+  const expRegressions = row.current?.regressions.length ?? 0;
+  if (row.current?.newPasses.length) parts.push(ansi.green(`✨ ${row.current.newPasses.length} new passes`));
   if (row.changes) {
+    // Drift (vs previous run) is authoritative; expectation-regressions overlap
+    // it, so only the non-drift remainder is shown, as "need ratchet".
+    const driftRegressed = row.changes.regressed.length;
+    if (row.changes.added > 0) parts.push(ansi.cyan(`🆕 ${row.changes.added} added`));
     if (row.changes.fixed.length) parts.push(ansi.green(`✅ ${row.changes.fixed.length} fixed`));
-    if (row.changes.regressed.length) parts.push(ansi.red(`❌ ${row.changes.regressed.length} regressed`));
-    if (!row.changes.fixed.length && !row.changes.regressed.length) parts.push(ansi.dim("no status drift"));
-  } else if (!parts.length) {
-    parts.push(ansi.dim("baseline n/a"));
+    if (driftRegressed) parts.push(ansi.red(`❌ ${driftRegressed} regressed`));
+    const unratcheted = Math.max(0, expRegressions - driftRegressed);
+    if (unratcheted > 0) parts.push(ansi.yellow(`⚠ ${unratcheted} need ratchet`));
+    if (!parts.length) parts.push(ansi.dim("no status drift"));
+  } else {
+    if (expRegressions) parts.push(ansi.red(`🚨 ${expRegressions} regressions`));
+    if (!parts.length) parts.push(ansi.dim("baseline n/a"));
   }
   return parts.join(", ");
 }
 
+// Display width: Bun.stringWidth handles ANSI escapes AND double-width
+// glyphs (emoji), which .length miscounts — that's what broke the box borders.
+function visibleWidth(value: string): number {
+  return Bun.stringWidth(value);
+}
+
 function padVisible(value: string, width: number): string {
-  const visible = value.replace(/\x1b\[[0-9;]*m/g, "").length;
-  return value + " ".repeat(Math.max(0, width - visible));
+  return value + " ".repeat(Math.max(0, width - visibleWidth(value)));
 }
 
 function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
@@ -629,21 +658,31 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
       changesLabel(row),
     ];
   });
-  const widths = headers.map((header, i) => Math.max(header.length, ...body.map((row) => row[i].replace(/\x1b\[[0-9;]*m/g, "").length)));
+  const widths = headers.map((header, i) => Math.max(header.length, ...body.map((row) => visibleWidth(row[i]))));
   const line = (cells: string[]): string => `│ ${cells.map((cell, i) => padVisible(cell, widths[i])).join(" │ ")} │`;
   const sep = `├${widths.map((width) => "─".repeat(width + 2)).join("┼")}┤`;
   const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
   const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
   const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
   const totalTests = rows.reduce((sum, row) => sum + (row.current ? scoredTotal(row.current.counts) : 0), 0);
-  const totalRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
+  const totalExpRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
+  const totalDriftRegressed = rows.reduce((sum, row) => sum + (row.changes?.regressed.length ?? 0), 0);
+  const totalAdded = rows.reduce((sum, row) => sum + (row.changes?.added ?? 0), 0);
+  const hasDrift = rows.some((row) => row.changes);
   const totalNewPasses = rows.reduce((sum, row) => sum + (row.current?.newPasses.length ?? 0), 0);
   const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;
+  const needRatchet = Math.max(0, totalExpRegressions - totalDriftRegressed);
   const headline = errored
     ? ansi.red(`🛑 ${errored} suite${errored === 1 ? "" : "s"} had harness errors`)
-    : totalRegressions
-      ? ansi.red(`🔴 ${totalRegressions} regression${totalRegressions === 1 ? "" : "s"} across selected suites`)
-      : ansi.green("🟢 No regressions across selected suites");
+    : totalDriftRegressed
+      ? ansi.red(`🔴 ${totalDriftRegressed} regression${totalDriftRegressed === 1 ? "" : "s"} across selected suites`)
+      : hasDrift && totalExpRegressions
+        ? totalAdded >= totalExpRegressions
+          ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)
+          : ansi.yellow(`🟡 ${needRatchet} unratcheted failure${needRatchet === 1 ? "" : "s"} (no drift regressions)`)
+        : totalExpRegressions
+          ? ansi.red(`🔴 ${totalExpRegressions} regression${totalExpRegressions === 1 ? "" : "s"} across selected suites`)
+          : ansi.green("🟢 No regressions across selected suites");
 
   process.stderr.write("\n");
   process.stderr.write(`${ansi.bold("Compliance Summary")} ${headline}\n`);

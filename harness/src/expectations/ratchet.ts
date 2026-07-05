@@ -25,6 +25,16 @@ export function ratchetCandidates(tests: TestResult[], exp: Expectations): strin
   return [...out].sort();
 }
 
+/**
+ * Merge semantics for --ratchet: prior entries for tests NOT observed in this
+ * run are retained (a scoped --include run must not clobber the full-suite
+ * baseline); observed entries survive only if still failing (candidates).
+ */
+export function mergeRatchet(prior: Set<string>, observedIds: Set<string>, candidates: string[]): string[] {
+  const retained = [...prior].filter((id) => !observedIds.has(id));
+  return [...new Set([...retained, ...candidates])].sort();
+}
+
 function tomlBasicString(value: string): string {
   return JSON.stringify(value);
 }
