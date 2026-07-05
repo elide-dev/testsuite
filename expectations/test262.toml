@@ -9,7 +9,7 @@
 # whole areas Elide does not yet support.
 
 [skip]
-"test/intl402/**" = "Intl 402 not supported yet"
+"test/intl402/Temporal/**" = "graal-js Temporal non-ISO calendar arithmetic incomplete (upstream; 752 fails, mostly Ethiopian/Islamic month math + 24x Nullish ClassCastException)"
 "test/built-ins/Atomics/**" = "SharedArrayBuffer / agents unsupported (WHIPLASH#1184)"
 "test/staging/**" = "staging area, not stable conformance"
 "test/**/*_FIXTURE.js" = "fixture support files, not standalone tests"
