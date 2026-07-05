@@ -151,6 +151,9 @@ class ElideAgent extends ConsoleAgent {
       // module into two instances and breaking TDZ/binding-identity tests. Run
       // the `.js` in place so those imports dedupe to the single entry record.
     }
+    // ELIDE_JS_TEST262 gates host-side test262 affordances the -X option can't
+    // reach (e.g. allowCreateThread for $262.agent worker threads).
+    options.env = { ...process.env, ...options.env, ELIDE_JS_TEST262: "1" };
     return super.createChildProcess(args, options);
   }
 

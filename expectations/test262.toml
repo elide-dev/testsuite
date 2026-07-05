@@ -10,8 +10,8 @@
 
 [skip]
 "test/intl402/Temporal/**" = "graal-js Temporal non-ISO calendar arithmetic incomplete (upstream; 752 fails, mostly Ethiopian/Islamic month math; CCE tracked in WHIPLASH#1274)"
-"test/built-ins/Atomics/**" = "SharedArrayBuffer / agents unsupported (WHIPLASH#1184)"
 "test/staging/**" = "staging area, not stable conformance"
+"test/built-ins/Atomics/wait/**/cannot-suspend-throws.js" = "CanBlockIsFalse-flagged: verifies the throw on non-blocking agents; Elide's shell agent can block (js.agent-can-block, Node parity)"
 "test/**/*_FIXTURE.js" = "fixture support files, not standalone tests"
 "test/built-ins/Promise/allKeyed/**" = "Promise.allKeyed (joint-iteration proposal) unshipped in graal-js"
 "test/built-ins/Promise/allSettledKeyed/**" = "Promise.allSettledKeyed (joint-iteration proposal) unshipped in graal-js"
