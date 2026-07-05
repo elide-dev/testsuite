@@ -1,0 +1,17 @@
+{
+  "from": {
+    "semver": "1.4.0+48fa1f4f6",
+    "digest": "08afc26bcec111e0b4b008a4ec3f90c6575b31a5ed252f513e217c83c6dccb9d"
+  },
+  "to": {
+    "semver": "1.4.0+48fa1f4f6",
+    "digest": "019e3f7a34bba4955e5ad73f225035de389e3893d2e949feaa5c190095790af0"
+  },
+  "fixed": [
+    "test/parallel/test-stream2-readable-wrap-empty.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 968
+}

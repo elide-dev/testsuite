@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+4a7803beb",
+      "digest": "611c87beec05da7f48ed036c1174b914ce76f586a18b7d9ffd59623cb9d7e32a"
+    },
+    "startedAt": "2026-07-03T22:29:42.067Z",
+    "finishedAt": "2026-07-03T22:33:14.190Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 306,
+    "fail": 878,
+    "skip": 345,
+    "error": 34,
+    "total": 1563
+  },
+  "regressions": [],
+  "newPasses": [
+    "test/parallel/test-async-hooks-worker-asyncfn-terminate-2.js",
+    "test/parallel/test-async-hooks-worker-asyncfn-terminate-4.js",
+    "test/parallel/test-async-hooks-worker-asyncfn-terminate-3.js",
+    "test/parallel/test-async-hooks-worker-asyncfn-terminate-1.js",
+    "test/parallel/test-fs-make-callback.js",
+    "test/parallel/test-fs-fsync.js",
+    "test/parallel/test-fs-makeStatsCallback.js",
+    "test/parallel/test-fs-read-file-assert-encoding.js",
+    "test/parallel/test-fs-read-stream-double-close.js",
+    "test/parallel/test-fs-read-stream-fd.js",
+    "test/parallel/test-fs-readv-sync.js",
+    "test/parallel/test-fs-readv.js",
+    "test/parallel/test-fs-watch-abort-signal.js",
+    "test/parallel/test-fs-write-stream-change-open.js",
+    "test/parallel/test-fs-writev.js",
+    "test/parallel/test-stream2-set-encoding.js",
+    "test/parallel/test-worker-abort-on-uncaught-exception-terminate.js",
+    "test/parallel/test-worker-abort-on-uncaught-exception.js",
+    "test/parallel/test-worker-cjs-workerdata.js",
+    "test/parallel/test-worker-cleanexit-with-js.js",
+    "test/parallel/test-worker-esmodule.js",
+    "test/parallel/test-worker-exit-event-error.js",
+    "test/parallel/test-worker-load-file-with-extension-other-than-js.js",
+    "test/parallel/test-worker-message-port-infinite-message-loop.js",
+    "test/parallel/test-worker-message-port-transfer-terminate.js",
+    "test/parallel/test-worker-mjs-workerdata.js",
+    "test/parallel/test-worker-nexttick-terminate.js",
+    "test/parallel/test-worker-ref-onexit.js",
+    "test/parallel/test-worker-terminate-microtask-loop.js",
+    "test/parallel/test-worker-terminate-ref-public-port.js",
+    "test/parallel/test-worker-terminate-timers.js",
+    "test/parallel/test-worker-unsupported-path.js"
+  ]
+}

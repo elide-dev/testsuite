@@ -1,0 +1,20 @@
+{
+  "bySignature": [
+    {
+      "signature": "╭─ Script Error ──────────────────────────────────────────────────────────────╮ │ReferenceError: setTimeout is not defined │ │ │ │ In file <loc>: │ │ ╭─ │ │─ St",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-eventtarget-memoryleakwarning.js"
+      ],
+      "samples": [
+        "╭─ Script Error ──────────────────────────────────────────────────────────────╮\n│ReferenceError: setTimeout is not defined                                    │\n│                                                                             │\n│ In file test/parallel/test-eventtarget-memoryleakwarning.js:404:3:          │\n│   ╭─                                                                        │\n│─ Stack Trace ───────────────────────────────────────────────────────────────│\n│                                                                             │\n│ ╭─ [js] :anonymous                                  test/common/index.js:40 │\n│ │                                                                           │\n│ · elide run test/parallel/test-eventtarget-memoryle                         │\n│                                                                             │\n│─ Advice ────────────────────────────────────────────────────────────────────│\n│                                                                             │\n│ An error occurred while executing your code.                                │\n│                                                                             │\n╰─────────────────────────────────────────────────────────────────────────────╯"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "node:events",
+      "count": 1
+    }
+  ]
+}

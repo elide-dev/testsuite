@@ -1,0 +1,245 @@
+# test262 — `1.4.0+7dced7031`
+
+- Image digest: `6574f10b0f51def2cc1ed2ae503ec83fc993f3d623700138a31e5eda5f53d9ab`
+- Suite version: `de8e621cdba4f40cff3cf244e6cfb8cb48746b4a`
+- Ran: 2026-07-02T16:55:07.746Z → 2026-07-02T17:08:43.765Z
+
+## Summary
+
+![Pass-rate chart](./pass-rate.svg)
+
+**Pass rate: 90341/103361 (97.03%)**
+
+| pass | fail | error | skip | regressions | new passes |
+|---:|---:|---:|---:|---:|---:|
+| 90341 | 118 | 2646 | 10256 | 23 | 4531 |
+
+## ❌ Regressions (23)
+
+- `test/language/module-code/instn-named-err-not-found-dflt.js default` — Expected test to throw error of type SyntaxError, but did not throw error
+- `test/language/module-code/instn-named-err-not-found-dflt.js strict mode` — Expected test to throw error of type SyntaxError, but did not throw error
+- `test/language/import/import-attributes/json-invalid.js strict mode` — Expected test to throw error of type SyntaxError, got TypeError: JSON packages not supported.
+- `test/language/import/import-attributes/json-named-bindings.js default` — Expected test to throw error of type SyntaxError, got TypeError: JSON packages not supported.
+- `test/language/import/import-attributes/json-invalid.js default` — Expected test to throw error of type SyntaxError, got TypeError: JSON packages not supported.
+- `test/language/import/import-attributes/json-named-bindings.js strict mode` — Expected test to throw error of type SyntaxError, got TypeError: JSON packages not supported.
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js default` — Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js strict mode` — Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js default` — Expected SameValue(«false», «true») to be true (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js strict mode` — Expected SameValue(«false», «true») to be true (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/Set/bigint-tonumber.js default` — Expected a TypeError to be thrown but no exception was thrown
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js default` — Expected a Test262Error to be thrown but no exception was
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js strict mode` — Expected a Test262Error but got a TypeError (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js default` — Expected SameValue(«false», «true») to be true (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js strict mode` — Expected SameValue(«false», «true») to be true (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/null-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/number-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js strict mode` — Expected a SyntaxError but got a TypeError (Testing with
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js default` — Expected a SyntaxError to be thrown but no exception was thrown
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/symbol-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js strict mode` — `sample["0"] = obj` throws Test262Error Expected a Test262Error
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js default` — `sample["0"] = obj` throws Test262Error Expected a Test262Error
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/undefined-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown
+
+## 🟢 New passes (4531) — consider advancing the baseline
+
+- `test/built-ins/AsyncDisposableStack/constructor.js default`
+- `test/built-ins/AsyncDisposableStack/constructor.js strict mode`
+- `test/built-ins/AsyncDisposableStack/instance-extensible.js default`
+- `test/built-ins/AsyncDisposableStack/instance-extensible.js strict mode`
+- `test/built-ins/AsyncDisposableStack/is-a-constructor.js default`
+- `test/built-ins/AsyncDisposableStack/is-a-constructor.js strict mode`
+- `test/built-ins/AsyncDisposableStack/length.js strict mode`
+- `test/built-ins/AsyncDisposableStack/length.js default`
+- `test/built-ins/AsyncDisposableStack/name.js default`
+- `test/built-ins/AsyncDisposableStack/newtarget-prototype-is-not-object.js strict mode`
+- `test/built-ins/AsyncDisposableStack/newtarget-prototype-is-not-object.js default`
+- `test/built-ins/AsyncDisposableStack/prop-desc.js strict mode`
+- `test/built-ins/AsyncDisposableStack/name.js strict mode`
+- `test/built-ins/AsyncDisposableStack/prop-desc.js default`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget-custom.js strict mode`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget.js default`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget-custom.js default`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget-abrupt.js default`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget.js strict mode`
+- `test/built-ins/AsyncDisposableStack/prototype-from-newtarget-abrupt.js strict mode`
+- `test/built-ins/AsyncDisposableStack/proto.js default`
+- `test/built-ins/AsyncDisposableStack/undefined-newtarget-throws.js default`
+- `test/built-ins/AsyncDisposableStack/undefined-newtarget-throws.js strict mode`
+- `test/built-ins/AsyncDisposableStack/proto.js strict mode`
+- `test/built-ins/DisposableStack/constructor.js default`
+- `test/built-ins/DisposableStack/constructor.js strict mode`
+- `test/built-ins/DisposableStack/instance-extensible.js strict mode`
+- `test/built-ins/DisposableStack/length.js default`
+- `test/built-ins/DisposableStack/instance-extensible.js default`
+- `test/built-ins/DisposableStack/is-a-constructor.js default`
+- `test/built-ins/DisposableStack/is-a-constructor.js strict mode`
+- `test/built-ins/DisposableStack/name.js strict mode`
+- `test/built-ins/DisposableStack/name.js default`
+- `test/built-ins/DisposableStack/newtarget-prototype-is-not-object.js default`
+- `test/built-ins/DisposableStack/prop-desc.js default`
+- `test/built-ins/DisposableStack/prop-desc.js strict mode`
+- `test/built-ins/DisposableStack/length.js strict mode`
+- `test/built-ins/DisposableStack/newtarget-prototype-is-not-object.js strict mode`
+- `test/built-ins/DisposableStack/proto.js default`
+- `test/built-ins/DisposableStack/proto.js strict mode`
+- `test/built-ins/DisposableStack/prototype-from-newtarget-abrupt.js default`
+- `test/built-ins/DisposableStack/prototype-from-newtarget.js default`
+- `test/built-ins/DisposableStack/undefined-newtarget-throws.js strict mode`
+- `test/built-ins/DisposableStack/prototype-from-newtarget-custom.js strict mode`
+- `test/built-ins/DisposableStack/prototype-from-newtarget.js strict mode`
+- `test/built-ins/DisposableStack/undefined-newtarget-throws.js default`
+- `test/built-ins/DisposableStack/prototype-from-newtarget-abrupt.js strict mode`
+- `test/built-ins/DisposableStack/prototype-from-newtarget-custom.js default`
+- `test/built-ins/Function/15.3.2.1-11-7-s.js strict mode`
+- `test/built-ins/Function/15.3.2.1-11-3.js default`
+- `test/built-ins/Function/15.3.2.1-11-3.js strict mode`
+- `test/built-ins/Function/15.3.2.1-11-4-s.js strict mode`
+- `test/built-ins/Function/15.3.5.4_2-14gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-12gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-76gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-75gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-77gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-80gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-78gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-79gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-84gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-85gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-82gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-81gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-83gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-86gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-88gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-89gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-87gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-91gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-90gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-93gs.js default`
+- `test/built-ins/Function/15.3.5.4_2-92gs.js default`
+- `test/built-ins/Infinity/S15.1.1.2_A3_T2.js default`
+- `test/built-ins/Infinity/S15.1.1.2_A2_T2.js default`
+- `test/built-ins/NaN/S15.1.1.1_A2_T2.js default`
+- `test/built-ins/NaN/S15.1.1.1_A3_T2.js default`
+- `test/built-ins/Promise/executor-call-context-sloppy.js default`
+- `test/built-ins/String/S15.5.5.1_A4_T1.js default`
+- `test/built-ins/SuppressedError/is-a-constructor.js default`
+- `test/built-ins/SuppressedError/message-method-prop.js default`
+- `test/built-ins/SuppressedError/is-a-constructor.js strict mode`
+- `test/built-ins/SuppressedError/message-tostring-abrupt-symbol.js default`
+- `test/built-ins/SuppressedError/message-undefined-no-prop.js default`
+- `test/built-ins/SuppressedError/message-method-prop.js strict mode`
+- `test/built-ins/SuppressedError/length.js strict mode`
+- `test/built-ins/SuppressedError/message-tostring-abrupt-symbol.js strict mode`
+- `test/built-ins/SuppressedError/length.js default`
+- `test/built-ins/SuppressedError/message-tostring-abrupt.js default`
+- `test/built-ins/SuppressedError/message-undefined-no-prop.js strict mode`
+- `test/built-ins/SuppressedError/message-tostring-abrupt.js strict mode`
+- `test/built-ins/SuppressedError/message-method-prop-cast.js default`
+- `test/built-ins/SuppressedError/name.js strict mode`
+- `test/built-ins/SuppressedError/name.js default`
+- `test/built-ins/SuppressedError/newtarget-is-undefined.js default`
+- `test/built-ins/SuppressedError/newtarget-proto-custom.js strict mode`
+- `test/built-ins/SuppressedError/message-method-prop-cast.js strict mode`
+- `test/built-ins/SuppressedError/newtarget-proto-fallback.js strict mode`
+- `test/built-ins/SuppressedError/newtarget-proto-custom.js default`
+- `test/built-ins/SuppressedError/newtarget-proto.js strict mode`
+- `test/built-ins/SuppressedError/newtarget-proto.js default`
+- `test/built-ins/SuppressedError/newtarget-proto-fallback.js default`
+- `test/built-ins/SuppressedError/newtarget-is-undefined.js strict mode`
+- `test/built-ins/SuppressedError/order-of-args-evaluation.js default`
+- `test/built-ins/SuppressedError/order-of-args-evaluation.js strict mode`
+- `test/built-ins/SuppressedError/prop-desc.js default`
+- `test/built-ins/SuppressedError/prop-desc.js strict mode`
+- `test/built-ins/Symbol/auto-boxing-non-strict.js default`
+- `test/built-ins/SuppressedError/proto.js default`
+- `test/built-ins/SuppressedError/proto.js strict mode`
+- `test/built-ins/undefined/15.1.1.3-3.js default`
+- `test/built-ins/undefined/15.1.1.3-1.js default`
+- `test/built-ins/undefined/S15.1.1.3_A3_T2.js default`
+- `test/language/arguments-object/10.6-12-1.js default`
+- `test/language/arguments-object/10.6-10-c-ii-1.js default`
+- `test/language/arguments-object/10.6-13-a-2.js default`
+- `test/language/arguments-object/10.6-13-a-1.js default`
+- `test/language/arguments-object/10.6-10-c-ii-2.js default`
+- `test/language/arguments-object/10.6-13-a-3.js default`
+- `test/language/arguments-object/10.6-12-2.js default`
+- `test/language/arguments-object/10.6-6-4.js default`
+- `test/language/arguments-object/S10.6_A3_T4.js default`
+- `test/language/arguments-object/S10.6_A3_T3.js default`
+- `test/language/arguments-object/10.6-6-3.js default`
+- `test/language/arguments-object/S10.6_A4.js default`
+- `test/language/arguments-object/non-strict-arguments-object-is-immutable.js default`
+- `test/language/directive-prologue/10.1.1-10-s.js default`
+- `test/language/directive-prologue/10.1.1-1-s.js default`
+- `test/language/directive-prologue/10.1.1-11-s.js default`
+- `test/language/directive-prologue/10.1.1-12-s.js default`
+- `test/language/directive-prologue/10.1.1-13-s.js default`
+- `test/language/directive-prologue/10.1.1-3-s.js default`
+- `test/language/directive-prologue/10.1.1-31-s.js default`
+- `test/language/directive-prologue/10.1.1-4-s.js default`
+- `test/language/directive-prologue/10.1.1-32-s.js default`
+- `test/language/directive-prologue/10.1.1-6-s.js default`
+- `test/language/directive-prologue/10.1.1-9-s.js default`
+- `test/language/directive-prologue/14.1-16-s.js default`
+- `test/language/directive-prologue/14.1-4-s.js default`
+- `test/language/directive-prologue/14.1-3-s.js default`
+- `test/language/directive-prologue/14.1-17-s.js default`
+- `test/language/directive-prologue/14.1-6-s.js default`
+- `test/language/directive-prologue/14.1-5-s.js default`
+- `test/language/directive-prologue/14.1-7-s.js default`
+- `test/language/directive-prologue/func-decl-final-runtime.js default`
+- `test/language/directive-prologue/func-decl-not-first-runtime.js default`
+- `test/language/directive-prologue/10.1.1-7-s.js default`
+- `test/language/directive-prologue/func-expr-final-runtime.js default`
+- `test/language/directive-prologue/func-expr-not-first-runtime.js default`
+- `test/language/directive-prologue/get-accsr-not-first-runtime.js default`
+- `test/language/function-code/10.4.3-1-1-s.js default`
+- `test/language/function-code/10.4.3-1-101-s.js default`
+- `test/language/function-code/10.4.3-1-101gs.js default`
+- `test/language/function-code/10.4.3-1-105.js default`
+- `test/language/function-code/10.4.3-1-2-s.js default`
+- `test/language/function-code/10.4.3-1-20-s.js default`
+- `test/language/function-code/10.4.3-1-3-s.js default`
+- `test/language/function-code/10.4.3-1-4-s.js default`
+- `test/language/function-code/10.4.3-1-45gs.js default`
+- `test/language/function-code/10.4.3-1-45-s.js default`
+- `test/language/function-code/10.4.3-1-47-s.js default`
+- `test/language/function-code/10.4.3-1-47gs.js default`
+- `test/language/function-code/10.4.3-1-46gs.js default`
+- `test/language/function-code/10.4.3-1-46-s.js default`
+- `test/language/function-code/10.4.3-1-48gs.js default`
+- `test/language/function-code/10.4.3-1-48-s.js default`
+- `test/language/function-code/10.4.3-1-49-s.js default`
+- `test/language/function-code/10.4.3-1-49gs.js default`
+- `test/language/function-code/10.4.3-1-50-s.js default`
+- `test/language/function-code/10.4.3-1-51-s.js default`
+- `test/language/function-code/10.4.3-1-53-s.js default`
+- `test/language/function-code/10.4.3-1-52gs.js default`
+- `test/language/function-code/10.4.3-1-52-s.js default`
+- `test/language/function-code/10.4.3-1-53gs.js default`
+- `test/language/function-code/10.4.3-1-51gs.js default`
+- `test/language/function-code/10.4.3-1-50gs.js default`
+- `test/language/function-code/10.4.3-1-81-s.js default`
+- `test/language/function-code/10.4.3-1-82-s.js default`
+- `test/language/function-code/10.4.3-1-81gs.js default`
+- `test/language/function-code/10.4.3-1-84-s.js default`
+- `test/language/function-code/10.4.3-1-83-s.js default`
+- `test/language/function-code/10.4.3-1-83gs.js default`
+- `test/language/function-code/10.4.3-1-82gs.js default`
+- `test/language/function-code/10.4.3-1-84gs.js default`
+- `test/language/function-code/10.4.3-1-86-s.js default`
+- `test/language/function-code/10.4.3-1-87-s.js default`
+- `test/language/function-code/10.4.3-1-85-s.js default`
+- `test/language/function-code/10.4.3-1-86gs.js default`
+- `test/language/function-code/10.4.3-1-85gs.js default`
+- `test/language/function-code/10.4.3-1-87gs.js default`
+- `test/language/function-code/10.4.3-1-90-s.js default`
+- `test/language/function-code/10.4.3-1-90gs.js default`
+- `test/language/function-code/10.4.3-1-91gs.js default`
+- `test/language/function-code/10.4.3-1-91-s.js default`
+- `test/language/function-code/10.4.3-1-92gs.js default`
+- `test/language/function-code/10.4.3-1-92-s.js default`
+- `test/language/function-code/10.4.3-1-95gs.js default`
+- `test/language/function-code/10.4.3-1-96-s.js default`
+- `test/language/function-code/10.4.3-1-95-s.js default`
+- `test/language/function-code/10.4.3-1-97-s.js default`
+- …and 4331 more

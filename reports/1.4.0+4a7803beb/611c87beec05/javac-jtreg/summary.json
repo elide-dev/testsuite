@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "javac-jtreg",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+4a7803beb",
+      "digest": "611c87beec05da7f48ed036c1174b914ce76f586a18b7d9ffd59623cb9d7e32a"
+    },
+    "startedAt": "2026-07-03T22:29:42.002Z",
+    "finishedAt": "2026-07-03T22:34:50.270Z",
+    "suiteVersion": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
+  },
+  "counts": {
+    "pass": 3657,
+    "fail": 45,
+    "skip": 232,
+    "error": 0,
+    "total": 3934
+  },
+  "regressions": [],
+  "newPasses": []
+}

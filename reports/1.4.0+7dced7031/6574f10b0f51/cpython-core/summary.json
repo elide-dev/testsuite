@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "workload": "cpython-core",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+7dced7031",
+      "digest": "6574f10b0f51def2cc1ed2ae503ec83fc993f3d623700138a31e5eda5f53d9ab"
+    },
+    "startedAt": "2026-07-02T16:55:07.454Z",
+    "finishedAt": "2026-07-02T16:57:30.123Z",
+    "suiteVersion": "7c999be49dee7f12703e4b2e07e990544fabd40e"
+  },
+  "counts": {
+    "pass": 6194,
+    "fail": 277,
+    "skip": 277,
+    "error": 104,
+    "total": 6852
+  },
+  "regressions": [],
+  "newPasses": [
+    "test_json.test_tool.TestTool.test_stdin_stdout",
+    "test_calendar.CommandLineTestCase.test_output_current_year",
+    "test_gzip.TestCommandLine.test_compress_stdin_outfile"
+  ]
+}

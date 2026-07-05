@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "test262",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+f3e1d901f",
+      "digest": "cdd2b244210c8564aafd50f0fa5ad500f5d39eaefed14ede264e15dffe4bdb10"
+    },
+    "startedAt": "2026-07-03T04:27:15.477Z",
+    "finishedAt": "2026-07-03T04:33:53.156Z",
+    "suiteVersion": "de8e621cdba4f40cff3cf244e6cfb8cb48746b4a"
+  },
+  "counts": {
+    "pass": 34372,
+    "fail": 20,
+    "skip": 1997,
+    "error": 750,
+    "total": 37139
+  },
+  "regressions": [],
+  "newPasses": []
+}

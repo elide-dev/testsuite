@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "workload": "wpt-wintertc",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+7dced7031",
+      "digest": "6574f10b0f51def2cc1ed2ae503ec83fc993f3d623700138a31e5eda5f53d9ab"
+    },
+    "startedAt": "2026-07-02T16:55:07.565Z",
+    "finishedAt": "2026-07-02T16:55:14.275Z",
+    "suiteVersion": "1eb456f600fedad07c8cd6439796fb81db54faff"
+  },
+  "counts": {
+    "pass": 927,
+    "fail": 1327,
+    "skip": 0,
+    "error": 139,
+    "total": 2393
+  },
+  "regressions": [
+    "fetch/api/request/request-init-priority.any.js :: new Request() with a 'high' priority does not throw an error",
+    "fetch/api/request/request-init-priority.any.js :: new Request() with a 'low' priority does not throw an error",
+    "fetch/api/request/request-init-priority.any.js :: new Request() with a 'auto' priority does not throw an error",
+    "fetch/api/request/request-init-priority.any.js :: fetch() with a 'high' priority completes successfully",
+    "fetch/api/request/request-init-priority.any.js :: fetch() with a 'low' priority completes successfully",
+    "fetch/api/request/request-init-priority.any.js :: fetch() with a 'auto' priority completes successfully"
+  ],
+  "newPasses": []
+}

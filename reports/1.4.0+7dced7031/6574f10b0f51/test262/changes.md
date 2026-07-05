@@ -1,0 +1,238 @@
+# Changes — `1.4.0+ff263a815` → `1.4.0+7dced7031`
+
+- From: `1.4.0+ff263a815` (`f35eaed61d0963346bde39f3f37cf41a7f51268a1e875dc3e5cdee7123d9ee3d`)
+- To: `1.4.0+7dced7031` (`6574f10b0f51def2cc1ed2ae503ec83fc993f3d623700138a31e5eda5f53d9ab`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 23 | 4531 | 0 | 0 | 2741 |
+
+## ❌ Regressed (23)
+
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js default`
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js strict mode`
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js default`
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js strict mode`
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js default`
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js strict mode`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/null-tobigint.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/number-tobigint.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js strict mode`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/symbol-tobigint.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js strict mode`
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/undefined-tobigint.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/bigint-tonumber.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js default`
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js strict mode`
+- `test/language/import/import-attributes/json-invalid.js default`
+- `test/language/import/import-attributes/json-invalid.js strict mode`
+- `test/language/import/import-attributes/json-named-bindings.js default`
+- `test/language/import/import-attributes/json-named-bindings.js strict mode`
+- `test/language/module-code/instn-named-err-not-found-dflt.js default`
+- `test/language/module-code/instn-named-err-not-found-dflt.js strict mode`
+
+## ✅ Fixed (4531)
+
+- `test/annexB/built-ins/Date/prototype/getYear/B.2.4.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/B.2.4.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/length.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/length.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/name.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/name.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/nan.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/nan.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/not-a-constructor.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/return-value.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/return-value.js strict mode`
+- `test/annexB/built-ins/Date/prototype/getYear/this-not-date.js default`
+- `test/annexB/built-ins/Date/prototype/getYear/this-not-date.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/B.2.5.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/B.2.5.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/date-value-read-before-tonumber-when-date-is-invalid.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/date-value-read-before-tonumber-when-date-is-invalid.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/date-value-read-before-tonumber-when-date-is-valid.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/date-value-read-before-tonumber-when-date-is-valid.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/length.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/length.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/name.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/name.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/not-a-constructor.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/this-not-date.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/this-not-date.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/this-time-nan.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/this-time-nan.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/this-time-valid.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/this-time-valid.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/time-clip.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/time-clip.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/year-nan.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/year-nan.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/year-number-absolute.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/year-number-absolute.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/year-number-relative.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/year-number-relative.js strict mode`
+- `test/annexB/built-ins/Date/prototype/setYear/year-to-number-err.js default`
+- `test/annexB/built-ins/Date/prototype/setYear/year-to-number-err.js strict mode`
+- `test/annexB/built-ins/Date/prototype/toGMTString/not-a-constructor.js default`
+- `test/annexB/built-ins/Date/prototype/toGMTString/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/Date/prototype/toGMTString/prop-desc.js default`
+- `test/annexB/built-ins/Date/prototype/toGMTString/prop-desc.js strict mode`
+- `test/annexB/built-ins/Date/prototype/toGMTString/value.js default`
+- `test/annexB/built-ins/Date/prototype/toGMTString/value.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/Symbol.split/Symbol.match-getter-recompiles-source.js default`
+- `test/annexB/built-ins/RegExp/prototype/Symbol.split/Symbol.match-getter-recompiles-source.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/Symbol.split/toint32-limit-recompiles-source.js default`
+- `test/annexB/built-ins/RegExp/prototype/Symbol.split/toint32-limit-recompiles-source.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/B.RegExp.prototype.compile.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/B.RegExp.prototype.compile.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/duplicate-named-capturing-groups-syntax.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/duplicate-named-capturing-groups-syntax.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-string-invalid.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-string-invalid.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-to-string-err.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-to-string-err.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-to-string.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-to-string.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-undefined.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/flags-undefined.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/length.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/length.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/name.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/name.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-distinct.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-distinct.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-flags-defined.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-flags-defined.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-immutable-lastindex.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-immutable-lastindex.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-props.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-props.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-same.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-regexp-same.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-invalid-u.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-invalid-u.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-invalid.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-invalid.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-u.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string-u.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-string.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-to-string-err.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-to-string-err.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-undefined.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/pattern-undefined.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/this-not-object.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/this-not-object.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/compile/this-obj-not-regexp.js default`
+- `test/annexB/built-ins/RegExp/prototype/compile/this-obj-not-regexp.js strict mode`
+- `test/annexB/built-ins/RegExp/prototype/flags/order-after-compile.js default`
+- `test/annexB/built-ins/RegExp/prototype/flags/order-after-compile.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/B.2.3.2.js default`
+- `test/annexB/built-ins/String/prototype/anchor/B.2.3.2.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/attr-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/anchor/attr-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/length.js default`
+- `test/annexB/built-ins/String/prototype/anchor/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/name.js default`
+- `test/annexB/built-ins/String/prototype/anchor/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/anchor/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/anchor/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/anchor/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/anchor/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/B.2.3.3.js default`
+- `test/annexB/built-ins/String/prototype/big/B.2.3.3.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/length.js default`
+- `test/annexB/built-ins/String/prototype/big/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/name.js default`
+- `test/annexB/built-ins/String/prototype/big/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/big/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/big/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/big/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/big/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/B.2.3.4.js default`
+- `test/annexB/built-ins/String/prototype/blink/B.2.3.4.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/length.js default`
+- `test/annexB/built-ins/String/prototype/blink/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/name.js default`
+- `test/annexB/built-ins/String/prototype/blink/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/blink/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/blink/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/blink/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/blink/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/B.2.3.5.js default`
+- `test/annexB/built-ins/String/prototype/bold/B.2.3.5.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/length.js default`
+- `test/annexB/built-ins/String/prototype/bold/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/name.js default`
+- `test/annexB/built-ins/String/prototype/bold/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/bold/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/bold/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/bold/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/bold/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/B.2.3.6.js default`
+- `test/annexB/built-ins/String/prototype/fixed/B.2.3.6.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/length.js default`
+- `test/annexB/built-ins/String/prototype/fixed/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/name.js default`
+- `test/annexB/built-ins/String/prototype/fixed/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/fixed/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/fixed/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/fixed/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/fixed/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/B.2.3.7.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/B.2.3.7.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/attr-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/attr-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/length.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/name.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontcolor/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/fontcolor/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/B.2.3.8.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/B.2.3.8.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/attr-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/attr-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/length.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/name.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/fontsize/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/fontsize/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/B.2.3.9.js default`
+- `test/annexB/built-ins/String/prototype/italics/B.2.3.9.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/length.js default`
+- `test/annexB/built-ins/String/prototype/italics/length.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/name.js default`
+- `test/annexB/built-ins/String/prototype/italics/name.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/not-a-constructor.js default`
+- `test/annexB/built-ins/String/prototype/italics/not-a-constructor.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/prop-desc.js default`
+- `test/annexB/built-ins/String/prototype/italics/prop-desc.js strict mode`
+- `test/annexB/built-ins/String/prototype/italics/this-val-tostring-err.js default`
+- `test/annexB/built-ins/String/prototype/italics/this-val-tostring-err.js strict mode`
+- `test/annexB/built-ins/String/prototype/link/B.2.3.10.js default`
+- `test/annexB/built-ins/String/prototype/link/B.2.3.10.js strict mode`
+- …and 4331 more

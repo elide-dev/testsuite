@@ -1,0 +1,335 @@
+# test262 — `1.4.0+4a7803beb`
+
+- Image digest: `611c87beec05da7f48ed036c1174b914ce76f586a18b7d9ffd59623cb9d7e32a`
+- Suite version: `de8e621cdba4f40cff3cf244e6cfb8cb48746b4a`
+- Ran: 2026-07-03T22:29:42.409Z → 2026-07-03T22:43:52.299Z
+
+## Summary
+
+![Pass-rate chart](./pass-rate.svg)
+
+**Pass rate: 92589/103361 (99.80%)**
+
+| pass | fail | error | skip | regressions | new passes |
+|---:|---:|---:|---:|---:|---:|
+| 92589 | 14 | 171 | 10587 | 113 | 495 |
+
+## ❌ Regressions (113)
+
+- `test/built-ins/Error/prototype/stack/getter-error-as-prototype.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-cross-realm.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-error-prototype.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-data-property-shadows.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-error-prototype.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-error-instance.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-cross-realm.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-error-as-prototype.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-error-instance.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-data-property-shadows.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-foreign-new-target.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-foreign-new-target.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-receiver-is-proxy.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-not-a-constructor.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-no-error-data.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-no-error-data.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-this-not-object.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-this-not-object.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-subclass.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-subclass.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-not-a-constructor.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/getter-receiver-is-proxy.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/instance-not-enumerable.js strict mode` — Error: getOwnPropertyNames does not include "stack" Expected SameValue(«1», «-1») to be true
+- `test/built-ins/Error/prototype/stack/instance-not-enumerable.js default` — Error: getOwnPropertyNames does not include "stack" Expected SameValue(«1», «-1») to be true
+- `test/built-ins/Error/prototype/stack/prop-desc.js default` — Error.prototype.stack getter should be a function Expected SameValue(«"undefined"», «"function"») to be true
+- `test/built-ins/Error/prototype/stack/setter-cross-realm.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-delete-round-trip.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/setter-creates-own-property.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-creates-own-property.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/prop-desc.js strict mode` — Error.prototype.stack getter should be a function Expected SameValue(«"undefined"», «"function"») to be true
+- `test/built-ins/Error/prototype/stack/setter-delete-round-trip.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/setter-no-argument.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-existing-own-property.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-empty-string.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-existing-own-property.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-cross-realm.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-empty-string.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-no-argument.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-error-receiver.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/instance-no-own-stack.js strict mode` — Error: hasOwnProperty("stack") is false Expected SameValue(«true», «false») to be true
+- `test/built-ins/Error/prototype/stack/setter-non-error-receiver.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-extensible-receiver.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-extensible-receiver.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/instance-no-own-stack.js default` — Error: hasOwnProperty("stack") is false Expected SameValue(«true», «false») to be true
+- `test/built-ins/Error/prototype/stack/setter-not-a-constructor.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-writable-stack.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-writable-stack.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-not-a-constructor.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-string-value.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-non-string-value.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-trap-rejects.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-trap-throws.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-wrapping-prototype.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-own-accessor.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-own-accessor.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-trap-rejects.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-other-prototype.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-this-not-object.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-other-prototype.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-null-proto.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-null-proto.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-wrapping-prototype.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-proxy-trap-throws.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-this-not-object.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-via-assignment.js strict mode` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/setter-via-assignment.js default` — Expected no error, got TypeError: Cannot read property 'get' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-prototype.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-prototype.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-proxy.js default` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/Error/prototype/stack/setter-receiver-is-proxy.js strict mode` — Expected no error, got TypeError: Cannot read property 'set' of undefined
+- `test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js default` — All globalThis properties must be configurable Expected SameValue(«"__dirname, __filename, module, exports"», «""») to be true
+- `test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js strict mode` — All globalThis properties must be configurable Expected SameValue(«"__dirname, __filename, module, exports"», «""») to be true
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js default` — Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js strict mode` — Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js default` — Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js strict mode` — Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/bigint-tonumber.js default` — Expected a TypeError to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js default` — Expected a Test262Error to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js strict mode` — Expected a Test262Error but got a TypeError (Testing with Float64Array and makeImmutableArrayBuffer.)
+- `test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-no-strict.js default` — Test262Error: delete: default
+- `test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-strict.js strict mode` — Expected no error, got TypeError: "default" is not a configurable property
+- `test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js strict mode` — Test262Error: Expected SameValue(«true», «false») to be true
+- `test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js default` — Test262Error: Expected SameValue(«true», «false») to be true
+- `test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-strict.js strict mode` — Expected no error, got TypeError: "default" is not a configurable property
+- `test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-no-strict.js default` — Test262Error: delete: default
+- `test/language/import/import-defer/errors/get-self-while-evaluating.js strict mode` — Expected a TypeError to be thrown but no exception was thrown at all
+- `test/language/import/import-defer/errors/get-self-while-evaluating.js default` — Expected a TypeError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/enumerate-binding-uninit.js default` — Expected a ReferenceError but got a Test262Error
+- `test/language/module-code/namespace/internals/delete-exported-uninit.js strict mode` — binding unmodified: local1 Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/delete-exported-uninit.js default` — binding unmodified: local1 Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/enumerate-binding-uninit.js strict mode` — Expected a ReferenceError but got a Test262Error
+- `test/language/module-code/namespace/internals/get-own-property-str-found-uninit.js strict mode` — hasOwnProperty: local1 Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/get-own-property-str-found-uninit.js default` — hasOwnProperty: local1 Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/get-str-found-uninit.js default` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/get-str-found-uninit.js strict mode` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-keys-binding-uninit.js default` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-hasOwnProperty-binding-uninit.js default` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-hasOwnProperty-binding-uninit.js strict mode` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-keys-binding-uninit.js strict mode` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-propertyIsEnumerable-binding-uninit.js strict mode` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/object-propertyIsEnumerable-binding-uninit.js default` — Expected a ReferenceError to be thrown but no exception was thrown at all
+- `test/language/module-code/namespace/internals/super-access-to-tdz-binding.js strict mode` — Expected a ReferenceError but got a TypeError
+- `test/language/module-code/namespace/internals/super-access-to-tdz-binding.js default` — Expected a ReferenceError but got a TypeError
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js strict mode` — Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js default` — Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/null-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/number-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js strict mode` — Expected a SyntaxError but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js default` — Expected a SyntaxError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/symbol-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/undefined-tobigint.js default` — Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js default` — `sample["0"] = obj` throws Test262Error Expected a Test262Error to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+- `test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js strict mode` — `sample["0"] = obj` throws Test262Error Expected a Test262Error but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)
+
+## 🟢 New passes (495) — consider advancing the baseline
+
+- `test/harness/assert-throws-same-realm.js strict mode`
+- `test/harness/assert-throws-same-realm.js default`
+- `test/harness/asyncHelpers-throwsAsync-same-realm.js default`
+- `test/harness/asyncHelpers-throwsAsync-same-realm.js strict mode`
+- `test/built-ins/AbstractModuleSource/length.js default`
+- `test/built-ins/AbstractModuleSource/length.js strict mode`
+- `test/built-ins/AbstractModuleSource/proto.js strict mode`
+- `test/built-ins/AbstractModuleSource/name.js strict mode`
+- `test/built-ins/AbstractModuleSource/prototype.js default`
+- `test/built-ins/AbstractModuleSource/name.js default`
+- `test/built-ins/AbstractModuleSource/proto.js default`
+- `test/built-ins/AbstractModuleSource/prototype.js strict mode`
+- `test/built-ins/AbstractModuleSource/throw-from-constructor.js strict mode`
+- `test/built-ins/AbstractModuleSource/throw-from-constructor.js default`
+- `test/built-ins/AggregateError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/AggregateError/proto-from-ctor-realm.js default`
+- `test/built-ins/Array/proto-from-ctor-realm-one.js default`
+- `test/built-ins/Array/proto-from-ctor-realm-one.js strict mode`
+- `test/built-ins/Array/proto-from-ctor-realm-two.js default`
+- `test/built-ins/Array/proto-from-ctor-realm-zero.js default`
+- `test/built-ins/Array/proto-from-ctor-realm-zero.js strict mode`
+- `test/built-ins/Array/proto-from-ctor-realm-two.js strict mode`
+- `test/built-ins/ArrayBuffer/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/ArrayBuffer/proto-from-ctor-realm.js default`
+- `test/built-ins/AsyncDisposableStack/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/AsyncDisposableStack/proto-from-ctor-realm.js default`
+- `test/built-ins/AsyncFunction/proto-from-ctor-realm.js default`
+- `test/built-ins/AsyncFunction/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/AsyncGeneratorFunction/proto-from-ctor-realm-prototype.js strict mode`
+- `test/built-ins/AsyncGeneratorFunction/proto-from-ctor-realm-prototype.js default`
+- `test/built-ins/AsyncGeneratorFunction/proto-from-ctor-realm.js default`
+- `test/built-ins/AsyncGeneratorFunction/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Boolean/proto-from-ctor-realm.js default`
+- `test/built-ins/Boolean/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/DataView/custom-proto-access-detaches-buffer.js default`
+- `test/built-ins/DataView/custom-proto-access-detaches-buffer.js strict mode`
+- `test/built-ins/DataView/detached-buffer.js default`
+- `test/built-ins/DataView/detached-buffer.js strict mode`
+- `test/built-ins/DataView/proto-from-ctor-realm.js default`
+- `test/built-ins/DataView/proto-from-ctor-realm-sab.js default`
+- `test/built-ins/DataView/proto-from-ctor-realm-sab.js strict mode`
+- `test/built-ins/DataView/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Date/proto-from-ctor-realm-one.js default`
+- `test/built-ins/Date/proto-from-ctor-realm-zero.js default`
+- `test/built-ins/Date/proto-from-ctor-realm-two.js default`
+- `test/built-ins/Date/proto-from-ctor-realm-two.js strict mode`
+- `test/built-ins/Date/proto-from-ctor-realm-one.js strict mode`
+- `test/built-ins/Date/proto-from-ctor-realm-zero.js strict mode`
+- `test/built-ins/DisposableStack/proto-from-ctor-realm.js default`
+- `test/built-ins/DisposableStack/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Error/proto-from-ctor-realm.js default`
+- `test/built-ins/Error/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/FinalizationRegistry/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/FinalizationRegistry/proto-from-ctor-realm.js default`
+- `test/built-ins/Function/call-bind-this-realm-value.js default`
+- `test/built-ins/Function/call-bind-this-realm-value.js strict mode`
+- `test/built-ins/Function/call-bind-this-realm-undef.js strict mode`
+- `test/built-ins/Function/call-bind-this-realm-undef.js default`
+- `test/built-ins/Function/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Function/proto-from-ctor-realm-prototype.js default`
+- `test/built-ins/Function/proto-from-ctor-realm.js default`
+- `test/built-ins/Function/proto-from-ctor-realm-prototype.js strict mode`
+- `test/built-ins/GeneratorFunction/has-instance.js default`
+- `test/built-ins/GeneratorFunction/has-instance.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-name.js default`
+- `test/built-ins/GeneratorFunction/instance-construct-throws.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-construct-throws.js default`
+- `test/built-ins/GeneratorFunction/instance-name.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-prototype.js default`
+- `test/built-ins/GeneratorFunction/instance-length.js default`
+- `test/built-ins/GeneratorFunction/instance-prototype.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-restricted-properties.js default`
+- `test/built-ins/GeneratorFunction/instance-restricted-properties.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-length.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-yield-expr-in-param.js strict mode`
+- `test/built-ins/GeneratorFunction/instance-yield-expr-in-param.js default`
+- `test/built-ins/GeneratorFunction/invoked-as-constructor-no-arguments.js default`
+- `test/built-ins/GeneratorFunction/invoked-as-function-multiple-arguments.js strict mode`
+- `test/built-ins/GeneratorFunction/invoked-as-constructor-no-arguments.js strict mode`
+- `test/built-ins/GeneratorFunction/invoked-as-function-single-argument.js strict mode`
+- `test/built-ins/GeneratorFunction/invoked-as-function-single-argument.js default`
+- `test/built-ins/GeneratorFunction/invoked-as-function-no-arguments.js default`
+- `test/built-ins/GeneratorFunction/invoked-as-function-no-arguments.js strict mode`
+- `test/built-ins/GeneratorFunction/invoked-as-function-multiple-arguments.js default`
+- `test/built-ins/GeneratorFunction/length.js default`
+- `test/built-ins/GeneratorFunction/length.js strict mode`
+- `test/built-ins/GeneratorFunction/name.js strict mode`
+- `test/built-ins/GeneratorFunction/name.js default`
+- `test/built-ins/GeneratorFunction/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/GeneratorFunction/proto-from-ctor-realm-prototype.js strict mode`
+- `test/built-ins/GeneratorFunction/proto-from-ctor-realm-prototype.js default`
+- `test/built-ins/GeneratorFunction/proto-from-ctor-realm.js default`
+- `test/built-ins/GeneratorPrototype/constructor.js strict mode`
+- `test/built-ins/GeneratorPrototype/constructor.js default`
+- `test/built-ins/Iterator/proto-from-ctor-realm.js default`
+- `test/built-ins/Iterator/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Map/proto-from-ctor-realm.js default`
+- `test/built-ins/Map/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Number/proto-from-ctor-realm.js default`
+- `test/built-ins/Number/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Object/proto-from-ctor-realm.js default`
+- `test/built-ins/Object/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Promise/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Promise/proto-from-ctor-realm.js default`
+- `test/built-ins/Proxy/get-fn-realm-recursive.js default`
+- `test/built-ins/Proxy/get-fn-realm-recursive.js strict mode`
+- `test/built-ins/Proxy/get-fn-realm.js default`
+- `test/built-ins/Proxy/get-fn-realm.js strict mode`
+- `test/built-ins/RegExp/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/RegExp/proto-from-ctor-realm.js default`
+- `test/built-ins/Set/proto-from-ctor-realm.js default`
+- `test/built-ins/Set/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/SharedArrayBuffer/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/SharedArrayBuffer/proto-from-ctor-realm.js default`
+- `test/built-ins/String/proto-from-ctor-realm.js default`
+- `test/built-ins/String/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/SuppressedError/proto-from-ctor-realm.js default`
+- `test/built-ins/SuppressedError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/ThrowTypeError/distinct-cross-realm.js strict mode`
+- `test/built-ins/ThrowTypeError/distinct-cross-realm.js default`
+- `test/built-ins/WeakMap/proto-from-ctor-realm.js default`
+- `test/built-ins/WeakMap/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/WeakRef/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/WeakRef/proto-from-ctor-realm.js default`
+- `test/built-ins/WeakSet/proto-from-ctor-realm.js default`
+- `test/built-ins/WeakSet/proto-from-ctor-realm.js strict mode`
+- `test/language/global-code/script-decl-lex-deletion.js default`
+- `test/language/global-code/script-decl-func.js strict mode`
+- `test/language/global-code/script-decl-func.js default`
+- `test/language/global-code/script-decl-lex-var-declared-via-eval.js default`
+- `test/language/global-code/script-decl-lex-var-declared-via-eval.js strict mode`
+- `test/language/global-code/script-decl-lex.js strict mode`
+- `test/language/global-code/script-decl-lex.js default`
+- `test/language/global-code/script-decl-var.js default`
+- `test/language/global-code/script-decl-var.js strict mode`
+- `test/language/module-code/eval-rqstd-order.js default`
+- `test/language/module-code/eval-rqstd-order.js strict mode`
+- `test/language/module-code/instn-named-err-not-found-dflt.js strict mode`
+- `test/language/module-code/instn-named-err-not-found-dflt.js default`
+- `test/built-ins/AbstractModuleSource/prototype/Symbol.toStringTag.js default`
+- `test/built-ins/AbstractModuleSource/prototype/constructor.js default`
+- `test/built-ins/AbstractModuleSource/prototype/Symbol.toStringTag.js strict mode`
+- `test/built-ins/AbstractModuleSource/prototype/proto.js default`
+- `test/built-ins/AbstractModuleSource/prototype/proto.js strict mode`
+- `test/built-ins/AbstractModuleSource/prototype/constructor.js strict mode`
+- `test/built-ins/Array/from/proto-from-ctor-realm.js default`
+- `test/built-ins/Array/from/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/Array/length/define-own-prop-length-overflow-realm.js strict mode`
+- `test/built-ins/Array/length/define-own-prop-length-overflow-realm.js default`
+- `test/built-ins/Array/of/proto-from-ctor-realm.js default`
+- `test/built-ins/Array/of/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/ArrayIteratorPrototype/next/detach-typedarray-in-progress.js strict mode`
+- `test/built-ins/ArrayIteratorPrototype/next/detach-typedarray-in-progress.js default`
+- `test/built-ins/Error/isError/errors-other-realm.js default`
+- `test/built-ins/Error/isError/errors-other-realm.js strict mode`
+- `test/built-ins/Error/isError/non-error-objects-other-realm.js strict mode`
+- `test/built-ins/Error/isError/non-error-objects-other-realm.js default`
+- `test/built-ins/GeneratorFunction/prototype/Symbol.toStringTag.js default`
+- `test/built-ins/GeneratorFunction/prototype/Symbol.toStringTag.js strict mode`
+- `test/built-ins/GeneratorFunction/prototype/constructor.js strict mode`
+- `test/built-ins/GeneratorFunction/prototype/constructor.js default`
+- `test/built-ins/GeneratorFunction/prototype/prototype.js default`
+- `test/built-ins/GeneratorFunction/prototype/prototype.js strict mode`
+- `test/built-ins/GeneratorPrototype/next/length.js strict mode`
+- `test/built-ins/GeneratorPrototype/next/length.js default`
+- `test/built-ins/GeneratorPrototype/next/name.js default`
+- `test/built-ins/GeneratorPrototype/next/name.js strict mode`
+- `test/built-ins/GeneratorPrototype/next/property-descriptor.js strict mode`
+- `test/built-ins/GeneratorPrototype/next/property-descriptor.js default`
+- `test/built-ins/GeneratorPrototype/return/length.js default`
+- `test/built-ins/GeneratorPrototype/return/length.js strict mode`
+- `test/built-ins/GeneratorPrototype/return/name.js default`
+- `test/built-ins/GeneratorPrototype/return/name.js strict mode`
+- `test/built-ins/GeneratorPrototype/return/property-descriptor.js default`
+- `test/built-ins/GeneratorPrototype/return/property-descriptor.js strict mode`
+- `test/built-ins/GeneratorPrototype/throw/length.js default`
+- `test/built-ins/GeneratorPrototype/throw/length.js strict mode`
+- `test/built-ins/GeneratorPrototype/throw/property-descriptor.js strict mode`
+- `test/built-ins/GeneratorPrototype/throw/property-descriptor.js default`
+- `test/built-ins/GeneratorPrototype/throw/name.js strict mode`
+- `test/built-ins/GeneratorPrototype/throw/name.js default`
+- `test/built-ins/JSON/stringify/replacer-array-proxy-revoked-realm.js default`
+- `test/built-ins/JSON/stringify/replacer-array-proxy-revoked-realm.js strict mode`
+- `test/built-ins/JSON/stringify/value-bigint-cross-realm.js default`
+- `test/built-ins/JSON/stringify/value-bigint-cross-realm.js strict mode`
+- `test/built-ins/NativeErrors/EvalError/proto-from-ctor-realm.js default`
+- `test/built-ins/NativeErrors/EvalError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/RangeError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/RangeError/proto-from-ctor-realm.js default`
+- `test/built-ins/NativeErrors/ReferenceError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/ReferenceError/proto-from-ctor-realm.js default`
+- `test/built-ins/NativeErrors/SyntaxError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/SyntaxError/proto-from-ctor-realm.js default`
+- `test/built-ins/NativeErrors/TypeError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/TypeError/proto-from-ctor-realm.js default`
+- `test/built-ins/NativeErrors/URIError/proto-from-ctor-realm.js strict mode`
+- `test/built-ins/NativeErrors/URIError/proto-from-ctor-realm.js default`
+- `test/built-ins/Promise/all/capability-resolve-throws-no-close.js strict mode`
+- `test/built-ins/Promise/all/capability-resolve-throws-no-close.js default`
+- `test/built-ins/Promise/all/invoke-resolve-error-close.js strict mode`
+- …and 295 more

@@ -1,0 +1,19 @@
+{
+  "from": {
+    "semver": "1.4.0+ff263a815",
+    "digest": "f35eaed61d0963346bde39f3f37cf41a7f51268a1e875dc3e5cdee7123d9ee3d"
+  },
+  "to": {
+    "semver": "1.4.0+7dced7031",
+    "digest": "6574f10b0f51def2cc1ed2ae503ec83fc993f3d623700138a31e5eda5f53d9ab"
+  },
+  "fixed": [
+    "test_calendar.CommandLineTestCase.test_output_current_year",
+    "test_gzip.TestCommandLine.test_compress_stdin_outfile",
+    "test_json.test_tool.TestTool.test_stdin_stdout"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 378
+}

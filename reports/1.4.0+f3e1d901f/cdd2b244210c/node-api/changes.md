@@ -1,0 +1,54 @@
+# Changes — `1.4.0+48fa1f4f6` → `1.4.0+f3e1d901f`
+
+- From: `1.4.0+48fa1f4f6` (`019e3f7a34bba4955e5ad73f225035de389e3893d2e949feaa5c190095790af0`)
+- To: `1.4.0+f3e1d901f` (`cdd2b244210c8564aafd50f0fa5ad500f5d39eaefed14ede264e15dffe4bdb10`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 8 | 32 | 0 | 0 | 936 |
+
+## ❌ Regressed (8)
+
+- `test/parallel/test-stream-readable-data.js`
+- `test/parallel/test-stream-readable-flow-recursion.js`
+- `test/parallel/test-stream-readable-next-no-null.js`
+- `test/parallel/test-stream-readable-readable-one.js`
+- `test/parallel/test-stream-readable-unpipe-resume.js`
+- `test/parallel/test-stream2-compatibility.js`
+- `test/parallel/test-stream2-unpipe-leak.js`
+- `test/parallel/test-stream3-pause-then-read.js`
+
+## ✅ Fixed (32)
+
+- `test/parallel/test-console-no-swallow-stack-overflow.js`
+- `test/parallel/test-stream-backpressure.js`
+- `test/parallel/test-stream-big-push.js`
+- `test/parallel/test-stream-end-paused.js`
+- `test/parallel/test-stream-passthrough-drain.js`
+- `test/parallel/test-stream-pipe-await-drain-push-while-write.js`
+- `test/parallel/test-stream-pipe-flow-after-unpipe.js`
+- `test/parallel/test-stream-pipe-manual-resume.js`
+- `test/parallel/test-stream-readable-add-chunk-during-data.js`
+- `test/parallel/test-stream-readable-end-destroyed.js`
+- `test/parallel/test-stream-readable-ended.js`
+- `test/parallel/test-stream-readable-hwm-0-async.js`
+- `test/parallel/test-stream-readable-hwm-0.js`
+- `test/parallel/test-stream-readable-no-unneeded-readable.js`
+- `test/parallel/test-stream-readable-readable-then-resume.js`
+- `test/parallel/test-stream-readable-readable.js`
+- `test/parallel/test-stream-readable-reading-readingMore.js`
+- `test/parallel/test-stream-readable-resume-hwm.js`
+- `test/parallel/test-stream-readable-resumeScheduled.js`
+- `test/parallel/test-stream-readableListening-state.js`
+- `test/parallel/test-stream-unshift-empty-chunk.js`
+- `test/parallel/test-stream-writable-ended-state.js`
+- `test/parallel/test-stream-writable-final-destroy.js`
+- `test/parallel/test-stream-writable-finish-destroyed.js`
+- `test/parallel/test-stream-writable-finished-state.js`
+- `test/parallel/test-stream-writable-needdrain-state.js`
+- `test/parallel/test-stream-write-drain.js`
+- `test/parallel/test-stream2-base64-single-char-read-end.js`
+- `test/parallel/test-stream2-push.js`
+- `test/parallel/test-stream2-read-correct-num-bytes-in-utf8.js`
+- `test/parallel/test-stream2-readable-empty-buffer-no-eof.js`
+- `test/parallel/test-stream2-readable-wrap.js`

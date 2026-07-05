@@ -1,0 +1,618 @@
+# wpt-wintertc — `1.4.0+4a7803beb`
+
+- Image digest: `611c87beec05da7f48ed036c1174b914ce76f586a18b7d9ffd59623cb9d7e32a`
+- Suite version: `1eb456f600fedad07c8cd6439796fb81db54faff`
+- Ran: 2026-07-03T22:29:42.163Z → 2026-07-03T22:29:49.385Z
+
+## Summary
+
+![Pass-rate chart](./pass-rate.svg)
+
+**Pass rate: 10480/14575 (75.32%)**
+
+| pass | fail | error | skip | regressions | new passes |
+|---:|---:|---:|---:|---:|---:|
+| 10480 | 3422 | 12 | 661 | 1102 | 172 |
+
+## Observed cases (13914)
+
+- `encoding/api-basics.any.js :: Default encodings` — pass
+- `encoding/api-basics.any.js :: Default inputs` — pass
+- `encoding/api-basics.any.js :: Encode/decode round trip: utf-8` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16le` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16be` — pass
+- `encoding/api-basics.any.js :: Decode sample: utf-16` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Sanity check` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high)` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (low), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Surrogate half (high), in a string` — pass
+- `encoding/api-surrogates-utf8.any.js :: Invalid surrogates encoded into UTF-8: Wrong order` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: csiso2022kr` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: hz-gb-2312` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: iso-2022-cn` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: iso-2022-cn-ext` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: iso-2022-kr` — pass
+- `encoding/api-replacement-encodings.any.js :: Label for "replacement" should be rejected by API: replacement` — pass
+- `encoding/replacement-encodings.any.js :: csiso2022kr - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: csiso2022kr - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: hz-gb-2312 - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: hz-gb-2312 - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-cn - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-cn - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-cn-ext - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-cn-ext - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-kr - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: iso-2022-kr - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: replacement - non-empty input decodes to one replacement character.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/replacement-encodings.any.js :: replacement - empty input decodes to empty output.` — fail — promise_test: Unhandled rejection with value: object "ReferenceError: XMLHttpRequest is not defined"
+- `encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'unicode-1-1-utf-8'` — pass
+- `encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'iso-8859-2'` — pass
+- `encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'ascii'` — pass
+- `encoding/streams/decode-attributes.any.js :: encoding attribute should have correct value for 'utf-16'` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to 'false' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to 'false' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to '0' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to '0' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to '' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to '' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to 'undefined' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to 'undefined' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to 'null' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to 'null' should set the attribute to false` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to 'true' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to 'true' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to '1' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to '1' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to '[object Object]' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to '[object Object]' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to '' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to '' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting fatal to 'yes' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: setting ignoreBOM to 'yes' should set the attribute to true` — pass
+- `encoding/streams/decode-attributes.any.js :: constructing with an invalid encoding should throw` — pass
+- `encoding/streams/decode-attributes.any.js :: constructing with a non-stringifiable encoding should throw` — pass
+- `encoding/streams/decode-attributes.any.js :: a throwing fatal member should cause the constructor to throw` — pass
+- `encoding/streams/decode-attributes.any.js :: a throwing ignoreBOM member should cause the constructor to throw` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC` — fail — assert_equals: expected "\ufffd$" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Error ESC, character` — fail — assert_equals: expected "\ufffd$P" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: ASCII ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double ASCII ESC, character` — fail — assert_equals: expected "\ufffdP" but got "P"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, ASCII ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: characters` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: SO / SI` — fail — assert_equals: expected "\r\ufffd\ufffd\x10" but got "\r\x10"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, characters` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, SO / SI` — fail — assert_equals: expected "\r\ufffd\ufffd\x10" but got "\r\x10"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Roman ESC, error ESC, Katakana ESC` — fail — assert_equals: expected "\ufffdﾐ" but got "\ufffd(IP"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, error ESC, character` — fail — assert_equals: expected "\ufffdﾐ" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, error ESC #2, character` — fail — assert_equals: expected "\ufffd､ﾐ" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, character, Katakana ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Katakana ESC, SO / SI` — fail — assert_equals: expected "\ufffd\ufffd\ufffd\ufffd" but got "ｍｐ"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC #2, character` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, error ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "\ufffd\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC` — fail — assert_equals: expected "\ufffd" but got ""
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Double multibyte ESC #2, character` — fail — assert_equals: expected "\ufffd佩" but got "佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, error ESC #2, character` — fail — assert_equals: expected "\ufffdば\ufffd" but got "\ufffd\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, single byte, multibyte ESC, character` — fail — assert_equals: expected "\ufffd佩" but got "\ufffdだ佩"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, lead error byte` — fail — assert_equals: expected "\ufffd\ufffd" but got "\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: Multibyte ESC, trail error byte` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC #2` — fail — assert_equals: expected "P\ufffd$" but got "P\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, error ESC #3` — fail — assert_equals: expected "P\ufffdP" but got "P\ufffd"
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, ASCII ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Roman ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Katakana ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Multibyte ESC` — pass
+- `encoding/iso-2022-jp-decoder.any.js :: iso-2022-jp decoder: character, Multibyte ESC #2` — pass
+- `encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextDecoderStream` — pass
+- `encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextDecoderStream` — pass
+- `encoding/streams/backpressure.any.js :: write() should not complete until read relieves backpressure for TextEncoderStream` — pass
+- `encoding/streams/backpressure.any.js :: additional writes should wait for backpressure to be relieved for class TextEncoderStream` — pass
+- `encoding/idlharness.any.js :: idl_test setup` — fail — promise_test: Unhandled rejection with value: object "TypeError: Failed to parse URL: /interfaces/encoding.idl"
+- `encoding/single-byte-decoder.window.js :: IBM866: 866 (XMLHttpRequest)` — fail — XMLHttpRequest is not defined
+- `encoding/single-byte-decoder.window.js :: IBM866: 866 (TextDecoder)` — pass
+- `encoding/single-byte-decoder.window.js :: IBM866: 866 (document.characterSet and document.inputEncoding)` — fail — Cannot read property 'appendChild' of undefined
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with Hi and destination length 0, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with Hi and destination length 0, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with A and destination length 10, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with A and destination length 10, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆 and destination length 4, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆 and destination length 4, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with 𝌆A and destination length 3, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with 𝌆A and destination length 3, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with U+d834AU+df06A¥Hi and destination length 10, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with AU+df06 and destination length 4, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with AU+df06 and destination length 4, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler 0` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler 0` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler 128` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler 128` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 0, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 0, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: encodeInto() into ArrayBuffer with ¥¥ and destination length 4, offset 4, filler random` — pass
+- `encoding/encodeInto.any.js :: encodeInto() into SharedArrayBuffer with ¥¥ and destination length 4, offset 4, filler random` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: DataView, backed by: ArrayBuffer` — pass
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: DataView, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int8Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int8Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int16Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int16Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int32Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Int32Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint16Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint16Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint32Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint32Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint8ClampedArray, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: Uint8ClampedArray, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigInt64Array, backed by: ArrayBuffer` — fail — assert_throws_js: function "() => new TextEncoder().encodeInto("", viewInstance)" did not throw
+- `encoding/encodeInto.any.js :: Invalid encodeInto() destination: BigInt64Array, backed by: SharedArrayBuffer` — fail — sabConstructor is not a constructor
+- …and 13714 more
+
+## ❌ Regressions (1102)
+
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 0` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 1` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 2` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 3` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 4` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 5` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 6` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 7` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 8` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 9` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 10` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 11` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 12` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 13` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 14` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 15` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 16` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 17` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 18` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 19` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 20` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 21` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 22` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 23` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 24` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 25` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 26` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 27` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 28` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 29` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 30` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 31` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 32` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 33` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 34` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 35` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 36` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 37` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 38` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 39` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 40` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 41` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 42` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 43` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 44` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 45` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 46` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 47` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 48` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 49` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 50` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 51` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 52` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 53` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 54` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 55` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 56` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 57` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 58` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 59` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 60` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 61` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 62` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 63` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 64` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 65` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 66` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 67` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 68` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 69` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 70` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 71` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 72` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 73` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 74` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 75` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 76` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 77` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 78` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 79` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 80` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 81` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 82` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 83` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 84` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 85` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 86` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 87` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 88` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 89` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 90` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 91` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 92` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 93` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 94` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 95` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 96` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 97` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 98` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 99` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 100` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 101` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 102` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 103` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 104` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 105` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 106` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 107` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 108` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 109` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 110` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 111` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 112` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 113` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 114` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 115` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 116` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 117` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 118` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 119` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 120` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 121` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 122` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 123` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 124` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 125` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 126` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 127` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 128` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 129` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 130` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 131` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 132` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 133` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 134` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 135` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 136` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 137` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 138` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 139` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 140` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 141` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 142` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 143` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 144` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 145` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 146` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 147` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 148` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 149` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 150` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 151` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 152` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 153` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 154` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 155` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 156` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 157` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 158` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 159` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 160` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 161` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 162` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 163` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 164` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 165` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 166` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 167` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 168` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 169` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 170` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 171` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 172` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 173` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 174` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 175` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 176` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 177` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 178` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 179` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 180` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 181` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 182` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 183` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 184` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 185` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 186` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 187` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 188` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 189` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Not throw: ISO-8859-8-I has a pointer 190` — TextDecoder: encoding ISO-8859-8-I not available on this JVM
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 191` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 192` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 193` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 194` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 195` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 196` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 197` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 198` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- `encoding/textdecoder-fatal-single-byte.any.js :: Throw due to fatal flag: ISO-8859-8-I doesn't have a pointer 199` — assert_throws_js: function "function() {
+                    new TextDecoder(t.encoding, {fatal: true}).decode(new Uint8Array([i]));
+                }" threw object "RangeError: TextDecoder: encoding ISO-8859-8-I not available on this JVM" ("RangeError") expected instance of function "function TypeError() { [native code] }" ("TypeError")
+- …and 902 more
+
+## 🟢 New passes (172) — consider advancing the baseline
+
+- `fetch/api/abort/request.any.js :: Calling arrayBuffer() on an aborted request`
+- `fetch/api/abort/request.any.js :: Aborting a request after calling arrayBuffer()`
+- `fetch/api/abort/request.any.js :: Calling arrayBuffer() on an aborted consumed empty request`
+- `fetch/api/abort/request.any.js :: Calling blob() on an aborted request`
+- `fetch/api/abort/request.any.js :: Aborting a request after calling blob()`
+- `fetch/api/abort/request.any.js :: Calling blob() on an aborted consumed empty request`
+- `fetch/api/abort/request.any.js :: Calling formData() on an aborted request`
+- `fetch/api/abort/request.any.js :: Aborting a request after calling formData()`
+- `fetch/api/abort/request.any.js :: Calling json() on an aborted request`
+- `fetch/api/abort/request.any.js :: Aborting a request after calling json()`
+- `fetch/api/abort/request.any.js :: Calling text() on an aborted request`
+- `fetch/api/abort/request.any.js :: Aborting a request after calling text()`
+- `fetch/api/abort/request.any.js :: Calling text() on an aborted consumed empty request`
+- `fetch/api/abort/general.any.js :: Request objects have a signal property`
+- `fetch/api/abort/general.any.js :: Signal on request object`
+- `fetch/api/abort/general.any.js :: Signal on request object should also have abort reason`
+- `fetch/api/abort/general.any.js :: Signal on request object created from request object`
+- `fetch/api/abort/general.any.js :: Signal on request object created from request object, with signal on second request`
+- `fetch/api/abort/general.any.js :: Signal on request object created from request object, with signal on second request overriding another`
+- `fetch/api/abort/general.any.js :: Signal retained after unrelated properties are overridden by fetch`
+- `fetch/api/abort/general.any.js :: Clone aborts with original controller`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 with BOM with Request.text()`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 with BOM (Request object)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 without BOM with Request.text()`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 without BOM (Request object)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16BE with BOM decoded as UTF-8 with Request.text()`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16BE with BOM decoded as UTF-8 (Request object)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16LE with BOM decoded as UTF-8 with Request.text()`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16LE with BOM decoded as UTF-8 (Request object)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16 without BOM decoded as UTF-8 with Request.text()`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16 without BOM decoded as UTF-8 (Request object)`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as text`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as blob`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as arrayBuffer`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as json (error case)`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as formData with correct multipart type (error case)`
+- `fetch/api/request/request-consume-empty.any.js :: Consume request's body as formData without correct type (error case)`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty blob request body as arrayBuffer`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty text request body as arrayBuffer`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty blob request body as text`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty text request body as text`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty URLSearchParams request body as text`
+- `fetch/api/request/request-consume-empty.any.js :: Consume empty ArrayBuffer request body as text`
+- `fetch/api/request/request-consume.any.js :: Consume String request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume String request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume String request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume String request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume String request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume ArrayBuffer request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume ArrayBuffer request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume ArrayBuffer request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume ArrayBuffer request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume ArrayBuffer request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume Uint8Array request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume Uint8Array request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume Uint8Array request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume Uint8Array request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume Uint8Array request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume Int8Array request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume Int8Array request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume Int8Array request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume Int8Array request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume Int8Array request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume Float32Array request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume Float32Array request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume Float32Array request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume Float32Array request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume Float32Array request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume DataView request's body as text`
+- `fetch/api/request/request-consume.any.js :: Consume DataView request's body as blob`
+- `fetch/api/request/request-consume.any.js :: Consume DataView request's body as arrayBuffer`
+- `fetch/api/request/request-consume.any.js :: Consume DataView request's body as bytes`
+- `fetch/api/request/request-consume.any.js :: Consume DataView request's body as JSON`
+- `fetch/api/request/request-consume.any.js :: Consume FormData request's body as FormData`
+- `fetch/api/request/request-consume.any.js :: Consume JSON from text: '"null"'`
+- `fetch/api/request/request-consume.any.js :: Consume JSON from text: '"1"'`
+- `fetch/api/request/request-consume.any.js :: Consume JSON from text: '"true"'`
+- `fetch/api/request/request-consume.any.js :: Consume JSON from text: '"\"string\""'`
+- `fetch/api/request/request-consume.any.js :: Trying to consume bad JSON text as JSON: 'undefined'`
+- `fetch/api/request/request-consume.any.js :: Trying to consume bad JSON text as JSON: '{'`
+- `fetch/api/request/request-consume.any.js :: Trying to consume bad JSON text as JSON: 'a'`
+- `fetch/api/request/request-consume.any.js :: Trying to consume bad JSON text as JSON: '['`
+- `fetch/api/request/request-error.any.js :: Request should get its content-type from the init request`
+- `fetch/api/request/request-error.any.js :: Request should get its content-type from the body if none is provided`
+- `fetch/api/request/request-error.any.js :: Request should get its content-type from init headers if one is provided`
+- `fetch/api/request/request-error.any.js :: Request with cache mode: only-if-cached and fetch mode: same-origin`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request with headers values`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "undefined", undefined`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "null", null`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "[object Blob]", application/octet-binary`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "[object FormData]", multipart/form-data`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "This is a USVString", text/plain;charset=UTF-8`
+- `fetch/api/request/request-init-002.any.js :: Initialize Request's body with "name=value", application/x-www-form-urlencoded;charset=UTF-8`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "Content-Type: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "Potato: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "proxy: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "proxya: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "sec: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "secb: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "Set-Cookie2: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid request header "User-Agent: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Accept-Charset: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "accept-charset: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "ACCEPT-ENCODING: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Accept-Encoding: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Access-Control-Request-Headers: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Access-Control-Request-Method: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Connection: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Content-Length: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Cookie: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Cookie2: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Date: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "DNT: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Expect: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Host: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Keep-Alive: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Origin: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Referer: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Set-Cookie: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "TE: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Trailer: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Transfer-Encoding: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Upgrade: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Via: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Proxy-: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "proxy-a: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "Sec-: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid request header "sec-b: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "Accept: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "Accept-Language: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-language: OK"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-type: application/x-www-form-urlencoded"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-type: application/x-www-form-urlencoded;charset=UTF-8"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-type: multipart/form-data"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-type: multipart/form-data;charset=UTF-8"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "content-TYPE: text/plain"`
+- `fetch/api/request/request-headers.any.js :: Adding valid no-cors request header "CONTENT-type: text/plain;charset=UTF-8"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "Content-Type: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "Potato: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "proxy: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "proxya: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "sec: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "secb: KO"`
+- `fetch/api/request/request-headers.any.js :: Adding invalid no-cors request header "Empty-Value: "`
+- `fetch/api/request/request-headers.any.js :: Check that request constructor is filtering headers provided as init parameter`
+- `fetch/api/request/request-headers.any.js :: Check that no-cors request constructor is filtering headers provided as init parameter`
+- `fetch/api/request/request-headers.any.js :: Request should get its content-type from the init request`
+- `fetch/api/request/request-headers.any.js :: Request should get its content-type from the body if none is provided`
+- `fetch/api/request/request-headers.any.js :: Request should get its content-type from init headers if one is provided`
+- `fetch/api/request/request-headers.any.js :: Testing request header creations with various objects`
+- `fetch/api/request/request-headers.any.js :: Testing empty Request Content-Type header`
+- `fetch/api/request/request-headers.any.js :: Test that Request.headers has the [SameObject] extended attribute`
+- `fetch/api/request/request-keepalive.any.js :: keepalive flag`
+- `fetch/api/request/request-init-priority.any.js :: new Request() with a 'high' priority does not throw an error`
+- `fetch/api/request/request-init-priority.any.js :: new Request() with a 'low' priority does not throw an error`
+- `fetch/api/request/request-init-priority.any.js :: new Request() with a 'auto' priority does not throw an error`
+- `fetch/api/request/request-init-stream.any.js :: Constructing a Request with a stream holds the original object.`
+- `fetch/api/request/request-init-stream.any.js :: Constructing a Request with a Request on which body.getReader() is called`
+- `fetch/api/request/request-init-stream.any.js :: Constructing a Request with a Request on which body.getReader().read() is called`
+- `fetch/api/request/request-init-stream.any.js :: Constructing a Request with a Request on which read() and releaseLock() are called`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to omit .duplex when the body is null.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to omit .duplex when the body is a string.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to omit .duplex when the body is a Uint8Array.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to omit .duplex when the body is a Blob.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to set .duplex = 'half' when the body is null.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to set .duplex = 'half' when the body is a string.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to set .duplex = 'half' when the body is a Uint8Array.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to set .duplex = 'half' when the body is a Blob.`
+- `fetch/api/request/request-init-stream.any.js :: It is OK to set .duplex = 'half' when the body is a ReadableStream.`
+- `fetch/api/response/response-consume-stream.any.js :: Getting a redirect Response stream`
+- `fetch/range/general.any.js :: Range header setting allowed for guard type: request`
+- `fetch/range/general.any.js :: Privileged header not allowed for guard type: request-no-cors`

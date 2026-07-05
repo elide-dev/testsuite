@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+eaef25c61",
+      "digest": "ecf9c74d8466eed7610ab2b839d0753c598b34526899a95f188c86a1db4118cd"
+    },
+    "startedAt": "2026-07-03T16:07:09.024Z",
+    "finishedAt": "2026-07-03T16:10:24.037Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 286,
+    "fail": 907,
+    "skip": 345,
+    "error": 25,
+    "total": 1563
+  },
+  "regressions": [],
+  "newPasses": [
+    "test/parallel/test-fs-fsync.js",
+    "test/parallel/test-fs-make-callback.js",
+    "test/parallel/test-fs-makeStatsCallback.js",
+    "test/parallel/test-fs-read-file-assert-encoding.js",
+    "test/parallel/test-fs-read-stream-fd.js",
+    "test/parallel/test-fs-read-stream-double-close.js",
+    "test/parallel/test-fs-readv-sync.js",
+    "test/parallel/test-fs-readv.js",
+    "test/parallel/test-fs-watch-abort-signal.js",
+    "test/parallel/test-fs-write-stream-change-open.js",
+    "test/parallel/test-fs-writev.js",
+    "test/parallel/test-stream2-set-encoding.js"
+  ]
+}

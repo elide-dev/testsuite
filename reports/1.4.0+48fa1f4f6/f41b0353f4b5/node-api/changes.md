@@ -1,0 +1,67 @@
+# Changes — `1.4.0+f97795e57` → `1.4.0+48fa1f4f6`
+
+- From: `1.4.0+f97795e57` (`12389379467df266df1f7856e6f954b7189b1537fe06e82aebbd4fd0cbc42208`)
+- To: `1.4.0+48fa1f4f6` (`f41b0353f4b59ad0caf60a15001ce87c0dd25e7d252efc6dc76b7bddb7def52c`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 56 | 0 | 0 | 1053 |
+
+## ✅ Fixed (56)
+
+- `test/parallel/test-async-hooks-correctly-switch-promise-hook.js`
+- `test/parallel/test-async-hooks-promise-enable-disable.js`
+- `test/parallel/test-async-hooks-run-in-async-scope-caught-exception.js`
+- `test/parallel/test-async-hooks-run-in-async-scope-this-arg.js`
+- `test/parallel/test-async-local-storage-contexts.js`
+- `test/parallel/test-async-local-storage-deep-stack.js`
+- `test/parallel/test-async-local-storage-exit-does-not-leak.js`
+- `test/parallel/test-async-local-storage-isolation.js`
+- `test/parallel/test-async-local-storage-snapshot.js`
+- `test/parallel/test-buffer-failed-alloc-typed-arrays.js`
+- `test/parallel/test-diagnostics-channel-has-subscribers.js`
+- `test/parallel/test-diagnostics-channel-safe-subscriber-errors.js`
+- `test/parallel/test-diagnostics-channel-sync-unsubscribe.js`
+- `test/parallel/test-diagnostics-channel-tracing-channel-callback-error.js`
+- `test/parallel/test-diagnostics-channel-tracing-channel-has-subscribers.js`
+- `test/parallel/test-diagnostics-channel-tracing-channel-promise-unhandled.js`
+- `test/parallel/test-diagnostics-channel-tracing-channel-sync-error.js`
+- `test/parallel/test-diagnostics-channel-tracing-channel-sync.js`
+- `test/parallel/test-fs-realpath.js`
+- `test/parallel/test-next-tick-when-exiting.js`
+- `test/parallel/test-process-exit-handler.js`
+- `test/parallel/test-process-exit-recursive.js`
+- `test/parallel/test-process-getgroups.js`
+- `test/parallel/test-process-load-env-file.js`
+- `test/parallel/test-timers-nan-duration-warning.js`
+- `test/parallel/test-timers-negative-duration-warning.js`
+- `test/parallel/test-vm-access-process-env.js`
+- `test/parallel/test-vm-create-context-accessors.js`
+- `test/parallel/test-vm-create-context-circular-reference.js`
+- `test/parallel/test-vm-cross-context.js`
+- `test/parallel/test-vm-data-property-writable.js`
+- `test/parallel/test-vm-deleting-property.js`
+- `test/parallel/test-vm-global-assignment.js`
+- `test/parallel/test-vm-global-configurable-properties.js`
+- `test/parallel/test-vm-global-get-own.js`
+- `test/parallel/test-vm-global-non-writable-properties.js`
+- `test/parallel/test-vm-inherited_properties.js`
+- `test/parallel/test-vm-low-stack-space.js`
+- `test/parallel/test-vm-new-script-this-context.js`
+- `test/parallel/test-vm-parse-abort-on-uncaught-exception.js`
+- `test/parallel/test-vm-proxy-failure-CP.js`
+- `test/parallel/test-vm-proxy-sandbox-property-query.js`
+- `test/parallel/test-vm-script-after-evaluate.js`
+- `test/parallel/test-vm-script-throw-in-tostring.js`
+- `test/parallel/test-vm-set-proto-null-on-globalthis.js`
+- `test/parallel/test-vm-strict-mode.js`
+- `test/parallel/test-vm-util-lazy-properties.js`
+- `test/parallel/test-whatwg-url-custom-global.js`
+- `test/parallel/test-whatwg-url-custom-searchparams-entries.js`
+- `test/parallel/test-whatwg-url-custom-searchparams-foreach.js`
+- `test/parallel/test-whatwg-url-custom-searchparams-keys.js`
+- `test/parallel/test-whatwg-url-custom-searchparams-stringifier.js`
+- `test/parallel/test-whatwg-url-custom-searchparams-values.js`
+- `test/parallel/test-worker-messaging-errors-handler.js`
+- `test/parallel/test-worker-messaging-errors-invalid.js`
+- `test/parallel/test-worker-messaging-errors-timeout.js`

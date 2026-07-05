@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "cpython-core",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+4a7803beb",
+      "digest": "611c87beec05da7f48ed036c1174b914ce76f586a18b7d9ffd59623cb9d7e32a"
+    },
+    "startedAt": "2026-07-03T22:29:42.257Z",
+    "finishedAt": "2026-07-03T22:32:16.533Z",
+    "suiteVersion": "7c999be49dee7f12703e4b2e07e990544fabd40e"
+  },
+  "counts": {
+    "pass": 6194,
+    "fail": 277,
+    "skip": 277,
+    "error": 104,
+    "total": 6852
+  },
+  "regressions": [],
+  "newPasses": []
+}

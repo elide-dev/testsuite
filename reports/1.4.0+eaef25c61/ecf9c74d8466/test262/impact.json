@@ -1,0 +1,25 @@
+{
+  "bySignature": [
+    {
+      "signature": "Expected a SyntaxError to be thrown but no exception was thrown at all",
+      "count": 1,
+      "exampleIds": [
+        "test/annexB/language/global-code/script-decl-lex-collision.js default"
+      ],
+      "samples": [
+        "Expected a SyntaxError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«<str>», «<str>») to be true",
+      "count": 1,
+      "exampleIds": [
+        "test/annexB/language/function-code/block-decl-func-skip-arguments.js default"
+      ],
+      "samples": [
+        "Expected SameValue(«\"function arguments() {}\"», «\"[object Arguments]\"») to be true"
+      ]
+    }
+  ],
+  "byFeature": []
+}

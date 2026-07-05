@@ -1,0 +1,109 @@
+{
+  "bySignature": [
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 36,
+      "exampleIds": [
+        "tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java",
+        "tools/javac/T6411379.java",
+        "tools/javac/T6423583.java",
+        "tools/javac/T6458749.java",
+        "tools/javac/T6855236.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/newlines/NewLineTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: java.lang.AssertionError: The compiler output should have one line only"
+      ]
+    },
+    {
+      "signature": "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=<n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/platform/PlatformProviderTest.java"
+      ],
+      "samples": [
+        "Execution failed: `main' threw exception: toolbox.Task$TaskError: Task javac failed: rc=2"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: LambdaInAnnotationsCausesNPETest1.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/T8181464/LambdaInAnnotationsCausesNPETest1.java"
+      ],
+      "samples": [
+        "Output does not match reference file: LambdaInAnnotationsCausesNPETest1.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: LambdaInAnnotationsCausesNPETest2.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/T8181464/LambdaInAnnotationsCausesNPETest2.java"
+      ],
+      "samples": [
+        "Output does not match reference file: LambdaInAnnotationsCausesNPETest2.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: LambdaInAnnotationsCausesNPETest3.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/T8181464/LambdaInAnnotationsCausesNPETest3.java"
+      ],
+      "samples": [
+        "Output does not match reference file: LambdaInAnnotationsCausesNPETest3.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: Processor.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/T8171332/Processor.java"
+      ],
+      "samples": [
+        "Output does not match reference file: Processor.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: TestImportStar.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/7129225/TestImportStar.java"
+      ],
+      "samples": [
+        "Output does not match reference file: TestImportStar.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: TypeVariableAsAnnotationTest.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/neg/8171322/TypeVariableAsAnnotationTest.java"
+      ],
+      "samples": [
+        "Output does not match reference file: TypeVariableAsAnnotationTest.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: TypeVariableMissingTA.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/typeAnnotations/failures/TypeVariableMissingTA.java"
+      ],
+      "samples": [
+        "Output does not match reference file: TypeVariableMissingTA.out, line 1"
+      ]
+    }
+  ],
+  "byFeature": []
+}

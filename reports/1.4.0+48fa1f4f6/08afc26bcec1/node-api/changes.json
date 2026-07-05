@@ -1,0 +1,23 @@
+{
+  "from": {
+    "semver": "1.4.0+48fa1f4f6",
+    "digest": "49df108fc4b8773c825a5ab73d73fbb831380faffa22542350d54f3e977018e7"
+  },
+  "to": {
+    "semver": "1.4.0+48fa1f4f6",
+    "digest": "08afc26bcec111e0b4b008a4ec3f90c6575b31a5ed252f513e217c83c6dccb9d"
+  },
+  "fixed": [
+    "test/parallel/test-fs-promises-watch-iterator.js",
+    "test/parallel/test-fs-watch-recursive-add-file-with-url.js",
+    "test/parallel/test-fs-watch-recursive-add-folder.js",
+    "test/parallel/test-fs-watch-recursive-assert-leaks.js",
+    "test/parallel/test-fs-watch-recursive-prefix-sibling.js",
+    "test/parallel/test-fs-watch-recursive-symlink.js",
+    "test/parallel/test-stream-writable-final-async.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 969
+}
