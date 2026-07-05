@@ -21,6 +21,7 @@ import {
 import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { classifySuiteStatus } from "./suite-status";
 
 interface Options {
   elideRef: string;
@@ -593,22 +594,26 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
   return delta > 0 ? ansi.green(`↗ +${delta.toFixed(1)}pp`) : ansi.red(`↘ ${delta.toFixed(1)}pp`);
 }
 
+const STATUS_LABEL: Record<string, (s: string) => string> = {
+  ERROR: (s) => ansi.red(`🛑 ${s}`),
+  REGRESSED: (s) => ansi.red(`🔴 ${s}`),
+  GAINED: (s) => ansi.cyan(`🔵 ${s}`),
+  IMPROVED: (s) => ansi.green(`🟢 ${s}`),
+  RED: (s) => ansi.yellow(`🟡 ${s}`),
+  GREEN: (s) => ansi.green(`🟢 ${s}`),
+};
+
 function statusLabel(row: SuiteSummaryRow): string {
-  if (row.rc === 2 || row.rc > 2 || !row.current) return ansi.red("🛑 ERROR");
-  const expRegressions = row.current.regressions.length;
-  const driftRegressed = row.changes?.regressed.length ?? 0;
-  const added = row.changes?.added ?? 0;
-  const fixed = row.changes?.fixed.length ?? 0;
-  // A test that was passing and now fails (drift) is a true regression. Failures
-  // in newly-added coverage (an enabled slice) are a GAIN awaiting ratchet, not
-  // a regression.
-  if (driftRegressed > 0) return ansi.red("🔴 REGRESSED");
-  if (expRegressions > 0) {
-    if (row.changes && added >= expRegressions) return ansi.cyan("🔵 GAINED");
-    return row.changes ? ansi.yellow("🟡 RED") : ansi.red("🔴 REGRESSED");
-  }
-  if (row.rc === 0 && (fixed > 0 || added > 0)) return ansi.green("🟢 IMPROVED");
-  return row.rc === 1 ? ansi.yellow("🟡 RED") : ansi.green("🟢 GREEN");
+  const status = classifySuiteStatus({
+    rc: row.rc,
+    hasCurrent: !!row.current,
+    expRegressions: row.current?.regressions.length ?? 0,
+    driftRegressed: row.changes?.regressed.length ?? 0,
+    added: row.changes?.added ?? 0,
+    fixed: row.changes?.fixed.length ?? 0,
+    hasChanges: !!row.changes,
+  });
+  return STATUS_LABEL[status](status);
 }
 
 function changesLabel(row: SuiteSummaryRow): string {
