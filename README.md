@@ -1,4 +1,4 @@
-# compliance testing
+# conformance testing
 
 This repository runs upstream conformance test suites against pinned builds of
 [Elide](https://elide.dev) and publishes per-version Markdown/JSON reports.
