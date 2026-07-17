@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed6403be11d119eb0234efa699809d81a801986659790996c18306a06"
+    },
+    "startedAt": "2026-07-17T20:46:27.850Z",
+    "finishedAt": "2026-07-17T20:52:51.868Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 309,
+    "fail": 875,
+    "skip": 345,
+    "error": 34,
+    "total": 1563
+  },
+  "regressions": [],
+  "newPasses": []
+}

@@ -2,6 +2,61 @@
   "runs": [
     {
       "workload": "test262",
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed640",
+      "pass": 92589,
+      "total": 103361,
+      "skip": 10587,
+      "regressions": 0,
+      "finishedAt": "2026-07-17T21:06:56.786Z",
+      "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/test262"
+    },
+    {
+      "workload": "javac-jtreg",
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed640",
+      "pass": 3655,
+      "total": 3934,
+      "skip": 232,
+      "regressions": 0,
+      "finishedAt": "2026-07-17T20:58:52.135Z",
+      "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/javac-jtreg"
+    },
+    {
+      "workload": "node-api",
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed640",
+      "pass": 309,
+      "total": 1563,
+      "skip": 345,
+      "regressions": 0,
+      "finishedAt": "2026-07-17T20:52:51.868Z",
+      "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/node-api"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed640",
+      "pass": 1690,
+      "total": 1865,
+      "skip": 103,
+      "regressions": 0,
+      "finishedAt": "2026-07-17T20:47:59.909Z",
+      "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.4.1+20260716.b8b6531",
+      "digest": "3d3ea83ed640",
+      "pass": 10480,
+      "total": 14575,
+      "skip": 661,
+      "regressions": 0,
+      "finishedAt": "2026-07-17T20:46:39.248Z",
+      "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/wpt-wintertc"
+    },
+    {
+      "workload": "test262",
       "semver": "1.4.0+fe8ca1ef6",
       "digest": "eae94dd2ac6f",
       "pass": 92589,

@@ -1,0 +1,635 @@
+{
+  "bySignature": [
+    {
+      "signature": "Expected no error, got TypeError: Cannot read property <str> of undefined",
+      "count": 64,
+      "exampleIds": [
+        "test/built-ins/Error/prototype/stack/getter-data-property-shadows.js default",
+        "test/built-ins/Error/prototype/stack/getter-cross-realm.js default",
+        "test/built-ins/Error/prototype/stack/getter-cross-realm.js strict mode",
+        "test/built-ins/Error/prototype/stack/getter-error-as-prototype.js default",
+        "test/built-ins/Error/prototype/stack/getter-error-as-prototype.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: Cannot read property 'get' of undefined",
+        "Expected no error, got TypeError: Cannot read property 'set' of undefined"
+      ]
+    },
+    {
+      "signature": "Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 12,
+      "exampleIds": [
+        "test/language/module-code/instn-named-bndng-dflt-named.js strict mode",
+        "test/language/module-code/instn-named-bndng-dflt-named.js default",
+        "test/language/module-code/instn-named-bndng-dflt-star.js default",
+        "test/language/module-code/instn-named-bndng-dflt-star.js strict mode",
+        "test/language/module-code/namespace/internals/get-str-found-uninit.js strict mode"
+      ],
+      "samples": [
+        "Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Expected no error, got ReferenceError: results is not defined",
+      "count": 12,
+      "exampleIds": [
+        "test/language/module-code/instn-iee-bndng-const.js default",
+        "test/language/module-code/instn-iee-bndng-cls.js strict mode",
+        "test/language/module-code/instn-iee-bndng-cls.js default",
+        "test/language/module-code/instn-iee-bndng-gen.js strict mode",
+        "test/language/module-code/instn-iee-bndng-gen.js default"
+      ],
+      "samples": [
+        "Expected no error, got ReferenceError: results is not defined"
+      ]
+    },
+    {
+      "signature": "binding is created but not initialized Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 8,
+      "exampleIds": [
+        "test/language/module-code/instn-named-bndng-const.js default",
+        "test/language/module-code/instn-named-bndng-cls.js strict mode",
+        "test/language/module-code/instn-named-bndng-cls.js default",
+        "test/language/module-code/instn-named-bndng-const.js strict mode",
+        "test/language/module-code/instn-named-bndng-dflt-expr.js strict mode"
+      ],
+      "samples": [
+        "binding is created but not initialized Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all",
+      "count": 6,
+      "exampleIds": [
+        "test/language/global-code/script-decl-func-err-non-extensible.js strict mode",
+        "test/language/global-code/script-decl-func-err-non-extensible.js default",
+        "test/language/global-code/script-decl-var-err.js default",
+        "test/language/global-code/script-decl-var-err.js strict mode",
+        "test/language/import/import-defer/errors/get-self-while-evaluating.js default"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "binding is initialized to <str> prior to module evaulation Expected SameValue(«<n>», «undefined») to be true",
+      "count": 4,
+      "exampleIds": [
+        "test/language/module-code/instn-named-bndng-trlng-comma.js default",
+        "test/language/module-code/instn-named-bndng-trlng-comma.js strict mode",
+        "test/language/module-code/instn-named-bndng-var.js strict mode",
+        "test/language/module-code/instn-named-bndng-var.js default"
+      ],
+      "samples": [
+        "binding is initialized to `undefined` prior to module evaulation Expected SameValue(«23», «undefined») to be true"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 4,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/null-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/number-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/symbol-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/undefined-tobigint.js default"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: Module not found: <str>",
+      "count": 4,
+      "exampleIds": [
+        "test/language/module-code/source-phase-import/reexport-source-binding-named-import.js default",
+        "test/language/module-code/source-phase-import/reexport-source-binding-named-import.js strict mode",
+        "test/language/module-code/source-phase-import/reexport-source-binding-namespace-get.js default",
+        "test/language/module-code/source-phase-import/reexport-source-binding-namespace-get.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: Module not found: '<module source>'"
+      ]
+    },
+    {
+      "signature": "Expected a SyntaxError to be thrown but no exception was thrown at all",
+      "count": 3,
+      "exampleIds": [
+        "test/language/global-code/script-decl-lex-restricted-global.js default",
+        "test/language/global-code/script-decl-lex-restricted-global.js strict mode",
+        "test/annexB/language/global-code/script-decl-lex-collision.js default"
+      ],
+      "samples": [
+        "Expected a SyntaxError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "<str> binding Expected a SyntaxError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/global-code/script-decl-lex-lex.js strict mode",
+        "test/language/global-code/script-decl-lex-lex.js default"
+      ],
+      "samples": [
+        "`let` binding Expected a SyntaxError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "<str> on <str> binding Expected a SyntaxError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/global-code/script-decl-var-collision.js default",
+        "test/language/global-code/script-decl-var-collision.js strict mode"
+      ],
+      "samples": [
+        "`var` on `let` binding Expected a SyntaxError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "All globalThis properties must be configurable Expected SameValue(«<str>», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js default",
+        "test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js strict mode"
+      ],
+      "samples": [
+        "All globalThis properties must be configurable Expected SameValue(«\"__dirname, __filename, module, exports\"», «\"\"») to be true"
+      ]
+    },
+    {
+      "signature": "Binding is created but not initialized. Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/instn-named-bndng-dflt-cls.js default",
+        "test/language/module-code/instn-named-bndng-dflt-cls.js strict mode"
+      ],
+      "samples": [
+        "Binding is created but not initialized. Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "binding unmodified: local1 Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/namespace/internals/delete-exported-uninit.js default",
+        "test/language/module-code/namespace/internals/delete-exported-uninit.js strict mode"
+      ],
+      "samples": [
+        "binding unmodified: local1 Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Error: getOwnPropertyNames does not include <str> Expected SameValue(«<n>», «-<n>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/Error/prototype/stack/instance-not-enumerable.js default",
+        "test/built-ins/Error/prototype/stack/instance-not-enumerable.js strict mode"
+      ],
+      "samples": [
+        "Error: getOwnPropertyNames does not include \"stack\" Expected SameValue(«1», «-1») to be true"
+      ]
+    },
+    {
+      "signature": "Error: hasOwnProperty(<str>) is false Expected SameValue(«true», «false») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/Error/prototype/stack/instance-no-own-stack.js strict mode",
+        "test/built-ins/Error/prototype/stack/instance-no-own-stack.js default"
+      ],
+      "samples": [
+        "Error: hasOwnProperty(\"stack\") is false Expected SameValue(«true», «false») to be true"
+      ]
+    },
+    {
+      "signature": "Error.prototype.stack getter should be a function Expected SameValue(«<str>», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/Error/prototype/stack/prop-desc.js strict mode",
+        "test/built-ins/Error/prototype/stack/prop-desc.js default"
+      ],
+      "samples": [
+        "Error.prototype.stack getter should be a function Expected SameValue(«\"undefined\"», «\"function\"») to be true"
+      ]
+    },
+    {
+      "signature": "Expected a ReferenceError but got a Test262Error",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/namespace/internals/enumerate-binding-uninit.js strict mode",
+        "test/language/module-code/namespace/internals/enumerate-binding-uninit.js default"
+      ],
+      "samples": [
+        "Expected a ReferenceError but got a Test262Error"
+      ]
+    },
+    {
+      "signature": "Expected a ReferenceError but got a TypeError",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/namespace/internals/super-access-to-tdz-binding.js strict mode",
+        "test/language/module-code/namespace/internals/super-access-to-tdz-binding.js default"
+      ],
+      "samples": [
+        "Expected a ReferenceError but got a TypeError"
+      ]
+    },
+    {
+      "signature": "Expected no error, got ReferenceError: assert is not defined",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from-and-import-star-as-and-export.js strict mode",
+        "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from-and-import-star-as-and-export.js default"
+      ],
+      "samples": [
+        "Expected no error, got ReferenceError: assert is not defined"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: <str> is not a configurable property",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-strict.js strict mode",
+        "test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-strict.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: \"default\" is not a configurable property"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js default",
+        "test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js default",
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js strict mode"
+      ],
+      "samples": [
+        "Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js default",
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js strict mode"
+      ],
+      "samples": [
+        "Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "global property initially unset Expected SameValue(«<n>», «undefined») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/eval-self-once.js strict mode",
+        "test/language/module-code/eval-self-once.js default"
+      ],
+      "samples": [
+        "global property initially unset Expected SameValue(«262», «undefined») to be true"
+      ]
+    },
+    {
+      "signature": "hasOwnProperty: local1 Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/namespace/internals/get-own-property-str-found-uninit.js strict mode",
+        "test/language/module-code/namespace/internals/get-own-property-str-found-uninit.js default"
+      ],
+      "samples": [
+        "hasOwnProperty: local1 Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "java.lang.IllegalStateException: Recursive update at :anonymous (native) at :program (<loc>)",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/eval-self-once-script.js default",
+        "test/language/expressions/dynamic-import/eval-self-once-script.js strict mode"
+      ],
+      "samples": [
+        "java.lang.IllegalStateException: Recursive update\n    at :anonymous (native)\n    at :program (eval-self-once-script.js:281:3)",
+        "java.lang.IllegalStateException: Recursive update\n    at :anonymous (native)\n    at :program (eval-self-once-script.js:282:3)"
+      ]
+    },
+    {
+      "signature": "name descriptor value should be [Symbol.asyncIterator]; name value should be [Symbol.asyncIterator]",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/AsyncIteratorPrototype/Symbol.asyncIterator/name.js strict mode",
+        "test/built-ins/AsyncIteratorPrototype/Symbol.asyncIterator/name.js default"
+      ],
+      "samples": [
+        "name descriptor value should be [Symbol.asyncIterator]; name value should be [Symbol.asyncIterator]"
+      ]
+    },
+    {
+      "signature": "self is not initialized yet Expected a ReferenceError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/top-level-await/module-self-import-async-resolution-ticks.js default",
+        "test/language/module-code/top-level-await/module-self-import-async-resolution-ticks.js strict mode"
+      ],
+      "samples": [
+        "self is not initialized yet Expected a ReferenceError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Test timed out",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/Object/defineProperty/15.2.3.6-4-116.js default",
+        "test/built-ins/Object/defineProperty/15.2.3.6-4-116.js strict mode"
+      ],
+      "samples": [
+        "Test timed out"
+      ]
+    },
+    {
+      "signature": "Test262Error: delete: default",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-no-strict.js default",
+        "test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-no-strict.js default"
+      ],
+      "samples": [
+        "Test262Error: delete: default"
+      ]
+    },
+    {
+      "signature": "Test262Error: Expected SameValue(«<str>», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/verify-dfs.js strict mode",
+        "test/language/module-code/verify-dfs.js default"
+      ],
+      "samples": [
+        "Test262Error: Expected SameValue(«\"B\"», «\"A\"») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: Expected SameValue(«true», «false») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js default",
+        "test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js strict mode"
+      ],
+      "samples": [
+        "Test262Error: Expected SameValue(«true», «false») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: f Expected SameValue(«null», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/for-await-resolution-and-error-agen-yield.js default",
+        "test/language/expressions/dynamic-import/for-await-resolution-and-error-agen-yield.js strict mode"
+      ],
+      "samples": [
+        "Test262Error: f Expected SameValue(«null», «\"foo\"») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: global property was defined and incremented only once Expected SameValue(«<n>», «<n>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/eval-self-once-module.js strict mode",
+        "test/language/expressions/dynamic-import/eval-self-once-module.js default"
+      ],
+      "samples": [
+        "Test262Error: global property was defined and incremented only once Expected SameValue(«2», «1») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: The import should reject (second import) Expected a Error to be thrown asynchronously but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/import-errored-module.js default",
+        "test/language/expressions/dynamic-import/import-errored-module.js strict mode"
+      ],
+      "samples": [
+        "Test262Error: The import should reject (second import) Expected a Error to be thrown asynchronously but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Test262Error: updated value, direct binding Expected SameValue(«<n>», «<n>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/imported-self-update.js strict mode",
+        "test/language/expressions/dynamic-import/imported-self-update.js default"
+      ],
+      "samples": [
+        "Test262Error: updated value, direct binding Expected SameValue(«0», «1») to be true"
+      ]
+    },
+    {
+      "signature": "variable Expected a SyntaxError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/global-code/script-decl-lex-var.js strict mode",
+        "test/language/global-code/script-decl-lex-var.js default"
+      ],
+      "samples": [
+        "variable Expected a SyntaxError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "writable, non-enumerable data property Expected a TypeError to be thrown but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/global-code/script-decl-func-err-non-configurable.js strict mode",
+        "test/language/global-code/script-decl-func-err-non-configurable.js default"
+      ],
+      "samples": [
+        "writable, non-enumerable data property Expected a TypeError to be thrown but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "<str> throws Test262Error Expected a Test262Error but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js strict mode"
+      ],
+      "samples": [
+        "`sample[\"0\"] = obj` throws Test262Error Expected a Test262Error but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "<str> throws Test262Error Expected a Test262Error to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js default"
+      ],
+      "samples": [
+        "`sample[\"0\"] = obj` throws Test262Error Expected a Test262Error to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a SyntaxError but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js strict mode"
+      ],
+      "samples": [
+        "Expected a SyntaxError but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a SyntaxError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js default"
+      ],
+      "samples": [
+        "Expected a SyntaxError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a Test262Error but got a TypeError (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js strict mode"
+      ],
+      "samples": [
+        "Expected a Test262Error but got a TypeError (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a Test262Error to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js default"
+      ],
+      "samples": [
+        "Expected a Test262Error to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/bigint-tonumber.js default"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«<str>», «<str>») to be true",
+      "count": 1,
+      "exampleIds": [
+        "test/annexB/language/function-code/block-decl-func-skip-arguments.js default"
+      ],
+      "samples": [
+        "Expected SameValue(«\"function arguments() {}\"», «\"[object Arguments]\"») to be true"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "error-stack-accessor",
+      "count": 70
+    },
+    {
+      "feature": "dynamic-import",
+      "count": 18
+    },
+    {
+      "feature": "TypedArray",
+      "count": 17
+    },
+    {
+      "feature": "align-detached-buffer-semantics-with-web-reality",
+      "count": 15
+    },
+    {
+      "feature": "BigInt",
+      "count": 11
+    },
+    {
+      "feature": "Proxy",
+      "count": 10
+    },
+    {
+      "feature": "let",
+      "count": 8
+    },
+    {
+      "feature": "Reflect",
+      "count": 6
+    },
+    {
+      "feature": "Reflect.construct",
+      "count": 6
+    },
+    {
+      "feature": "__proto__",
+      "count": 4
+    },
+    {
+      "feature": "async-iteration",
+      "count": 4
+    },
+    {
+      "feature": "cross-realm",
+      "count": 4
+    },
+    {
+      "feature": "source-phase-imports",
+      "count": 4
+    },
+    {
+      "feature": "source-phase-imports-module-source",
+      "count": 4
+    },
+    {
+      "feature": "Array.prototype.includes",
+      "count": 2
+    },
+    {
+      "feature": "class",
+      "count": 2
+    },
+    {
+      "feature": "export-star-as-namespace-from-module",
+      "count": 2
+    },
+    {
+      "feature": "generators",
+      "count": 2
+    },
+    {
+      "feature": "import-defer",
+      "count": 2
+    },
+    {
+      "feature": "ShadowRealm",
+      "count": 2
+    },
+    {
+      "feature": "Symbol.asyncIterator",
+      "count": 2
+    },
+    {
+      "feature": "Symbol.species",
+      "count": 2
+    },
+    {
+      "feature": "top-level-await",
+      "count": 2
+    },
+    {
+      "feature": "Symbol",
+      "count": 1
+    }
+  ]
+}
