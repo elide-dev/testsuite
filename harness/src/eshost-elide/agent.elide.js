@@ -144,15 +144,12 @@ class ElideAgent extends ConsoleAgent {
           // Fixture copying is best-effort; the test itself still runs.
         }
       }
-      if (this._elideModule && args[0].endsWith(".js")) {
-        const mjs = `${args[0].slice(0, -3)}.mjs`;
-        try {
-          fs.copyFileSync(args[0], mjs);
-          args = [mjs, ...args.slice(1)];
-        } catch {
-          // Fall back to the original `.js` file if the copy fails.
-        }
-      }
+      // A module-flagged `.js` entry runs as ESM via the `{"type":"module"}`
+      // marker written above — no `.mjs` copy needed. Copying to `.mjs` would
+      // give the entry a distinct file identity from any self/cyclic import that
+      // names the original `.js` (e.g. instn-*_FIXTURE re-exports), splitting one
+      // module into two instances and breaking TDZ/binding-identity tests. Run
+      // the `.js` in place so those imports dedupe to the single entry record.
     }
     return super.createChildProcess(args, options);
   }
