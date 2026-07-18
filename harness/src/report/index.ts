@@ -77,12 +77,11 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
 }
 
 // Workloads hidden from the rolled-up, top-level summaries (README compat table,
-// reports/index.md, reports/pass-rate.svg) for now. Their per-run reports and the
-// raw reports/index.json entries are unaffected — this only suppresses them from
-// the headline views while their coverage is still being shaped:
-//   - node-api: broad slice still dominated by unimplemented core modules.
-//   - wpt-wintertc: fetch surface enabled but failing, not yet representative.
-export const SUMMARY_MUTED_WORKLOADS = new Set<string>(["node-api", "wpt-wintertc"]);
+// reports/index.md, reports/pass-rate.svg). Their per-run reports and the raw
+// reports/index.json entries are unaffected — this only suppresses them from
+// the headline views while their coverage is still being shaped. Currently empty:
+// all suites (including node-api and wpt-wintertc) report in the headline views.
+export const SUMMARY_MUTED_WORKLOADS = new Set<string>([]);
 
 export function latestRunSummariesFromIndex(index: { runs: IndexEntry[] }): RunSummary[] {
   const latest = new Map<string, RunSummary & { finishedAt: string }>();
