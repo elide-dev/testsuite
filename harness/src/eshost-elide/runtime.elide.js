@@ -14,13 +14,14 @@ var elideNative262 = globalThis["\x24262"];
 var $262 = {
   global: globalThis,
   destroy: function () {},
+  // Per test262 INTERPRETING.md, $262.evalScript must evaluate `code` as a
+  // script and return its completion value, propagating any error. The prior
+  // implementation caught the error and returned a `{type, value}` record, so
+  // `assert.throws(..., () => $262.evalScript(...))` saw no exception — breaking
+  // the language/global-code script-declaration tests (SyntaxError/TypeError on
+  // redeclaration over restricted/non-configurable/non-extensible globals).
   evalScript: function (code) {
-    try {
-      elideNative262.evalScript(code);
-      return { type: "normal", value: undefined };
-    } catch (e) {
-      return { type: "throw", value: e };
-    }
+    return elideNative262.evalScript(code);
   },
   getGlobal: function (name) {
     return this.global[name];

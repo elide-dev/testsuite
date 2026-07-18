@@ -31,8 +31,11 @@ path = "suites/openjdk"
   [workload.settings]
   manifest = "manifests/javac-langtools.toml"
   timeoutMs = 3600000
-  # jtreg's default action timeout is 120s; this maps to -timeoutFactor:2.5.
-  jtregCaseTimeoutSeconds = 300
+  # jtreg's default action timeout is 120s; this maps to -timeoutFactor:7.5.
+  # 300s starved slow-but-passing tests (combo.ComboTestHelper suites, file/zip)
+  # under full-suite concurrency: they pass in isolation but hit the wall when
+  # thousands of concurrent per-compile launches contend for cores.
+  jtregCaseTimeoutSeconds = 900
   jtregPath = "jtreg"
   # Optional explicit real JDK home for the jtreg wrapper layout.
   # If omitted, the adapter derives java.home from javaRunner and only falls back to JAVA_HOME for compatibility.

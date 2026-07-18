@@ -1,6 +1,17 @@
 {
   "runs": [
     {
+      "workload": "javac-jtreg",
+      "semver": "1.4.1+20260717.acbafa6",
+      "digest": "3d3ea83ed640",
+      "pass": 2,
+      "total": 2,
+      "skip": 0,
+      "regressions": 0,
+      "finishedAt": "2026-07-18T00:48:06.442Z",
+      "reportDir": "1.4.1+20260717.acbafa6/3d3ea83ed640/javac-jtreg"
+    },
+    {
       "workload": "test262",
       "semver": "1.4.1+20260716.b8b6531",
       "digest": "3d3ea83ed640",
