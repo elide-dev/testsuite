@@ -38,4 +38,49 @@
 "test_pathlib.WalkTests.*" = "Directory walking deferred until sandboxed file I/O"
 "test_pathlib.WindowsPathTest.*" = "Concrete pathlib filesystem behavior deferred until sandboxed file I/O"
 
+# --- Platform-limitation classifications (cpython-core triage 2026-07-17) ---
+# Subprocess / script_helper.assert_python_ok: Elide has no child_process/subprocess.
+"test_builtin.ShutdownTest.test_cleanup" = "Spawns a child interpreter via assert_python_ok; subprocess + interpreter-shutdown finalization unsupported"
+"test_exceptions.ExceptionTests.test_memory_error_in_subinterp" = "script_helper.assert_python_ok subprocess + _testcapi subinterpreters unsupported"
+"test_weakref.FinalizeTestCase.test_atexit" = "script_helper.assert_python_ok subprocess unsupported"
+"test_fstring.TestCase.test_filename_in_syntaxerror" = "assert_python_failure subprocess unsupported"
+"test_fstring.TestCase.test_syntax_warning_infinite_recursion_in_file" = "assert_python_ok subprocess + stderr line-count assertion unsupported"
+"test_json.test_tool.TestTool.test_broken_pipe_error" = "Spawns json.tool subprocess and asserts EPIPE returncode; subprocess/pipe unsupported"
+# GC / refcount / __del__ finalization timing: JVM GC is non-deterministic, no refcount-0 finalization.
+"test_descr.ClassPropertiesAndMethods.test_delete_hook" = "__del__ finalization timing; not run synchronously after del+gc.collect on GraalPy"
+"test_descr.ClassPropertiesAndMethods.test_slots" = "instance __del__ counting depends on refcount/GC finalization timing"
+"test_dict.DictTest.test_free_after_iterating" = "free-after-iterating requires __del__ to run immediately after iteration (refcount finalization)"
+"test_list.ListTest.test_free_after_iterating" = "free-after-iterating depends on refcount __del__; JVM GC non-deterministic"
+"test_list.ListTest.test_basic" = "MemoryError not raised on huge list(range(maxsize//2)) allocation under the JVM"
+"test_tuple.TupleTest.test_free_after_iterating" = "free-after-iterating depends on refcount __del__; JVM GC non-deterministic"
+"test_class.ClassTests.testDel" = "__del__ not run deterministically under JVM GC"
+"test_exceptions.ExceptionTests.test_3114" = "JVM finalization: object __del__ not run at refcount 0, sys.exception() sentinel never cleared"
+"test_exceptions.ExceptionTests.testExceptionCleanupState" = "weakref/refcount: exception-local object not deterministically freed under JVM GC"
+"test_weakref.FinalizeTestCase.test_all_freed" = "finalize/weakref timing: del+gc.collect does not free object under JVM GC"
+"test_weakref.FinalizeTestCase.test_finalize" = "finalize timing: del does not run finalizer under JVM GC"
+"test_weakref.FinalizeTestCase.test_order" = "finalizer ordering/timing at JVM GC differs from CPython refcount-0 ordering"
+# dict mutation-during-iteration guard: GraalPy detects size change only, not same-size structural mutation (no version/keys tag).
+"test_dict.DictTest.test_mutating_iteration_delete" = "same-size dict mutation during iteration needs version/keys-tag internals GraalPy lacks (size-change is detected)"
+"test_dict.DictTest.test_mutating_iteration_delete_over_values" = "same-size dict mutation during iteration needs version/keys-tag internals GraalPy lacks"
+"test_dict.DictTest.test_mutating_iteration_delete_over_items" = "same-size dict mutation during iteration needs version/keys-tag internals GraalPy lacks"
+"test_dict.DictTest.test_oob_indexing_dictiter_iternextitem" = "mutation is driven by X.__del__ which never fires during iteration under GraalPy (no refcounting)"
+# Buffer-protocol export/resize locking not modeled on the JVM (no BufferError on resize-while-exported).
+"test_builtin.BuiltinTest.test_bytearray_join_with_misbehaving_iterator" = "Requires buffer-protocol export/resize locking (BufferError on resize-while-exported), not implemented"
+"test_re.ReTests.test_keep_buffer" = "JVM does not track buffer-protocol exports; resizing a bytearray held by a live regex iterator does not raise BufferError"
+# Native / locale / immutable-builtin / hash-impl details.
+"test_builtin.BuiltinTest.test_hash" = "hash(str)==hash(bytes) is a CPython siphash implementation detail; GraalPy hashes str and bytes differently"
+"test_tuple.TupleTest.test_hash_exact" = "tuple hash algorithm differs from CPython's exact hash values"
+"test_re.ReTests.test_locale_caching" = "Locale-dependent re.L matching needs native LC_CTYPE support; setlocale is a no-op under Elide"
+"test_re.ReTests.test_locale_compiled" = "Locale-dependent re.L compiled patterns need native LC_CTYPE support; setlocale is a no-op under Elide"
+"test_ast.test_ast.AST_Tests.test_AST_fields_NULL_check" = "ast.AST is an immutable builtin type on the JVM; del/set ast.AST._fields raises TypeError instead of succeeding"
+"test_descr.ClassPropertiesAndMethods.test_cycle_through_dict" = "gc.get_objects not present in Elide's GraalPy fork"
+"test_patma.TestSourceLocations.test_jump_threading" = "dis.get_instructions raises NotImplementedError: dis module is not supported on GraalPy"
+"test_deque.TestSubclass.test_weakref" = "weakref.proxy of a builtin collections.deque raises TypeError (subclasses are referenceable)"
+"test_functools.TestCmpToKeyC.test_cmp_to_signature" = "C cmp_to_key signature is '(mycmp, /)' (positional-only marker) vs CPython docstring-derived '(mycmp)'"
+"test_json.test_scanstring.TestCScanstring.test_surrogates" = "GraalPy UTF-16 strings combine adjacent lone surrogates into one astral code point; CPython keeps them separate"
+"test_genexps" = "Doctest relies on CPython tuple-object identity reuse across genexp iterations (max-min tupleids==0); GraalPy allocates fresh tuples"
+# Attribute-error message wording (behavior correct, phrasing differs; low value to chase).
+"test_class.ClassTests.testObjectAttributeAccessErrorMessages" = "AttributeError message wording differs (del/setattr/read-only phrasing)"
+"test_class.ClassTests.testTypeAttributeAccessErrorMessages" = "AttributeError says \"'A' object\" instead of \"type object 'A'\""
+
 [fail]

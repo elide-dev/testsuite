@@ -10,4 +10,58 @@
 # 150/192 errors in the 1.3.6 run live here. See WHIPLASH #1174.
 "tools/javac/processing/**" = "annotation processing unsupported by Elide embedded javac (jtreg exit code 3); tracked in WHIPLASH #1174"
 
+# The following tests live outside tools/javac/processing/ but share the same
+# root cause (WHIPLASH #1174): each compiles an annotation-processor class
+# during the test and passes it via -processor/-processorpath. Native-image
+# javac cannot define user bytecode at runtime, so javac reports
+# "Annotation processor 'X' not found". This includes six negative tests
+# whose .out golden files expect processor-driven diagnostics.
+"tools/javac/7129225/TestImportStar.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/MethodParameters/ClassReaderTest/ClassReaderTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T6411379.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T6423583.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T6458749.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T6855236.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8151191/ErrorRunningJavadocOnInnerClasses.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8170667/ParameterProcessor.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8171332/Processor.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8181464/LambdaInAnnotationsCausesNPETest1.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8181464/LambdaInAnnotationsCausesNPETest2.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/T8181464/LambdaInAnnotationsCausesNPETest3.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/TypeToString.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/annotations/neg/8171322/TypeVariableAsAnnotationTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/annotations/repeatingAnnotations/generatedInRepeating/GeneratedInRepeating.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/annotations/typeAnnotations/failures/TypeVariableMissingTA.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/annotations/typeAnnotations/packageanno/PackageProcessor.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/annotations/typeAnnotations/position/TypeAnnotationPositionTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/api/TestGetTree.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/api/TestOperators.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/cast/intersection/model/Model01.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/classreader/8215407/BrokenEnclosingClass.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/defaultMethods/private/PrivateInterfaceMethodProcessorTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/doctree/ReferenceTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/doctree/positions/TestPosition.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/enum/6350057/T6350057.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/enum/6424358/T6424358.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/modules/T8160454/NPEGetDirectivesTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/modules/T8161501/UnnamedModuleUnnamedPackageTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/multicatch/model/ModelChecker.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/patterns/Annotations.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/patterns/PatternMatchPosTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/platform/NonPublicAnnotations.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/platform/ReleaseModulesAndTypeElement.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/tree/ArrayTypeToString.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/tree/MakeTypeTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/tree/NoPrivateTypesExported.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/tree/TreePosRoundsTest.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/treeannotests/AnnoTreeTests.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+"tools/javac/util/NewlineOnlyDiagnostic.java" = "runtime annotation-processor loading unsupported in native image (loads a -processor class compiled during the test); same root cause as tools/javac/processing/**; tracked in WHIPLASH #1174"
+# Custom PlatformProvider via ToolProvider SPI: same runtime class-discovery
+# limit as above ("release version name not supported").
+"tools/javac/platform/PlatformProviderTest.java" = "custom --release PlatformProvider SPI requires runtime service discovery, unsupported in native image; see WHIPLASH #1174"
+# Elide is a native binary, not a JVM launcher: the jtreg wrapper strips -J*
+# flags, so -J-Dline.separator cannot take effect and the single-line usage
+# assertion fails. Environmental, not a compiler defect.
+"tools/javac/newlines/NewLineTest.java" = "-J JVM flags cannot apply to a native binary; jtreg wrapper strips them by design"
+
 [fail]
