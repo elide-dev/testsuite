@@ -1,6 +1,14 @@
 # WinterTC / WPT expectations baseline.
 # Keys are picomatch globs over WPT-relative test paths, without the subtest suffix.
 
+# Browser-only tests: the Elide runtime has no document / window / navigation, so these can never
+# pass here. Skipping keeps them out of the pass-rate denominator (they are structurally
+# unreachable, not regressions). Note: encoding/encodeInto.any.js is deliberately NOT skipped --
+# its ArrayBuffer branch passes; only the SharedArrayBuffer branch fails (it needs
+# WebAssembly.Memory, which Elide lacks), and skip is file-level, so skipping the file would drop
+# the passing subtests. That branch stays a known failure instead.
 [skip]
+"**/*.window.js" = "browser-only: needs a document / window / navigation"
+"fetch/fetch-later/**" = "browser-only: fetchLater needs window / iframe / bfcache"
 
 [fail]

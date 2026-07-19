@@ -1,4 +1,6 @@
 import { test, expect } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { parseExpectations } from "./load";
 import { compare, passRate, scoredTotal } from "./compare";
 import type { TestResult } from "../results/schema";
@@ -114,4 +116,32 @@ test("CPython module-level skip expectations match upstreamPath metadata", () =>
   );
   expect(c.regressions).toHaveLength(0);
   expect(c.counts.skip).toBe(1);
+});
+
+test("wpt-wintertc baseline skips browser-only tests out of the denominator", () => {
+  const wpt = parseExpectations(
+    readFileSync(join(import.meta.dir, "../../../expectations/wpt-wintertc.toml"), "utf8"),
+  );
+  const mkWpt = (path: string, status: TestResult["status"]): TestResult =>
+    mk(`${path} :: t`, status, {
+      suite: "wpt-wintertc",
+      upstreamPath: path,
+      runner: "wpt",
+      subtest: "t",
+    });
+  const c = compare(
+    [
+      mkWpt("encoding/single-byte-decoder.window.js", "fail"),
+      mkWpt("fetch/api/response/response-clone-iframe.window.js", "fail"),
+      mkWpt("fetch/fetch-later/basic.https.worker.js", "fail"),
+      mkWpt("url/urlsearchparams-constructor.any.js", "pass"),
+      // encodeInto is deliberately NOT skipped: its ArrayBuffer branch passes, so it stays scored.
+      mkWpt("encoding/encodeInto.any.js", "fail"),
+    ],
+    wpt,
+  );
+  expect(c.counts.skip).toBe(3); // two .window.js + the fetch-later .worker.js
+  expect(c.counts.pass).toBe(1); // the url test is scored
+  expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure, not skipped
+  expect(scoredTotal(c.counts)).toBe(2); // skipped browser-only tests leave the denominator
 });
