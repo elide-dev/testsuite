@@ -118,7 +118,7 @@ test("CPython module-level skip expectations match upstreamPath metadata", () =>
   expect(c.counts.skip).toBe(1);
 });
 
-test("wpt-wintertc baseline skips browser-only tests out of the denominator", () => {
+test("wpt-wintertc baseline skips unreachable tests but keeps window.js files that pass headless", () => {
   const wpt = parseExpectations(
     readFileSync(join(import.meta.dir, "../../../expectations/wpt-wintertc.toml"), "utf8"),
   );
@@ -131,17 +131,20 @@ test("wpt-wintertc baseline skips browser-only tests out of the denominator", ()
     });
   const c = compare(
     [
-      mkWpt("encoding/single-byte-decoder.window.js", "fail"),
-      mkWpt("fetch/api/response/response-clone-iframe.window.js", "fail"),
-      mkWpt("fetch/fetch-later/basic.https.worker.js", "fail"),
+      mkWpt("url/toascii.window.js", "fail"), // browser-only, explicitly listed -> skip
+      mkWpt("fetch/api/cors/cors-basic.https.any.js", "fail"), // no TLS -> skip
+      mkWpt("fetch/api/redirect/redirect-upload.h2.any.js", "fail"), // no HTTP/2 -> skip
+      mkWpt("fetch/fetch-later/basic.any.js", "fail"), // browser-only -> skip
+      // A .window.js file that passes headless is deliberately NOT skipped, so its pass counts.
+      mkWpt("encoding/single-byte-decoder.window.js", "pass"),
       mkWpt("url/urlsearchparams-constructor.any.js", "pass"),
-      // encodeInto is deliberately NOT skipped: its ArrayBuffer branch passes, so it stays scored.
+      // encodeInto is deliberately NOT skipped: its valid-destination branch passes, so it stays scored.
       mkWpt("encoding/encodeInto.any.js", "fail"),
     ],
     wpt,
   );
-  expect(c.counts.skip).toBe(3); // two .window.js + the fetch-later .worker.js
-  expect(c.counts.pass).toBe(1); // the url test is scored
+  expect(c.counts.skip).toBe(4); // listed .window.js + .https + .h2 + fetch-later
+  expect(c.counts.pass).toBe(2); // the headless-passing .window.js keeper and the url test are scored
   expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure, not skipped
-  expect(scoredTotal(c.counts)).toBe(2); // skipped browser-only tests leave the denominator
+  expect(scoredTotal(c.counts)).toBe(3); // only the four unreachable tests leave the denominator
 });

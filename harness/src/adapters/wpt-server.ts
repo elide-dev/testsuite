@@ -1,5 +1,4 @@
-import { createServer } from "node:net";
-import { mkdtempSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -20,29 +19,36 @@ export interface WptServer {
   origin: string;
   host: string;
   httpPort: number;
-  /** Terminate the server and free its port. Idempotent. */
+  /** Terminate the server (and its child listeners) and clean up. Idempotent. */
   stop(): void;
 }
 
 const HOST = "127.0.0.1";
 
-async function freePort(): Promise<number> {
-  return await new Promise<number>((resolvePort, reject) => {
-    const probe = createServer();
-    probe.on("error", reject);
-    probe.listen(0, HOST, () => {
-      const addr = probe.address();
-      const port = typeof addr === "object" && addr ? addr.port : 0;
-      probe.close(() => (port ? resolvePort(port) : reject(new Error("no port"))));
-    });
-  });
+// wptserve logs one line per listener as "[<ts> <scheme> on port <port>] INFO - Starting ...". The
+// primary HTTP listener's scheme is exactly "http" (never "http-local"/"http-public"/"https"), so
+// this uniquely identifies the port wptserve actually bound — read from the log rather than
+// pre-allocated, which removes the bind-a-port-then-hope-it's-still-free (TOCTOU) race entirely.
+const MAIN_HTTP_PORT_RE = /\bhttp on port (\d+)\]/;
+const CAPTURE_CAP = 8192;
+
+/**
+ * Extract the port the primary HTTP listener bound from wptserve's accumulated log output. Matches
+ * only the `http` scheme's process tag (`[… http on port N]`) — never `http-local`/`http-public`
+ * (no ` on port` right after `http`) nor `https`/the `http://…` message text — so it yields exactly
+ * the origin the fetch tests must target. Returns null until that line appears.
+ */
+export function parseMainHttpPort(logText: string): number | null {
+  const m = MAIN_HTTP_PORT_RE.exec(logText);
+  return m ? Number(m[1]) : null;
 }
 
-/** Poll `origin` until it answers or the deadline passes. */
+/** Poll `origin` until it serves testharness.js or the deadline passes. */
 async function waitReady(origin: string, deadlineMs: number): Promise<boolean> {
   const probeUrl = `${origin}/resources/testharness.js`;
   while (Date.now() < deadlineMs) {
     try {
+      // Loopback is never routed through an HTTP proxy by Bun's fetch, so no proxy bypass is needed.
       const resp = await fetch(probeUrl, { signal: AbortSignal.timeout(1000) });
       await resp.body?.cancel();
       if (resp.status === 200) return true;
@@ -64,25 +70,30 @@ export async function startWptServer(
   opts: { readyTimeoutMs?: number; log?: (msg: string) => void } = {},
 ): Promise<WptServer> {
   const log = opts.log ?? (() => {});
-  const httpPort = await freePort();
-  const httpsPort = await freePort();
-  const origin = `http://${HOST}:${httpPort}`;
 
-  // Minimal override merged over wptserve's built-in config (serve.py `_default`): bind to
-  // loopback, skip the subdomain connectivity check, and disable TLS (the pregenerated cert is for
-  // web-platform.test, which we are not using here). The https listeners fail to start under
-  // ssl.type "none" and are logged-and-skipped by wptserve; the http listener serves regardless.
+  // Minimal override merged over wptserve's built-in config (serve.py `_default`): bind to loopback
+  // explicitly (bind_address:true + browser_host, so serve.py binds the socket to 127.0.0.1 rather
+  // than 0.0.0.0 — not left to the default), skip the subdomain connectivity check, let every port
+  // auto-pick (no pre-allocation race), and disable TLS (the pregenerated cert is for
+  // web-platform.test, which we are not using). The https listeners then fail to start under ssl
+  // "none" and are logged-and-skipped; the http listener serves regardless.
   const configDir = mkdtempSync(join(tmpdir(), "wpt-serve-"));
   const configPath = join(configDir, "config.json");
+  const cleanupConfig = (): void => {
+    try {
+      rmSync(configDir, { recursive: true, force: true });
+    } catch {
+      // best effort
+    }
+  };
   writeFileSync(
     configPath,
     JSON.stringify({
       browser_host: HOST,
+      bind_address: true,
       alternate_hosts: {},
       check_subdomains: false,
-      // wptserve requires two ports each for http/https. We serve on http[0]; the extra http port
-      // and the (never-bound, ssl-disabled) https ports auto-pick to avoid collisions.
-      ports: { http: [httpPort, "auto"], https: [httpsPort, "auto"] },
+      ports: { http: ["auto", "auto"], https: ["auto", "auto"] },
       ssl: { type: "none" },
     }),
   );
@@ -97,35 +108,75 @@ export async function startWptServer(
     if (stopped) return;
     stopped = true;
     try {
-      // wptserve forks multiprocessing child servers and reaps them on its KeyboardInterrupt
-      // (SIGINT) handler; a plain SIGTERM to the parent would orphan those children (the ports
-      // stay bound). Escalate to SIGKILL only if it does not exit promptly.
+      // wptserve forks multiprocessing child listeners and reaps them on its KeyboardInterrupt
+      // (SIGINT) handler; a plain SIGTERM/SIGKILL of the parent would orphan them (ports stay
+      // bound). SIGINT first for a clean reap; if it does not exit in time, SIGKILL the parent AND
+      // pkill anything still holding this server's unique --config path (the forked children
+      // inherit the parent's argv, so they carry it too) — no orphaned listeners survive.
       proc.kill("SIGINT");
-      const grace = setTimeout(() => {
-        try {
-          proc.kill("SIGKILL");
-        } catch {
-          // already gone
-        }
-      }, 5000);
-      void proc.exited.finally(() => clearTimeout(grace));
     } catch {
       // already gone
     }
+    const grace = setTimeout(() => {
+      try {
+        proc.kill("SIGKILL");
+      } catch {
+        // gone
+      }
+      try {
+        Bun.spawn(["pkill", "-9", "-f", configPath], { stdout: "ignore", stderr: "ignore" });
+      } catch {
+        // pkill unavailable / nothing to kill
+      }
+      cleanupConfig();
+    }, 5000);
+    void proc.exited.finally(() => {
+      clearTimeout(grace);
+      cleanupConfig();
+    });
   };
 
   const deadline = Date.now() + (opts.readyTimeoutMs ?? 30_000);
+
+  // Drain both streams (so wptserve never blocks on a full pipe), capturing a bounded tail for
+  // diagnostics and resolving the port as soon as the primary HTTP listener logs it.
+  let capture = "";
+  let resolvePort: (p: number | null) => void = () => {};
+  const portFound = new Promise<number | null>((r) => {
+    resolvePort = r;
+  });
+  const drain = async (stream: ReadableStream<Uint8Array> | undefined): Promise<void> => {
+    if (!stream) return;
+    const dec = new TextDecoder();
+    try {
+      for await (const chunk of stream) {
+        const text = capture + dec.decode(chunk, { stream: true });
+        const port = parseMainHttpPort(text);
+        if (port !== null) resolvePort(port);
+        capture = text.length > CAPTURE_CAP ? text.slice(-CAPTURE_CAP) : text;
+      }
+    } catch {
+      // stream closed
+    }
+  };
+  void drain(proc.stdout as ReadableStream<Uint8Array>);
+  void drain(proc.stderr as ReadableStream<Uint8Array>);
+
+  const port = await Promise.race([
+    portFound,
+    new Promise<null>((r) => setTimeout(() => r(null), Math.max(0, deadline - Date.now()))),
+  ]);
+  if (port === null) {
+    stop();
+    throw new Error(`wptserve did not report a bound HTTP port\n${capture.slice(-2000)}`);
+  }
+
+  const origin = `http://${HOST}:${port}`;
   const ready = await waitReady(origin, deadline);
   if (!ready) {
     stop();
-    let tail = "";
-    try {
-      tail = await new Response(proc.stderr).text();
-    } catch {
-      // ignore
-    }
-    throw new Error(`wptserve did not become ready at ${origin}\n${tail.slice(-2000)}`);
+    throw new Error(`wptserve did not become ready at ${origin}\n${capture.slice(-2000)}`);
   }
   log(`wptserve ready at ${origin}`);
-  return { origin, host: HOST, httpPort, stop };
+  return { origin, host: HOST, httpPort: port, stop };
 }

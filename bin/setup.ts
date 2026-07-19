@@ -186,6 +186,9 @@ function assertSuiteReady(suite: SuiteSetup): void {
   if (missing.length) {
     throw new Error(`${suite.id}: missing required path(s): ${missing.join(", ")}`);
   }
+  if (suite.id === "wpt-wintertc") {
+    assertWptServePatched(checkout);
+  }
 }
 
 async function prepareSuite(suite: SuiteSetup): Promise<void> {
@@ -232,23 +235,70 @@ async function prepareSuite(suite: SuiteSetup): Promise<void> {
  *      vendored `tools/third_party/` deps, with no per-invocation venv/pip step (needs network).
  *   2. `tools/wpt/paths`: drop the `docs/` line so the CLI's command loader does not require
  *      `docs/commands.json`, which the sparse checkout deliberately omits.
- * Idempotent: re-running leaves an already-patched checkout unchanged.
+ * Idempotent: re-running leaves an already-patched checkout unchanged (the paths edit normalizes to
+ * a single trailing newline so a second pass is a no-op). `assertWptServePatched` verifies the
+ * result, so a re-vendored submodule that reset these files is caught by `setup --check`.
  */
+interface ServeCommands {
+  serve?: { virtualenv?: boolean; conditional_requirements?: unknown };
+}
+
+/** Parse `tools/serve/commands.json`, or return null if absent. Throws a clear error on bad JSON. */
+function readServeCommands(commandsPath: string): ServeCommands | null {
+  if (!existsSync(commandsPath)) return null;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(commandsPath, "utf8"));
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : String(err);
+    throw new Error(`wpt serve patch: ${commandsPath} is not valid JSON (${detail})`);
+  }
+  if (typeof parsed !== "object" || parsed === null) {
+    throw new Error(`wpt serve patch: ${commandsPath} is not a JSON object`);
+  }
+  return parsed as ServeCommands;
+}
+
 function patchWptServe(suitePath: string): void {
   const commandsPath = resolve(suitePath, "tools/serve/commands.json");
-  if (existsSync(commandsPath)) {
-    const commands = JSON.parse(readFileSync(commandsPath, "utf8")) as Record<string, { virtualenv?: boolean; conditional_requirements?: unknown }>;
-    if (commands.serve?.virtualenv !== false) {
-      commands.serve.virtualenv = false;
-      delete commands.serve.conditional_requirements;
+  const commands = readServeCommands(commandsPath);
+  if (commands) {
+    const serve = commands.serve;
+    if (!serve) {
+      throw new Error(`wpt serve patch: ${commandsPath} has no "serve" command entry (WPT layout changed?)`);
+    }
+    if (serve.virtualenv !== false) {
+      serve.virtualenv = false;
+      delete serve.conditional_requirements;
       writeFileSync(commandsPath, `${JSON.stringify(commands, null, 2)}\n`);
     }
   }
   const pathsFile = resolve(suitePath, "tools/wpt/paths");
   if (existsSync(pathsFile)) {
-    const lines = readFileSync(pathsFile, "utf8").split("\n");
-    const kept = lines.filter((l: string) => l.trim() !== "docs/");
-    if (kept.length !== lines.length) writeFileSync(pathsFile, kept.join("\n"));
+    const original = readFileSync(pathsFile, "utf8");
+    const kept = original.split("\n").filter((l: string) => l.trim() !== "docs/");
+    const next = `${kept.join("\n").replace(/\n+$/, "")}\n`;
+    if (next !== original) writeFileSync(pathsFile, next);
+  }
+}
+
+/**
+ * Confirm the wpt serve checkout carries the offline patch (see {@link patchWptServe}). Content-based
+ * rather than a marker file, so a re-vendored/updated submodule that silently reset these files is
+ * caught here (by `setup --check`) instead of failing opaquely at server start; `prepareSuite`
+ * re-applies the patch unconditionally, so a plain `setup` self-heals.
+ */
+function assertWptServePatched(suitePath: string): void {
+  const commandsPath = resolve(suitePath, "tools/serve/commands.json");
+  const commands = readServeCommands(commandsPath);
+  if (commands && commands.serve?.virtualenv !== false) {
+    throw new Error(
+      `wpt-wintertc: ${commandsPath} not patched for offline serve (serve.virtualenv must be false) — re-run setup`,
+    );
+  }
+  const pathsFile = resolve(suitePath, "tools/wpt/paths");
+  if (existsSync(pathsFile) && readFileSync(pathsFile, "utf8").split("\n").some((l) => l.trim() === "docs/")) {
+    throw new Error(`wpt-wintertc: ${pathsFile} still lists docs/ (unpatched) — re-run setup`);
   }
 }
 

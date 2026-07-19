@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { AdapterContext } from "./types";
-import { filterIncludedPaths, parseWptLine, parseWptLines, runWptWintertc } from "./wpt-wintertc";
+import { filterIncludedPaths, isFetchTask, parseWptLine, parseWptLines, runWptWintertc } from "./wpt-wintertc";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/wpt-wintertc.ndjson`).text();
 
@@ -232,4 +232,54 @@ setTimeout(() => {
 
   expect(writes).toContain("progress: start url/a.any.js");
   expect(writes).toContain("progress: still running url/a.any.js");
+});
+
+test("isFetchTask gates the server on fetch/ paths only", () => {
+  expect(isFetchTask({ category: "fetch", rel: "fetch/api/basic/a.any.js" })).toBe(true);
+  expect(isFetchTask({ category: "url", rel: "url/a.any.js" })).toBe(false);
+  expect(isFetchTask({ category: "encoding", rel: "encoding/textdecoder.any.js" })).toBe(false);
+});
+
+test("a failed server fails fetch tasks explicitly but leaves serverless tasks running", async () => {
+  const root = mkdtempSync(join(tmpdir(), "wpt-wintertc-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "wpt"); // no ./wpt entrypoint -> startWptServer fails fast
+  const runnerDir = join(root, "suites/drivers/wpt");
+  mkdirSync(suitePath, { recursive: true });
+  mkdirSync(runnerDir, { recursive: true });
+  writeFileSync(
+    manifest,
+    ['[[group]]', 'id = "fetch"', 'include = ["fetch/api/basic/a.any.js"]', "", '[[group]]', 'id = "url"', 'include = ["url/b.any.js"]', ""].join("\n"),
+  );
+  writeFileSync(
+    join(runnerDir, "wintertc-runner.js"),
+    `function arg(name) { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : ""; }
+console.log(JSON.stringify({ path: arg("--test"), subtest: "file", status: "PASS", category: arg("--category") }));
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath: "/fake/elide",
+    repoRoot: root,
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 2,
+    settings: { manifest, timeoutMs: 5_000, serverReadyTimeoutMs: 500 },
+    workspacePath: join(root, "workspace"),
+  };
+  const stderr = spyOn(process.stderr, "write").mockImplementation(() => true);
+  let results;
+  try {
+    results = await collect(runWptWintertc(ctx));
+  } finally {
+    stderr.mockRestore();
+  }
+  const byId = new Map(results.map((r) => [r.id, r]));
+  // Serverless url task ran normally through the fake runner.
+  expect(byId.get("url/b.any.js :: file")?.status).toBe("pass");
+  // Fetch task is an explicit, attributed error — not a silent pass and not an opaque runner failure.
+  const fetchResult = byId.get("fetch/api/basic/a.any.js :: <file>");
+  expect(fetchResult?.status).toBe("error");
+  expect(fetchResult?.message).toContain("wpt-server unavailable");
 });
