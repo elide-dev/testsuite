@@ -94,25 +94,28 @@ function token() {
   return uuid;
 }
 `,
-  // Upstream common/get-host-info.sub.js with static substitutions
-  // (host: web-platform.test, ports: 80/81/443/444).
+  // Upstream common/get-host-info.sub.js. Same-origin host + port derive from self.location, so
+  // they track a running WPT server (WPT_SERVER_ORIGIN); cross-origin subdomains and the second
+  // port have no server here and stay gated.
   "/common/get-host-info.sub.js": `
 function get_host_info() {
-  var HTTP_PORT = '80';
-  var HTTP_PORT2 = '81';
-  var HTTPS_PORT = '443';
-  var HTTPS_PORT2 = '444';
   var PROTOCOL = self.location.protocol;
   var IS_HTTPS = (PROTOCOL == "https:");
+  // Host + primary port track the running server via location; the "second port" and cross-origin
+  // hosts below have no server here (subdomain / multi-port tests stay gated, failing honestly).
+  var ORIGINAL_HOST = self.location.hostname;
+  var HTTP_PORT = (!IS_HTTPS && self.location.port) ? self.location.port : '80';
+  var HTTPS_PORT = (IS_HTTPS && self.location.port) ? self.location.port : '443';
+  var HTTP_PORT2 = '81';
+  var HTTPS_PORT2 = '444';
   var PORT = IS_HTTPS ? HTTPS_PORT : HTTP_PORT;
   var PORT2 = IS_HTTPS ? HTTPS_PORT2 : HTTP_PORT2;
   var HTTP_PORT_ELIDED = HTTP_PORT == "80" ? "" : (":" + HTTP_PORT);
   var HTTP_PORT2_ELIDED = HTTP_PORT2 == "80" ? "" : (":" + HTTP_PORT2);
   var HTTPS_PORT_ELIDED = HTTPS_PORT == "443" ? "" : (":" + HTTPS_PORT);
   var PORT_ELIDED = IS_HTTPS ? HTTPS_PORT_ELIDED : HTTP_PORT_ELIDED;
-  var ORIGINAL_HOST = 'web-platform.test';
   var REMOTE_HOST = (ORIGINAL_HOST === 'localhost') ? '127.0.0.1' : ('www1.' + ORIGINAL_HOST);
-  var OTHER_HOST = 'www2.web-platform.test';
+  var OTHER_HOST = 'www2.' + ORIGINAL_HOST;
   var NOTSAMESITE_HOST = (ORIGINAL_HOST === 'localhost') ? '127.0.0.1' : ('not-' + ORIGINAL_HOST);
   return {
     HTTP_PORT: HTTP_PORT,
@@ -210,13 +213,18 @@ export function buildMetaPreamble(suiteRoot, testRel, source) {
 export function buildEnvPreamble(testRel) {
   const dir = posix.dirname(testRel);
   const pathname = dir === "." ? "/" : `/${dir}/`;
-  const origin = "http://web-platform.test";
+  // When a WPT server is running (fetch tests, WPT_SERVER_ORIGIN set by the adapter), root the
+  // document location at it so relative fetches resolve to real served resources. Otherwise use a
+  // static synthetic origin — enough for tests that only read location, never fetch.
+  const serverOrigin = process.env.WPT_SERVER_ORIGIN;
+  const u = serverOrigin ? new URL(serverOrigin) : null;
+  const origin = u ? u.origin : "http://web-platform.test";
   const location = {
     href: origin + pathname,
-    protocol: "http:",
-    host: "web-platform.test",
-    hostname: "web-platform.test",
-    port: "",
+    protocol: u ? u.protocol : "http:",
+    host: u ? u.host : "web-platform.test",
+    hostname: u ? u.hostname : "web-platform.test",
+    port: u ? u.port : "",
     pathname,
     origin,
     search: "",

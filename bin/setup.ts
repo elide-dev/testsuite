@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { existsSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -40,8 +40,10 @@ const SUITES: SuiteSetup[] = [
     id: "wpt-wintertc",
     aliases: ["wpt", "wpt-wintertc"],
     path: "suites/wpt",
-    sparse: ["resources", "url", "encoding", "fetch"],
-    required: ["resources", "url", "encoding", "fetch"],
+    // `tools` carries wptserve (`wpt serve`) + its vendored deps, needed to serve fetch/ tests
+    // against a real WPT server (see harness/src/adapters/wpt-server.ts).
+    sparse: ["resources", "url", "encoding", "fetch", "tools"],
+    required: ["resources", "url", "encoding", "fetch", "tools/serve/serve.py"],
     filterBlobNone: true,
   },
   {
@@ -216,7 +218,38 @@ async function prepareSuite(suite: SuiteSetup): Promise<void> {
     ], `populating sparse paths for ${suite.id}`);
   }
 
+  if (suite.id === "wpt-wintertc") {
+    patchWptServe(resolve(ROOT, suite.path));
+  }
+
   assertSuiteReady(suite);
+}
+
+/**
+ * Make the vendored `wpt serve` runnable offline inside the harness container. Two in-place edits
+ * to the (submodule-local, uncommitted) checkout, mirroring cloudflare/workerd's WPT patch:
+ *   1. `tools/serve/commands.json`: `virtualenv: false` — run against the system Python + WPT's
+ *      vendored `tools/third_party/` deps, with no per-invocation venv/pip step (needs network).
+ *   2. `tools/wpt/paths`: drop the `docs/` line so the CLI's command loader does not require
+ *      `docs/commands.json`, which the sparse checkout deliberately omits.
+ * Idempotent: re-running leaves an already-patched checkout unchanged.
+ */
+function patchWptServe(suitePath: string): void {
+  const commandsPath = resolve(suitePath, "tools/serve/commands.json");
+  if (existsSync(commandsPath)) {
+    const commands = JSON.parse(readFileSync(commandsPath, "utf8")) as Record<string, { virtualenv?: boolean; conditional_requirements?: unknown }>;
+    if (commands.serve?.virtualenv !== false) {
+      commands.serve.virtualenv = false;
+      delete commands.serve.conditional_requirements;
+      writeFileSync(commandsPath, `${JSON.stringify(commands, null, 2)}\n`);
+    }
+  }
+  const pathsFile = resolve(suitePath, "tools/wpt/paths");
+  if (existsSync(pathsFile)) {
+    const lines = readFileSync(pathsFile, "utf8").split("\n");
+    const kept = lines.filter((l: string) => l.trim() !== "docs/");
+    if (kept.length !== lines.length) writeFileSync(pathsFile, kept.join("\n"));
+  }
 }
 
 async function main(): Promise<number> {

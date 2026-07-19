@@ -5,6 +5,7 @@ import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
 import { runProcess } from "./process";
 import { runTaskPool } from "./pool";
+import { type WptServer, startWptServer } from "./wpt-server";
 
 interface WptBridgeRecord {
   path: string;
@@ -87,13 +88,14 @@ async function runWptTask(
   runner: string,
   skip: Array<(path: string) => boolean>,
   task: WptTask,
+  serverEnv?: Record<string, string>,
 ): Promise<TestResult[]> {
   const stopProgress = startProgress(ctx, task.rel);
   let result;
   try {
     result = await runProcess(
       ["node", runner, "--suite", ctx.suitePath, "--test", task.rel, "--category", task.category, "--elide", ctx.elidePath],
-      { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000) },
+      { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000), env: serverEnv },
     );
   } finally {
     stopProgress();
@@ -123,7 +125,32 @@ export async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestRe
     return filterIncludedPaths(group.include, ctx.include).map((rel) => ({ category: group.id, rel }));
   });
 
-  yield* runTaskPool(tasks, ctx.threads, (task) => runWptTask(ctx, runner, skip, task));
+  // The fetch tests resolve relative URLs against the document location and fetch WPT resources /
+  // handlers; they need a real WPT server. Start one only when fetch tasks are in scope, and never
+  // let a server failure sink the encoding/url tests — those run serverless.
+  const needsServer = tasks.some((t) => t.category === "fetch" || t.rel.startsWith("fetch/"));
+  let server: WptServer | undefined;
+  if (needsServer) {
+    try {
+      server = await startWptServer(ctx.suitePath, {
+        readyTimeoutMs: Number(ctx.settings.serverReadyTimeoutMs ?? 30_000),
+        log: (m) => {
+          if (progressEnabled(ctx)) process.stderr.write(`${ctx.logPrefix ?? ""}${m}\n`);
+        },
+      });
+    } catch (err) {
+      process.stderr.write(
+        `${ctx.logPrefix ?? ""}wpt-server: failed to start; fetch tests will error (${err instanceof Error ? err.message : String(err)})\n`,
+      );
+    }
+  }
+  const serverEnv = server ? { WPT_SERVER_ORIGIN: server.origin } : undefined;
+
+  try {
+    yield* runTaskPool(tasks, ctx.threads, (task) => runWptTask(ctx, runner, skip, task, serverEnv));
+  } finally {
+    server?.stop();
+  }
 }
 
 export const wptWintertcAdapter: Adapter = {

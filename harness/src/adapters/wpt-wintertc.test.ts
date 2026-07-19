@@ -113,6 +113,27 @@ test("META preamble inlines existing scripts, shims virtual ones, and marks miss
   expect(preamble).toContain("missing META script /no/such/helper.js");
 });
 
+test("buildEnvPreamble roots location at WPT_SERVER_ORIGIN when set, else the synthetic origin", async () => {
+  const runner = await import("../../../suites/drivers/wpt/wintertc-runner.js");
+  const prev = process.env.WPT_SERVER_ORIGIN;
+  try {
+    process.env.WPT_SERVER_ORIGIN = "http://127.0.0.1:8123";
+    const withServer = runner.buildEnvPreamble("fetch/api/basic/a.any.js");
+    expect(withServer).toContain('"origin":"http://127.0.0.1:8123"');
+    expect(withServer).toContain('"href":"http://127.0.0.1:8123/fetch/api/basic/"');
+    expect(withServer).toContain('"host":"127.0.0.1:8123"');
+    expect(withServer).toContain('"port":"8123"');
+
+    delete process.env.WPT_SERVER_ORIGIN;
+    const noServer = runner.buildEnvPreamble("fetch/api/basic/a.any.js");
+    expect(noServer).toContain('"origin":"http://web-platform.test"');
+    expect(noServer).not.toContain("127.0.0.1");
+  } finally {
+    if (prev === undefined) delete process.env.WPT_SERVER_ORIGIN;
+    else process.env.WPT_SERVER_ORIGIN = prev;
+  }
+});
+
 function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
   return Array.fromAsync(items);
 }
