@@ -25,18 +25,15 @@ export interface WptServer {
 
 const HOST = "127.0.0.1";
 
-// wptserve logs one line per listener as "[<ts> <scheme> on port <port>] INFO - Starting ...". The
-// primary HTTP listener's scheme is exactly "http" (never "http-local"/"http-public"/"https"), so
-// this uniquely identifies the port wptserve actually bound — read from the log rather than
-// pre-allocated, which removes the bind-a-port-then-hope-it's-still-free (TOCTOU) race entirely.
+// wptserve tags each listener line "[<ts> <scheme> on port <port>] ...". Reading the bound port
+// from the log (rather than pre-allocating one) removes the bind-then-hope-it's-free TOCTOU race.
 const MAIN_HTTP_PORT_RE = /\bhttp on port (\d+)\]/;
 const CAPTURE_CAP = 8192;
 
 /**
- * Extract the port the primary HTTP listener bound from wptserve's accumulated log output. Matches
- * only the `http` scheme's process tag (`[… http on port N]`) — never `http-local`/`http-public`
- * (no ` on port` right after `http`) nor `https`/the `http://…` message text — so it yields exactly
- * the origin the fetch tests must target. Returns null until that line appears.
+ * Port of the primary HTTP listener from wptserve's log output. The regex matches only the `http`
+ * scheme tag — never `http-local`/`http-public`/`https` nor the `http://…` message text. Null until
+ * that line appears.
  */
 export function parseMainHttpPort(logText: string): number | null {
   const m = MAIN_HTTP_PORT_RE.exec(logText);
@@ -71,12 +68,10 @@ export async function startWptServer(
 ): Promise<WptServer> {
   const log = opts.log ?? (() => {});
 
-  // Minimal override merged over wptserve's built-in config (serve.py `_default`): bind to loopback
-  // explicitly (bind_address:true + browser_host, so serve.py binds the socket to 127.0.0.1 rather
-  // than 0.0.0.0 — not left to the default), skip the subdomain connectivity check, let every port
-  // auto-pick (no pre-allocation race), and disable TLS (the pregenerated cert is for
-  // web-platform.test, which we are not using). The https listeners then fail to start under ssl
-  // "none" and are logged-and-skipped; the http listener serves regardless.
+  // Override merged over wptserve's `_default` config: bind loopback explicitly (bind_address +
+  // browser_host → 127.0.0.1, not 0.0.0.0), skip the subdomain check, auto-pick every port, and
+  // disable TLS (the pregenerated cert is for web-platform.test). The ssl-"none" https listeners
+  // fail to start and are logged-and-skipped; the http listener serves regardless.
   const configDir = mkdtempSync(join(tmpdir(), "wpt-serve-"));
   const configPath = join(configDir, "config.json");
   const cleanupConfig = (): void => {
