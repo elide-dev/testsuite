@@ -1,0 +1,35 @@
+{
+  "from": {
+    "semver": "1.4.0+edea5ebd9",
+    "digest": "d0a092aa83f7f1588c9e5053a564166d8fed8a3e389e30c30b25b593ddbdad14"
+  },
+  "to": {
+    "semver": "1.4.0+801fbbc34",
+    "digest": "6c16d765505117657d8e4748b5b8cd63395a6f93530ca88df069278d547a007f"
+  },
+  "fixed": [
+    "test/built-ins/Atomics/wait/bigint/false-for-timeout.js default",
+    "test/built-ins/Atomics/wait/bigint/false-for-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/bigint/negative-timeout.js default",
+    "test/built-ins/Atomics/wait/bigint/negative-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/false-for-timeout.js default",
+    "test/built-ins/Atomics/wait/false-for-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/negative-timeout.js default",
+    "test/built-ins/Atomics/wait/negative-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/null-for-timeout.js default",
+    "test/built-ins/Atomics/wait/null-for-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/object-for-timeout.js default",
+    "test/built-ins/Atomics/wait/object-for-timeout.js strict mode",
+    "test/built-ins/Atomics/wait/true-for-timeout.js default",
+    "test/built-ins/Atomics/wait/true-for-timeout.js strict mode"
+  ],
+  "regressed": [
+    "test/built-ins/Atomics/wait/bigint/cannot-suspend-throws.js default",
+    "test/built-ins/Atomics/wait/bigint/cannot-suspend-throws.js strict mode",
+    "test/built-ins/Atomics/wait/cannot-suspend-throws.js default",
+    "test/built-ins/Atomics/wait/cannot-suspend-throws.js strict mode"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 218
+}

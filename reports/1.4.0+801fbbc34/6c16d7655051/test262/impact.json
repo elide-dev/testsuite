@@ -1,0 +1,73 @@
+{
+  "bySignature": [
+    {
+      "signature": "java.lang.IllegalStateException: Creating threads is not allowed. at :program (<loc>)",
+      "count": 218,
+      "exampleIds": [
+        "test/built-ins/Atomics/notify/count-defaults-to-infinity-undefined.js default",
+        "test/built-ins/Atomics/notify/count-defaults-to-infinity-missing.js strict mode",
+        "test/built-ins/Atomics/notify/count-defaults-to-infinity-undefined.js strict mode",
+        "test/built-ins/Atomics/notify/count-defaults-to-infinity-missing.js default",
+        "test/built-ins/Atomics/notify/negative-count.js strict mode"
+      ],
+      "samples": [
+        "java.lang.IllegalStateException: Creating threads is not allowed.\n    at :program (f-1783278573144-27-n1r1i2.byzi.js:562:3)",
+        "java.lang.IllegalStateException: Creating threads is not allowed.\n    at :program (f-1783278573141-27-fm4egn.unler.js:565:3)",
+        "java.lang.IllegalStateException: Creating threads is not allowed.\n    at :program (f-1783278573146-27-1nww6m2.gad7.js:563:3)",
+        "java.lang.IllegalStateException: Creating threads is not allowed.\n    at :program (f-1783278573137-27-1jhnulz.yx3h.js:564:3)",
+        "java.lang.IllegalStateException: Creating threads is not allowed.\n    at :program (f-1783278573231-27-400tc5.mfnns.js:554:1)"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all",
+      "count": 4,
+      "exampleIds": [
+        "test/built-ins/Atomics/wait/cannot-suspend-throws.js default",
+        "test/built-ins/Atomics/wait/cannot-suspend-throws.js strict mode",
+        "test/built-ins/Atomics/wait/bigint/cannot-suspend-throws.js default",
+        "test/built-ins/Atomics/wait/bigint/cannot-suspend-throws.js strict mode"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "Atomics",
+      "count": 222
+    },
+    {
+      "feature": "SharedArrayBuffer",
+      "count": 216
+    },
+    {
+      "feature": "TypedArray",
+      "count": 216
+    },
+    {
+      "feature": "Atomics.waitAsync",
+      "count": 100
+    },
+    {
+      "feature": "arrow-function",
+      "count": 96
+    },
+    {
+      "feature": "async-functions",
+      "count": 96
+    },
+    {
+      "feature": "BigInt",
+      "count": 86
+    },
+    {
+      "feature": "Symbol",
+      "count": 18
+    },
+    {
+      "feature": "Symbol.toPrimitive",
+      "count": 18
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+5e7d6a48e",
+      "digest": "dd28294684cffe5f4f5e6f1655be3b9f9da07b800f5684339eadc0635586eaee"
+    },
+    "startedAt": "2026-07-07T01:36:36.534Z",
+    "finishedAt": "2026-07-07T01:39:58.268Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 309,
+    "fail": 874,
+    "skip": 345,
+    "error": 35,
+    "total": 1563
+  },
+  "regressions": [
+    "test/parallel/test-fs-read-stream-pos.js"
+  ],
+  "newPasses": [
+    "test/parallel/test-worker-unref-from-message-during-exit.js"
+  ]
+}

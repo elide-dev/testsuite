@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.0+e90472917",
+      "digest": "5bd510eb4c72a64e66021a081d9d74aea1bb5fd7ab9b3bbebde6e0ff6b58102b"
+    },
+    "startedAt": "2026-07-05T20:40:53.693Z",
+    "finishedAt": "2026-07-05T20:44:24.881Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 311,
+    "fail": 873,
+    "skip": 345,
+    "error": 34,
+    "total": 1563
+  },
+  "regressions": [],
+  "newPasses": [
+    "test/parallel/test-stream2-set-encoding.js",
+    "test/parallel/test-worker-unref-from-message-during-exit.js"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "from": {
+    "semver": "1.4.0+edea5ebd9",
+    "digest": "d0a092aa83f7f1588c9e5053a564166d8fed8a3e389e30c30b25b593ddbdad14"
+  },
+  "to": {
+    "semver": "1.4.0+e90472917",
+    "digest": "5bd510eb4c72a64e66021a081d9d74aea1bb5fd7ab9b3bbebde6e0ff6b58102b"
+  },
+  "fixed": [
+    "test/parallel/test-stream2-set-encoding.js",
+    "test/parallel/test-worker-unref-from-message-during-exit.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 907
+}

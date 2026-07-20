@@ -1,0 +1,47 @@
+{
+  "bySignature": [
+    {
+      "signature": "en-US-u-nu-hanidec: display all time units in <n>-digit Expected SameValue(«false», «true») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/DateTimeFormat/prototype/format/numbering-system.js default",
+        "test/intl402/DateTimeFormat/prototype/format/numbering-system.js strict mode"
+      ],
+      "samples": [
+        "en-US-u-nu-hanidec: display all time units in 2-digit Expected SameValue(«false», «true») to be true"
+      ]
+    },
+    {
+      "signature": "islamic-civil eras (Anno Hegirae,Anno Hegirae) should be unique Expected SameValue(«<n>», «<n>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/DateTimeFormat/prototype/formatToParts/era.js default",
+        "test/intl402/DateTimeFormat/prototype/formatToParts/era.js strict mode"
+      ],
+      "samples": [
+        "islamic-civil eras (Anno Hegirae,Anno Hegirae) should be unique Expected SameValue(«1», «2») to be true"
+      ]
+    },
+    {
+      "signature": "non-continental timezone Etc/GMT+<n> is not supported",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/Intl/supportedValuesOf/timeZones-include-non-continental.js strict mode",
+        "test/intl402/Intl/supportedValuesOf/timeZones-include-non-continental.js default"
+      ],
+      "samples": [
+        "non-continental timezone Etc/GMT+1 is not supported"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "Intl-enumeration",
+      "count": 2
+    },
+    {
+      "feature": "Intl.Era-monthcode",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "from": {
+    "semver": "1.4.0+fe8ca1ef6",
+    "digest": "eae94dd2ac6f3adf30aecc22462c04fe9de1896efbdbfc7cc1454397bf062a34"
+  },
+  "to": {
+    "semver": "1.4.0+edea5ebd9",
+    "digest": "d0a092aa83f7f1588c9e5053a564166d8fed8a3e389e30c30b25b593ddbdad14"
+  },
+  "fixed": [],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 909
+}

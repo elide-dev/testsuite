@@ -1,0 +1,42 @@
+# Changes — `1.4.0+5e7d6a48e` → `1.4.1+d089fc65d`
+
+- From: `1.4.0+5e7d6a48e` (`dd28294684cffe5f4f5e6f1655be3b9f9da07b800f5684339eadc0635586eaee`)
+- To: `1.4.1+d089fc65d` (`4efe10f815d4882fa5cd90770eeee30c944862746a80f75406e33536d101e2fc`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 31 | 1 | 0 | 336 |
+
+## ✅ Fixed (31)
+
+- `test_calendar.CommandLineTestCase.test_help`
+- `test_calendar.CommandLineTestCase.test_html_output_current_year`
+- `test_calendar.CommandLineTestCase.test_html_output_year_css`
+- `test_calendar.CommandLineTestCase.test_html_output_year_encoding`
+- `test_calendar.CommandLineTestCase.test_illegal_arguments`
+- `test_calendar.CommandLineTestCase.test_option_encoding`
+- `test_calendar.CommandLineTestCase.test_option_lines`
+- `test_calendar.CommandLineTestCase.test_option_locale`
+- `test_calendar.CommandLineTestCase.test_option_months`
+- `test_calendar.CommandLineTestCase.test_option_spacing`
+- `test_calendar.CommandLineTestCase.test_option_type`
+- `test_calendar.CommandLineTestCase.test_option_width`
+- `test_calendar.CommandLineTestCase.test_output_month`
+- `test_gzip.TestCommandLine.test_compress_fast_best_are_exclusive`
+- `test_gzip.TestCommandLine.test_decompress_cannot_have_flags_compression`
+- `test_gzip.TestCommandLine.test_decompress_infile_outfile`
+- `test_gzip.TestCommandLine.test_decompress_stdin_stdout`
+- `test_inspect.test_inspect.TestGetsourceInteractive.test_getclasses_interactive`
+- `test_json.test_tool.TestTool.test_compact`
+- `test_json.test_tool.TestTool.test_ensure_ascii_default`
+- `test_json.test_tool.TestTool.test_help_flag`
+- `test_json.test_tool.TestTool.test_indent`
+- `test_json.test_tool.TestTool.test_infile_outfile`
+- `test_json.test_tool.TestTool.test_infile_stdout`
+- `test_json.test_tool.TestTool.test_jsonlines`
+- `test_json.test_tool.TestTool.test_no_ensure_ascii_flag`
+- `test_json.test_tool.TestTool.test_no_indent`
+- `test_json.test_tool.TestTool.test_non_ascii_infile`
+- `test_json.test_tool.TestTool.test_sort_keys_flag`
+- `test_json.test_tool.TestTool.test_tab`
+- `test_json.test_tool.TestTool.test_writing_in_place`

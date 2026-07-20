@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.1+d089fc65d",
+      "digest": "4efe10f815d4882fa5cd90770eeee30c944862746a80f75406e33536d101e2fc"
+    },
+    "startedAt": "2026-07-15T00:40:12.609Z",
+    "finishedAt": "2026-07-15T00:43:42.806Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 310,
+    "fail": 874,
+    "skip": 345,
+    "error": 34,
+    "total": 1563
+  },
+  "regressions": [],
+  "newPasses": [
+    "test/parallel/test-worker-unref-from-message-during-exit.js"
+  ]
+}
