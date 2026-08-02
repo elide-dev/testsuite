@@ -2,6 +2,50 @@
   "runs": [
     {
       "workload": "test262",
+      "semver": "1.4.2+20260802.a0d5a22",
+      "digest": "unknown",
+      "pass": 96126,
+      "total": 103361,
+      "skip": 7187,
+      "regressions": 0,
+      "finishedAt": "2026-08-02T09:13:20.337Z",
+      "reportDir": "1.4.2+20260802.a0d5a22/unknown/test262"
+    },
+    {
+      "workload": "javac-jtreg",
+      "semver": "1.4.2+20260802.a0d5a22",
+      "digest": "unknown",
+      "pass": 3658,
+      "total": 3934,
+      "skip": 274,
+      "regressions": 2,
+      "finishedAt": "2026-08-02T08:55:33.487Z",
+      "reportDir": "1.4.2+20260802.a0d5a22/unknown/javac-jtreg"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.4.2+20260802.a0d5a22",
+      "digest": "unknown",
+      "pass": 4646,
+      "total": 5334,
+      "skip": 405,
+      "regressions": 0,
+      "finishedAt": "2026-08-02T08:52:35.511Z",
+      "reportDir": "1.4.2+20260802.a0d5a22/unknown/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.4.2+20260802.a0d5a22",
+      "digest": "unknown",
+      "pass": 12606,
+      "total": 15171,
+      "skip": 661,
+      "regressions": 0,
+      "finishedAt": "2026-08-02T08:50:54.145Z",
+      "reportDir": "1.4.2+20260802.a0d5a22/unknown/wpt-wintertc"
+    },
+    {
+      "workload": "test262",
       "semver": "1.4.2+8bf2c6fb1",
       "digest": "dce38dd7dc4c",
       "pass": 96126,

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
+  <title id="title">wpt-wintertc pass-rate chart</title>
+  <desc id="desc">12606 of 15171 tests passed.</desc>
+  <rect width="720" height="170" fill="#ffffff"/>
+  <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">wpt-wintertc</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">12606/15171 pass (86.9%)</text>
+  <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
+  <rect x="40.00" y="84" width="531.79" height="28" fill="#198754"><title>pass: 12606</title></rect>
+  <rect x="571.79" y="84" width="79.82" height="28" fill="#dc3545"><title>fail: 1892</title></rect>
+  <rect x="651.61" y="84" width="0.51" height="28" fill="#6f42c1"><title>error: 12</title></rect>
+  <rect x="652.12" y="84" width="27.88" height="28" fill="#6c757d"><title>skip: 661</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 1892 · error 12 · skip 661 · regressions 0</text>
+</svg>

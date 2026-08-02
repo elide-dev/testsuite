@@ -1,0 +1,25 @@
+{
+  "bySignature": [
+    {
+      "signature": "Output does not match reference file: Package.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/neg/Package.java"
+      ],
+      "samples": [
+        "Output does not match reference file: Package.out, line 1"
+      ]
+    },
+    {
+      "signature": "Output does not match reference file: WrongTarget.out, line <n>",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/annotations/neg/WrongTarget.java"
+      ],
+      "samples": [
+        "Output does not match reference file: WrongTarget.out, line 1"
+      ]
+    }
+  ],
+  "byFeature": []
+}
