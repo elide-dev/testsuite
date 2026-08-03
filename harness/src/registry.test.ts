@@ -67,5 +67,10 @@ test("loads node-api workload from registry.toml", () => {
   expect(node!.adapter).toBe("node-api");
   expect(node!.path).toBe("suites/node");
   expect(node!.settings.manifest).toBe("manifests/node-api.toml");
-  expect(node!.settings.elideRunArgs).toEqual(["--sandbox", "--allow-read", "--allow-write"]);
+  expect(node!.settings.elideRunArgs).toEqual([
+    "-XX:MaxHeapSize=4g",
+    "--sandbox",
+    "--allow-read",
+    "--allow-write",
+  ]);
 });

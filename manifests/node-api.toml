@@ -16,6 +16,7 @@ id = "async-hooks"
 include = [
   "test/parallel/test-async-hooks*.js",
   "test/parallel/test-async-local*.js",
+  "test/parallel/test-async-wrap*.js",
 ]
 tags = ["node", "api", "async_hooks"]
 
@@ -23,8 +24,23 @@ tags = ["node", "api", "async_hooks"]
 id = "buffer"
 include = [
   "test/parallel/test-buffer*.js",
+  "test/parallel/test-stringbytes*.js",
 ]
 tags = ["node", "api", "buffer"]
+
+[[group]]
+id = "child-process"
+include = [
+  "test/parallel/test-child-process*.js",
+]
+tags = ["node", "api", "child_process"]
+
+[[group]]
+id = "cluster"
+include = [
+  "test/parallel/test-cluster*.js",
+]
+tags = ["node", "api", "cluster"]
 
 [[group]]
 id = "console"
@@ -49,11 +65,25 @@ include = [
 tags = ["node", "api", "diagnostics_channel"]
 
 [[group]]
+id = "dgram"
+include = [
+  "test/parallel/test-dgram*.js",
+]
+tags = ["node", "api", "dgram"]
+
+[[group]]
 id = "dns"
 include = [
   "test/parallel/test-dns*.js",
 ]
 tags = ["node", "api", "dns"]
+
+[[group]]
+id = "domain"
+include = [
+  "test/parallel/test-domain*.js",
+]
+tags = ["node", "api", "domain"]
 
 [[group]]
 id = "events"
@@ -67,8 +97,31 @@ id = "fs"
 include = [
   "test/parallel/test-fs*.js",
   "test/parallel/test-vfs-fs*.js",
+  "test/parallel/test-file*.js",
 ]
 tags = ["node", "api", "fs"]
+
+[[group]]
+id = "http"
+include = [
+  "test/parallel/test-http*.js",
+]
+tags = ["node", "api", "http"]
+
+[[group]]
+id = "https"
+include = [
+  "test/parallel/test-https*.js",
+]
+tags = ["node", "api", "https"]
+
+[[group]]
+id = "intl"
+include = [
+  "test/parallel/test-icu*.js",
+  "test/parallel/test-intl*.js",
+]
+tags = ["node", "api", "intl", "icu"]
 
 [[group]]
 id = "module-loading"
@@ -81,6 +134,20 @@ include = [
 tags = ["node", "api", "modules", "commonjs", "esm"]
 
 [[group]]
+id = "net"
+include = [
+  "test/parallel/test-net*.js",
+]
+tags = ["node", "api", "net"]
+
+[[group]]
+id = "os"
+include = [
+  "test/parallel/test-os*.js",
+]
+tags = ["node", "api", "os"]
+
+[[group]]
 id = "path"
 include = [
   "test/parallel/test-path*.js",
@@ -88,16 +155,39 @@ include = [
 tags = ["node", "api", "path"]
 
 [[group]]
+id = "perf-hooks"
+include = [
+  "test/parallel/test-perf*.js",
+]
+tags = ["node", "api", "perf_hooks"]
+
+[[group]]
 id = "process"
 include = [
   "test/parallel/test-process*.js",
+  "test/parallel/test-memory-usage*.js",
 ]
 tags = ["node", "api", "process"]
+
+[[group]]
+id = "querystring"
+include = [
+  "test/parallel/test-querystring*.js",
+]
+tags = ["node", "api", "querystring"]
+
+[[group]]
+id = "readline"
+include = [
+  "test/parallel/test-readline*.js",
+]
+tags = ["node", "api", "readline"]
 
 [[group]]
 id = "streams"
 include = [
   "test/parallel/test-stream*.js",
+  "test/parallel/test-string-decoder*.js",
 ]
 tags = ["node", "api", "stream"]
 
@@ -111,12 +201,26 @@ include = [
 tags = ["node", "api", "timers"]
 
 [[group]]
+id = "tty"
+include = [
+  "test/parallel/test-tty*.js",
+]
+tags = ["node", "api", "tty"]
+
+[[group]]
 id = "url"
 include = [
   "test/parallel/test-url*.js",
   "test/parallel/test-whatwg-url*.js",
 ]
 tags = ["node", "api", "url", "whatwg-url"]
+
+[[group]]
+id = "v8"
+include = [
+  "test/parallel/test-v8*.js",
+]
+tags = ["node", "api", "v8"]
 
 [[group]]
 id = "util"
@@ -133,8 +237,32 @@ include = [
 tags = ["node", "api", "vm"]
 
 [[group]]
+id = "web-globals"
+include = [
+  "test/parallel/test-blob*.js",
+  "test/parallel/test-broadcastchannel*.js",
+  "test/parallel/test-btoa-atob.js",
+  "test/parallel/test-global*.js",
+  "test/parallel/test-messageport*.js",
+  "test/parallel/test-microtask*.js",
+  "test/parallel/test-webstreams*.js",
+  "test/parallel/test-whatwg-encoding*.js",
+  "test/parallel/test-whatwg-events*.js",
+  "test/parallel/test-whatwg-readable*.js",
+  "test/parallel/test-whatwg-writable*.js",
+]
+tags = ["node", "api", "web", "wintercg"]
+
+[[group]]
 id = "worker-threads"
 include = [
   "test/parallel/test-worker*.js",
 ]
 tags = ["node", "api", "worker_threads"]
+
+[[group]]
+id = "zlib"
+include = [
+  "test/parallel/test-zlib*.js",
+]
+tags = ["node", "api", "zlib"]
