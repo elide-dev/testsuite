@@ -1,6 +1,50 @@
 # WinterTC / WPT expectations baseline.
-# Keys are picomatch globs over WPT-relative test paths, without the subtest suffix.
+# Keys are picomatch globs over WPT-relative test paths (no subtest suffix). Skipped tests leave the
+# pass-rate denominator (rate over run, not selection); ratcheted per-subtest failures are counted
+# but expected. Skip only what is structurally unreachable -- never a file with passing subtests.
 
 [skip]
+# TLS / HTTP-2 -- unreachable transport. The wptserve sidecar is plain HTTP on loopback (no WPT-CA
+# trust, HTTP/2 off), so .https / .h2 tests can't run on their required transport; the few that pass
+# over plain HTTP are not valid signals for it. Skipped wholesale rather than counted.
+# The `.https.` / `.h2.` infix marks the required transport in WPT (also in `.https.sub.any.js`,
+# `.tentative.https.any.js`, `.https.window.js`, ...), so match it anywhere in the filename.
+"**/*.https.*" = "no TLS: HTTP-only server cut, no WPT-CA trust"
+"**/*.h2.*" = "no HTTP/2: server started with --no-h2"
+
+# Browser-only `.window.js` (no document / window / navigation). Only window-scoped files with ZERO
+# headless passes are skipped; those that DO pass headless (encoding/single-byte-decoder,
+# fetch/content-type/multipart, fetch/h1-parsing/{lone-cr,status-code}) stay in so their passes
+# count and failures ratchet -- same rule as encodeInto. On a re-vendor, a new `.window.js` runs
+# (failures show as regressions) until triaged here.
+"fetch/fetch-later/**" = "browser-only: fetchLater needs window / iframe / bfcache"
+"encoding/streams/invalid-realm.window.js" = "browser-only: window-scoped, no headless pass"
+"encoding/streams/realms.window.js" = "browser-only: window-scoped, no headless pass"
+"encoding/unsupported-labels.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/api/basic/mediasource.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/api/request/multi-globals/construct-in-detached-frame.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/content-length/parsing.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/content-length/too-long.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/content-type/response.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/content-type/script.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/data-urls/navigate.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/h1-parsing/resources-with-0x00-in-header.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/local-network-access/navigate.tentative.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/nosniff/parsing-nosniff.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/origin/assorted.window.js" = "browser-only: window-scoped, no headless pass"
+"fetch/range/general.window.js" = "browser-only: window-scoped, no headless pass"
+"url/javascript-urls.window.js" = "browser-only: window-scoped, no headless pass"
+"url/percent-encoding.window.js" = "browser-only: window-scoped, no headless pass"
+"url/toascii.window.js" = "browser-only: window-scoped, no headless pass"
+"url/url-setters-a-area.window.js" = "browser-only: window-scoped, no headless pass"
+
+# encoding/encodeInto.any.js is NOT skipped: its valid-destination subtests pass. Known failures
+# (ratcheted): the SharedArrayBuffer subtests (need WebAssembly.Memory) plus 12 non-SAB -- the
+# invalid-destination checks for non-Uint8Array typed arrays over ArrayBuffer, and the detached
+# buffer. Skipping the file would drop its passes, so it stays scored.
+
+# Cross-origin fetch subtests (CORS, CORP, cross-origin redirects) aren't file-globbable -- they sit
+# among same-origin subtests in otherwise-passing files and need the web-platform.test subdomain
+# aliases this loopback cut lacks. They stay ratcheted: structurally plateaued, not regressions.
 
 [fail]
