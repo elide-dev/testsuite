@@ -21,6 +21,7 @@ async function readCapped(
   stream: ReadableStream<Uint8Array>,
   cap: number,
   onLine?: (line: string) => void,
+  sink?: { text: string },
 ): Promise<string> {
   const decoder = new TextDecoder();
   let output = "";
@@ -48,6 +49,7 @@ async function readCapped(
     const remaining = Math.max(0, cap - total);
     if (remaining > 0) output += text.slice(0, remaining);
     total += chunk.byteLength;
+    if (sink) sink.text = output;
   }
   const rest = decoder.decode();
   if (rest) {
@@ -60,28 +62,56 @@ async function readCapped(
   return output;
 }
 
+// Grace between reaping the process group and dropping the pipes. A descendant that
+// opened its own session escapes the group kill and keeps the inherited pipes open,
+// which would stall the read for as long as it lives.
+const PIPE_GIVEUP_MS = 2_000;
+
 export async function runProcess(argv: string[], options: ProcessRunOptions): Promise<ProcessRunResult> {
   const started = performance.now();
+  // Own process group, so a timeout reaps the whole tree. Node's core suite spawns
+  // children that outlive the test process and hold its stdout open; killing the
+  // entry process alone leaves them running and the read below never ends.
   const proc = Bun.spawn(argv, {
     cwd: options.cwd,
     env: { ...process.env, ...options.env },
     stdout: "pipe",
     stderr: "pipe",
+    detached: true,
   });
+  const stdoutStream = proc.stdout as ReadableStream<Uint8Array>;
+  const stderrStream = proc.stderr as ReadableStream<Uint8Array>;
 
   let timedOut = false;
+  let abandonPipes: () => void = () => {};
+  const abandoned = new Promise<void>((resolve) => {
+    abandonPipes = resolve;
+  });
+  let giveUpTimer: ReturnType<typeof setTimeout> | undefined;
   const timer = setTimeout(() => {
     timedOut = true;
-    proc.kill("SIGKILL");
+    try {
+      process.kill(-proc.pid, "SIGKILL");
+    } catch {
+      proc.kill("SIGKILL");
+    }
+    giveUpTimer = setTimeout(abandonPipes, PIPE_GIVEUP_MS);
   }, options.timeoutMs);
 
   const cap = options.maxOutputBytes ?? 1_000_000;
-  const [stdout, stderr] = await Promise.all([
-    readCapped(proc.stdout as ReadableStream<Uint8Array>, cap, options.onStdoutLine),
-    readCapped(proc.stderr as ReadableStream<Uint8Array>, cap, options.onStderrLine),
+  const outSink = { text: "" };
+  const errSink = { text: "" };
+  const captured = Promise.all([
+    readCapped(stdoutStream, cap, options.onStdoutLine, outSink),
+    readCapped(stderrStream, cap, options.onStderrLine, errSink),
   ]);
+  // Whole-read give-up rather than a cancel: Bun's subprocess pipes reject an
+  // explicit reader, so the pending read is left behind with what it collected.
+  const complete = await Promise.race([captured, abandoned.then(() => undefined)]);
+  const [stdout, stderr] = complete ?? [outSink.text, errSink.text];
   const exitCode = await proc.exited;
   clearTimeout(timer);
+  if (giveUpTimer) clearTimeout(giveUpTimer);
 
   return {
     command: argv,
