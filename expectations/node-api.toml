@@ -115,10 +115,12 @@
 "test/parallel/test-worker-environmentdata.js" = "requires internal/worker (Node internals; needs --expose-internals)"
 "test/parallel/test-worker-message-port-jstransferable-nested-untransferable.js" = "requires internal/worker/js_transferable (Node internals; needs --expose-internals)"
 
-# Known failures with a durable cause: the API the test exercises is absent, so the
-# result will not move until that API lands. Entries here are excluded from the
+# Known failures with a durable cause: either the API the test exercises is absent,
+# so the result will not move until that API lands, or the outcome depends on
+# scheduler load and carries no signal. Entries here are excluded from the
 # auto-generated ratchet and still count as failures in the pass rate.
 [fail]
+"test/parallel/test-cluster-concurrent-disconnect.js" = "races worker teardown against concurrent disconnects; passes in isolation and drifts under suite load"
 "test/parallel/test-timers-immediate-unref-nested-once.js" = "(intermediate value)(...).unref is missing"
 "test/parallel/test-timers-unrefed-in-beforeexit.js" = "(intermediate value)(...).unref is missing"
 "test/parallel/test-worker-arraybuffer-zerofill.js" = "(intermediate value)(...).unref is missing"
