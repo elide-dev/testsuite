@@ -127,3 +127,68 @@ bun run testsuite --elide nightly --suite node-api --ratchet
   mismatch stack traces point there, not at a runtime bug in itself.
 - After a fix lands: full run → check `changes.md` (new passes, no
   regressions) → `--ratchet` → commit reports + expectations together.
+
+## Failure classification (1423 accepted failures, snapshot at `1.4.2+c928728a8`)
+
+Signatures were taken from a diagnostic run with the per-test timeout cut to 10s
+(a hang carries no cause), normalized (paths, numbers, addresses stripped), then
+grouped. 563 distinct signatures reduce to these classes:
+
+| Verdict | Tests | Signatures |
+|---|---:|---:|
+| behaviour mismatch | 607 | 254 |
+| our defect: hang until timeout | 319 | 1 |
+| absent API | 149 | 115 |
+| not applicable: Node internals | 81 | 6 |
+| our defect: over-strict validation | 55 | 35 |
+| our defect: missing object or property | 45 | 34 |
+| one-off, needs reading | 45 | 45 |
+| error raised by the test itself | 37 | 26 |
+| our defect: swallowed handler exception | 26 | 20 |
+| our defect: CLI argument parsing | 22 | 11 |
+| spec divergence | 18 | 7 |
+| our defect: module resolution | 12 | 5 |
+| our defect: engine context | 4 | 1 |
+| not applicable: V8 test intrinsics | 3 | 3 |
+
+Reading the classes:
+
+- **absent API** and **not applicable** entries carry a per-test reason in
+  `expectations/node-api.toml`; everything else sits in the ratchet, which holds
+  no reasons because a run rewrites it.
+- **hang until timeout** is one signature because the harness reports every hang
+  identically; the causes underneath differ per area (http, cluster, dgram).
+- **swallowed handler exception** used to hide failures entirely: an exception in
+  a socket/child event handler was logged and the process still exited zero, so
+  affected tests counted as passes. Routed to `uncaughtException` in the http,
+  net, tls, dgram and child_process bridges; the measured pass rate dropped
+  accordingly and is now honest.
+- **over-strict validation** means Elide throws where Node accepts (duck-typed
+  streams, path arguments); the message quoted in the signature is ours, not
+  Node's.
+
+### Where the behaviour mismatches sit
+
+The 607-test mismatch class by subsystem (representatives in brackets):
+
+| Subsystem | Tests | Representative |
+|---|---:|---|
+| stream | 98 | test-stream-iter-consumers-text.js |
+| http | 72 | test-http-agent-maxtotalsockets.js |
+| fs | 63 | test-fs-internal-assertencoding.js |
+| worker_threads | 41 | test-worker-message-port-transfer-closed.js |
+| process | 37 | test-process-config.js |
+| buffer | 32 | test-buffer-bigint64.js |
+| diagnostics_channel | 32 | test-diagnostics-channel-pub-sub.js |
+| vm | 30 | test-vm-is-context.js |
+| net | 29 | test-net-better-error-messages-path.js |
+| child_process | 24 | test-child-process-advanced-serialization.js |
+| whatwg url | 23 | test-whatwg-url-custom-searchparams-append.js |
+| zlib | 22 | test-zlib-brotli-dictionary.js |
+| async_hooks | 21 | test-async-hooks-constructor.js |
+| timers | 20 | test-timers-promises-scheduler.js |
+
+Mismatches do not share a single cause the way the hang class does: each
+subsystem needs its representative read, the divergence reproduced in a small
+script, and the runtime fixed. Working from the top of this table maximizes
+tests-per-fix.
