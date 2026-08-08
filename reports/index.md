@@ -6,6 +6,6 @@
 |---|---|---|---:|:--:|
 | cpython-core | `1.4.2+8bf2c6fb1` | `dce38dd7dc4c` | 96.6% | ✅ |
 | javac-jtreg | `1.4.2+8bf2c6fb1` | `dce38dd7dc4c` | 100.0% | ✅ |
-| node-api | `1.4.2+e38113fcf` | `6b43d803f4e8` | 35.8% | ✅ |
+| node-api | `1.4.2+7b76e7355` | `435f8c409bd4` | 43.2% | ✅ |
 | test262 | `1.4.2+8bf2c6fb1` | `dce38dd7dc4c` | 100.0% | ✅ |
 | wpt-wintertc | `1.4.2+8bf2c6fb1` | `dce38dd7dc4c` | 86.9% | ✅ |
