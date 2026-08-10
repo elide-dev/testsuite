@@ -1,0 +1,21 @@
+{
+  "from": {
+    "semver": "1.4.2+1de97a056",
+    "digest": "4fbdd01b03aa0c85f6ab7468e4c4d89107a24e4ca3e03f59950b126e12929bd5"
+  },
+  "to": {
+    "semver": "1.4.2+1de97a056",
+    "digest": "e9a347078bd9986d48c8eea15c5d53288a0988c47cc0dc5af436471abe7882ef"
+  },
+  "fixed": [
+    "test/parallel/test-async-local-storage-bind.js",
+    "test/parallel/test-buffer-inspect.js",
+    "test/parallel/test-buffer-set-inspect-max-bytes.js"
+  ],
+  "regressed": [
+    "test/parallel/test-http-raw-headers.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 1057
+}
