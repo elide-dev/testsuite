@@ -2,7 +2,7 @@
 
 ## By root-cause signature
 
-### 95 × `Node API test timed out`
+### 94 × `Node API test timed out`
 
 distinct messages:
 - `Node API test timed out`
@@ -116,20 +116,20 @@ example test: `test/parallel/test-fs-access.js`
 ### 9 × `(node:<n>) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Bu`
 
 distinct messages:
-- `(node:754) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+- `(node:1142) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 AssertionError: Expected values to be strictly equal:  5 !== 4
     at :=> (test-buffer-alloc.js:293:5)
-    at :`
-- `(node:788) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+    at `
+- `(node:1150) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 AssertionError: Missing expected exception (RangeError).
     at :anonymous (test-buffer-arraybuffer.js:120:3)
- `
-- `(node:1114) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
-AssertionError: DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use th`
-- `(node:972) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+`
+- `(node:1190) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 AssertionError: Expected values to be strictly equal:  2 !== 3
-    at :anonymous (test-buffer-bytelength.js:101`
-- `(node:1338) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+    at :anonymous (test-buffer-bytelength.js:10`
+- `(node:1274) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+AssertionError: DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use th`
+- `(node:1410) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 AssertionError: Missing expected exception (TypeError).
     at :anonymous (test-buffer-new.js:6:1)
     at :pro`
@@ -584,18 +584,18 @@ undefined !== 236
     at Object._return (/work/.harn`
 - `AssertionError: Expected values to be strictly equal:
 
-undefined !== 512
-
-    at Object.messageSent (test-dgram-send-callback-multi-buffer-empty-address.js:10:10)
-    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:17)
-    at Object._return (/work/.harne`
-- `AssertionError: Expected values to be strictly equal:
-
 undefined !== 236
 
     at Object.messageSent (test-dgram-send-callback-buffer-length.js:36:10)
     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:17)
     at Object._return (/work/.harness/work/node-`
+- `AssertionError: Expected values to be strictly equal:
+
+undefined !== 512
+
+    at Object.messageSent (test-dgram-send-callback-multi-buffer-empty-address.js:10:10)
+    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:17)
+    at Object._return (/work/.harne`
 example test: `test/parallel/test-dgram-connect-send-callback-buffer-length.js`
 
 ### 4 × `Mismatched noop function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at <loc> at <loc> Mismatched noop function calls. Expected exactly <`
@@ -670,18 +670,18 @@ example test: `test/parallel/test-util-inspect-namespace.js`
 
 distinct messages:
 - `AssertionError: Expected values to be strictly deep-equal: + actual - expected  + Comparison {} - Comparison { -   code: 'ERR_INVALID_ARG_TYPE' - }
-    at :=> (test-buffer-isutf8.js:68:3)
-    at :anonymous (test-buffer-isutf8.js:61:1)
-    at :program (test-buffer-isutf8.js:1:1)`
-- `AssertionError: Expected values to be strictly deep-equal: + actual - expected  + Comparison {} - Comparison { -   code: 'ERR_INVALID_ARG_TYPE' - }
     at :=> (test-buffer-isascii.js:24:3)
     at :anonymous (test-buffer-isascii.js:14:1)
     at :program (test-buffer-isascii.js:1:1)`
 - `AssertionError: Expected values to be strictly deep-equal: + actual - expected  + Comparison {} - Comparison { -   code: 'ERR_INVALID_ARG_TYPE' - }
+    at :=> (test-buffer-isutf8.js:68:3)
+    at :anonymous (test-buffer-isutf8.js:61:1)
+    at :program (test-buffer-isutf8.js:1:1)`
+- `AssertionError: Expected values to be strictly deep-equal: + actual - expected  + Comparison {} - Comparison { -   code: 'ERR_INVALID_ARG_TYPE' - }
     at :=> (test-zlib-crc32.js:206:3)
     at :anonymous (test-zlib-crc32.js:205:1)
     at :program (test-zlib-crc32.js:1:1)`
-example test: `test/parallel/test-buffer-isutf8.js`
+example test: `test/parallel/test-buffer-isascii.js`
 
 ### 3 × `AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { - code: <str>, name: <str> } at :=> (<loc>) at :anonymous (<loc>) at`
 
@@ -712,8 +712,8 @@ distinct messages:
 - `AssertionError: Expected values to be strictly equal:
 + actual - expected
 
-+ "ECONNREFUSED: connection refused, tcp-connect '::1:35119' (errno=111)"
-- 'connect ECONNREFUSED ::1:35119'
++ "ECONNREFUSED: connection refused, tcp-connect '::1:44063' (errno=111)"
+- 'connect ECONNREFUSED ::1:44063'
 
     at Duplex.<anonymous> (test-net-autoselectfamily-commandline-option.js:35:16)
     at Duplex._return (/work/.har`
@@ -847,16 +847,16 @@ undefined !== 256
 
 undefined !== 256
 
-    at Object.<anonymous> (test-dgram-send-callback-buffer.js:12:10)
+    at Object.<anonymous> (test-dgram-send-callback-buffer-empty-address.js:12:10)
     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:17)
-    at Object._return (/work/.harness/work/node-api/nod`
+    at Object._return (/work/.harness/wor`
 - `AssertionError: Expected values to be strictly equal:
 
 undefined !== 256
 
-    at Object.<anonymous> (test-dgram-send-callback-buffer-empty-address.js:12:10)
+    at Object.<anonymous> (test-dgram-send-callback-buffer.js:12:10)
     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:17)
-    at Object._return (/work/.harness/wor`
+    at Object._return (/work/.harness/work/node-api/nod`
 example test: `test/parallel/test-dgram-connect-send-callback-buffer.js`
 
 ### 3 × `AssertionError: function should not have been called at <loc> at EventEmitter.mustNotCall (<loc>) at EventEmitter.emit (native)`
@@ -1037,24 +1037,24 @@ example test: `test/parallel/test-async-hooks-async-await.js`
 
 distinct messages:
 - `Uncaught (in promise) TypeError: foo.linkRequests is not a function`
-example test: `test/parallel/test-vm-module-linkmodulerequests-deep.js`
+example test: `test/parallel/test-vm-module-linkmodulerequests-circular.js`
 
-### 2 × `[ [ SegfaultHandler caught a segfault in thread <n> ] ] siginfo: si_signo: <n>, si_code: <n>, si_addr: <n> (heapBase + <n>) General purpose register values: RAX`
+### 2 × `[ [ SegfaultHandler caught a segfault in thread <n> ] ] siginfo: si_signo: <n>, si_code: <n>, si_addr: <n> (heapBase - <n>) General purpose register values: RAX`
 
 distinct messages:
-- `[ [ SegfaultHandler caught a segfault in thread 0x00007a1468000cc0 ] ]
-siginfo: si_signo: 11, si_code: 1, si_addr: 0x00007d7acf91d750 (heapBase + 3742654388048)
+- `[ [ SegfaultHandler caught a segfault in thread 0x00007fd4bc000cc0 ] ]
+siginfo: si_signo: 11, si_code: 1, si_addr: 0x00007d7acf91d750 (heapBase - 2580946757808)
 
 General purpose register values:
   RAX 0x0000000000000000 
-  RBX 0x00007a147e259038 points into the stack for thread 0x00007a1468000cc0
+  RBX 0x00007fd4d3da9038 points into the stack for thread 0x00007fd4bc000cc0
   `
-- `[ [ SegfaultHandler caught a segfault in thread 0x00007b6fe4000cc0 ] ]
-siginfo: si_signo: 11, si_code: 1, si_addr: 0x00007d7acf91d360 (heapBase + 2250220360544)
+- `[ [ SegfaultHandler caught a segfault in thread 0x00007eb680000cc0 ] ]
+siginfo: si_signo: 11, si_code: 1, si_addr: 0x00007d7acf91d360 (heapBase - 1351579479200)
 
 General purpose register values:
   RAX 0x0000000000000000 
-  RBX 0x00007b6ff8f9a448 points into the stack for thread 0x00007b6fe4000cc0
+  RBX 0x00007eb695a3a448 points into the stack for thread 0x00007eb680000cc0
   `
 example test: `test/parallel/test-os-process-priority.js`
 
@@ -1308,12 +1308,13 @@ false !== true
 
     at EventEmitter.<anonymous> (test-http-outgoing-finish-writable.js:39:10)
     at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
-    at EventEmitter.emit (native)`
+    at EventEmitter.emit (native)
+AssertionErro`
 - `AssertionError: Expected values to be strictly equal:
 
 false !== true
 
-    at EventEmitter.<anonymous> (test-net-server-drop-connections.js:16:10)
+    at EventEmitter.<anonymous> (test-net-server-drop-connections.js:25:10)
     at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
     at EventEmitter.emit (native)
 AssertionError:`
@@ -1412,7 +1413,7 @@ example test: `test/parallel/test-vm-module-evaluate-synthethic-module-rejection
 ### 2 × `Error: ECONNRESET: connection reset by peer, tcp-read <str> (errno=<n>)`
 
 distinct messages:
-- `Error: ECONNRESET: connection reset by peer, tcp-read '5' (errno=104)`
+- `Error: ECONNRESET: connection reset by peer, tcp-read '7' (errno=104)`
 - `Error: ECONNRESET: connection reset by peer, tcp-read '3' (errno=104)`
 example test: `test/parallel/test-net-connect-abort-controller.js`
 
@@ -1426,6 +1427,19 @@ distinct messages:
     at :anonymous (test-zlib-from-gzip-with-trailing-garbage.js:15:20)
     at :program (test-zlib-from-gzip-with-trailing-garbage.js:1:1)`
 example test: `test/parallel/test-zlib-from-concatenated-gzip.js`
+
+### 2 × `Fatal error: java.lang.OutOfMemoryError: Could not allocate an aligned heap chunk because the heap address space is exhausted. Consider re-building the image wi`
+
+distinct messages:
+- `Fatal error: java.lang.OutOfMemoryError: Could not allocate an aligned heap chunk because the heap address space is exhausted. Consider re-building the image with compressed references disabled ('-H:-UseCompressedReferences').
+
+Printing instructions (ip=0x0000644788fa185b):
+  0x0000644788fa175b: 0x0`
+- `Fatal error: java.lang.OutOfMemoryError: Could not allocate an aligned heap chunk because the heap address space is exhausted. Consider re-building the image with compressed references disabled ('-H:-UseCompressedReferences').
+
+Printing instructions (ip=0x00005ae98095185b):
+  0x00005ae98095175b: 0x0`
+example test: `test/parallel/test-child-process-advanced-serialization-largebuffer.js`
 
 ### 2 × `java.lang.IllegalArgumentException: Unknown language or instrument id dev.elide.runtime, known ids: DAPOutputProviderInstrument, OutputProviderInstrument, TypeP`
 
@@ -1458,6 +1472,21 @@ distinct messages:
     at Proxy.expectsError (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:796:10)
     at test-stream-writable-write-cb-`
 example test: `test/parallel/test-net-connect-reset.js`
+
+### 2 × `RangeError: <str> is outside of buffer bounds at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (native) AssertionError: `
+
+distinct messages:
+- `RangeError: "offset" is outside of buffer bounds
+    at EventEmitter.<anonymous> (test-dgram-send-default-host.js:33:12)
+    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
+    at EventEmitter.emit (native)
+AssertionError: Expected values to be str`
+- `RangeError: "offset" is outside of buffer bounds
+    at EventEmitter.<anonymous> (test-dgram-udp6-send-default-host.js:36:12)
+    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
+    at EventEmitter.emit (native)
+AssertionError: Expected values to b`
+example test: `test/parallel/test-dgram-send-default-host.js`
 
 ### 2 × `ReferenceError: WebAssembly is not defined at :anonymous (<loc>) at :program (<loc>)`
 
@@ -1497,10 +1526,10 @@ distinct messages:
     # Subtest: performs flush
     not ok 2 - performs flush
       ---
-      duration_ms: 3
+      duration_ms: 14
       failureType: 'testCodeFailure'
       error: "Expected values to be strictly equal:\n\n0 !== 1\n"
-      code: `
+      code:`
 - `TAP version 13
 # Subtest: synchronous version
     # Subtest: validation
@@ -1508,7 +1537,7 @@ distinct messages:
     # Subtest: performs flush
     not ok 2 - performs flush
       ---
-      duration_ms: 5
+      duration_ms: 4
       failureType: 'testCodeFailure'
       error: "Expected values to be strictly equal:\n\n0 !== 1\n"
       code: `
@@ -1700,12 +1729,12 @@ example test: `test/parallel/test-vm-module-evaluate-source-text-module.js`
 
 distinct messages:
 - `TypeError: The "err" argument must be of type number. Received undefined
-    at :anonymous (test-child-process-spawnsync.js:40:20)
-    at :program (test-child-process-spawnsync.js:1:1)`
-- `TypeError: The "err" argument must be of type number. Received undefined
     at :anonymous (test-child-process-spawnsync-timeout.js:52:24)
     at :program (test-child-process-spawnsync-timeout.js:1:1)`
-example test: `test/parallel/test-child-process-spawnsync.js`
+- `TypeError: The "err" argument must be of type number. Received undefined
+    at :anonymous (test-child-process-spawnsync.js:40:20)
+    at :program (test-child-process-spawnsync.js:1:1)`
+example test: `test/parallel/test-child-process-spawnsync-timeout.js`
 
 ### 2 × `TypeError: The URL must be of scheme file at :anonymous (<loc>) at :program (<loc>)`
 
@@ -1761,16 +1790,16 @@ example test: `test/parallel/test-async-hooks-promise-triggerid.js`
 ### 1 × `(node:<n>) DeprecationWarning: Something is deprecated. AssertionError: received unexpected warning at process.listener (<loc>) (node:<n>) DeprecationWarning: S`
 
 distinct messages:
-- `(node:35552) DeprecationWarning: Something is deprecated.
+- `(node:36619) DeprecationWarning: Something is deprecated.
 AssertionError: received unexpected warning
     at process.listener (test-process-no-deprecation.js:13:10)
-(node:35552) DeprecationWarning: Something else is deprecated.`
+(node:36619) DeprecationWarning: Something else is deprecated.`
 example test: `test/parallel/test-process-no-deprecation.js`
 
 ### 1 × `(node:<n>) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. <n> default listeners added to [EventEmitter]. MaxListeners is <n>. Use emit`
 
 distinct messages:
-- `(node:16755) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 default listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+- `(node:17766) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 default listeners added to [EventEmitter]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
 AssertionError: The expression evaluated to a falsy value:    assert.ok(e._events.default.warned)
   `
 example test: `test/parallel/test-event-emitter-check-listener-leaks.js`
@@ -1778,21 +1807,21 @@ example test: `test/parallel/test-event-emitter-check-listener-leaks.js`
 ### 1 × `(node:<n>) TimeoutNaNWarning: NaN is not a number. Timeout duration was set to <n>.`
 
 distinct messages:
-- `(node:38409) TimeoutNaNWarning: NaN is not a number.
+- `(node:39470) TimeoutNaNWarning: NaN is not a number.
 Timeout duration was set to 1.`
 example test: `test/parallel/test-timers-invalid-clear.js`
 
 ### 1 × `(node:<n>) TimeoutOverflowWarning: <n> does not fit into a <n>-bit signed integer. Timeout duration was set to <n>.`
 
 distinct messages:
-- `(node:38415) TimeoutOverflowWarning: 2147483648 does not fit into a 32-bit signed integer.
+- `(node:39486) TimeoutOverflowWarning: 2147483648 does not fit into a 32-bit signed integer.
 Timeout duration was set to 1.`
 example test: `test/parallel/test-timers-max-duration-warning.js`
 
 ### 1 × `(node:<n>) TimeoutOverflowWarning: <n> does not fit into a <n>-bit signed integer. Timeout duration was set to <n>. AssertionError: The expression evaluated to `
 
 distinct messages:
-- `(node:27117) TimeoutOverflowWarning: 1099511627776 does not fit into a 32-bit signed integer.
+- `(node:28168) TimeoutOverflowWarning: 1099511627776 does not fit into a 32-bit signed integer.
 Timeout duration was set to 1.
 AssertionError: The expression evaluated to a falsy value:
 
@@ -1804,22 +1833,22 @@ example test: `test/parallel/test-http-timeout-client-warning.js`
 ### 1 × `(node:<n>) Warning: A Warning (node:<n>) CustomWarning: A Warning (node:<n>) Warning: A Warning (node:<n>) CustomWarning: A Warning (node:<n>) [CODE001] CustomW`
 
 distinct messages:
-- `(node:34858) Warning: A Warning
-(node:34858) CustomWarning: A Warning
-(node:34858) Warning: A Warning
-(node:34858) CustomWarning: A Warning
-(node:34858) [CODE001] CustomWarning: A Warning
-(node:34858) CustomWarning: A Warning
-(node:34858) [CODE001] CustomWarning: A Warning
-(node:34858) [CODE001] Cus`
+- `(node:35898) Warning: A Warning
+(node:35898) CustomWarning: A Warning
+(node:35898) Warning: A Warning
+(node:35898) CustomWarning: A Warning
+(node:35898) [CODE001] CustomWarning: A Warning
+(node:35898) CustomWarning: A Warning
+(node:35898) [CODE001] CustomWarning: A Warning
+(node:35898) [CODE001] Cus`
 example test: `test/parallel/test-process-emitwarning.js`
 
 ### 1 × `(node:<n>) Warning: test AssertionError: stderr.write must not be called at <loc> called with arguments: <str> at mustNotCall (<loc>) at Writable.write (<loc>) `
 
 distinct messages:
-- `(node:35790) Warning: test
+- `(node:36874) Warning: test
 AssertionError: stderr.write must not be called at test-process-warning.js:13
-called with arguments: '(node:35790) Warning: test\n'
+called with arguments: '(node:36874) Warning: test\n'
     at mustNotCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:631:12)
     at Writable.write (/work/.harness/work/nod`
 example test: `test/parallel/test-process-warning.js`
@@ -1827,24 +1856,24 @@ example test: `test/parallel/test-process-warning.js`
 ### 1 × `[process <n>]: --- stderr --- (node:<n>) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(`
 
 distinct messages:
-- `[process 1340]: --- stderr ---
-(node:1340) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+- `[process 1263]: --- stderr ---
+(node:1263) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
 
-[process 1340]: --- stdout ---
+[process 1263]: --- stdout ---
 
-[process 1340]: status = 0, signal = null
+[process 1263]: status = 0, signal = null
 Erro`
 example test: `test/parallel/test-buffer-constructor-node-modules.js`
 
 ### 1 × `[process <n>]: --- stderr --- Error: Source is not a file or is not readable: /work/.harness/work/node-api/node-api-overlay/test/fixtures/spawn-worker-with-copi`
 
 distinct messages:
-- `[process 42324]: --- stderr ---
+- `[process 43375]: --- stderr ---
 Error: Source is not a file or is not readable: /work/.harness/work/node-api/node-api-overlay/test/fixtures/spawn-worker-with-copied-env; see --help
 
-[process 42324]: --- stdout ---
+[process 43375]: --- stdout ---
 
-[process 42324]: status = 1, signal = null
+[process 43375]: status = 1, signal = null
 Error: - process terminated with status 1,`
 example test: `test/parallel/test-worker-node-options.js`
 
@@ -1859,7 +1888,7 @@ example test: `test/parallel/test-http-agent.js`
 distinct messages:
 - `> CLIENT SENDING REQUEST {"expectClose":true,"data":"POST / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"}
 <  SERVER SENDING RESPONSE {"headers":{"Connection":"keep-alive"},"chunks":["OK"]}
- > CLIENT ONDATA 82 "HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nDate: Sun, 09 Aug 2026 21:58:09 GMT\r\n\r\nOK"`
+ > CLIENT ONDATA 82 "HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nDate: Mon, 10 Aug 2026 01:12:34 GMT\r\n\r\nOK"`
 example test: `test/parallel/test-http-1.0-keep-alive.js`
 
 ### 1 × `AssertionError at :anonymous (<loc>) at :program (<loc>)`
@@ -2242,7 +2271,7 @@ distinct messages:
 
   [
     'host',
-    '127.0.0.1:39711',
+    '127.0.0.1:40153',
     'foo',
     'bar',
 ...
@@ -2271,7 +2300,7 @@ distinct messages:
 ...
     'JJJ; KKK; LLL',
 +   'Date',
-+   'Sun, 09 Aug 2026 21:58:43 GMT',
++   'Mon, 10 Aug 2026 01:16:10 GMT',
     'Transfer-Encoding',
     'chunked'
   ]
@@ -2343,11 +2372,11 @@ distinct messages:
 
   [
 +   'HOST',
-+   '127.0.0.1:40405',
++   '127.0.0.1:36111',
     'test',
     'value',
 -   'HOST',
--   '127.0.0.1:40405',
+-   '127.0.0.1:36111',
     'foo',
     'bar',
     'foo',
@@ -2393,7 +2422,7 @@ distinct messages:
 -   'array-val',
     '2',
 +   'Date',
-+   'Sun, 09 Aug 2026 21:59:05 GMT'
++   'Mon, 10 Aug 2026 01:19:49 GMT'
   ]
 
     at Writable.<anonymous> (test-http-write-head-after-set-header.js:27:12)
@@ -2424,7 +2453,7 @@ distinct messages:
 
   [
     'Host',
-    '127.0.0.1:39455',
+    '127.0.0.1:46453',
 +   'Connection',
 +   'keep-alive',
 +   'Content-Length',
@@ -2453,7 +2482,7 @@ distinct messages:
     'keep-alive': 'timeout=1',
     'transfer-encoding': 'chunked',
     connection: 'keep-alive',
-+   date: 'Sun, 09 Aug 2026 21:58:39 GMT'
++   date: 'Mon, 10 Aug 2026 01:15:04 GMT'
   }
 
     at Writable.<anonymous> (test-http-content-`
@@ -2473,8 +2502,8 @@ distinct messages:
 + actual - expected
 
   {
-+   state: '/8'
--   state: '/1'
++   state: '/9'
+-   state: '/0'
   }
 
     at Readable.<anonymous> (test-async-hooks-execution-async-resource.js:39:14)
@@ -3022,7 +3051,7 @@ distinct messages:
 
 + 'HTTP/1.1 200 OK\r\n' +
 +   'Content-Type: text/plain\r\n' +
-+   'Date: Sun, 09 Aug 2026 21:58:34 GMT\r\n' +
++   'Date: Mon, 10 Aug 2026 01:13:35 GMT\r\n' +
 +   'Connection: keep-alive\r\n' +
 +   'Keep-Alive: timeout=65\r\n' +
 +   'Transfer-Encoding: chunked\r\n' +
@@ -3633,7 +3662,7 @@ distinct messages:
 
 undefined !== 5
 
-    at Object.<anonymous> (test-net-keepalive-interval-count.js:46:20)
+    at Object.<anonymous> (test-net-keepalive-interval-count.js:23:20)
     at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
     at Duplex.<anonymous> (test-net-keepalive-interval-coun`
 example test: `test/parallel/test-net-keepalive-interval-count.js`
@@ -3765,7 +3794,7 @@ example test: `test/parallel/test-timers-to-primitive.js`
 
 distinct messages:
 - `AssertionError: function should not have been called at test-dgram-ipv6only.js:32
-called with arguments: [Error: EADDRINUSE: address already in use, udp-bind '0.0.0.0:53957' (errno=98)] {
+called with arguments: [Error: EADDRINUSE: address already in use, udp-bind '0.0.0.0:47002' (errno=98)] {
   code: 'EADDRINUSE',
   errno: 98,
   syscall: 'bind'
@@ -3827,7 +3856,7 @@ example test: `test/parallel/test-diagnostics-channel-tracing-channel-sync-early
 
 distinct messages:
 - `AssertionError: function should not have been called at test-child-process-ipc.js:38
-called with arguments: <Buffer 54 79 70 65 45 72 72 6f 72 3a 20 28 69 6e 74 65 72 6d 65 64 69 61 74 65 20 76 61 6c 75 65 29 2e 6f 70 65 6e 53 74 64 69 6e 20 69 73 20 6e 6f 74 20 61 ... 10 more bytes>
+called with arguments: <Buffer 54 79 70 65 45 72 72 6f 72 3a 20 28 69 6e 74 65 72 6d 65 64 69 61 74 65 20 76 61 6c 75 65 29 2e 6f 70 65 6e 53 74 64 69 6e 20 69 73 20 6e 6f 74 20 61 ... 74 more bytes>
     at Readable`
 example test: `test/parallel/test-child-process-ipc.js`
 
@@ -3845,7 +3874,7 @@ example test: `test/parallel/test-net-onread-static-buffer.js`
 
 distinct messages:
 - `AssertionError: function should not have been called at test-child-process-no-deprecation.js:14
-called with arguments: <Buffer 28 6e 6f 64 65 3a 33 34 36 37 29 20 44 65 70 72 65 63 61 74 69 6f 6e 57 61 72 6e 69 6e 67 3a 20 53 6f 6d 65 74 68 69 6e 67 20 65 6c 73 65 20 69 73 20 ... 12 more bytes>
+called with arguments: <Buffer 28 6e 6f 64 65 3a 37 34 37 38 29 20 44 65 70 72 65 63 61 74 69 6f 6e 57 61 72 6e 69 6e 67 3a 20 53 6f 6d 65 74 68 69 6e 67 20 65 6c 73 65 20 69 73 20 ... 12 more bytes>
     `
 example test: `test/parallel/test-child-process-no-deprecation.js`
 
@@ -4713,7 +4742,7 @@ example test: `test/parallel/test-process-exit-code.js`
 ### 1 × `com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for JSToObjectNodeGen.Uncached@21291bf6: [dev.elide.lang.javascript.no`
 
 distinct messages:
-- `com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for JSToObjectNodeGen.Uncached@21291bf6: [dev.elide.lang.javascript.node.events.JSEventEmitter$BorrowedEmitterState@36b58029], [BorrowedEmitterState]
+- `com.oracle.truffle.api.dsl.UnsupportedSpecializationException: Unexpected values provided for JSToObjectNodeGen.Uncached@21291bf6: [dev.elide.lang.javascript.node.events.JSEventEmitter$BorrowedEmitterState@6190df21], [BorrowedEmitterState]
     at :anonymous (native)
     at :program (test-fs-stream-c`
 example test: `test/parallel/test-fs-stream-construct-compat-old-node.js`
@@ -4759,12 +4788,12 @@ example test: `test/parallel/test-domain-nested.js`
 ### 1 × `Error: ECONNREFUSED: connection refused, tcp-connect <str> (errno=<n>) AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str>`
 
 distinct messages:
-- `Error: ECONNREFUSED: connection refused, tcp-connect '::1:36401' (errno=111)
+- `Error: ECONNREFUSED: connection refused, tcp-connect '::1:40585' (errno=111)
 AssertionError: Expected values to be strictly equal:
 + actual - expected
 
-+ "ECONNREFUSED: connection refused, tcp-connect '::1:45637' (errno=111)"
-- 'connect ECONNREFUSED ::1:45637'
++ "ECONNREFUSED: connection refused, tcp-connect '::1:43215' (errno=111)"
+- 'connect ECONNREFUSED ::1:43215'
 
     at Duplex.<anonymous> (test-net-au`
 example test: `test/parallel/test-net-autoselectfamily-default.js`
@@ -4855,12 +4884,6 @@ distinct messages:
     at :anonymous (test-fs-chmod-mask.js:88:1)
     at :program (test-fs-chmod-mask.js:1:1)`
 example test: `test/parallel/test-fs-chmod-mask.js`
-
-### 1 × `Error: EPIPE: broken pipe, tcp-write <str> (errno=<n>)`
-
-distinct messages:
-- `Error: EPIPE: broken pipe, tcp-write '2' (errno=32)`
-example test: `test/parallel/test-http-keep-alive-pipeline-max-requests.js`
 
 ### 1 × `Error: Error`
 
@@ -5464,35 +5487,6 @@ distinct messages:
 AssertionError: Expected values to be strictly equal: + actual - expected    'This is the outer level\n' + +   '\n' + +   'Level 2\n' + +   '\n' + +   'Level 3\n' + +   'Back to level 2\n' + -   '  Level 2\n' + -   '    Level 3\n' + -   '  Back to level 2\n' +     'Back to the outer `
 example test: `test/parallel/test-console-group.js`
 
-### 1 × `ok Mismatched <anonymous> function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at EventEmitter.<anonymous> (<loc>) at EventEmitter._retur`
-
-distinct messages:
-- `ok
-Mismatched <anonymous> function calls. Expected exactly 1, actual 0.
-    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:531:10)
-    at EventEmitter.<anonymous> (test-http-raw-headers.js:61:24)
-    at EventEmitter._return (/work/.harness/work/node-api/node-ap`
-example test: `test/parallel/test-http-raw-headers.js`
-
-### 1 × `RangeError: <str> is outside of buffer bounds at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (native)`
-
-distinct messages:
-- `RangeError: "offset" is outside of buffer bounds
-    at EventEmitter.<anonymous> (test-dgram-udp6-send-default-host.js:36:12)
-    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
-    at EventEmitter.emit (native)`
-example test: `test/parallel/test-dgram-udp6-send-default-host.js`
-
-### 1 × `RangeError: <str> is outside of buffer bounds at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (native) AssertionError: `
-
-distinct messages:
-- `RangeError: "offset" is outside of buffer bounds
-    at EventEmitter.<anonymous> (test-dgram-send-default-host.js:33:12)
-    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
-    at EventEmitter.emit (native)
-AssertionError: Expected values to be str`
-example test: `test/parallel/test-dgram-send-default-host.js`
-
 ### 1 × `RangeError: Maximum call stack size exceeded at :anonymous (<loc>) at :program (<loc>)`
 
 distinct messages:
@@ -5652,7 +5646,7 @@ distinct messages:
 # Subtest: Assert class destructuring behavior - diff option
 not ok 1 - Assert class destructuring behavior - diff option
   ---
-  duration_ms: 1
+  duration_ms: 3
   failureType: 'testCodeFailure'
   error: "Assert is not a constructor"
   code: 'ERR_TEST_FAILURE'
@@ -5667,7 +5661,7 @@ distinct messages:
 # Subtest: Assert constructor requires new
 not ok 1 - Assert constructor requires new
   ---
-  duration_ms: 8
+  duration_ms: 6
   failureType: 'testCodeFailure'
   error: "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n-   code: 'ERR_CONSTRUCT_CALL_REQUIRED',\n    name`
 example test: `test/parallel/test-assert-class.js`
@@ -5681,7 +5675,7 @@ distinct messages:
         # Subtest: resolves require() through package map
         not ok 1 - resolves require() through package map
           ---
-          duration_ms: 75
+          duration_ms: 68
           failureType: 'testCodeFailure'
           err`
 example test: `test/parallel/test-require-package-map.js`
@@ -5723,9 +5717,9 @@ distinct messages:
     # Subtest: should return code 1 for each command
     not ok 1 - should return code 1 for each command
       ---
-      duration_ms: 117
+      duration_ms: 52
       failureType: 'testCodeFailure'
-      error: "Expected `
+      error: "Expected v`
 example test: `test/parallel/test-assert-esm-cjs-message-verify.js`
 
 ### 1 × `TAP version <n> # Subtest: format invalid input not ok <n> - format invalid input --- duration_ms: <n> failureType: <str> error: <str> code: <str> ... <n>..<n> `
@@ -5758,7 +5752,7 @@ distinct messages:
 # Subtest: format slightly wonky content to a valid URL
 not ok 1 - format slightly wonky content to a valid URL
   ---
-  duration_ms: 4
+  duration_ms: 3
   failureType: 'testCodeFailure'
   error: "wonky format(http://example.com?) == http://example.com/?\nactual:\n+ actual - expected\n\n+ ''\n- 'http://`
 example test: `test/parallel/test-url-format.js`
@@ -5770,7 +5764,7 @@ distinct messages:
 # Subtest: fs.stat should throw AbortError when called with an already aborted AbortSignal
 not ok 1 - fs.stat should throw AbortError when called with an already aborted AbortSignal
   ---
-  duration_ms: 4
+  duration_ms: 1
   failureType: 'testCodeFailure'
   error: "Missing expected rejection (AbortErro`
 example test: `test/parallel/test-fs-stat-abort-test.js`
@@ -5795,7 +5789,7 @@ distinct messages:
 # Subtest: module is not instantiated yet
 not ok 1 - module is not instantiated yet
   ---
-  duration_ms: 4
+  duration_ms: 3
   failureType: 'testCodeFailure'
   error: "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ Comparison {}\n- Comparison {\n-   code: 'ERR_VM_MODULE_STATUS'\n-`
 example test: `test/parallel/test-vm-module-hasasyncgraph.js`
@@ -5839,7 +5833,7 @@ ok 1 - should format
 # Subtest: handle invalid arguments
 not ok 2 - handle invalid arguments
   ---
-  duration_ms: 0
+  duration_ms: 1
   failureType: 'testCodeFailure'
   error: "Missing expected exception (TypeError)."
   code: 'ERR_ASSERTION'
@@ -5854,7 +5848,7 @@ distinct messages:
 # Subtest: should parse and format
 not ok 1 - should parse and format
   ---
-  duration_ms: 9
+  duration_ms: 6
   failureType: 'testCodeFailure'
   error: "parsing //some_path and expected Url {\n  protocol: null,\n  slashes: null,\n  auth: null,\n  host: null,\n  port: null,\n  hostname: null,\n  hash: `
 example test: `test/parallel/test-url-parse-format.js`
@@ -5866,7 +5860,7 @@ distinct messages:
 # Subtest: simple module
 not ok 1 - simple module
   ---
-  duration_ms: 2
+  duration_ms: 0
   failureType: 'testCodeFailure'
   error: "foo.linkRequests is not a function"
   code: 'ERR_TEST_FAILURE'
@@ -5913,7 +5907,7 @@ distinct messages:
 # Subtest: SourceTextModule.moduleRequests should return module requests
 not ok 1 - SourceTextModule.moduleRequests should return module requests
   ---
-  duration_ms: 4
+  duration_ms: 1
   failureType: 'testCodeFailure'
   error: "Cannot read property 'length' of undefined"
   code: 'ERR_TEST_FAILURE'
@@ -5970,7 +5964,7 @@ not ok 1 - zlib flush
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 9`
+# duration_ms 4`
 example test: `test/parallel/test-zlib-flush.js`
 
 ### 1 × `Trace: in nexttick false AssertionError: Expected values to be strictly equal: + actual - expected + undefined - Domain { - members: [] - } at <loc>`
@@ -6276,7 +6270,7 @@ example test: `test/parallel/test-zlib-deflate-raw-inherits.js`
 
 distinct messages:
 - `TypeError: client._handle.close is not a function
-    at Duplex.<anonymous> (test-net-socket-write-after-close.js:17:22)
+    at Duplex.<anonymous> (test-net-socket-write-after-close.js:37:22)
     at Duplex._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:573:12)
     at Duplex.emit (native)
     at TypeError.get stack (native)
@@ -7422,21 +7416,11 @@ TypeError: Cannot read property 'name' of undefined
     at EventEmitter`
 example test: `test/parallel/test-child-process-spawn-controller.js`
 
-### 1 × `Unhandled exception: java.lang.OutOfMemoryError: Could not allocate an aligned heap chunk because the heap address space is exhausted. Consider re-building the `
-
-distinct messages:
-- `Unhandled exception: java.lang.OutOfMemoryError: Could not allocate an aligned heap chunk because the heap address space is exhausted. Consider re-building the image with compressed references disabled ('-H:-UseCompressedReferences').
-
-Fatal error: Unhandled exception
-
-Printing instructions (ip=0x00`
-example test: `test/parallel/test-http-pipeline-flood.js`
-
 ## By feature
 
 | count | feature |
 |---:|---|
-| 162 | node:http |
+| 160 | node:http |
 | 94 | node:streams |
 | 85 | node:worker-threads |
 | 83 | node:fs |

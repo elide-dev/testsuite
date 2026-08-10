@@ -4,11 +4,11 @@
       "workload": "node-api",
       "semver": "1.4.2+1de97a056",
       "digest": "e9a347078bd9",
-      "pass": 1075,
+      "pass": 1077,
       "total": 3071,
       "skip": 938,
-      "regressions": 7,
-      "finishedAt": "2026-08-09T22:01:36.895Z",
+      "regressions": 0,
+      "finishedAt": "2026-08-10T01:30:39.172Z",
       "reportDir": "1.4.2+1de97a056/e9a347078bd9/node-api"
     },
     {
