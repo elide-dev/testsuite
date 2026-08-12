@@ -1,0 +1,21 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "29373c30b9ca3dd7ec1865f72c2597115f1beeba8ee997f66ea13d68b45cd3f8"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "24b9ee439ea6f75a6975c52297062e9a2444ef3f19a49918e8f93a91a9814e3f"
+  },
+  "fixed": [
+    "test/parallel/test-domain-top-level-error-handler-clears-stack.js",
+    "test/parallel/test-http-outgoing-message-capture-rejection.js",
+    "test/parallel/test-stream-catch-rejections.js"
+  ],
+  "regressed": [
+    "test/parallel/test-fs-read-stream-pos.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 960
+}

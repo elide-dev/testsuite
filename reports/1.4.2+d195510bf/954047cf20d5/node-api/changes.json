@@ -1,0 +1,18 @@
+{
+  "from": {
+    "semver": "1.4.2+1de97a056",
+    "digest": "e9a347078bd9986d48c8eea15c5d53288a0988c47cc0dc5af436471abe7882ef"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "954047cf20d5a347e196f389b4c8353f86fa1b714f42c11faa111ce9c77f1873"
+  },
+  "fixed": [],
+  "regressed": [
+    "test/parallel/test-http-keep-alive-pipeline-max-requests.js",
+    "test/parallel/test-zlib-params.js"
+  ],
+  "added": 0,
+  "removed": 3004,
+  "stillFailing": 0
+}

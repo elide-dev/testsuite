@@ -1,0 +1,28 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "d93fa5fb5b4ee14f119e971bdd960dcb5c6dd00898d4127c3ec0af38e616792f"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "75e7d8452fc7d5f55704551632c596ff3d7a39bf63c061fd08a17c5c321df8e8"
+  },
+  "fixed": [
+    "test/parallel/test-diagnostics-channel-tracing-channel-args-types.js",
+    "test/parallel/test-diagnostics-channel-tracing-channel-callback.js",
+    "test/parallel/test-diagnostics-channel-tracing-channel-sync-early-exit.js",
+    "test/parallel/test-event-emitter-listeners.js",
+    "test/parallel/test-readline-position.js",
+    "test/parallel/test-worker-arraybuffer-zerofill.js"
+  ],
+  "regressed": [
+    "test/parallel/test-http-pause-no-dump.js",
+    "test/parallel/test-http-raw-headers.js",
+    "test/parallel/test-http-server-keep-alive-max-requests-null.js",
+    "test/parallel/test-net-connect-abort-controller.js",
+    "test/parallel/test-stream2-httpclient-response-end.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 923
+}

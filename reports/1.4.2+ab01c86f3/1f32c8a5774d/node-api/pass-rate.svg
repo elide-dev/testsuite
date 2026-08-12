@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
+  <title id="title">node-api pass-rate chart</title>
+  <desc id="desc">1321 of 3071 tests passed.</desc>
+  <rect width="720" height="170" fill="#ffffff"/>
+  <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">node-api</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">1321/3071 pass (61.9%)</text>
+  <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
+  <rect x="40.00" y="84" width="275.30" height="28" fill="#198754"><title>pass: 1321</title></rect>
+  <rect x="315.30" y="84" width="154.01" height="28" fill="#dc3545"><title>fail: 739</title></rect>
+  <rect x="469.31" y="84" width="15.21" height="28" fill="#6f42c1"><title>error: 73</title></rect>
+  <rect x="484.52" y="84" width="195.48" height="28" fill="#6c757d"><title>skip: 938</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 739 · error 73 · skip 938 · regressions 1</text>
+</svg>

@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.2+d195510bf",
+      "digest": "954047cf20d5a347e196f389b4c8353f86fa1b714f42c11faa111ce9c77f1873"
+    },
+    "startedAt": "2026-08-10T05:22:39.308Z",
+    "finishedAt": "2026-08-10T05:23:42.550Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 1,
+    "fail": 1,
+    "skip": 0,
+    "error": 1,
+    "total": 3
+  },
+  "regressions": [
+    "test/parallel/test-http-keep-alive-pipeline-max-requests.js"
+  ],
+  "newPasses": []
+}

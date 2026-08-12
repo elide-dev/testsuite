@@ -1,0 +1,42 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "128f80ad47ae277497862c069681c338f36037dd8b838171024a76ca82f4bacd"
+  },
+  "to": {
+    "semver": "1.4.2+ab01c86f3",
+    "digest": "0e5ba9d1f3fedb0236783f791e1a6262b92744d458fe259b599d806968a6abbc"
+  },
+  "fixed": [
+    "test/parallel/test-buffer-concat.js",
+    "test/parallel/test-buffer-copy.js",
+    "test/parallel/test-child-process-internal.js",
+    "test/parallel/test-console-count.js",
+    "test/parallel/test-console-methods.js",
+    "test/parallel/test-http-1.0.js",
+    "test/parallel/test-http-agent-free-socket-data-guard.js",
+    "test/parallel/test-http-agent-keep-alive-timeout-buffer.js",
+    "test/parallel/test-http-agent-remove.js",
+    "test/parallel/test-http-agent.js",
+    "test/parallel/test-http-content-length.js",
+    "test/parallel/test-http-createConnection.js",
+    "test/parallel/test-http-destroyed-socket-write2.js",
+    "test/parallel/test-http-dont-set-default-headers-with-set-header.js",
+    "test/parallel/test-http-dont-set-default-headers-with-setHost.js",
+    "test/parallel/test-http-dont-set-default-headers.js",
+    "test/parallel/test-http-keep-alive-close-on-header.js",
+    "test/parallel/test-http-keep-alive.js",
+    "test/parallel/test-http-multiple-headers.js",
+    "test/parallel/test-http-mutable-headers.js",
+    "test/parallel/test-http-remove-header-stays-removed.js",
+    "test/parallel/test-http-write-head.js",
+    "test/parallel/test-net-listen-twice.js",
+    "test/parallel/test-net-server-call-listen-multiple-times.js",
+    "test/parallel/test-net-server-listen-options-signal.js",
+    "test/parallel/test-url-urltooptions.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 825
+}

@@ -1,0 +1,23 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "846665466f25d1ab5b61ef4e5198d398286c98fedde644d21b353f4b84661eb7"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "ec4cb029cc970087cd647e0fef8f45979be4325128235c0c756f8450bc660984"
+  },
+  "fixed": [
+    "test/parallel/test-os-constants-signals.js",
+    "test/parallel/test-zlib-invalid-arg-value-brotli-compress.js",
+    "test/parallel/test-zlib-not-string-or-buffer.js",
+    "test/parallel/test-zlib-object-write.js"
+  ],
+  "regressed": [
+    "test/parallel/test-http-server-keep-alive-defaults.js",
+    "test/parallel/test-net-connect-abort-controller.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 932
+}

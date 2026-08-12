@@ -1,0 +1,22 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "b8a3d157f91a8390b1419984f2633cd7b314a5387b11d802c5697874d6df682f"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "846665466f25d1ab5b61ef4e5198d398286c98fedde644d21b353f4b84661eb7"
+  },
+  "fixed": [
+    "test/parallel/test-console-clear.js",
+    "test/parallel/test-net-connect-abort-controller.js",
+    "test/parallel/test-path-parse-format.js",
+    "test/parallel/test-timers-immediate-unref.js",
+    "test/parallel/test-timers-immediate.js",
+    "test/parallel/test-timers-setimmediate-infinite-loop.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 936
+}

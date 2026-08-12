@@ -1,0 +1,17 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "954047cf20d5a347e196f389b4c8353f86fa1b714f42c11faa111ce9c77f1873"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "9ed0cd8914c7aef08d44235ba9d1558550472c25719fc97bb28f3709b7a2540f"
+  },
+  "fixed": [
+    "test/parallel/test-http-keep-alive-pipeline-max-requests.js"
+  ],
+  "regressed": [],
+  "added": 3004,
+  "removed": 0,
+  "stillFailing": 1
+}

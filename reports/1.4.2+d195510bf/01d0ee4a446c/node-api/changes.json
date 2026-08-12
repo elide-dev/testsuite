@@ -1,0 +1,30 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "5d9d925b2b09f4a9c939ec971427f0a067a9892b6f9435c4e05263d95fa8a072"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "01d0ee4a446cdfbc6835693729b1850d357b8d615298482d7105785e4c601d01"
+  },
+  "fixed": [
+    "test/parallel/test-buffer-bytelength.js",
+    "test/parallel/test-buffer-compare.js",
+    "test/parallel/test-buffer-from.js",
+    "test/parallel/test-buffer-writeuint.js",
+    "test/parallel/test-events-list.js",
+    "test/parallel/test-net-buffersize.js",
+    "test/parallel/test-net-listen-close-server-callback-is-not-function.js",
+    "test/parallel/test-net-listen-close-server.js",
+    "test/parallel/test-net-server-close-before-calling-lookup-callback.js",
+    "test/parallel/test-net-socket-connecting.js",
+    "test/parallel/test-net-throttle.js",
+    "test/parallel/test-util-inherits.js"
+  ],
+  "regressed": [
+    "test/parallel/test-net-server-close-before-ipc-response.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 884
+}

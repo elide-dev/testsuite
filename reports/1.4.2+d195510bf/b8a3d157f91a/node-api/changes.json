@@ -1,0 +1,29 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "723b3a64840e9bc8bc6ea7b7bdcebd1607fe7f8776c40c0e921237145c053c22"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "b8a3d157f91a8390b1419984f2633cd7b314a5387b11d802c5697874d6df682f"
+  },
+  "fixed": [
+    "test/parallel/test-buffer-isascii.js",
+    "test/parallel/test-buffer-isutf8.js",
+    "test/parallel/test-buffer-over-max-length.js",
+    "test/parallel/test-buffer-sharedarraybuffer.js",
+    "test/parallel/test-buffer-slow.js",
+    "test/parallel/test-event-emitter-once.js",
+    "test/parallel/test-http-pipeline-socket-parser-typeerror.js",
+    "test/parallel/test-http-raw-headers.js",
+    "test/parallel/test-module-nodemodulepaths.js",
+    "test/parallel/test-url-format-invalid-input.js",
+    "test/parallel/test-whatwg-url-invalidthis.js"
+  ],
+  "regressed": [
+    "test/parallel/test-http-keep-alive-max-requests.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 941
+}

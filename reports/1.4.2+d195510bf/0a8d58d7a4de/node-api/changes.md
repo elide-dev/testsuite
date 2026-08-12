@@ -1,0 +1,18 @@
+# Changes — `1.4.2+d195510bf` → `1.4.2+d195510bf`
+
+- From: `1.4.2+d195510bf` (`86ba41ca86ae3dcbcc31b001b3fec74b584b7bd9733325ada895e7f99a857765`)
+- To: `1.4.2+d195510bf` (`0a8d58d7a4de3d143905697ab31258ddaa3d52919d63ec9d43ed6e97ed8b59c6`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 7 | 0 | 0 | 919 |
+
+## ✅ Fixed (7)
+
+- `test/parallel/test-dns-negative-zero.js`
+- `test/parallel/test-fs-read-stream-pos.js`
+- `test/parallel/test-http-keep-alive-pipeline-max-requests.js`
+- `test/parallel/test-http-pause-no-dump.js`
+- `test/parallel/test-http-raw-headers.js`
+- `test/parallel/test-net-listen-invalid-port.js`
+- `test/parallel/test-stream2-set-encoding.js`

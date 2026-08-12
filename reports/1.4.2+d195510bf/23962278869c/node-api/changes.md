@@ -1,0 +1,20 @@
+# Changes — `1.4.2+d195510bf` → `1.4.2+d195510bf`
+
+- From: `1.4.2+d195510bf` (`75e7d8452fc7d5f55704551632c596ff3d7a39bf63c061fd08a17c5c321df8e8`)
+- To: `1.4.2+d195510bf` (`23962278869c0fa2ad0841d8f85a5fa97a31c268456a864d6cf2a34689811d7d`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 1 | 5 | 0 | 0 | 923 |
+
+## ❌ Regressed (1)
+
+- `test/parallel/test-fs-read-zero-length.js`
+
+## ✅ Fixed (5)
+
+- `test/parallel/test-fs-statfs.js`
+- `test/parallel/test-http-pause-no-dump.js`
+- `test/parallel/test-http-server-keep-alive-max-requests-null.js`
+- `test/parallel/test-http-server-write-after-end.js`
+- `test/parallel/test-stream2-set-encoding.js`
