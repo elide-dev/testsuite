@@ -55,7 +55,7 @@ test("loads javac-jtreg workload from registry.toml", () => {
   expect(javac!.path).toBe("suites/openjdk");
   expect(javac!.settings.manifest).toBe("manifests/javac-langtools.toml");
   expect(javac!.settings.timeoutMs).toBe(3600000);
-  expect(javac!.settings.jtregCaseTimeoutSeconds).toBe(300);
+  expect(javac!.settings.jtregCaseTimeoutSeconds).toBe(900);
   expect(javac!.settings.javaRunner).toBe("java");
 });
 
@@ -67,5 +67,10 @@ test("loads node-api workload from registry.toml", () => {
   expect(node!.adapter).toBe("node-api");
   expect(node!.path).toBe("suites/node");
   expect(node!.settings.manifest).toBe("manifests/node-api.toml");
-  expect(node!.settings.elideRunArgs).toEqual(["--sandbox", "--allow-read", "--allow-write"]);
+  expect(node!.settings.elideRunArgs).toEqual([
+    "-XX:MaxHeapSize=4g",
+    "--sandbox",
+    "--allow-read",
+    "--allow-write",
+  ]);
 });
