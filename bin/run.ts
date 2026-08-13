@@ -349,7 +349,9 @@ async function buildHarnessImage(options: Options, image: string, plat: string[]
   if (isLocalInstallDir(elideRef)) {
     log("mode: local install dir");
     rmSync(resolve(ROOT, ".elide-install"), { recursive: true, force: true });
-    cpSync(elideRef, resolve(ROOT, ".elide-install"), { recursive: true });
+    // `--elide` often points at a symlink (`dist/current`); the build context must carry the real
+    // files, so the staged copy dereferences.
+    cpSync(elideRef, resolve(ROOT, ".elide-install"), { recursive: true, dereference: true });
     const digest = sha256File(resolve(ROOT, ".elide-install/bin/elide"));
     log(`building image ${image} (local install dir)...`);
     const rc = await run(["docker", "build", ...plat, "-f", "docker/harness.local.Dockerfile", "-t", image, "."]);
