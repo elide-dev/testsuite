@@ -91,27 +91,56 @@ test("node-api manifest selects broad Node API surfaces", () => {
     "assert",
     "async-hooks",
     "buffer",
+    "child-process",
+    "cluster",
     "console",
     "crypto",
     "diagnostics-channel",
+    "dgram",
     "dns",
+    "domain",
     "events",
     "fs",
+    "http",
+    "https",
+    "intl",
     "module-loading",
+    "net",
+    "os",
     "path",
+    "perf-hooks",
     "process",
+    "querystring",
+    "readline",
     "streams",
     "timers",
+    "tty",
     "url",
+    "v8",
     "util",
     "vm",
+    "web-globals",
     "worker-threads",
+    "zlib",
   ]);
   expect(groups.get("assert")).toEqual(["test/parallel/test-assert*.js"]);
-  expect(groups.get("buffer")).toEqual(["test/parallel/test-buffer*.js"]);
-  expect(groups.get("fs")).toEqual(["test/parallel/test-fs*.js", "test/parallel/test-vfs-fs*.js"]);
+  expect(groups.get("buffer")).toEqual([
+    "test/parallel/test-buffer*.js",
+    "test/parallel/test-stringbytes*.js",
+  ]);
+  expect(groups.get("fs")).toEqual([
+    "test/parallel/test-fs*.js",
+    "test/parallel/test-vfs-fs*.js",
+    "test/parallel/test-file*.js",
+  ]);
   expect(groups.get("path")).toEqual(["test/parallel/test-path*.js"]);
-  expect(groups.get("process")).toEqual(["test/parallel/test-process*.js"]);
-  expect(groups.get("streams")).toEqual(["test/parallel/test-stream*.js"]);
+  expect(groups.get("process")).toEqual([
+    "test/parallel/test-process*.js",
+    "test/parallel/test-memory-usage*.js",
+  ]);
+  expect(groups.get("streams")).toEqual([
+    "test/parallel/test-stream*.js",
+    "test/parallel/test-string-decoder*.js",
+  ]);
   expect(groups.get("url")).toEqual(["test/parallel/test-url*.js", "test/parallel/test-whatwg-url*.js"]);
 });

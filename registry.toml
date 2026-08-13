@@ -61,4 +61,12 @@ path = "suites/node"
   [workload.settings]
   manifest = "manifests/node-api.toml"
   timeoutMs = 60000
-  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
+  # Bound the heap per test. Node's core suite includes cases whose only brake is
+  # stream backpressure (test-zlib-brotli-16GB.js decompresses 16 GB); without a
+  # bound such a case grows until the host runs out of memory instead of failing.
+  elideRunArgs = [
+    "-XX:MaxHeapSize=4g",
+    "--sandbox",
+    "--allow-read",
+    "--allow-write",
+  ]
