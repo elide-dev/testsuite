@@ -1,0 +1,25 @@
+{
+  "from": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "51cb50d09b99fbd552ddd9e8bec3ca06666bb2fbf42788b39043a5dd06f182da"
+  },
+  "to": {
+    "semver": "1.4.2+d195510bf",
+    "digest": "128f80ad47ae277497862c069681c338f36037dd8b838171024a76ca82f4bacd"
+  },
+  "fixed": [
+    "test/parallel/test-dgram-send-empty-array.js",
+    "test/parallel/test-http-keep-alive-max-requests.js",
+    "test/parallel/test-http-keep-alive-pipeline-max-requests.js",
+    "test/parallel/test-http-many-ended-pipelines.js",
+    "test/parallel/test-http-outgoing-buffer.js",
+    "test/parallel/test-http-outgoing-writableFinished.js",
+    "test/parallel/test-http-server-write-after-end.js",
+    "test/parallel/test-net-server-close-before-ipc-response.js",
+    "test/parallel/test-stream2-httpclient-response-end.js"
+  ],
+  "regressed": [],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 851
+}

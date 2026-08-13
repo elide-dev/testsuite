@@ -1,0 +1,29 @@
+# Changes — `1.4.2+ab01c86f3` → `1.4.2+ab01c86f3`
+
+- From: `1.4.2+ab01c86f3` (`65e8e88cf2ea669f7554abe01d15bcdb8019a60e2c92763b0cc1d6c7e6cb95eb`)
+- To: `1.4.2+ab01c86f3` (`15b14ec99d0401eeed818e6badd861d5e11be361aa35c7a6b714dd61eb47db7e`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 3 | 12 | 0 | 0 | 743 |
+
+## ❌ Regressed (3)
+
+- `test/parallel/test-http-many-ended-pipelines.js`
+- `test/parallel/test-net-connect-abort-controller.js`
+- `test/parallel/test-stream2-set-encoding.js`
+
+## ✅ Fixed (12)
+
+- `test/parallel/test-buffer-parent-property.js`
+- `test/parallel/test-console-tty-colors.js`
+- `test/parallel/test-dgram-multicast-set-interface.js`
+- `test/parallel/test-dns-resolver-max-timeout.js`
+- `test/parallel/test-http-highwatermark.js`
+- `test/parallel/test-http-outgoing-proto.js`
+- `test/parallel/test-http-request-method-delete-payload.js`
+- `test/parallel/test-stream-duplex-readable-writable.js`
+- `test/parallel/test-stream-readable-aborted.js`
+- `test/parallel/test-stream2-finish-pipe-error.js`
+- `test/parallel/test-stream2-readable-wrap-destroy.js`
+- `test/parallel/test-stream2-readable-wrap-proxy-methods.js`
