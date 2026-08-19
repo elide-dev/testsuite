@@ -80,11 +80,16 @@ function cageSupported(): boolean {
     cageAvailable = false;
     return cageAvailable;
   }
-  const probe = Bun.spawnSync(
-    ["systemd-run", "--user", "--scope", "-q", "--collect", "-p", "MemoryMax=64M", "--", "/bin/true"],
-    { stdout: "ignore", stderr: "ignore" },
-  );
-  cageAvailable = probe.exitCode === 0;
+  try {
+    const probe = Bun.spawnSync(
+      ["systemd-run", "--user", "--scope", "-q", "--collect", "-p", "MemoryMax=64M", "--", "/bin/true"],
+      { stdout: "ignore", stderr: "ignore" },
+    );
+    cageAvailable = probe.exitCode === 0;
+  } catch {
+    // No `systemd-run` on PATH at all: spawnSync throws rather than reporting an exit code.
+    cageAvailable = false;
+  }
   return cageAvailable;
 }
 

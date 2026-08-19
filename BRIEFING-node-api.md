@@ -1,6 +1,6 @@
 # Briefing: `node-api` compat work (Node.js core test suite)
 
-_Self-contained handoff doc. Generated 2026-08-13 from the latest committed run._
+_Self-contained handoff doc. Generated 2026-08-19 from the latest committed run._
 
 ## Context
 
@@ -15,18 +15,27 @@ against a checked-in `common/` overlay (`node-api-overlay`), so
 
 Counts are whole test *files*: one Node test file = one result.
 
-## Current state (Elide `1.4.2+ab01c86f3`, digest `15b14ec99d04`)
+## Current state (Elide `1.4.4+405f52319`, digest `217673cb0474`)
 
 | pass | fail | error | skip | total | pass rate (excl. skips) |
 |---:|---:|---:|---:|---:|---:|
-| 1,387 | 679 | 67 | 938 | 3,071 | **65.0%** |
+| 1,542 | 510 | 81 | 938 | 3,071 | **72.3%** |
 
 Progression of measured runs: 25.4% (sparse slice, July) → 50.4% → 60.1% →
-65.0%. The denominator excluding skips is 2,133.
+65.0% → 72.3%. The denominator excluding skips is 2,133.
+
+The run is RED: 18 tests the ratchet expected to pass do not — 11 functional
+failures and 7 timeouts. The ratchet was deliberately left at its previous
+contents, so those 18 stay visible as regressions rather than being absorbed
+into the baseline. They are the first thing to work on, ahead of any new
+subsystem; the largest cluster is http/net timeouts, and the functional half is
+led by `test-stream-pipeline-duplex`, `test-stream-pipe-flow-after-unpipe` and
+two `diagnostics-channel` cases. The comparison run was measured on Elide 1.4.2,
+so part of the delta belongs to upstream changes rather than to compat work.
 
 Latest reports:
 
-- `reports/1.4.2+ab01c86f3/15b14ec99d04/node-api/impact.md` — failures ordered
+- `reports/1.4.4+405f52319/217673cb0474/node-api/impact.md` — failures ordered
   by root-cause signature, largest first (read the top ~40 sections)
 - `.../node-api/impact.json` — machine-readable (`bySignature`)
 - `.../node-api/changes.md` — diff against the previous run
@@ -73,61 +82,68 @@ Of the 938 skips, `expectations/node-api.toml` carries a per-test reason:
 Everything else that fails sits in the ratchet, which holds no reasons because a
 run rewrites it.
 
-## Failure map (746 failing files: 679 fail + 67 error)
+## Failure map (591 failing files: 510 fail + 81 error)
 
 By subsystem, largest first, with the hang subset broken out:
 
 | Subsystem | Failing | of which hangs |
 |---|---:|---:|
-| http | 88 | 14 |
-| worker_threads | 68 | 15 |
-| stream | 64 | 0 |
-| vm | 60 | 5 |
-| fs | 55 | 5 |
-| process | 50 | 0 |
-| child_process | 45 | 6 |
-| net | 36 | 2 |
-| async_hooks | 26 | 2 |
-| zlib | 21 | 2 |
-| dns | 17 | 9 |
+| http | 79 | 26 |
+| worker_threads | 64 | 14 |
+| stream | 51 | 0 |
+| vm | 48 | 4 |
+| fs | 39 | 6 |
+| child_process | 30 | 7 |
+| net | 25 | 7 |
+| process | 20 | 0 |
+| async_hooks | 19 | 2 |
 | module | 17 | 0 |
-| domain | 16 | 2 |
-| require | 16 | 0 |
+| require | 15 | 0 |
+| dns | 14 | 7 |
+| zlib | 14 | 1 |
+| buffer | 12 | 0 |
 
 Largest root-cause signatures in the latest run:
 
 | Tests | Signature |
 |---:|---|
-| 67 | `Node API test timed out` |
-| 17 | `AssertionError: Expected values to be strictly equal` (numeric) |
-| 15 | `Mismatched <anonymous> function calls` (`mustCall` count) |
-| 14 | `AssertionError: Expected values to be strictly equal` (string) |
-| 10 | `AssertionError: Missing expected exception` |
-| 10 | `Mismatched noop function calls` |
-| 10 | `TypeError: Cannot load module` |
+| 81 | `Node API test timed out` |
+| 16 | `Mismatched <anonymous> function calls` (`mustCall` count) |
+| 23 | `AssertionError: Expected values to be strictly equal` (numeric and string) |
+| 7 | `Mismatched noop function calls` |
+| 6 | `AssertionError: Expected values to be strictly deep-equal` |
+| 6 | `AssertionError: Missing expected exception` |
+| 6 | `AssertionError: input did not match /ERR_INVALID_ARG_TYPE/` |
 
 ## Ranked work items
 
-1. **Hangs — 69 files, one visible signature, several causes.** The harness
+0. **The 18 regressions.** Tests the ratchet expects to pass and this run does
+   not: 7 timeouts, clustered in http/net, and 11 functional failures led by
+   `test-stream-pipeline-duplex` (`TypeError: Cannot read property 'code' of
+   undefined`), `test-stream-pipe-flow-after-unpipe` (20 calls expected, 2 seen)
+   and two `diagnostics-channel` cases. Re-run them individually first: the
+   harness reports a flake and a real regression identically.
+1. **Hangs — 81 files, one visible signature, several causes.** The harness
    reports every hang identically, so the causes must be separated by area:
-   `worker_threads` (15), `http` (14), `dns` (9), `child_process` (6), `fs` (5),
-   `vm` (5), `dgram` (4). Highest density in the suite; each area is a coherent
-   mini-project.
-2. **`mustCall` count mismatches — ~32 files across two signatures.** These point
+   `http` (26), `worker_threads` (14), `child_process` (7), `net` (7), `dns` (7),
+   `fs` (6), `vm` (4). Highest density in the suite; each area is a coherent
+   mini-project. http overtook worker_threads since the last run and is now the
+   largest single block.
+2. **`mustCall` count mismatches — ~23 files across two signatures.** These point
    at event ordering and async scheduling: a callback Node fires and Elide does
    not, or fires at a different time. Read one per subsystem before generalizing.
-3. **Error-shape assertions — ~11 files.** Deep-equal failures where the
-   comparison differs only by `code`/`message` on the thrown error. Cheap per
+3. **Error-shape assertions — ~12 files.** Deep-equal and regexp failures where
+   the comparison differs only by `code`/`message` on the thrown error. Cheap per
    file once the expected code is known.
-4. **`vm` — 60 files.** Real contextified objects; the cluster is large and
+4. **`vm` — 48 files.** Real contextified objects; the cluster is large and
    coherent enough to justify runtime work rather than per-test patching.
-5. **`process` — 50 files, no hangs.** Assorted platform surface (`chdir`,
-   `getuid`, active-resource tracking, env semantics); low complexity each.
-6. **`stream` — 64 files, no hangs.** Diffuse; mostly event ordering and
+5. **`stream` — 51 files, no hangs.** Diffuse; mostly event ordering and
    backpressure, overlapping with item 2.
-7. **`Cannot load module` — 10 files.** Absent public modules; classify as
-   static skips only when the module is genuinely out of scope, otherwise
-   implement.
+6. **`process` — 20 files, no hangs.** Assorted platform surface (active-resource
+   tracking, env semantics); low complexity each.
+7. **`module`/`require` — 32 files between them.** Resolution order and absent
+   public modules; classify as static skips only when a module is genuinely out
+   of scope, otherwise implement.
 
 ## Notes for the implementer
 

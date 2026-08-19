@@ -85,3 +85,34 @@ test("streams stdout and stderr lines while retaining captured output", async ()
   expect(r.stdout).toContain("out1");
   expect(r.stderr).toContain("err1");
 });
+
+// The cgroup cage is optional: inside the harness container `systemd-run` is absent, and
+// `Bun.spawnSync` throws for a missing executable rather than reporting an exit code. Probing it
+// must therefore degrade to "uncaged", not fail the run. Spawned directly rather than through
+// `runProcess`, because the PATH a child searches is the one it was started with: mutating
+// `process.env.PATH` in-process does not affect it, and caging the outer call would need the very
+// binary this test takes away.
+test("runs uncaged when systemd-run is missing from PATH", async () => {
+  const mod = join(import.meta.dir, "process.ts");
+  const child = `
+    const { runProcess } = await import(${JSON.stringify(mod)});
+    const r = await runProcess([process.execPath, "-e", "console.log('uncaged')"], {
+      cwd: process.cwd(),
+      timeoutMs: 5000,
+    });
+    console.log(r.exitCode, r.stdout.trim());
+  `;
+  const proc = Bun.spawn([process.execPath, "-e", child], {
+    env: { PATH: join(tmpdir(), "harness-empty-path") },
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  const [out, err, code] = await Promise.all([
+    new Response(proc.stdout).text(),
+    new Response(proc.stderr).text(),
+    proc.exited,
+  ]);
+  expect(code).toBe(0);
+  expect(err).toBe("");
+  expect(out.trim()).toBe("0 uncaged");
+});
