@@ -142,6 +142,16 @@ function planConcurrency(options: Options, suiteCount: number): ConcurrencyPlan 
   return { cpuCount: cpus, totalBudget, suiteWorkers, threads };
 }
 
+// Hard ceilings for the harness container. Suites under test fork without bound when a
+// compatibility gap bites, and an unlimited container takes the host's RAM down with it; swap is
+// disabled (`--memory-swap` equal to `--memory`) because swapping a runaway stalls the machine
+// instead of killing it.
+function containerLimits(): string[] {
+  const memory = process.env.TESTSUITE_MEMORY_MAX ?? "24g";
+  const pids = process.env.TESTSUITE_PIDS_MAX ?? "4096";
+  return ["--memory", memory, "--memory-swap", memory, "--pids-limit", pids];
+}
+
 function cleanupContainersSync(): void {
   const listed = Bun.spawnSync(["docker", "ps", "-aq", "--filter", `label=${RUN_LABEL}`], {
     stdout: "pipe",
@@ -349,7 +359,9 @@ async function buildHarnessImage(options: Options, image: string, plat: string[]
   if (isLocalInstallDir(elideRef)) {
     log("mode: local install dir");
     rmSync(resolve(ROOT, ".elide-install"), { recursive: true, force: true });
-    cpSync(elideRef, resolve(ROOT, ".elide-install"), { recursive: true });
+    // `--elide` often points at a symlink (`dist/current`); the build context must carry the real
+    // files, so the staged copy dereferences.
+    cpSync(elideRef, resolve(ROOT, ".elide-install"), { recursive: true, dereference: true });
     const digest = sha256File(resolve(ROOT, ".elide-install/bin/elide"));
     log(`building image ${image} (local install dir)...`);
     const rc = await run(["docker", "build", ...plat, "-f", "docker/harness.local.Dockerfile", "-t", image, "."]);
@@ -759,6 +771,7 @@ async function main(): Promise<number> {
       "--rm",
       "--label",
       RUN_LABEL,
+      ...containerLimits(),
       ...plat,
       ...user,
       "-v",

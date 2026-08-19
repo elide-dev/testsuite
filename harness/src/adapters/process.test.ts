@@ -1,4 +1,7 @@
 import { test, expect } from "bun:test";
+import { readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { runProcess } from "./process";
 
 test("captures stdout, stderr, exit code, and duration", async () => {
@@ -22,6 +25,47 @@ test("marks timeout and kills process", async () => {
   expect(r.exitCode).not.toBe(0);
 });
 
+test("reaps a child that outlives the timed-out process instead of waiting on its pipes", async () => {
+  const pidFile = join(tmpdir(), `harness-process-test-${process.pid}.pid`);
+  rmSync(pidFile, { force: true });
+  const script = `
+    const { spawn } = require("node:child_process");
+    const { writeFileSync } = require("node:fs");
+    const child = spawn(process.execPath, ["-e", "setInterval(() => {}, 1000)"], { stdio: "inherit" });
+    writeFileSync(${JSON.stringify(pidFile)}, String(child.pid));
+    setInterval(() => {}, 1000);
+  `;
+
+  const r = await runProcess([process.execPath, "-e", script], { cwd: process.cwd(), timeoutMs: 300 });
+
+  expect(r.timedOut).toBe(true);
+  const childPid = Number(readFileSync(pidFile, "utf8"));
+  rmSync(pidFile, { force: true });
+  expect(() => process.kill(childPid, 0)).toThrow();
+});
+
+test("returns when a child escapes the process group and holds the pipes open", async () => {
+  const pidFile = join(tmpdir(), `harness-process-escapee-${process.pid}.pid`);
+  rmSync(pidFile, { force: true });
+  const script = `
+    const { spawn } = require("node:child_process");
+    const { writeFileSync } = require("node:fs");
+    const child = spawn(process.execPath, ["-e", "setInterval(() => {}, 1000)"], {
+      stdio: "inherit",
+      detached: true,
+    });
+    writeFileSync(${JSON.stringify(pidFile)}, String(child.pid));
+    setInterval(() => {}, 1000);
+  `;
+
+  const r = await runProcess([process.execPath, "-e", script], { cwd: process.cwd(), timeoutMs: 300 });
+
+  expect(r.timedOut).toBe(true);
+  const escapee = Number(readFileSync(pidFile, "utf8"));
+  rmSync(pidFile, { force: true });
+  process.kill(escapee, "SIGKILL");
+}, 15_000);
+
 test("streams stdout and stderr lines while retaining captured output", async () => {
   const stdoutLines: string[] = [];
   const stderrLines: string[] = [];
@@ -40,4 +84,35 @@ test("streams stdout and stderr lines while retaining captured output", async ()
   expect(stderrLines).toEqual(["err1"]);
   expect(r.stdout).toContain("out1");
   expect(r.stderr).toContain("err1");
+});
+
+// The cgroup cage is optional: inside the harness container `systemd-run` is absent, and
+// `Bun.spawnSync` throws for a missing executable rather than reporting an exit code. Probing it
+// must therefore degrade to "uncaged", not fail the run. Spawned directly rather than through
+// `runProcess`, because the PATH a child searches is the one it was started with: mutating
+// `process.env.PATH` in-process does not affect it, and caging the outer call would need the very
+// binary this test takes away.
+test("runs uncaged when systemd-run is missing from PATH", async () => {
+  const mod = join(import.meta.dir, "process.ts");
+  const child = `
+    const { runProcess } = await import(${JSON.stringify(mod)});
+    const r = await runProcess([process.execPath, "-e", "console.log('uncaged')"], {
+      cwd: process.cwd(),
+      timeoutMs: 5000,
+    });
+    console.log(r.exitCode, r.stdout.trim());
+  `;
+  const proc = Bun.spawn([process.execPath, "-e", child], {
+    env: { PATH: join(tmpdir(), "harness-empty-path") },
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  const [out, err, code] = await Promise.all([
+    new Response(proc.stdout).text(),
+    new Response(proc.stderr).text(),
+    proc.exited,
+  ]);
+  expect(code).toBe(0);
+  expect(err).toBe("");
+  expect(out.trim()).toBe("0 uncaged");
 });
