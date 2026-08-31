@@ -5,22 +5,22 @@
   <text x="32" y="32" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">Latest compatibility</text>
   <text x="32" y="69" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">cpython-core</text>
   <rect x="210" y="54" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="54" width="415.36" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="68" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">96.6%</text>
+  <rect x="210" y="54" width="417.21" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="68" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">97.0%</text>
   <text x="32" y="103" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">javac-jtreg</text>
   <rect x="210" y="88" width="430" height="18" rx="3" fill="#eaeef2"/>
   <rect x="210" y="88" width="430.00" height="18" rx="3" fill="#198754"/>
   <text x="658" y="102" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">100.0%</text>
   <text x="32" y="137" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">node-api</text>
   <rect x="210" y="122" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="122" width="126.99" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">29.5%</text>
+  <rect x="210" y="122" width="301.53" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">70.1%</text>
   <text x="32" y="171" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">test262</text>
   <rect x="210" y="156" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="156" width="429.79" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="170" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">100.0%</text>
+  <rect x="210" y="156" width="429.55" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="170" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">99.9%</text>
   <text x="32" y="205" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">wpt-wintertc</text>
   <rect x="210" y="190" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="190" width="373.58" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="204" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">86.9%</text>
+  <rect x="210" y="190" width="386.62" height="18" rx="3" fill="#198754"/>
+  <text x="658" y="204" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">89.9%</text>
 </svg>

@@ -1,0 +1,489 @@
+{
+  "bySignature": [
+    {
+      "signature": "Expected SameValue(«<str>», «<str>») to be true",
+      "count": 23,
+      "exampleIds": [
+        "test/annexB/language/function-code/block-decl-func-skip-arguments.js default",
+        "test/intl402/DateTimeFormat/prototype/resolvedOptions/hourCycle-default.js default",
+        "test/intl402/DateTimeFormat/prototype/resolvedOptions/hourCycle-default.js strict mode",
+        "test/intl402/NumberFormat/prototype/format/notation-compact-ja-JP.js default",
+        "test/intl402/NumberFormat/prototype/format/notation-compact-ja-JP.js strict mode"
+      ],
+      "samples": [
+        "Expected SameValue(«\"function arguments() {}\"», «\"[object Arguments]\"») to be true",
+        "Expected SameValue(«\"h12\"», «\"h11\"») to be true",
+        "Expected SameValue(«\"988M\"», «\"9.9億\"») to be true",
+        "Expected SameValue(«\"988M\"», «\"9.9억\"») to be true",
+        "Expected SameValue(«\"($987.00)\"», «\"(US$987.00)\"») to be true"
+      ]
+    },
+    {
+      "signature": "formatToParts(<n>, second): length Expected SameValue(«<n>», «<n>») to be true",
+      "count": 6,
+      "exampleIds": [
+        "test/intl402/RelativeTimeFormat/prototype/formatToParts/pl-pl-style-long.js default",
+        "test/intl402/RelativeTimeFormat/prototype/formatToParts/pl-pl-style-narrow.js default",
+        "test/intl402/RelativeTimeFormat/prototype/formatToParts/pl-pl-style-long.js strict mode",
+        "test/intl402/RelativeTimeFormat/prototype/formatToParts/pl-pl-style-narrow.js strict mode",
+        "test/intl402/RelativeTimeFormat/prototype/formatToParts/pl-pl-style-short.js default"
+      ],
+      "samples": [
+        "formatToParts(1000, second): length Expected SameValue(«5», «3») to be true"
+      ]
+    },
+    {
+      "signature": "Compact short: <n>: length Expected SameValue(«<n>», «<n>») to be true",
+      "count": 4,
+      "exampleIds": [
+        "test/intl402/NumberFormat/prototype/formatToParts/notation-compact-ja-JP.js default",
+        "test/intl402/NumberFormat/prototype/formatToParts/notation-compact-ja-JP.js strict mode",
+        "test/intl402/NumberFormat/prototype/formatToParts/notation-compact-ko-KR.js default",
+        "test/intl402/NumberFormat/prototype/formatToParts/notation-compact-ko-KR.js strict mode"
+      ],
+      "samples": [
+        "Compact short: 987654321: length Expected SameValue(«2», «4») to be true"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 4,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/null-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/number-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/symbol-tobigint.js default",
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/undefined-tobigint.js default"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: Module not found: <str>",
+      "count": 4,
+      "exampleIds": [
+        "test/language/module-code/source-phase-import/reexport-source-binding-named-import.js strict mode",
+        "test/language/module-code/source-phase-import/reexport-source-binding-named-import.js default",
+        "test/language/module-code/source-phase-import/reexport-source-binding-namespace-get.js strict mode",
+        "test/language/module-code/source-phase-import/reexport-source-binding-namespace-get.js default"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: Module not found: '<module source>'"
+      ]
+    },
+    {
+      "signature": "java.lang.IllegalArgumentException: No rule set named %spellout-cardinal-financial at :program (<loc>)",
+      "count": 4,
+      "exampleIds": [
+        "test/intl402/Intl/supportedValuesOf/numberingSystems-accepted-by-RelativeTimeFormat.js strict mode",
+        "test/intl402/Intl/supportedValuesOf/numberingSystems-accepted-by-RelativeTimeFormat.js default",
+        "test/intl402/Intl/supportedValuesOf/numberingSystems-accepted-by-DateTimeFormat.js default",
+        "test/intl402/Intl/supportedValuesOf/numberingSystems-accepted-by-DateTimeFormat.js strict mode"
+      ],
+      "samples": [
+        "java.lang.IllegalArgumentException: No rule set named %spellout-cardinal-financial\n    at :program (f-1788219519900-19-9ttnjq.xm1ed.js:3030:13)",
+        "java.lang.IllegalArgumentException: No rule set named %spellout-cardinal-financial\n    at :program (f-1788219519897-19-191w71m.2rfsk.js:3029:13)",
+        "java.lang.IllegalArgumentException: No rule set named %spellout-cardinal-financial\n    at :program (f-1788219519880-19-1jd202c.senx.js:3029:13)",
+        "java.lang.IllegalArgumentException: No rule set named %spellout-cardinal-financial\n    at :program (f-1788219519884-19-9otbik.q4qeb.js:3030:13)"
+      ]
+    },
+    {
+      "signature": "negative: parts[<n>].value Expected SameValue(«<str>», «<str>») to be true",
+      "count": 4,
+      "exampleIds": [
+        "test/intl402/NumberFormat/prototype/formatToParts/signDisplay-currency-ko-KR.js default",
+        "test/intl402/NumberFormat/prototype/formatToParts/signDisplay-currency-ko-KR.js strict mode",
+        "test/intl402/NumberFormat/prototype/formatToParts/signDisplay-negative-currency-ko-KR.js strict mode",
+        "test/intl402/NumberFormat/prototype/formatToParts/signDisplay-negative-currency-ko-KR.js default"
+      ],
+      "samples": [
+        "negative: parts[1].value Expected SameValue(«\"$\"», «\"US$\"») to be true"
+      ]
+    },
+    {
+      "signature": "undefined: length Expected SameValue(«<n>», «<n>») to be true",
+      "count": 4,
+      "exampleIds": [
+        "test/intl402/NumberFormat/prototype/formatToParts/unit-ja-JP.js default",
+        "test/intl402/NumberFormat/prototype/formatToParts/unit-ja-JP.js strict mode",
+        "test/intl402/NumberFormat/prototype/formatToParts/unit-ko-KR.js default",
+        "test/intl402/NumberFormat/prototype/formatToParts/unit-ko-KR.js strict mode"
+      ],
+      "samples": [
+        "undefined: length Expected SameValue(«4», «6») to be true",
+        "undefined: length Expected SameValue(«4», «3») to be true"
+      ]
+    },
+    {
+      "signature": "All globalThis properties must be configurable Expected SameValue(«<str>», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js strict mode",
+        "test/built-ins/ShadowRealm/prototype/evaluate/globalthis-config-only-properties.js default"
+      ],
+      "samples": [
+        "All globalThis properties must be configurable Expected SameValue(«\"__dirname, __filename, module, exports\"», «\"\"») to be true"
+      ]
+    },
+    {
+      "signature": "en-US-u-nu-hanidec: display all time units in <n>-digit Expected SameValue(«false», «true») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/DateTimeFormat/prototype/format/numbering-system.js default",
+        "test/intl402/DateTimeFormat/prototype/format/numbering-system.js strict mode"
+      ],
+      "samples": [
+        "en-US-u-nu-hanidec: display all time units in 2-digit Expected SameValue(«false», «true») to be true"
+      ]
+    },
+    {
+      "signature": "Expected no error, got ReferenceError: assert is not defined",
+      "count": 2,
+      "exampleIds": [
+        "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from-and-import-star-as-and-export.js default",
+        "test/language/module-code/ambiguous-export-bindings/namespace-unambiguous-if-export-star-as-from-and-import-star-as-and-export.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got ReferenceError: assert is not defined"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: <str> is not a configurable property",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-strict.js strict mode",
+        "test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-strict.js strict mode"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: \"default\" is not a configurable property"
+      ]
+    },
+    {
+      "signature": "Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js strict mode",
+        "test/built-ins/TypedArray/prototype/slice/speciesctor-return-same-buffer-with-offset.js default"
+      ],
+      "samples": [
+        "Expected no error, got TypeError: Immutable buffer (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js default",
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/BigInt/index-prop-desc.js strict mode"
+      ],
+      "samples": [
+        "Expected SameValue(«false», «true») to be true (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js strict mode",
+        "test/built-ins/TypedArrayConstructors/internals/GetOwnProperty/index-prop-desc.js default"
+      ],
+      "samples": [
+        "Expected SameValue(«false», «true») to be true (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "islamic-civil eras (Anno Hegirae,Anno Hegirae) should be unique Expected SameValue(«<n>», «<n>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/DateTimeFormat/prototype/formatToParts/era.js strict mode",
+        "test/intl402/DateTimeFormat/prototype/formatToParts/era.js default"
+      ],
+      "samples": [
+        "islamic-civil eras (Anno Hegirae,Anno Hegirae) should be unique Expected SameValue(«1», «2») to be true"
+      ]
+    },
+    {
+      "signature": "java.lang.IllegalStateException: Recursive update at :anonymous (native) at :program (<loc>)",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/eval-self-once-script.js strict mode",
+        "test/language/expressions/dynamic-import/eval-self-once-script.js default"
+      ],
+      "samples": [
+        "java.lang.IllegalStateException: Recursive update\n    at :anonymous (native)\n    at :program (eval-self-once-script.js:282:3)",
+        "java.lang.IllegalStateException: Recursive update\n    at :anonymous (native)\n    at :program (eval-self-once-script.js:281:3)"
+      ]
+    },
+    {
+      "signature": "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions at :anon",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/Segmenter/prototype/segment/containing/word-iswordlike.js strict mode",
+        "test/intl402/Segmenter/prototype/segment/containing/word-iswordlike.js default"
+      ],
+      "samples": [
+        "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions\n    at :anonymous (f-1788219931338-19-1q42lw1.cpdkk.js:265:20)\n    at :program (f-1788219931338-19-1q42lw1.cpdkk.js:262:1)",
+        "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions\n    at :anonymous (f-1788219931336-19-u5zhbm.jx5sb.js:264:20)\n    at :program (f-1788219931336-19-u5zhbm.jx5sb.js:261:1)"
+      ]
+    },
+    {
+      "signature": "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions at :prog",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/Segmenter/prototype/segment/segment-word-iterable.js default",
+        "test/intl402/Segmenter/prototype/segment/segment-word-iterable.js strict mode"
+      ],
+      "samples": [
+        "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions\n    at :program (f-1788219763321-19-13kgc7t.e9j1.js:255:3)",
+        "java.util.MissingResourceException: Can't find resource for bundle /org/graalvm/shadowed/com/ibm/icu/impl/data/icudata/brkitr/en_US.res, key extensions\n    at :program (f-1788219763323-19-11by3wk.ez3y.js:256:3)"
+      ]
+    },
+    {
+      "signature": "max date should include day <n> in Arabic-Indic digits, got: <n>-<n>-<n>",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/DateTimeFormat/prototype/format/temporal-objects-no-time-clip-non-latin-numerals.js default",
+        "test/intl402/DateTimeFormat/prototype/format/temporal-objects-no-time-clip-non-latin-numerals.js strict mode"
+      ],
+      "samples": [
+        "max date should include day 13 in Arabic-Indic digits, got: 275760-09-13"
+      ]
+    },
+    {
+      "signature": "name descriptor value should be [Symbol.asyncIterator]; name value should be [Symbol.asyncIterator]",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/AsyncIteratorPrototype/Symbol.asyncIterator/name.js strict mode",
+        "test/built-ins/AsyncIteratorPrototype/Symbol.asyncIterator/name.js default"
+      ],
+      "samples": [
+        "name descriptor value should be [Symbol.asyncIterator]; name value should be [Symbol.asyncIterator]"
+      ]
+    },
+    {
+      "signature": "non-continental timezone Etc/GMT+<n> is not supported",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/Intl/supportedValuesOf/timeZones-include-non-continental.js default",
+        "test/intl402/Intl/supportedValuesOf/timeZones-include-non-continental.js strict mode"
+      ],
+      "samples": [
+        "non-continental timezone Etc/GMT+1 is not supported"
+      ]
+    },
+    {
+      "signature": "Test timed out",
+      "count": 2,
+      "exampleIds": [
+        "test/built-ins/Object/defineProperty/15.2.3.6-4-116.js default",
+        "test/built-ins/Object/defineProperty/15.2.3.6-4-116.js strict mode"
+      ],
+      "samples": [
+        "Test timed out"
+      ]
+    },
+    {
+      "signature": "Test262Error: delete: default",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/await-ns-delete-non-exported-no-strict.js default",
+        "test/language/expressions/dynamic-import/namespace/promise-then-ns-delete-non-exported-no-strict.js default"
+      ],
+      "samples": [
+        "Test262Error: delete: default"
+      ]
+    },
+    {
+      "signature": "Test262Error: Expected SameValue(«true», «false») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js strict mode",
+        "test/language/expressions/dynamic-import/namespace/default-property-not-set-own.js default"
+      ],
+      "samples": [
+        "Test262Error: Expected SameValue(«true», «false») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: f Expected SameValue(«null», «<str>») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/for-await-resolution-and-error-agen-yield.js default",
+        "test/language/expressions/dynamic-import/for-await-resolution-and-error-agen-yield.js strict mode"
+      ],
+      "samples": [
+        "Test262Error: f Expected SameValue(«null», «\"foo\"») to be true"
+      ]
+    },
+    {
+      "signature": "Test262Error: The import should reject (second import) Expected a Error to be thrown asynchronously but no exception was thrown at all",
+      "count": 2,
+      "exampleIds": [
+        "test/language/expressions/dynamic-import/import-errored-module.js default",
+        "test/language/expressions/dynamic-import/import-errored-module.js strict mode"
+      ],
+      "samples": [
+        "Test262Error: The import should reject (second import) Expected a Error to be thrown asynchronously but no exception was thrown at all"
+      ]
+    },
+    {
+      "signature": "Thai default ignorePunctuation to true Expected SameValue(«false», «true») to be true",
+      "count": 2,
+      "exampleIds": [
+        "test/intl402/Collator/prototype/resolvedOptions/ignorePunctuation-default.js default",
+        "test/intl402/Collator/prototype/resolvedOptions/ignorePunctuation-default.js strict mode"
+      ],
+      "samples": [
+        "Thai default ignorePunctuation to true Expected SameValue(«false», «true») to be true"
+      ]
+    },
+    {
+      "signature": "<str> throws Test262Error Expected a Test262Error but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js strict mode"
+      ],
+      "samples": [
+        "`sample[\"0\"] = obj` throws Test262Error Expected a Test262Error but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "<str> throws Test262Error Expected a Test262Error to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/tonumber-value-throws.js default"
+      ],
+      "samples": [
+        "`sample[\"0\"] = obj` throws Test262Error Expected a Test262Error to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a SyntaxError but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js strict mode"
+      ],
+      "samples": [
+        "Expected a SyntaxError but got a TypeError (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a SyntaxError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/BigInt/string-nan-tobigint.js default"
+      ],
+      "samples": [
+        "Expected a SyntaxError to be thrown but no exception was thrown at all (Testing with BigInt64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a Test262Error but got a TypeError (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js strict mode"
+      ],
+      "samples": [
+        "Expected a Test262Error but got a TypeError (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a Test262Error to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/tonumber-value-throws.js default"
+      ],
+      "samples": [
+        "Expected a Test262Error to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    },
+    {
+      "signature": "Expected a TypeError to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)",
+      "count": 1,
+      "exampleIds": [
+        "test/built-ins/TypedArrayConstructors/internals/Set/bigint-tonumber.js default"
+      ],
+      "samples": [
+        "Expected a TypeError to be thrown but no exception was thrown at all (Testing with Float64Array and makeImmutableArrayBuffer.)"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "Intl.NumberFormat-unified",
+      "count": 20
+    },
+    {
+      "feature": "TypedArray",
+      "count": 17
+    },
+    {
+      "feature": "align-detached-buffer-semantics-with-web-reality",
+      "count": 15
+    },
+    {
+      "feature": "Intl.RelativeTimeFormat",
+      "count": 14
+    },
+    {
+      "feature": "dynamic-import",
+      "count": 12
+    },
+    {
+      "feature": "BigInt",
+      "count": 11
+    },
+    {
+      "feature": "Array.prototype.includes",
+      "count": 6
+    },
+    {
+      "feature": "Intl-enumeration",
+      "count": 6
+    },
+    {
+      "feature": "Intl.NumberFormat-v3",
+      "count": 6
+    },
+    {
+      "feature": "async-iteration",
+      "count": 4
+    },
+    {
+      "feature": "Intl.Segmenter",
+      "count": 4
+    },
+    {
+      "feature": "source-phase-imports",
+      "count": 4
+    },
+    {
+      "feature": "source-phase-imports-module-source",
+      "count": 4
+    },
+    {
+      "feature": "Intl.Era-monthcode",
+      "count": 2
+    },
+    {
+      "feature": "ShadowRealm",
+      "count": 2
+    },
+    {
+      "feature": "Symbol.asyncIterator",
+      "count": 2
+    },
+    {
+      "feature": "Symbol.species",
+      "count": 2
+    },
+    {
+      "feature": "Temporal",
+      "count": 2
+    },
+    {
+      "feature": "Symbol",
+      "count": 1
+    }
+  ]
+}

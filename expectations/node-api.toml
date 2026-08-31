@@ -114,3 +114,5 @@
 "test/parallel/test-util-promisify.js" = "requires internal/util (Node internals; needs --expose-internals)"
 "test/parallel/test-worker-environmentdata.js" = "requires internal/worker (Node internals; needs --expose-internals)"
 "test/parallel/test-worker-message-port-jstransferable-nested-untransferable.js" = "requires internal/worker/js_transferable (Node internals; needs --expose-internals)"
+"test/parallel/test-vm-sigint.js" = "hangs: spawns children that spin in `while(true){}` and rely on vm breakOnSigint to interrupt them; without it the children never exit"
+"test/parallel/test-vm-sigint-existing-handler.js" = "hangs: spawns children that spin in `while(true){}` and rely on vm breakOnSigint to interrupt them; without it the children never exit"

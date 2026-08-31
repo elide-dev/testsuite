@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "workload": "wpt-wintertc",
+    "kind": "test",
+    "elide": {
+      "semver": "1.4.99+8b374d579",
+      "digest": "4094eb2fb1ff122e2707260d4bea151c43278a01e4d16e2ac400c66de8cdff77"
+    },
+    "startedAt": "2026-08-31T23:33:38.223Z",
+    "finishedAt": "2026-08-31T23:33:49.459Z",
+    "suiteVersion": "1eb456f600fedad07c8cd6439796fb81db54faff"
+  },
+  "counts": {
+    "pass": 12799,
+    "fail": 1432,
+    "skip": 1455,
+    "error": 4,
+    "total": 15690
+  },
+  "regressions": [],
+  "newPasses": []
+}

@@ -1,0 +1,229 @@
+# Changes — `1.4.2+8bf2c6fb1` → `1.4.99+8b374d579`
+
+- From: `1.4.2+8bf2c6fb1` (`dce38dd7dc4c0629f1243b903348ae90e1a4f5eb6f78df1e52b7521e6883605e`)
+- To: `1.4.99+8b374d579` (`4094eb2fb1ff122e2707260d4bea151c43278a01e4d16e2ac400c66de8cdff77`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 14 | 209 | 30 | 15 | 1416 |
+
+## ❌ Regressed (14)
+
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Bad cache init parameter value`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Bad credentials init parameter value`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Bad mode init parameter value`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Bad referrerPolicy init parameter value`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Request with cache mode: only-if-cached and fetch mode cors`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - Request with cache mode: only-if-cached and fetch mode no-cors`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - RequestInit's cache mode is only-if-cached and mode is not same-origin`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - RequestInit's mode is navigate`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - RequestInit's referrer is invalid`
+- `fetch/api/abort/general.any.js :: TypeError from request constructor takes priority - RequestInit's window is not null`
+- `fetch/api/basic/header-value-null-byte.any.js :: Ensure fetch() rejects null bytes in headers`
+- `fetch/api/basic/request-head.any.js :: Fetch with HEAD with body`
+- `fetch/api/cors/cors-basic.any.js :: Cross domain different protocol [server forbid CORS]`
+- `fetch/range/general.any.js :: Cross Origin Fetch with non safe range header`
+
+## ✅ Fixed (209)
+
+- `encoding/encodeInto.any.js :: encodeInto() and a detached output buffer`
+- `encoding/replacement-encodings.any.js :: csiso2022kr - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: csiso2022kr - non-empty input decodes to one replacement character.`
+- `encoding/replacement-encodings.any.js :: hz-gb-2312 - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: hz-gb-2312 - non-empty input decodes to one replacement character.`
+- `encoding/replacement-encodings.any.js :: iso-2022-cn - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: iso-2022-cn - non-empty input decodes to one replacement character.`
+- `encoding/replacement-encodings.any.js :: iso-2022-cn-ext - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: iso-2022-cn-ext - non-empty input decodes to one replacement character.`
+- `encoding/replacement-encodings.any.js :: iso-2022-kr - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: iso-2022-kr - non-empty input decodes to one replacement character.`
+- `encoding/replacement-encodings.any.js :: replacement - empty input decodes to empty output.`
+- `encoding/replacement-encodings.any.js :: replacement - non-empty input decodes to one replacement character.`
+- `encoding/streams/decode-ignore-bom.any.js :: ignoreBOM should work for encoding utf-16be, split at character 1`
+- `encoding/streams/decode-ignore-bom.any.js :: ignoreBOM should work for encoding utf-16le, split at character 1`
+- `encoding/streams/decode-ignore-bom.any.js :: ignoreBOM should work for encoding utf-8, split at character 1`
+- `encoding/streams/decode-ignore-bom.any.js :: ignoreBOM should work for encoding utf-8, split at character 2`
+- `encoding/textdecoder-arguments.any.js :: TextDecoder decode() with array buffer detached during arg conversion`
+- `encoding/textdecoder-copy.any.js :: Modify buffer after passing it in (ArrayBuffer)`
+- `encoding/textdecoder-mistakes.any.js :: BOM splitting / repeats: utf-16be`
+- `encoding/textdecoder-mistakes.any.js :: BOM splitting / repeats: utf-16le`
+- `encoding/textdecoder-mistakes.any.js :: BOM splitting / repeats: utf-8`
+- `encoding/textdecoder-mistakes.any.js :: Invalid Unicode input is replaced: utf-16be`
+- `encoding/textdecoder-mistakes.any.js :: Invalid Unicode input is replaced: utf-16le`
+- `encoding/textdecoder-mistakes.any.js :: Sticky fatal BOM: utf-16be`
+- `encoding/textdecoder-mistakes.any.js :: Sticky fatal BOM: utf-16le`
+- `encoding/textdecoder-mistakes.any.js :: Sticky fatal BOM: utf-8`
+- `encoding/textdecoder-mistakes.any.js :: labels: invalid non-ascii`
+- `encoding/textdecoder-mistakes.any.js :: stream: utf-8`
+- `encoding/textdecoder-streaming.any.js :: Streaming decode: UTF-8 chunk tests (ArrayBuffer)`
+- `encoding/textdecoder-utf16-surrogates.any.js :: utf-16le - unmatched surrogate lead`
+- `encoding/unsupported-encodings.any.js :: UTF-32 with BOM should decode as UTF-16LE`
+- `encoding/unsupported-encodings.any.js :: UTF-32 with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: UTF-32LE with BOM should decode as UTF-16LE`
+- `encoding/unsupported-encodings.any.js :: UTF-32LE with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: UTF-32be with BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: UTF-32be with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: UTF-7 should not be supported`
+- `encoding/unsupported-encodings.any.js :: utf-32 with BOM should decode as UTF-16LE`
+- `encoding/unsupported-encodings.any.js :: utf-32 with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: utf-32be with BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: utf-32be with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: utf-32le with BOM should decode as UTF-16LE`
+- `encoding/unsupported-encodings.any.js :: utf-32le with no BOM should decode as UTF-8`
+- `encoding/unsupported-encodings.any.js :: utf-7 should not be supported`
+- `fetch/api/abort/general.any.js :: Aborting rejects with AbortError`
+- `fetch/api/abort/general.any.js :: Aborting rejects with abort reason`
+- `fetch/api/abort/general.any.js :: Already aborted signal can be used for many fetches`
+- `fetch/api/abort/general.any.js :: Already aborted signal does not make request`
+- `fetch/api/abort/general.any.js :: Signal can be used to abort other fetches, even if another fetch succeeded before aborting`
+- `fetch/api/basic/http-response-code.any.js :: Fetch on 425 response should not be retried for non TLS early data.`
+- `fetch/api/basic/integrity.sub.any.js :: Empty string integrity`
+- `fetch/api/basic/integrity.sub.any.js :: Multiple integrities: both are valid`
+- `fetch/api/basic/integrity.sub.any.js :: Multiple integrities: invalid as strong as valid`
+- `fetch/api/basic/integrity.sub.any.js :: Multiple integrities: valid stronger than invalid`
+- `fetch/api/basic/integrity.sub.any.js :: SHA-256 integrity`
+- `fetch/api/basic/integrity.sub.any.js :: SHA-384 integrity`
+- `fetch/api/basic/integrity.sub.any.js :: SHA-512 integrity`
+- `fetch/api/basic/integrity.sub.any.js :: SHA-512 integrity base64url encoded`
+- `fetch/api/basic/integrity.sub.any.js :: SHA-512 integrity base64url encoded with missing padding`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with ArrayBuffer body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Blob body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Blob body with mime type`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with DataView body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Float16Array body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Float32Array body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Float64Array body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Int8Array body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with URLSearchParams body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with Uint8Array body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with POST with text body`
+- `fetch/api/basic/request-upload.any.js :: Fetch with PUT with body`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=304 (method=GET)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=304 (method=OPTIONS)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=304 (method=POST)`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.type accessor returning invalid value should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.size accessor should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.type accessor should not affect stream creation by 'fetch'`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16BE with BOM decoded as UTF-8 with fetched data (UTF-16 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16BE with BOM decoded as UTF-8 with fetched data (UTF-8 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16LE with BOM decoded as UTF-8 with fetched data (UTF-16 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16LE with BOM decoded as UTF-8 with fetched data (UTF-8 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 with BOM with fetched data (UTF-16 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 with BOM with fetched data (UTF-8 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 without BOM with fetched data (UTF-16 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-8 without BOM with fetched data (UTF-8 charset)`
+- `fetch/range/blob.any.js :: Blob content with short content and a large range start`
+- `fetch/range/blob.any.js :: Blob content with short content and a range start matching the content length`
+- `fetch/range/blob.any.js :: Blob range end should be an ASCII digit`
+- `fetch/range/blob.any.js :: Blob range request with multiple range values`
+- `fetch/range/blob.any.js :: Blob range request with multiple range values and whitespace`
+- `fetch/range/blob.any.js :: Blob range request with short range end`
+- `fetch/range/blob.any.js :: Blob range request with trailing comma`
+- `fetch/range/blob.any.js :: Blob range should have a dash`
+- `fetch/range/blob.any.js :: Blob range should include '-'`
+- `fetch/range/blob.any.js :: Blob range should include '='`
+- `fetch/range/blob.any.js :: Blob range should include 'bytes='`
+- `fetch/range/blob.any.js :: Blob range start should be an ASCII digit`
+- `fetch/range/blob.any.js :: Blob range with incorrect range header`
+- `fetch/range/blob.any.js :: Blob range with incorrect range header #2`
+- `fetch/range/blob.any.js :: Blob range with incorrect range header #3`
+- `fetch/range/blob.any.js :: Blob range with no start or end`
+- `fetch/range/blob.any.js :: Blob range with no value`
+- `url/url-setters-stripping.any.js :: Setting hash with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hash with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hash with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hash with middle U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hash with trailing U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hash with trailing U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with leading U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with middle U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting host with trailing U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with leading U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with middle U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting hostname with trailing U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting password with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting password with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting password with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting password with middle U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting password with trailing U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting password with trailing U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with middle U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with trailing U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting pathname with trailing U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+001F (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with leading U+001F (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+001F (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with middle U+001F (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+0009 (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+0009 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+000A (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+000A (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+000D (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+000D (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+001F (https:)`
+- `url/url-setters-stripping.any.js :: Setting port with trailing U+001F (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting protocol with U+0000 before inserted colon (https:)`
+- `url/url-setters-stripping.any.js :: Setting protocol with U+0000 before inserted colon (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting search with leading U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting search with leading U+0000 (wpt++:)`
+- `url/url-setters-stripping.any.js :: Setting search with middle U+0000 (https:)`
+- `url/url-setters-stripping.any.js :: Setting search with middle U+0000 (wpt++:)`
+- …and 9 more

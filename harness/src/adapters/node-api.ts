@@ -396,6 +396,27 @@ async function runNodeApiTask(
   task: NodeApiTask,
   index: number,
 ): Promise<TestResult[]> {
+  // Skip before spawning, not after. A skipped test is one we have decided not
+  // to run at all, and some of them (vm SIGINT, for one) hang hard enough to
+  // outlive their own timeout, so running them anyway costs the whole suite.
+  if (skip.some((match) => match(task.rel))) {
+    return [{
+      kind: "test",
+      id: task.rel,
+      status: "skip",
+      message: "",
+      durationMs: 0,
+      meta: {
+        suite: "node-api",
+        upstreamPath: task.rel,
+        category: task.category,
+        runner: "node-core",
+        subtest: task.rel,
+        features: [`node:${task.category}`],
+      },
+    }];
+  }
+
   const source = readFileSync(join(ctx.suitePath, task.rel), "utf8");
   const metadata = readNodeTestMetadata(source);
   const workspaceTestDir = join(ctx.workspacePath, "node-test");
@@ -435,11 +456,10 @@ async function runNodeApiTask(
     stopProgress();
   }
 
-  const status = skip.some((match) => match(task.rel)) ? "skip" : resultStatus(result);
   return [{
     kind: "test",
     id: task.rel,
-    status,
+    status: resultStatus(result),
     message: resultMessage(result),
     durationMs: result.durationMs,
     meta: {

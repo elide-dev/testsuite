@@ -41,3 +41,44 @@ test("streams stdout and stderr lines while retaining captured output", async ()
   expect(r.stdout).toContain("out1");
   expect(r.stderr).toContain("err1");
 });
+
+test("does not wedge when a leaked grandchild holds the output pipes open", async () => {
+  // Mirrors test/parallel/test-vm-sigint.js: the child spawns a helper that
+  // inherits the stdout/stderr pipes and spins forever. Killing only the direct
+  // child leaves the pipe write-ends open, so the readers never see EOF.
+  const script = [
+    'const { spawn } = require("child_process");',
+    'spawn(process.execPath, ["-e", "while(true){}"], { stdio: [null, "inherit", "inherit"] });',
+    "setTimeout(() => {}, 100000);",
+  ].join("\n");
+
+  const started = performance.now();
+  const r = await runProcess([process.execPath, "-e", script], {
+    cwd: process.cwd(),
+    timeoutMs: 200,
+  });
+  const elapsed = performance.now() - started;
+
+  expect(r.timedOut).toBe(true);
+  expect(elapsed).toBeLessThan(10_000);
+});
+
+test("kills the whole process group on timeout", async () => {
+  const marker = `spin-marker-${process.pid}-${Date.now()}`;
+  const script = [
+    'const { spawn } = require("child_process");',
+    `spawn(process.execPath, ["-e", "/* ${marker} */ while(true){}"], { stdio: [null, "inherit", "inherit"] });`,
+    "setTimeout(() => {}, 100000);",
+  ].join("\n");
+
+  const r = await runProcess([process.execPath, "-e", script], {
+    cwd: process.cwd(),
+    timeoutMs: 200,
+  });
+  expect(r.timedOut).toBe(true);
+
+  // Give the kernel a moment to reap the group, then assert no spinner survived.
+  await Bun.sleep(500);
+  const survivors = await runProcess(["pgrep", "-f", marker], { cwd: process.cwd(), timeoutMs: 5000 });
+  expect(survivors.stdout.trim()).toBe("");
+});

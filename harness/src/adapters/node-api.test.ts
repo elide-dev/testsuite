@@ -236,3 +236,42 @@ test("maps Node common skip output to skip", async () => {
     status: "skip",
   });
 });
+
+test("skipped tests are never launched", async () => {
+  const root = mkdtempSync(join(tmpdir(), "node-api-"));
+  const suitePath = join(root, "node");
+  const workspacePath = join(root, "workspace");
+  const manifest = join(root, "node-api.toml");
+  const launchLog = join(root, "launched.txt");
+  mkdirSync(join(suitePath, "test/parallel"), { recursive: true });
+  mkdirSync(workspacePath, { recursive: true });
+  writeFileSync(join(suitePath, "test/parallel/test-vm-sigint.js"), "");
+  writeFileSync(join(suitePath, "test/parallel/test-vm-ok.js"), "");
+  writeFileSync(manifest, '[[group]]\nid = "vm"\ninclude = ["test/parallel/test-vm-*.js"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> ${JSON.stringify(launchLog)}\n`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: root,
+    suitePath,
+    include: [],
+    skipGlobs: ["test/parallel/test-vm-sigint.js"],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath,
+  };
+
+  const results = await collect(runNodeApi(ctx));
+
+  expect(results.find((r) => r.id === "test/parallel/test-vm-sigint.js")).toMatchObject({
+    status: "skip",
+    durationMs: 0,
+  });
+  // The skipped file must not appear in the launch log at all.
+  const launched = readFileSync(launchLog, "utf8");
+  expect(launched).toContain("test-vm-ok.js");
+  expect(launched).not.toContain("test-vm-sigint.js");
+});
