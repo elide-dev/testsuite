@@ -83,7 +83,7 @@ export function parseWptLines(text: string): TestResult[] {
   return text.split(/\r?\n/).map(parseWptLine).filter((r): r is TestResult => r !== null);
 }
 
-/** WPT `fetch/` tests hit the network sidecar; every other group runs serverless. */
+/** WPT `fetch/` tests hit the network sidecar; every other group runs serverless. test*/
 export function isFetchTask(task: WptTask): boolean {
   return task.rel.startsWith("fetch/");
 }
