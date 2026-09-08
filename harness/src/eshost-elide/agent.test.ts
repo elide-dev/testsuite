@@ -84,7 +84,7 @@ test("_copyFixtures ignores specifiers that do not name real files", () => {
   expect(existsSync(join(dst, "missing_FIXTURE.js"))).toBe(false);
 });
 
-test("createChildProcess marks the temp dir type:module only for module tests", async () => {
+test("createChildProcess marks the temp dir type:module only for module tests and runs the entry in place", async () => {
   const dir = mkdtempSync(join(tmpdir(), "elide-agent-tmp-"));
   const entry = join(dir, "t.js");
   writeFileSync(entry, "// entry");
@@ -101,8 +101,10 @@ test("createChildProcess marks the temp dir type:module only for module tests", 
     agent._elideModule = true;
     await agent.createChildProcess([entry]);
     expect(JSON.parse(readFileSync(join(dir, "package.json"), "utf8"))).toEqual({ type: "module" });
-    // Module entry runs as a `.mjs` copy.
-    expect(spawned[0][0]).toBe(join(dir, "t.mjs"));
+    // The module entry runs under its real `.js` name (parsed as ESM via the marker),
+    // so self/cyclic imports of that file dedupe to the single entry record.
+    expect(spawned[0][0]).toBe(entry);
+    expect(existsSync(join(dir, "t.mjs"))).toBe(false);
 
     agent._elideModule = false;
     await agent.createChildProcess([entry]);
