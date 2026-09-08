@@ -1,4 +1,10 @@
-import { existsSync, mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, writeFileSync } from "node:fs";
+
+// A checkout without submodules still has the empty suite directories, so test the
+// contents rather than the directory itself.
+function populated(dir: string): boolean {
+  return existsSync(dir) && readdirSync(dir).length > 0;
+}
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { test, expect } from "bun:test";
@@ -57,7 +63,7 @@ test("javac langtools manifest enables the full tools/javac tree", () => {
 
 test("cpython manifest entries exist in the checked-out CPython suite", () => {
   const suiteRoot = `${import.meta.dir}/../../suites/cpython`;
-  if (!existsSync(suiteRoot)) return;
+  if (!populated(suiteRoot)) return;
 
   const manifest = loadManifest(`${import.meta.dir}/../../manifests/cpython-core.toml`);
   const groups = new Map(manifest.groups.map((group) => [group.id, group.include]));
@@ -75,7 +81,7 @@ test("cpython manifest entries exist in the checked-out CPython suite", () => {
 
 test("wintertc WPT manifest includes checked-out paths when the suite exists", () => {
   const suiteRoot = `${import.meta.dir}/../../suites/wpt`;
-  if (!existsSync(suiteRoot)) return;
+  if (!populated(suiteRoot)) return;
 
   const manifest = loadManifest(`${import.meta.dir}/../../manifests/wintertc-wpt-2025.toml`);
   for (const path of manifest.groups.flatMap((group) => group.include)) {
