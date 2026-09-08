@@ -1,0 +1,12 @@
+# Bali jdk-jtreg expectations. Keys are picomatch globs over test/jdk file paths
+# such as java/lang/**. Same format and semantics as the Elide suites:
+# [skip] mutes files (not scored), [fail] records known Bali-only failures.
+# Failures observed by a `--ratchet` run are recorded automatically in
+# jdk-jtreg.ratchet.toml; hand-curated entries with reasons belong here.
+#
+# Adapter gaps (unsupported jtreg directives) and reference-JDK problems are
+# reported as skips by the adapter itself and need no entries.
+
+[skip]
+
+[fail]

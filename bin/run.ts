@@ -22,6 +22,21 @@ import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classifySuiteStatus } from "./suite-status";
+import {
+  ROOT,
+  RUN_LABEL,
+  assertWritableMountSources,
+  capture,
+  fixHostOwnership,
+  log,
+  platformArgs,
+  requireDocker,
+  run,
+  runWithHeartbeat,
+  sha256File,
+  usageError,
+  userArgs,
+} from "./docker";
 
 interface Options {
   elideRef: string;
@@ -44,6 +59,7 @@ interface Options {
 interface WorkloadInfo {
   id: string;
   path?: string;
+  target?: string;
 }
 
 interface SuiteRunSummary {
@@ -74,11 +90,7 @@ interface SuiteSummaryRow {
   changes?: SuiteChanges;
 }
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DEFAULT_ELIDE_REF = "ghcr.io/elide-dev/elide:nightly";
-const RUN_LABEL_KEY = "elide.testsuite.run";
-const RUN_ID = `${Date.now()}-${process.pid}-${randomUUID()}`;
-const RUN_LABEL = `${RUN_LABEL_KEY}=${RUN_ID}`;
 const CONTAINER_PATH = [
   "/opt/jtreg/bin",
   "/opt/graalvm-jdk-25.0.3/bin",
@@ -90,12 +102,6 @@ const CONTAINER_PATH = [
   "/sbin",
   "/bin",
 ].join(":");
-const activeProcesses = new Set<ReturnType<typeof Bun.spawn>>();
-let handlingSignal = false;
-
-function log(message: string): void {
-  process.stderr.write(`[bin/run] ${message}\n`);
-}
 
 const COLOR = process.stderr.isTTY && !process.env.NO_COLOR;
 const ansi = {
@@ -106,11 +112,6 @@ const ansi = {
   dim: (s: string) => COLOR ? `\x1b[2m${s}\x1b[0m` : s,
   bold: (s: string) => COLOR ? `\x1b[1m${s}\x1b[0m` : s,
 };
-
-function usageError(message: string): never {
-  log(message);
-  process.exit(2);
-}
 
 function parsePositiveInt(value: string | undefined, name: string): number | undefined {
   if (value === undefined || value === "") return undefined;
@@ -141,38 +142,6 @@ function planConcurrency(options: Options, suiteCount: number): ConcurrencyPlan 
   const threads = options.threads ?? Math.max(1, Math.ceil(totalBudget / suiteWorkers));
   return { cpuCount: cpus, totalBudget, suiteWorkers, threads };
 }
-
-function cleanupContainersSync(): void {
-  const listed = Bun.spawnSync(["docker", "ps", "-aq", "--filter", `label=${RUN_LABEL}`], {
-    stdout: "pipe",
-    stderr: "pipe",
-  });
-  const ids = new TextDecoder().decode(listed.stdout).trim().split(/\s+/).filter(Boolean);
-  if (ids.length === 0) return;
-  log(`cleaning up ${ids.length} running container(s) for interrupted run`);
-  Bun.spawnSync(["docker", "rm", "-f", ...ids], {
-    stdout: "ignore",
-    stderr: "ignore",
-  });
-}
-
-function interrupt(signal: NodeJS.Signals): never {
-  if (handlingSignal) process.exit(130);
-  handlingSignal = true;
-  log(`received ${signal}; stopping active command and cleaning up containers`);
-  for (const proc of activeProcesses) {
-    try {
-      proc.kill("SIGINT");
-    } catch {
-      // Best effort: labelled containers are forcibly removed below.
-    }
-  }
-  cleanupContainersSync();
-  process.exit(signal === "SIGTERM" ? 143 : 130);
-}
-
-process.on("SIGINT", () => interrupt("SIGINT"));
-process.on("SIGTERM", () => interrupt("SIGTERM"));
 
 function parseArgs(argv: string[]): Options {
   const options: Options = {
@@ -262,86 +231,12 @@ function parseArgs(argv: string[]): Options {
   return options;
 }
 
-function platformArgs(platform: string): string[] {
-  return platform ? ["--platform", platform] : [];
-}
-
-function userArgs(uid: string, gid: string): string[] {
-  return ["--user", `${uid}:${gid}`, "-e", "HOME=/work/.harness", "-e", `PATH=${CONTAINER_PATH}`];
-}
-
-async function run(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<number> {
-  const proc = Bun.spawn(args, {
-    cwd: opts.cwd ?? ROOT,
-    env: opts.env ?? process.env,
-    stdin: "inherit",
-    stdout: "inherit",
-    stderr: "inherit",
-  });
-  activeProcesses.add(proc);
-  try {
-    return await proc.exited;
-  } finally {
-    activeProcesses.delete(proc);
-  }
-}
-
-async function runWithHeartbeat(args: string[], label: string, opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<number> {
-  log(`${label}...`);
-  const started = performance.now();
-  const timer = setInterval(() => {
-    const seconds = Math.round((performance.now() - started) / 1000);
-    log(`${label} still running (${seconds}s)...`);
-  }, 5_000);
-  try {
-    const rc = await run(args, opts);
-    const seconds = Math.round((performance.now() - started) / 1000);
-    log(`${label} ${rc === 0 ? "done" : `exited ${rc}`} (${seconds}s).`);
-    return rc;
-  } finally {
-    clearInterval(timer);
-  }
-}
-
-async function capture(args: string[], opts: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<{
-  exitCode: number;
-  stdout: string;
-  stderr: string;
-}> {
-  const proc = Bun.spawn(args, {
-    cwd: opts.cwd ?? ROOT,
-    env: opts.env ?? process.env,
-    stdout: "pipe",
-    stderr: "pipe",
-  });
-  activeProcesses.add(proc);
-  try {
-    const [stdout, stderr, exitCode] = await Promise.all([
-      new Response(proc.stdout).text(),
-      new Response(proc.stderr).text(),
-      proc.exited,
-    ]);
-    return { exitCode, stdout, stderr };
-  } finally {
-    activeProcesses.delete(proc);
-  }
-}
-
-async function requireDocker(): Promise<void> {
-  const result = await capture(["docker", "--version"]);
-  if (result.exitCode !== 0) usageError("docker not found on PATH");
-}
-
 function dockerImageName(elideRef: string): string {
   return `elide-harness:${elideRef.replaceAll(/[/:@]/g, "_")}`;
 }
 
 function isLocalInstallDir(path: string): boolean {
   return existsSync(path) && statSync(path).isDirectory() && existsSync(resolve(path, "bin/elide"));
-}
-
-function sha256File(path: string): string {
-  return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
 async function buildHarnessImage(options: Options, image: string, plat: string[]): Promise<string> {
@@ -436,6 +331,8 @@ function parseRegistry(registryPath: string): WorkloadInfo[] {
     if (id) current.id = id;
     const path = line.match(/^\s*path\s*=\s*"([^"]+)"/)?.[1];
     if (path) current.path = path;
+    const target = line.match(/^\s*target\s*=\s*"([^"]+)"/)?.[1];
+    if (target) current.target = target;
   }
   if (current?.id) workloads.push(current);
   return workloads;
@@ -447,58 +344,6 @@ async function suiteVersion(workload: WorkloadInfo): Promise<string> {
   if (!existsSync(resolve(checkout, ".git"))) return "unknown";
   const result = await capture(["git", "-C", checkout, "rev-parse", "HEAD"]);
   return result.exitCode === 0 ? result.stdout.trim() : "unknown";
-}
-
-async function fixHostOwnership(image: string, plat: string[], uid: string, gid: string, label: string): Promise<void> {
-  await runWithHeartbeat([
-    "docker",
-    "run",
-    "--rm",
-    "--label",
-    RUN_LABEL,
-    ...plat,
-    "--entrypoint",
-    "chown",
-    "-v",
-    `${ROOT}/reports:/target/reports`,
-    "-v",
-    `${ROOT}/expectations:/target/expectations`,
-    "-v",
-    `${ROOT}/.harness:/target/.harness`,
-    "-v",
-    `${ROOT}/README.md:/target/README.md`,
-    image,
-    "-R",
-    `${uid}:${gid}`,
-    "/target/reports",
-    "/target/expectations",
-    "/target/.harness",
-    "/target/README.md",
-  ], label);
-}
-
-function assertWritableMountSources(): void {
-  for (const dir of ["reports", "expectations", ".harness"]) {
-    const target = resolve(ROOT, dir, `.write-test-${process.pid}`);
-    try {
-      writeFileSync(target, "");
-      unlinkSync(target);
-    } catch (err) {
-      usageError(
-        `${dir}/ is not writable by the current user (${err instanceof Error ? err.message : String(err)}). ` +
-          "Run once with --repair-ownership to fix stale root-owned files.",
-      );
-    }
-  }
-
-  try {
-    closeSync(openSync(resolve(ROOT, "README.md"), "a"));
-  } catch (err) {
-    usageError(
-      `README.md is not writable by the current user (${err instanceof Error ? err.message : String(err)}). ` +
-        "Run once with --repair-ownership to fix stale ownership.",
-    );
-  }
 }
 
 function walkSummaryPaths(root: string): string[] {
@@ -699,18 +544,23 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
   process.stderr.write(`${bottom}\n\n`);
 }
 
-async function main(): Promise<number> {
+async function main(argv = Bun.argv.slice(2)): Promise<number> {
   process.chdir(ROOT);
-  const options = parseArgs(Bun.argv.slice(2));
+  const options = parseArgs(argv);
   const plat = platformArgs(options.platform);
   const hostUid = (await $`id -u`.text()).trim();
   const hostGid = (await $`id -g`.text()).trim();
-  const user = userArgs(hostUid, hostGid);
+  const user = userArgs(hostUid, hostGid, CONTAINER_PATH);
   const registryPath = resolve(ROOT, "registry.toml");
   const workloads = parseRegistry(registryPath);
+  // Workloads for other runtimes (registry `target`) are run through `--target <name>`.
   const suites = options.allSuites && options.suites.length === 0
-    ? workloads.map((workload) => workload.id)
+    ? workloads.filter((workload) => (workload.target ?? "elide") === "elide").map((workload) => workload.id)
     : options.suites.length ? options.suites : ["test262"];
+  for (const suite of suites) {
+    const target = workloads.find((workload) => workload.id === suite)?.target;
+    if (target && target !== "elide") usageError(`suite '${suite}' targets ${target}; run it with --target ${target}`);
+  }
 
   if (options.prepareSuites) {
     const rc = await runWithHeartbeat(
@@ -741,9 +591,14 @@ async function main(): Promise<number> {
   if (!existsSync(resolve(ROOT, "README.md"))) closeSync(openSync(resolve(ROOT, "README.md"), "a"));
 
   if (options.repairOwnership) {
-    await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership before suite runs");
+    await fixHostOwnership(image, plat, hostUid, hostGid, "repairing writable mount ownership before suite runs", [
+      "reports",
+      "expectations",
+      ".harness",
+      "README.md",
+    ]);
   } else {
-    assertWritableMountSources();
+    assertWritableMountSources(["reports", "expectations", ".harness"], ["README.md"]);
   }
 
   const expMode = options.ratchet ? "rw" : "ro";
@@ -852,7 +707,33 @@ async function main(): Promise<number> {
 }
 
 try {
-  process.exit(await main());
+  const argv = Bun.argv.slice(2);
+  const targetIndex = argv.indexOf("--target");
+  const target = targetIndex < 0 ? "elide" : argv[targetIndex + 1];
+  if (targetIndex >= 0) argv.splice(targetIndex, 2);
+  if (target === "bali") {
+    const executionIndex = argv.indexOf("--execution");
+    const execution = executionIndex < 0 ? "docker" : argv[executionIndex + 1];
+    if (executionIndex >= 0) argv.splice(executionIndex, 2);
+    const baliSuites = parseRegistry(resolve(ROOT, "registry.toml"))
+      .filter((workload) => workload.target === "bali")
+      .map((workload) => workload.id);
+    if (argv.includes("--help")) {
+      console.log(
+        `usage: bun run testsuite --target bali --bali-home <linux-amd64 distribution> [--ratchet] [--suite ${baliSuites.join("|")}] [--execution docker|native]\n` +
+          "Docker (default) runs linux/amd64 with the reference JDK fixed in the image. --execution native runs on this host, " +
+          "using JAVA_HOME or --reference-home as the reference JDK. Results go to reports/bali/ and are checked against expectations/<suite>.toml like Elide suites.",
+      );
+    } else if (execution === "docker") {
+      const { runBaliDocker } = await import("./bali-docker");
+      process.exitCode = await runBaliDocker(argv, ROOT, RUN_LABEL, run, baliSuites);
+    } else if (execution === "native") {
+      const { runBaliNative } = await import("./bali-docker");
+      process.exitCode = await runBaliNative(argv, ROOT, baliSuites);
+    } else throw new Error(`Unknown execution environment: ${execution}`);
+  } else if (target === "elide") {
+    process.exit(await main(argv));
+  } else throw new Error(`Unknown target: ${target}`);
 } catch (err) {
   log(`ERROR: unexpected failure: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
   process.exit(2);

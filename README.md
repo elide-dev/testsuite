@@ -19,6 +19,18 @@ Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev
 > Full enabled slices may be RED until expectations are ratcheted and failures
 > are classified.
 
+## Bali runtime compatibility
+
+This repository also supports Bali as a Docker-based Linux AMD64 target. Elide remains the default.
+
+```sh
+bun run testsuite --target bali --suite jdk-jtreg --bali-home /path/to/linux-amd64/bali
+```
+
+See [Bali setup and expectations](BALI.md) and [Bali compatibility history](reports/bali/index.md).
+The runtime suite (`test/jdk`) is separate from Elide's compiler suite (`javac-jtreg`).
+Runner coverage, verified passes, reference issues, and unsupported files remain separate.
+
 ## Compatibility
 
 <!-- compat-summary:start -->

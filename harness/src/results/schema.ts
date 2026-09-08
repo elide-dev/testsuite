@@ -10,7 +10,8 @@ export interface ElideIdentity {
 export interface RunMeta {
   workload: string;
   kind: WorkloadKind;
-  elide: ElideIdentity;
+  elide: ElideIdentity; // semver + digest of the runtime under test (legacy field name)
+  target?: RuntimeTarget; // set by the harness; absent in reports written before Bali support
   startedAt: string;
   finishedAt: string;
   suiteVersion?: string; // submodule commit
@@ -39,4 +40,13 @@ export type Result = TestResult | BenchResult;
 
 export function isTest(r: Result): r is TestResult {
   return r.kind === "test";
+}
+
+/** Target identity for native/multi-runtime measurements. Legacy Elide runs retain
+ * their existing `elide` field so old reports and SQL indexes remain readable. */
+export interface RuntimeTarget {
+  name: "elide" | "bali";
+  version: string;
+  artifactDigest: string;
+  platform: string;
 }
