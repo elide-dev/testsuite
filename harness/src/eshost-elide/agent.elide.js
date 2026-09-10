@@ -124,9 +124,9 @@ class ElideAgent extends ConsoleAgent {
       // test262 fixture files are ES modules by suite convention, but Elide
       // (Node-style) treats imported `.js` as CommonJS unless the enclosing
       // package declares `type: module`. Mark the temp dir accordingly for
-      // module-flagged tests (whose entry runs as `.mjs`, unaffected by the
-      // package type); remove the marker for script tests, whose `.js` entry
-      // must keep evaluating as a classic global script.
+      // module-flagged tests, whose `.js` entry then parses as ESM; remove the
+      // marker for script tests, whose `.js` entry must keep evaluating as a
+      // classic global script.
       const pkg = path.join(path.dirname(args[0]), "package.json");
       try {
         if (this._elideModule) {
