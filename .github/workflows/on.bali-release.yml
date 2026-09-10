@@ -4,7 +4,7 @@ name: "Manual - Bali Release Compatibility"
   workflow_dispatch:
     inputs:
       ratchet:
-        description: "Regenerate expectations/jdk-jtreg.ratchet.toml from this run's failures, like Elide's ratchet"
+        description: "Regenerate expectations/jdk-jtreg.ratchet.toml from this run's failures, like Elide's ratchet; also records the stock-JDK reference baseline when it is missing or stale"
         required: false
         default: false
         type: boolean
@@ -106,6 +106,7 @@ jobs:
             .harness/work/jdk-jtreg/jtreg-run-*/reference/**
             .harness/work/jdk-jtreg/jtreg-run-*/bali/**
             expectations/jdk-jtreg.ratchet.toml
+            expectations/jdk-jtreg.reference.json
             reports/bali/**
       - name: Save report history in a pull request
         if: ${{ always() && !cancelled() && github.ref_type == 'branch' && hashFiles('.harness/work/jdk-jtreg/report.json') != '' }}
@@ -119,7 +120,7 @@ jobs:
           set -euo pipefail
           git config user.name "elide-ci"
           git config user.email "ci@elide.dev"
-          git add -- reports/bali expectations/jdk-jtreg.ratchet.toml
+          git add -- reports/bali expectations/jdk-jtreg.ratchet.toml expectations/jdk-jtreg.reference.json
           if git diff --cached --quiet; then
             echo 'No new Bali reports to commit.'
             exit 0

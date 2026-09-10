@@ -6,6 +6,11 @@
  * directives remain visible as adapter gaps instead of disappearing from the inventory.
  * All sibling fixtures are preserved. Stock javac compiles both runtime selections.
  *
+ * The reference outcome is a function of the pins alone (corpus, jtreg, reference JDK,
+ * portable root, execution options, adapter protocol, runnable inventory), so it is kept
+ * as a committed, fingerprinted baseline in expectations/ and the stock JDK is only run
+ * when no matching baseline exists. `--ratchet` records a fresh reference run as the
+ * baseline, like it records the ratchet.
  * Archives are verified on every use and each run gets fresh work directories.
  * Reports distinguish verified passes, Bali gaps, reference issues, and unsupported
  * files. Paired outcomes are flattened into Elide's single-status model, so the shared
@@ -219,6 +224,14 @@ export function summary(report: Report) {
 export const RAW_NOTE =
   "report.json preserves every file and diagnostic status. Raw logs and jtreg reports are in the run's jtreg-run-*/reference/ and jtreg-run-*/bali/ directories.";
 
+function referenceNote(metadata: Record<string, unknown>): string {
+  const reference = metadata.reference as { source?: string; generatedAt?: string } | undefined;
+  if (reference?.source === "baseline")
+    return `Reference outcomes come from the committed baseline generated ${reference.generatedAt}; the stock JDK was not run.\n\n`;
+  if (reference?.source === "run") return `Reference outcomes were measured by running the stock JDK in this run.\n\n`;
+  return "";
+}
+
 export function markdown(report: Report): string {
   const counts = summary(report);
   const areas = [...new Set(report.tests.map((row) => row.area))].sort();
@@ -232,6 +245,7 @@ export function markdown(report: Report): string {
     `| Outcome | Files |\n|---|---:|\n| Pass on both runtimes | ${counts.verifiedPassing} |\n| Reference passes; Bali does not | ${counts.baliFailures} |\n| Reference issues | ${counts.referenceIssues} |\n| Unsupported by adapter | ${counts.unsupported} |\n\n` +
     `${counts.incomplete ? "**Incomplete harness run.**" : "Completed inventory run; known failures remain visible."}\n\n` +
     `This measures the pinned test/jdk inventory, not Java SE certification. Stock javac compiles both runtime selections.\n\n` +
+    referenceNote(report.metadata) +
     `## Areas\n\n| Area | Inventory | Runnable | Pass on both |\n|---|---:|---:|---:|\n` +
     areas
       .map((area) => {
@@ -442,6 +456,130 @@ export async function runSuiteOnRuntime(
   return { exitCode, results };
 }
 
+/** Everything that determines the reference outcome; kernel and runner are provenance only. */
+export type ReferenceInputs = {
+  protocol: number;
+  manifest: string;
+  source: string;
+  jtreg: string;
+  execution: Manifest["execution"];
+  root: string;
+  heap: string;
+  referenceVersion: string;
+  platform: string;
+  /** Digest of the sorted runnable file IDs, so adapter inventory changes invalidate the baseline. */
+  inventory: string;
+};
+export type ReferenceBaseline = {
+  schema: 1;
+  fingerprint: string;
+  inputs: ReferenceInputs;
+  generatedAt: string;
+  exitCode: number;
+  results: Record<string, Result>;
+};
+export type RuntimeRun = { exitCode: number; results: Map<string, Result> };
+export const REFERENCE_BASELINE = "jdk-jtreg.reference.json";
+
+export function referenceInputs(args: {
+  manifest: Manifest;
+  root: string;
+  referenceVersion: string;
+  inventory: Entry[];
+  platform?: string;
+}): ReferenceInputs {
+  const runnable = args.inventory
+    .filter((test) => test.unsupported === null)
+    .map((test) => test.id)
+    .sort();
+  const { concurrency, timeoutFactor, headless } = args.manifest.execution;
+  return {
+    protocol: PROTOCOL,
+    manifest: args.manifest.id,
+    source: args.manifest.source.sha256,
+    jtreg: args.manifest.jtreg.sha256,
+    execution: { concurrency, timeoutFactor, headless },
+    root: args.root,
+    heap: HEAP_CAP,
+    referenceVersion: args.referenceVersion,
+    platform: args.platform ?? `${process.platform}-${arch()}`,
+    inventory: digest(runnable.join("\n")),
+  };
+}
+
+export const referenceFingerprint = (inputs: ReferenceInputs): string =>
+  digest(JSON.stringify(inputs));
+
+/** A baseline is used only when every input matches; otherwise the reason is reported. */
+export async function loadReferenceBaseline(
+  path: string,
+  fingerprint: string,
+): Promise<{ baseline: ReferenceBaseline } | { reason: string }> {
+  const file = Bun.file(path);
+  if (!(await file.exists())) return { reason: `no reference baseline at ${path}` };
+  let baseline: ReferenceBaseline;
+  try {
+    baseline = (await file.json()) as ReferenceBaseline;
+  } catch (error) {
+    return { reason: `unreadable reference baseline ${path}: ${(error as Error).message}` };
+  }
+  if (baseline?.schema !== 1 || typeof baseline.results !== "object" || !baseline.results)
+    return { reason: `malformed reference baseline ${path}` };
+  if (baseline.fingerprint !== fingerprint)
+    return {
+      reason: `stale reference baseline ${path} (fingerprint ${baseline.fingerprint.slice(0, 12)}, run needs ${fingerprint.slice(0, 12)})`,
+    };
+  return { baseline };
+}
+
+/** Reference results for the current inventory from a matching baseline. */
+export function baselineResults(baseline: ReferenceBaseline, inventory: Entry[]): RuntimeRun {
+  const results = new Map<string, Result>();
+  for (const test of inventory) {
+    if (test.unsupported !== null) {
+      results.set(test.id, { status: "unsupported", detail: test.unsupported });
+      continue;
+    }
+    results.set(
+      test.id,
+      baseline.results[test.id] ?? { status: "blocked", detail: "Missing from reference baseline" },
+    );
+  }
+  return { exitCode: baseline.exitCode, results };
+}
+
+/** Only a complete reference run may become the baseline; blocked results never do. */
+export function referenceComplete(run: RuntimeRun, inventory: Entry[]): boolean {
+  const runnable = inventory.filter((test) => test.unsupported === null);
+  return (
+    runnable.length > 0 &&
+    [0, 2, 3].includes(run.exitCode) &&
+    runnable.every((test) => {
+      const status = run.results.get(test.id)?.status;
+      return status !== undefined && status !== "blocked";
+    })
+  );
+}
+
+export function buildReferenceBaseline(
+  inputs: ReferenceInputs,
+  run: RuntimeRun,
+  inventory: Entry[],
+  generatedAt = new Date().toISOString(),
+): ReferenceBaseline {
+  const results: Record<string, Result> = {};
+  for (const test of [...inventory].sort((a, b) => (a.id < b.id ? -1 : 1)))
+    if (test.unsupported === null) results[test.id] = run.results.get(test.id)!;
+  return {
+    schema: 1,
+    fingerprint: referenceFingerprint(inputs),
+    inputs,
+    generatedAt,
+    exitCode: run.exitCode,
+    results,
+  };
+}
+
 /** Digest of the files that identify a Bali build; the launcher passes it as --digest. */
 export async function artifactDigest(home: string): Promise<string> {
   const artifacts: Record<string, string> = {};
@@ -528,7 +666,67 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
   const jtregVersion = await $`${join(reference, "bin/java")} -jar ${jar} -version`
     .env(cleanEnv(reference))
     .quiet();
+  const inputs = referenceInputs({
+    manifest,
+    root,
+    referenceVersion: versionText(refVersion),
+    inventory,
+  });
+  const fingerprint = referenceFingerprint(inputs);
+  const baselinePath = ctx.expectationsDir
+    ? join(ctx.expectationsDir, REFERENCE_BASELINE)
+    : undefined;
+  const loaded = baselinePath
+    ? await loadReferenceBaseline(baselinePath, fingerprint)
+    : { reason: "no expectations directory for a reference baseline" };
+  let referenceRun: RuntimeRun;
+  const referenceSource: Record<string, unknown> = { fingerprint };
+  if ("baseline" in loaded) {
+    console.log(
+      `Stock Java (1/2): using the committed reference baseline (generated ${loaded.baseline.generatedAt}); not running the stock JDK`,
+    );
+    referenceRun = baselineResults(loaded.baseline, inventory);
+    Object.assign(referenceSource, {
+      source: "baseline",
+      path: REFERENCE_BASELINE,
+      generatedAt: loaded.baseline.generatedAt,
+    });
+  } else {
+    console.log(`Stock Java (1/2): ${loaded.reason}; running the stock JDK`);
+    referenceRun = await runSuiteOnRuntime(
+      join(scratch, "reference"),
+      suite,
+      jar,
+      reference,
+      reference,
+      inventory,
+      manifest.execution,
+    );
+    referenceSource.source = "run";
+    // Like the ratchet: only a --ratchet run may write under expectations/, and only a
+    // complete reference run is worth keeping.
+    if (baselinePath && ctx.ratchet && referenceComplete(referenceRun, inventory)) {
+      const baseline = buildReferenceBaseline(inputs, referenceRun, inventory);
+      await Bun.write(baselinePath, JSON.stringify(baseline, null, 2) + "\n");
+      referenceSource.written = true;
+      console.log(`Recorded the reference baseline at ${baselinePath}; commit it with the ratchet`);
+    } else if (baselinePath && ctx.ratchet) {
+      console.warn("Reference run incomplete; the reference baseline was not updated");
+    } else if (baselinePath) {
+      console.log("Run with --ratchet to record this reference run as the committed baseline");
+    }
+  }
+  const baliRun = await runSuiteOnRuntime(
+    join(scratch, "bali"),
+    suite,
+    jar,
+    reference,
+    bali,
+    inventory,
+    manifest.execution,
+  );
   const metadata = {
+    reference: referenceSource,
     target: {
       name: "bali",
       version: versionText(baliVersion).match(/BaliVM (\S+)/)?.[1] ?? "unknown",
@@ -554,24 +752,6 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     rawResults: basename(scratch),
     root,
   };
-  const referenceRun = await runSuiteOnRuntime(
-    join(scratch, "reference"),
-    suite,
-    jar,
-    reference,
-    reference,
-    inventory,
-    manifest.execution,
-  );
-  const baliRun = await runSuiteOnRuntime(
-    join(scratch, "bali"),
-    suite,
-    jar,
-    reference,
-    bali,
-    inventory,
-    manifest.execution,
-  );
   const report: Report = {
     schema: 2,
     suite: manifest.id,

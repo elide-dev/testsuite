@@ -49,9 +49,31 @@ fails outside those lists. Exit `0` means no regressions, `1` means regressions,
 and `2` means an incomplete run: a harness abort, an unexpected jtreg exit code,
 or a runnable file with no result. Incomplete runs never ratchet green.
 
-No environment fingerprint participates. The reference JDK version and the
-kernel are recorded in the workspace report as provenance only, so a
-runner-image update can change outcomes but never invalidates the expectations. Reference-JDK problems are skips, not Bali regressions.
+No environment fingerprint participates in the expectations. The kernel is
+recorded in the workspace report as provenance only, so a runner-image update
+can change outcomes but never invalidates the expectations. Reference-JDK
+problems are skips, not Bali regressions.
+
+## Reference baseline
+
+The stock JDK's outcome depends only on pinned inputs: the corpus and jtreg
+archives, the reference JDK build in the image, the portable `TEST.ROOT`, the
+execution options, the adapter protocol, the platform, and the set of runnable
+files. `expectations/jdk-jtreg.reference.json` records one complete reference
+run together with a fingerprint of those inputs. When the fingerprint matches,
+the harness takes the reference outcomes from that file and runs only Bali,
+which halves the measurement. When the file is missing or stale (a pin bump, a
+new reference image, an adapter change that alters the runnable set, a different
+platform), the run logs the reason and runs the stock JDK as before. A
+`--ratchet` run then rewrites the baseline, and the CI workflows commit it
+beside the ratchet. Ordinary runs never write it. Delete the file to force a
+fresh reference measurement. The workspace report and `report.md` state whether
+the reference came from the baseline or from the run.
+
+One consequence: a runner-environment problem now shows up only on the Bali
+side and is scored as a Bali failure, whereas a live reference run could also
+have failed and turned it into a skip. Treat unexplained Bali-only failures in
+network or timing tests as environment suspects before recording them.
 
 ## Optional native local runs
 
@@ -123,7 +145,7 @@ On macOS jtreg needs access to OS memory/swap metrics. A restricted sandbox may
 block it before tests start. A failed harness probe remains an incomplete run.
 
 While tests run, the terminal identifies the current runtime (stock Java first,
-then Bali) and prints completed/total counts, outcomes, and elapsed time every
+when no matching reference baseline exists, then Bali) and prints completed/total counts, outcomes, and elapsed time every
 10 seconds. It also prints the directory containing live `.jtr` results.
 
 ## Understanding results
@@ -204,8 +226,9 @@ beside the harness unit tests:
   against the nightly Elide build, exactly as before.
 - **Compliance / Bali** runs `check.bali.yml` with `source: release`: it resolves
   the latest published Bali release, downloads and verifies its Linux AMD64
-  tarball, and runs `jdk-jtreg` in Docker on a hosted Ubuntu 24.04 runner. It
-  needs the `BALI_RELEASE_TOKEN` repository secret with `contents:read` access to
+  tarball, and runs `jdk-jtreg` in Docker on a hosted Ubuntu 24.04 runner. With
+  the committed reference baseline only Bali executes, about 14 minutes of
+  tests. It needs the `BALI_RELEASE_TOKEN` repository secret with `contents:read` access to
   `elide-dev/bali`, and never commits reports.
 
 The two jobs do not depend on each other, so a Bali change is judged by the
@@ -224,15 +247,17 @@ repository.
 
 The expectations file starts empty, so the first runs return exit 1 for every
 Bali-only failure while still uploading results and writing `reports/bali/`. Run once with `ratchet: true`,
-review the generated `expectations/jdk-jtreg.ratchet.toml`, and commit it; after
-that the job is green unless a previously passing file regresses. Establish the
+review the generated `expectations/jdk-jtreg.ratchet.toml` and
+`expectations/jdk-jtreg.reference.json`, and commit both; after that the job is
+green unless a previously passing file regresses, and the stock JDK is not run
+again until a pin changes. Establish the
 ratchet on the actual CI runner before making the job required. The workflow is
 reusable, not scheduled; inside this repository it runs on pull requests with
 `source: release` (see above).
 
 By default the reusable workflow stores results only in the workflow artifact.
-Pass `apply_updates: true` to also commit `reports/bali/` and the ratchet file to
-the testsuite repository, following Elide's compliance workflow: the job checks
+Pass `apply_updates: true` to also commit `reports/bali/`, the ratchet file, and
+the reference baseline to the testsuite repository, following Elide's compliance workflow: the job checks
 out `testsuite_ref`, publishes the measurement, commits to `update_branch`
 (default `sync/bali-compatibility`) with a force push, and opens or refreshes a
 pull request against `update_base` (default `main`) unless `create_pr` is false.
@@ -243,7 +268,8 @@ use the manual release workflow, which keeps one branch per run. Because the
 calling repository's job token cannot push to testsuite, `apply_updates`
 requires the `testsuite_token` secret with contents and pull-request write
 access to this repository; the job fails with an explicit error otherwise.
-Hand-curated expectations are never modified by CI; only the ratchet file is.
+Hand-curated expectations are never modified by CI; only the ratchet file and
+the reference baseline are.
 
 ## Manual latest-release measurements
 
@@ -255,7 +281,8 @@ No Bali checkout, native-image build, or Elide installation is needed.
 
 Leave `ratchet` unchecked for an ordinary measurement; existing regressions
 return exit 1 while still producing reports. Check it to regenerate the ratchet
-file from the run, which the report PR then includes for review. Incomplete runs
+file from the run, and the reference baseline if it is missing or stale, which
+the report PR then includes for review. Incomplete runs
 fail rather than becoming green.
 
 The job summary shows the selected release and test results. The
@@ -263,8 +290,8 @@ The job summary shows the selected release and test results. The
 per-test results, generated history, and raw jtreg diagnostics for 30 days,
 including when testing fails.
 
-For runs dispatched from a branch, the workflow also commits `reports/bali/` and
-the ratchet file to `sync/bali-reports-<run-id>-<attempt>` and opens a PR against
+For runs dispatched from a branch, the workflow also commits `reports/bali/`,
+the ratchet file, and the reference baseline to `sync/bali-reports-<run-id>-<attempt>` and opens a PR against
 the dispatch branch. Each run has its own branch so later runs cannot overwrite
 unmerged measurements. Merge the PR to retain the results in the repository and
 expose them through `reports/bali/index.md`. Concurrent report PRs can conflict in

@@ -214,6 +214,8 @@ export function buildAdapterContext(
     logPrefix: o.logPrefix,
     settings,
     workspacePath,
+    expectationsDir: o.expectationsDir,
+    ratchet: o.ratchet,
   };
 }
 

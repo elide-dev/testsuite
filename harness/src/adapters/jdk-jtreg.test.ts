@@ -3,8 +3,17 @@ import { chmod, mkdir, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
+  PROTOCOL,
+  REFERENCE_BASELINE,
+  ROOT,
+  baselineResults,
+  buildReferenceBaseline,
   cleanEnv,
+  loadReferenceBaseline,
   MEASUREMENT_ENVIRONMENT,
+  referenceComplete,
+  referenceFingerprint,
+  referenceInputs,
   discover,
   flatten,
   jdkJtregAdapter,
@@ -18,7 +27,10 @@ import {
   runtimeProgress,
   summary,
   unflatten,
+  type Entry,
+  type Manifest,
   type Report,
+  type Result,
   type Status,
 } from "./jdk-jtreg";
 import { compare as compareExpectations } from "../expectations/compare";
@@ -317,4 +329,101 @@ test("flattened results rebuild the paired report for the differential files", a
   expect(files["differential.md"]).toContain("4 test files inventoried");
   expect(files["differential.md"]).toContain("results.json.gz");
   expect(files["coverage.svg"]).toContain("3/4 runnable; 1 verified passes");
+});
+
+const referenceInventory: Entry[] = [
+  { id: "java/lang/A.java", area: "java/lang", unsupported: null },
+  { id: "java/lang/B.java", area: "java/lang", unsupported: "Unsupported @library directive" },
+];
+const inputsFor = (inventory: Entry[] = referenceInventory, referenceVersion = 'openjdk version "25.0.2"') =>
+  referenceInputs({ manifest: manifest as Manifest, root: ROOT, referenceVersion, inventory, platform: "linux-x64" });
+
+test("reference fingerprint covers exactly the inputs that determine stock-JDK outcomes", () => {
+  const fingerprint = referenceFingerprint(inputsFor());
+  expect(referenceFingerprint(inputsFor())).toBe(fingerprint);
+  expect(inputsFor().protocol).toBe(PROTOCOL);
+  // Only the runnable set matters, not how an unsupported file is described.
+  const reworded = referenceInventory.map((test) =>
+    test.unsupported ? { ...test, unsupported: "Unsupported @modules directive" } : test,
+  );
+  expect(referenceFingerprint(inputsFor(reworded))).toBe(fingerprint);
+  const grown = [...referenceInventory, { id: "java/lang/C.java", area: "java/lang", unsupported: null }];
+  expect(referenceFingerprint(inputsFor(grown))).not.toBe(fingerprint);
+  expect(referenceFingerprint(inputsFor(referenceInventory, 'openjdk version "25.0.3"'))).not.toBe(fingerprint);
+  const base = inputsFor();
+  const variants = [
+    { ...base, protocol: base.protocol + 1 },
+    { ...base, source: "0".repeat(64) },
+    { ...base, jtreg: "0".repeat(64) },
+    { ...base, execution: { ...base.execution, concurrency: base.execution.concurrency + 1 } },
+    { ...base, root: base.root + "extra=1\n" },
+    { ...base, heap: "-Xmx1g" },
+    { ...base, platform: "darwin-arm64" },
+  ];
+  for (const variant of variants) expect(referenceFingerprint(variant)).not.toBe(fingerprint);
+});
+
+test("a matching committed baseline replaces the stock-JDK run; missing, stale, or malformed ones do not", async () => {
+  const root = await mkdtemp(join(tmpdir(), "bali-reference-baseline-"));
+  try {
+    const pass: Result = { status: "pass", detail: "Passed. Execution successful" };
+    const run = {
+      exitCode: 2,
+      results: new Map<string, Result>([
+        ["java/lang/A.java", pass],
+        ["java/lang/B.java", { status: "unsupported", detail: "Unsupported @library directive" }],
+      ]),
+    };
+    expect(referenceComplete(run, referenceInventory)).toBe(true);
+    expect(referenceComplete({ ...run, exitCode: 4 }, referenceInventory)).toBe(false);
+    expect(
+      referenceComplete(
+        { exitCode: 0, results: new Map([["java/lang/A.java", { status: "blocked", detail: "" }]]) },
+        referenceInventory,
+      ),
+    ).toBe(false);
+    expect(referenceComplete({ exitCode: 0, results: new Map() }, referenceInventory)).toBe(false);
+
+    const inputs = inputsFor();
+    const baseline = buildReferenceBaseline(inputs, run, referenceInventory, "2026-09-10T09:23:55.252Z");
+    expect(baseline.fingerprint).toBe(referenceFingerprint(inputs));
+    expect(Object.keys(baseline.results)).toEqual(["java/lang/A.java"]);
+
+    const path = join(root, REFERENCE_BASELINE);
+    expect(await loadReferenceBaseline(path, baseline.fingerprint)).toMatchObject({
+      reason: expect.stringContaining("no reference baseline"),
+    });
+    await Bun.write(path, JSON.stringify(baseline));
+    const loaded = await loadReferenceBaseline(path, baseline.fingerprint);
+    if (!("baseline" in loaded)) throw new Error(loaded.reason);
+    const restored = baselineResults(loaded.baseline, referenceInventory);
+    expect(restored.exitCode).toBe(2);
+    expect(restored.results.get("java/lang/A.java")).toEqual(pass);
+    expect(restored.results.get("java/lang/B.java")?.status).toBe("unsupported");
+    // A newly runnable file has no baseline entry: blocked, so the run is incomplete, never a pass.
+    const grown = [...referenceInventory, { id: "java/lang/C.java", area: "java/lang", unsupported: null }];
+    expect(baselineResults(loaded.baseline, grown).results.get("java/lang/C.java")?.status).toBe("blocked");
+
+    expect(await loadReferenceBaseline(path, "f".repeat(64))).toMatchObject({
+      reason: expect.stringContaining("stale"),
+    });
+    await Bun.write(path, JSON.stringify({ schema: 1, fingerprint: baseline.fingerprint }));
+    expect(await loadReferenceBaseline(path, baseline.fingerprint)).toMatchObject({
+      reason: expect.stringContaining("malformed"),
+    });
+    await Bun.write(path, "{not json");
+    expect(await loadReferenceBaseline(path, baseline.fingerprint)).toMatchObject({
+      reason: expect.stringContaining("unreadable"),
+    });
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("reports state whether the reference came from the baseline or from this run", () => {
+  const fromBaseline = { ...report(["pass"]), metadata: { reference: { source: "baseline", generatedAt: "2026-09-10T09:23:55.252Z" } } };
+  expect(markdown(fromBaseline)).toContain("committed baseline generated 2026-09-10T09:23:55.252Z");
+  const fromRun = { ...report(["pass"]), metadata: { reference: { source: "run" } } };
+  expect(markdown(fromRun)).toContain("measured by running the stock JDK");
+  expect(markdown(report(["pass"]))).not.toContain("Reference outcomes");
 });
