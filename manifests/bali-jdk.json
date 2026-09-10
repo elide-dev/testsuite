@@ -1,0 +1,20 @@
+{
+  "id": "openjdk25-jdk-inventory-v2",
+  "javaFeature": 25,
+  "source": {
+    "revision": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f",
+    "url": "https://codeload.github.com/openjdk/jdk/tar.gz/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f",
+    "sha256": "829e6bae36579c46a3f9222355abe0b0ca7d66b3bfc8659eaf784fa002529692"
+  },
+  "jtreg": {
+    "build": "Shipilev 7.5.1+1 bundle; reports 7.5.1-dev+0",
+    "url": "https://builds.shipilev.net/jtreg/jtreg-7.5.1+1.zip",
+    "sha256": "18102bb9901e05a676455d6d6fd82de08f3a4471b6d1e8bc2663e0aced8b484e"
+  },
+  "scope": "test/jdk",
+  "execution": {
+    "concurrency": 4,
+    "timeoutFactor": 1,
+    "headless": true
+  }
+}

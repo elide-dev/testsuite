@@ -1,17 +1,11 @@
-import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
 import { runProcess, type ProcessRunResult } from "./process";
-
-const STATUS: Record<string, TestResult["status"]> = {
-  passed: "pass",
-  failed: "fail",
-  error: "error",
-  "not run": "skip",
-};
+import { createJtregRunRoot, isJtregRunnerExit, jtregCommonArgs, jtregOutcome } from "./jtreg";
 
 const JTREG_DEFAULT_ACTION_TIMEOUT_SECONDS = 120;
 
@@ -207,8 +201,7 @@ export function buildWrapperJdk(wrapperJdk: string, realJdkHome: string, repoRoo
 }
 
 export async function createJtregRunLayout(ctx: AdapterContext, realJdkHome?: string): Promise<JtregRunLayout> {
-  mkdirSync(ctx.workspacePath, { recursive: true });
-  const runRoot = mkdtempSync(join(ctx.workspacePath, "jtreg-run-"));
+  const runRoot = createJtregRunRoot(ctx.workspacePath);
   const workDir = join(runRoot, "JTwork");
   const reportDir = join(runRoot, "JTreport");
   const wrapperJdk = join(runRoot, "wrapper-jdk");
@@ -276,7 +269,7 @@ export function parseJtregSummary(text: string): TestResult[] {
     const path = statusFirst?.[2] ?? pathFirst?.[1];
     const message = pathFirst?.[3]?.trim();
     if (!statusName || !path) continue;
-    const status = message?.startsWith("Test ignored:") ? "skip" : STATUS[statusName.toLowerCase()];
+    const status = message?.startsWith("Test ignored:") ? "skip" : jtregOutcome(statusName);
     if (!status) continue;
     results.push({
       kind: "test",
@@ -322,26 +315,21 @@ function runnerFailureResult(result: ProcessRunResult): TestResult {
 }
 
 function isJtregRunnerFailure(result: ProcessRunResult): boolean {
-  if (result.timedOut) return true;
-  // jtreg uses 1 for no tests, 2 for failed tests, and 3 for errored tests.
-  // When a parseable summary exists, those outcomes are carried per test.
-  return result.exitCode !== 0 && result.exitCode !== 1 && result.exitCode !== 2 && result.exitCode !== 3;
+  // When a parseable summary exists, jtreg's 1/2/3 exit codes are carried per test.
+  return result.timedOut || isJtregRunnerExit(result.exitCode);
 }
 
 function appendCapped(output: string, text: string, cap: number): string {
   return output.length < cap ? output + text.slice(0, cap - output.length) : output;
 }
 
-function jtregTimeoutArgs(settings: Record<string, unknown>): string[] {
+function jtregTimeoutFactor(settings: Record<string, unknown>): number | undefined {
   const caseTimeoutSeconds = Number(settings.jtregCaseTimeoutSeconds);
   if (Number.isFinite(caseTimeoutSeconds) && caseTimeoutSeconds > 0) {
-    return [`-timeoutFactor:${caseTimeoutSeconds / JTREG_DEFAULT_ACTION_TIMEOUT_SECONDS}`];
+    return caseTimeoutSeconds / JTREG_DEFAULT_ACTION_TIMEOUT_SECONDS;
   }
-
   const timeoutFactor = Number(settings.jtregTimeoutFactor ?? 1);
-  return Number.isFinite(timeoutFactor) && timeoutFactor > 0
-    ? [`-timeoutFactor:${timeoutFactor}`]
-    : [];
+  return Number.isFinite(timeoutFactor) && timeoutFactor > 0 ? timeoutFactor : undefined;
 }
 
 async function* readStreamLines(
@@ -402,13 +390,9 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   const concurrency = Math.max(1, Math.trunc(ctx.threads) || 1);
   const argv = [
     jtreg,
-    "-verbose:summary",
-    `-concurrency:${concurrency}`,
-    ...jtregTimeoutArgs(ctx.settings),
+    ...jtregCommonArgs({ concurrency, timeoutFactor: jtregTimeoutFactor(ctx.settings), workDir, reportDir }),
     "-retain:fail,error",
     `-jdk:${wrapperJdk}`,
-    `-w:${workDir}`,
-    `-r:${reportDir}`,
     ...tests.map((test) => join(jtregLangtoolsRoot, test)),
   ];
   const emitted = new Set<string>();

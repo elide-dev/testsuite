@@ -21,7 +21,17 @@ test("preserves binding-required workload order from registry.toml", () => {
     "javac-jtreg",
     "test262",
     "node-api",
+    "jdk-jtreg",
   ]);
+});
+
+test("workloads default to the elide target; jdk-jtreg targets bali", () => {
+  const ws = loadRegistry(`${import.meta.dir}/../../registry.toml`);
+  expect(ws.find((w) => w.id === "test262")!.target).toBe("elide");
+  const jdk = ws.find((w) => w.id === "jdk-jtreg")!;
+  expect(jdk.target).toBe("bali");
+  expect(jdk.adapter).toBe("jdk-jtreg");
+  expect(jdk.settings.manifest).toBe("manifests/bali-jdk.json");
 });
 
 test("loads wpt-wintertc workload from registry.toml", () => {

@@ -1,0 +1,141 @@
+name: "Manual - Bali Release Compatibility"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      ratchet:
+        description: "Regenerate expectations/jdk-jtreg.ratchet.toml from this run's failures, like Elide's ratchet; also records the stock-JDK reference baseline when it is missing or stale"
+        required: false
+        default: false
+        type: boolean
+  # Add a schedule here when recurring measurements are wanted. The job's
+  # defaults also work without workflow_dispatch inputs.
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bali-release-compatibility
+  cancel-in-progress: false
+
+jobs:
+  compatibility:
+    name: "Latest Bali release / Linux AMD64"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - name: Checkout testsuite
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: true
+      - name: Setup Bun
+        uses: step-security/setup-bun@f6f5dadeac34f70c7828f731569e8d6e8330b8fb
+        with:
+          bun-version: "1.4.0"
+      - name: Resolve and download latest stable release
+        env:
+          # Bali is internal: the testsuite job token cannot read another repository.
+          GH_TOKEN: ${{ secrets.BALI_RELEASE_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo '::error::Configure BALI_RELEASE_TOKEN with contents:read access to elide-dev/bali in the testsuite repository or organization.'
+            exit 2
+          fi
+          mkdir -p .harness/release .harness/distribution
+          gh api repos/elide-dev/bali/releases/latest > .harness/release/release.json
+          bun bin/bali-release.ts select .harness/release/release.json .harness/release/selection.json
+          asset_id=$(bun -e 'console.log((await Bun.file(".harness/release/selection.json").json()).assetId)')
+          # Download the resolved asset ID, never resolve "latest" a second time.
+          gh api "repos/elide-dev/bali/releases/assets/$asset_id" \
+            -H 'Accept: application/octet-stream' > .harness/release/distribution.tgz
+          bun bin/bali-release.ts verify .harness/release/selection.json .harness/release/distribution.tgz
+          tar -xzf .harness/release/distribution.tgz -C .harness/distribution
+      - name: Run OpenJDK compatibility tests
+        env:
+          RATCHET: ${{ inputs.ratchet || false }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--bali-home "$PWD/.harness/distribution")
+          if [[ "$RATCHET" == "true" ]]; then args+=(--ratchet); fi
+          bun run testsuite --target bali "${args[@]}"
+      - name: Write job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo '## Bali release compatibility'
+            if [[ -f .harness/release/selection.json ]]; then
+              echo 'Resolved release and expected archive checksum:'
+              echo '```json'
+              cat .harness/release/selection.json
+              echo '```'
+            fi
+            if [[ -f .harness/work/jdk-jtreg/report.md ]]; then
+              cat .harness/work/jdk-jtreg/report.md
+            else
+              echo 'No test report was produced. Inspect the setup and harness logs.'
+            fi
+            if [[ -f reports/bali/index.md ]]; then
+              cat reports/bali/index.md
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload reports and diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bali-release-compatibility-linux-amd64
+          include-hidden-files: true
+          retention-days: 30
+          if-no-files-found: warn
+          path: |
+            .harness/release/release.json
+            .harness/release/selection.json
+            .harness/work/jdk-jtreg/report.*
+            .harness/work/jdk-jtreg/inventory.json
+            .harness/work/jdk-jtreg/jtreg-run-*/reference/**
+            .harness/work/jdk-jtreg/jtreg-run-*/bali/**
+            expectations/jdk-jtreg.ratchet.toml
+            expectations/jdk-jtreg.reference.json
+            reports/bali/**
+      - name: Save report history in a pull request
+        if: ${{ always() && !cancelled() && github.ref_type == 'branch' && hashFiles('.harness/work/jdk-jtreg/report.json') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_BRANCH: ${{ github.ref_name }}
+          REPORT_BRANCH: sync/bali-reports-${{ github.run_id }}-${{ github.run_attempt }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "elide-ci"
+          git config user.email "ci@elide.dev"
+          git add -- reports/bali expectations/jdk-jtreg.ratchet.toml expectations/jdk-jtreg.reference.json
+          if git diff --cached --quiet; then
+            echo 'No new Bali reports to commit.'
+            exit 0
+          fi
+          # Each run keeps its own branch so unmerged measurements are retained.
+          git checkout -b "$REPORT_BRANCH"
+          git commit -m "ci: record Bali compatibility measurement"
+          git push origin "$REPORT_BRANCH"
+          body_file="$RUNNER_TEMP/bali-report-pr.md"
+          cat > "$body_file" <<EOF
+          Records the Bali release compatibility measurement from [this workflow run]($RUN_URL).
+
+          Includes per-test results, coverage, failure analysis, and the updated history index under reports/bali/, in the same layout as the Elide suites. Test failures remain visible in the workflow result. The ratchet file is included when the run regenerated it.
+
+          Merge to preserve the measurement in the repository's main report history. Raw jtreg diagnostics are available in the workflow artifact for 30 days.
+          EOF
+          gh pr create --base "$BASE_BRANCH" --head "$REPORT_BRANCH" \
+            --title "ci: record Bali compatibility measurement" --body-file "$body_file"

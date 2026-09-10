@@ -1,0 +1,231 @@
+name: "Check - Bali Compatibility"
+
+on:
+  workflow_call:
+    secrets:
+      testsuite_token:
+        description: "Token for a private testsuite checkout from another repository; needs contents and pull-request write access when apply_updates is set"
+        required: false
+      bali_release_token:
+        description: "Token with contents:read access to elide-dev/bali; required when source is release"
+        required: false
+    inputs:
+      testsuite_ref:
+        description: "Reviewed testsuite commit containing the Bali integration; defaults to the calling workflow's commit"
+        required: false
+        default: ""
+        type: string
+      source:
+        description: "Where the Bali distribution comes from: an artifact of the calling workflow run, or the latest published Bali release"
+        required: false
+        default: "artifact"
+        type: string
+      artifact:
+        description: "Bali distribution artifact from the calling build; required when source is artifact"
+        required: false
+        default: ""
+        type: string
+      runner:
+        required: false
+        default: ubuntu-24.04
+        type: string
+      ratchet:
+        description: "Regenerate expectations/jdk-jtreg.ratchet.toml from this run's failures, like Elide's ratchet; also records the stock-JDK reference baseline when it is missing or stale"
+        required: false
+        default: false
+        type: boolean
+      apply_updates:
+        description: "Commit reports/bali, the ratchet, and the reference baseline to update_branch in the testsuite repository and open a pull request"
+        required: false
+        default: false
+        type: boolean
+      create_pr:
+        description: "Open or refresh a pull request for update_branch when apply_updates commits changes"
+        required: false
+        default: true
+        type: boolean
+      update_branch:
+        description: "Testsuite branch receiving committed reports"
+        required: false
+        default: "sync/bali-compatibility"
+        type: string
+      update_base:
+        description: "Testsuite branch the report pull request targets"
+        required: false
+        default: "main"
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  compatibility:
+    name: "Bali"
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
+        with:
+          disable-sudo: true
+          egress-policy: audit
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          repository: elide-dev/testsuite
+          token: ${{ secrets.testsuite_token || github.token }}
+          ref: ${{ inputs.testsuite_ref || github.sha }}
+          persist-credentials: false
+      - uses: step-security/setup-bun@f6f5dadeac34f70c7828f731569e8d6e8330b8fb
+        with:
+          bun-version: "1.4.0"
+      - name: Check distribution source
+        env:
+          SOURCE: ${{ inputs.source }}
+          ARTIFACT: ${{ inputs.artifact }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$SOURCE" in
+            artifact) [[ -n "$ARTIFACT" ]] || { echo '::error::source=artifact needs the artifact input'; exit 2; } ;;
+            release) ;;
+            *) echo "::error::Unknown source '$SOURCE'; use artifact or release"; exit 2 ;;
+          esac
+      - name: Download distribution artifact
+        if: ${{ inputs.source == 'artifact' }}
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: ${{ inputs.artifact }}
+          path: .harness/distribution-artifact
+      - name: Extract distribution artifact
+        if: ${{ inputs.source == 'artifact' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          archives=(.harness/distribution-artifact/bali-*.tgz)
+          [[ ${#archives[@]} -eq 1 ]] || { echo 'Expected exactly one Bali distribution tarball'; exit 2; }
+          mkdir -p .harness/distribution
+          tar -xzf "${archives[0]}" -C .harness/distribution
+      - name: Resolve and download latest stable release
+        if: ${{ inputs.source == 'release' }}
+        env:
+          # Bali is internal: the job token cannot read another repository.
+          GH_TOKEN: ${{ secrets.bali_release_token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo '::error::source=release needs the bali_release_token secret with contents:read access to elide-dev/bali.'
+            exit 2
+          fi
+          mkdir -p .harness/release .harness/distribution
+          gh api repos/elide-dev/bali/releases/latest > .harness/release/release.json
+          bun bin/bali-release.ts select .harness/release/release.json .harness/release/selection.json
+          asset_id=$(bun -e 'console.log((await Bun.file(".harness/release/selection.json").json()).assetId)')
+          # Download the resolved asset ID, never resolve "latest" a second time.
+          gh api "repos/elide-dev/bali/releases/assets/$asset_id" \
+            -H 'Accept: application/octet-stream' > .harness/release/distribution.tgz
+          bun bin/bali-release.ts verify .harness/release/selection.json .harness/release/distribution.tgz
+          tar -xzf .harness/release/distribution.tgz -C .harness/distribution
+      - name: Run OpenJDK runtime tests
+        env:
+          RATCHET: ${{ inputs.ratchet }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--bali-home "$PWD/.harness/distribution")
+          if [[ "$RATCHET" == "true" ]]; then args+=(--ratchet); fi
+          bun run testsuite --target bali "${args[@]}"
+      - name: Job summary
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f .harness/release/selection.json ]]; then
+            {
+              echo 'Bali release under test:'
+              echo '```json'
+              cat .harness/release/selection.json
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f .harness/work/jdk-jtreg/report.md ]]; then
+            cat .harness/work/jdk-jtreg/report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Bali compatibility did not produce a report. See setup/harness logs.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f reports/bali/index.md ]]; then
+            printf '\n' >> "$GITHUB_STEP_SUMMARY"
+            cat reports/bali/index.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload results and diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: bali-compatibility-${{ runner.os }}-${{ runner.arch }}
+          include-hidden-files: true
+          retention-days: 30
+          path: |
+            .harness/release/release.json
+            .harness/release/selection.json
+            reports/bali/**
+            expectations/jdk-jtreg.ratchet.toml
+            expectations/jdk-jtreg.reference.json
+            .harness/work/jdk-jtreg/report.*
+            .harness/work/jdk-jtreg/inventory.json
+            .harness/work/jdk-jtreg/jtreg-run-*/reference/**
+            .harness/work/jdk-jtreg/jtreg-run-*/bali/**
+          if-no-files-found: warn
+      - name: "Update: Commit Generated Reports"
+        if: ${{ always() && inputs.apply_updates }}
+        id: update
+        shell: bash
+        env:
+          TESTSUITE_TOKEN: ${{ secrets.testsuite_token }}
+          UPDATE_BRANCH: ${{ inputs.update_branch || 'sync/bali-compatibility' }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$TESTSUITE_TOKEN" ]]; then
+            echo '::error::apply_updates needs the testsuite_token secret with contents and pull-request write access to elide-dev/testsuite; the calling job token cannot push to another repository.'
+            exit 2
+          fi
+          git config user.name "elide-ci"
+          git config user.email "ci@elide.dev"
+          git add -- reports/bali expectations/jdk-jtreg.ratchet.toml expectations/jdk-jtreg.reference.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No generated changes to commit."
+            exit 0
+          fi
+
+          git checkout -B "$UPDATE_BRANCH"
+          git commit -m "ci: update Bali compatibility reports"
+          # Checkout ran without persisted credentials; authenticate git only here.
+          auth="$(printf 'x-access-token:%s' "$TESTSUITE_TOKEN" | base64 | tr -d '\n')"
+          header="http.https://github.com/.extraheader=AUTHORIZATION: basic $auth"
+          # The shallow checkout has no remote-tracking ref for the update branch, so
+          # fetch it first; otherwise --force-with-lease rejects any existing branch.
+          git -c "$header" fetch --no-tags origin \
+            "+refs/heads/$UPDATE_BRANCH:refs/remotes/origin/$UPDATE_BRANCH" || true
+          git -c "$header" push --force-with-lease origin "$UPDATE_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "branch=$UPDATE_BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: "Update: Open Pull Request"
+        if: ${{ always() && inputs.apply_updates && inputs.create_pr && steps.update.outputs.changed == 'true' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.testsuite_token }}
+          BRANCH: ${{ steps.update.outputs.branch }}
+          BASE_BRANCH: ${{ inputs.update_base || 'main' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          title="ci: update Bali compatibility reports"
+          body="Automated Bali compatibility report update from ${GITHUB_WORKFLOW} run ${GITHUB_RUN_ID} ($RUN_URL). This records the measurement under reports/bali/ and includes the ratchet file when the run regenerated it."
+          existing="$(gh pr list --repo elide-dev/testsuite --head "$BRANCH" --state open --json url --jq '.[0].url // ""')"
+          if [[ -n "$existing" ]]; then
+            gh pr edit "$existing" --repo elide-dev/testsuite --title "$title" --body "$body"
+            echo "Updated PR: $existing"
+          else
+            gh pr create --repo elide-dev/testsuite --base "$BASE_BRANCH" --head "$BRANCH" --title "$title" --body "$body"
+          fi

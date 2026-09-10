@@ -62,3 +62,16 @@ path = "suites/node"
   manifest = "manifests/node-api.toml"
   timeoutMs = 60000
   elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
+
+[[workload]]
+id = "jdk-jtreg"
+kind = "test"
+adapter = "jdk-jtreg"
+# OpenJDK's test/jdk on the Bali runtime, with a stock JDK as the reference.
+# `bun run testsuite --target bali` selects it; the Elide launcher skips bali targets.
+# The corpus is a checksum-pinned tarball (see the manifest), not a suites/ submodule.
+target = "bali"
+path = ""
+
+  [workload.settings]
+  manifest = "manifests/bali-jdk.json"

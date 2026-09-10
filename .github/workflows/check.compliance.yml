@@ -112,7 +112,7 @@ env:
 
 jobs:
   compliance:
-    name: "Compliance"
+    name: "Elide"
     runs-on: ${{ fromJSON(inputs.runner) }}
     timeout-minutes: 720
     env:
