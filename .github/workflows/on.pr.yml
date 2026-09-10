@@ -16,7 +16,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  compliance:
+  # Elide compliance: the four Elide suites against the nightly build, on the
+  # self-hosted runner. Reported as "Compliance / Elide".
+  elide:
     name: "Compliance"
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     uses: ./.github/workflows/check.compliance.yml
@@ -31,6 +33,21 @@ jobs:
       suite_cpython_core: true
       suite_javac_jtreg: true
       options: '{"log":true,"failure_output":"hide","update_summaries":false,"ratchet":false,"apply_updates":false}'
+
+  # Bali compatibility: the jdk-jtreg workload against the latest published
+  # Bali release, in Docker on a hosted runner. Reported as "Compliance / Bali".
+  bali:
+    name: "Compliance"
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    uses: ./.github/workflows/check.bali.yml
+    permissions:
+      contents: read
+      actions: read
+    with:
+      source: "release"
+      runner: ubuntu-24.04
+    secrets:
+      bali_release_token: ${{ secrets.BALI_RELEASE_TOKEN }}
 
   harness:
     name: "Harness Tests"

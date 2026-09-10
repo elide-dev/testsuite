@@ -195,13 +195,29 @@ previous run of the workload, exactly as for Elide builds. Because Bali reports 
 under `reports/bali/`, they have their own indexes and are not part of the Elide README
 table or SQL commands.
 
+## Pull request checks
+
+Every pull request in this repository runs two independent compliance jobs
+beside the harness unit tests:
+
+- **Compliance / Elide** runs the Elide suites through `check.compliance.yml`
+  against the nightly Elide build, exactly as before.
+- **Compliance / Bali** runs `check.bali.yml` with `source: release`: it resolves
+  the latest published Bali release, downloads and verifies its Linux AMD64
+  tarball, and runs `jdk-jtreg` in Docker on a hosted Ubuntu 24.04 runner. It
+  needs the `BALI_RELEASE_TOKEN` repository secret with `contents:read` access to
+  `elide-dev/bali`, and never commits reports.
+
+The two jobs do not depend on each other, so a Bali change is judged by the
+Bali job alone, and an Elide nightly regression shows up only in the Elide job.
+
 ## Calling from Bali CI
 
 After publishing this integration, call
 `elide-dev/testsuite/.github/workflows/check.bali.yml@<reviewed-commit>` from the
 Bali build workflow, depending on its existing distribution build. Supply the
 same reviewed commit as `testsuite_ref`, the uploaded distribution artifact name
-as `artifact`, and a compatible runner. Artifacts are downloaded from the calling
+as `artifact` (the default `source: artifact`), and a compatible runner. Artifacts are downloaded from the calling
 workflow run; the native image is never rebuilt here. For a private testsuite
 checkout, pass the optional `testsuite_token` secret with read access to this
 repository.
@@ -211,7 +227,8 @@ Bali-only failure while still uploading results and writing `reports/bali/`. Run
 review the generated `expectations/jdk-jtreg.ratchet.toml`, and commit it; after
 that the job is green unless a previously passing file regresses. Establish the
 ratchet on the actual CI runner before making the job required. The workflow is
-reusable, not scheduled; no remote workflow or publication was enabled by adding it.
+reusable, not scheduled; inside this repository it runs on pull requests with
+`source: release` (see above).
 
 By default the reusable workflow stores results only in the workflow artifact.
 Pass `apply_updates: true` to also commit `reports/bali/` and the ratchet file to

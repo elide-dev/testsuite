@@ -6,14 +6,24 @@ on:
       testsuite_token:
         description: "Token for a private testsuite checkout from another repository; needs contents and pull-request write access when apply_updates is set"
         required: false
+      bali_release_token:
+        description: "Token with contents:read access to elide-dev/bali; required when source is release"
+        required: false
     inputs:
       testsuite_ref:
-        description: "Reviewed testsuite commit containing the Bali integration"
-        required: true
+        description: "Reviewed testsuite commit containing the Bali integration; defaults to the calling workflow's commit"
+        required: false
+        default: ""
+        type: string
+      source:
+        description: "Where the Bali distribution comes from: an artifact of the calling workflow run, or the latest published Bali release"
+        required: false
+        default: "artifact"
         type: string
       artifact:
-        description: "Bali distribution artifact from the calling build"
-        required: true
+        description: "Bali distribution artifact from the calling build; required when source is artifact"
+        required: false
+        default: ""
         type: string
       runner:
         required: false
@@ -51,6 +61,7 @@ permissions:
 
 jobs:
   compatibility:
+    name: "Bali"
     runs-on: ${{ inputs.runner }}
     timeout-minutes: 60
     steps:
@@ -62,16 +73,31 @@ jobs:
         with:
           repository: elide-dev/testsuite
           token: ${{ secrets.testsuite_token || github.token }}
-          ref: ${{ inputs.testsuite_ref }}
+          ref: ${{ inputs.testsuite_ref || github.sha }}
           persist-credentials: false
       - uses: step-security/setup-bun@f6f5dadeac34f70c7828f731569e8d6e8330b8fb
         with:
           bun-version: "1.4.0"
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+      - name: Check distribution source
+        env:
+          SOURCE: ${{ inputs.source }}
+          ARTIFACT: ${{ inputs.artifact }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$SOURCE" in
+            artifact) [[ -n "$ARTIFACT" ]] || { echo '::error::source=artifact needs the artifact input'; exit 2; } ;;
+            release) ;;
+            *) echo "::error::Unknown source '$SOURCE'; use artifact or release"; exit 2 ;;
+          esac
+      - name: Download distribution artifact
+        if: ${{ inputs.source == 'artifact' }}
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
           name: ${{ inputs.artifact }}
           path: .harness/distribution-artifact
-      - name: Extract distribution
+      - name: Extract distribution artifact
+        if: ${{ inputs.source == 'artifact' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -80,6 +106,27 @@ jobs:
           [[ ${#archives[@]} -eq 1 ]] || { echo 'Expected exactly one Bali distribution tarball'; exit 2; }
           mkdir -p .harness/distribution
           tar -xzf "${archives[0]}" -C .harness/distribution
+      - name: Resolve and download latest stable release
+        if: ${{ inputs.source == 'release' }}
+        env:
+          # Bali is internal: the job token cannot read another repository.
+          GH_TOKEN: ${{ secrets.bali_release_token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo '::error::source=release needs the bali_release_token secret with contents:read access to elide-dev/bali.'
+            exit 2
+          fi
+          mkdir -p .harness/release .harness/distribution
+          gh api repos/elide-dev/bali/releases/latest > .harness/release/release.json
+          bun bin/bali-release.ts select .harness/release/release.json .harness/release/selection.json
+          asset_id=$(bun -e 'console.log((await Bun.file(".harness/release/selection.json").json()).assetId)')
+          # Download the resolved asset ID, never resolve "latest" a second time.
+          gh api "repos/elide-dev/bali/releases/assets/$asset_id" \
+            -H 'Accept: application/octet-stream' > .harness/release/distribution.tgz
+          bun bin/bali-release.ts verify .harness/release/selection.json .harness/release/distribution.tgz
+          tar -xzf .harness/release/distribution.tgz -C .harness/distribution
       - name: Run OpenJDK runtime tests
         env:
           RATCHET: ${{ inputs.ratchet }}
@@ -93,6 +140,14 @@ jobs:
         if: always()
         shell: bash
         run: |
+          if [[ -f .harness/release/selection.json ]]; then
+            {
+              echo 'Bali release under test:'
+              echo '```json'
+              cat .harness/release/selection.json
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [[ -f .harness/work/jdk-jtreg/report.md ]]; then
             cat .harness/work/jdk-jtreg/report.md >> "$GITHUB_STEP_SUMMARY"
           else
@@ -110,6 +165,8 @@ jobs:
           include-hidden-files: true
           retention-days: 30
           path: |
+            .harness/release/release.json
+            .harness/release/selection.json
             reports/bali/**
             expectations/jdk-jtreg.ratchet.toml
             .harness/work/jdk-jtreg/report.*
