@@ -1,16 +1,22 @@
 /**
  * RFC-0016: discover the pinned OpenJDK test/jdk inventory and measure runtime support.
  *
- * The original TEST.ROOT probes HotSpot WhiteBox/diagnostic flags even for
- * portable cases. Both runtimes use the same portable root; unsupported test
- * directives remain visible as adapter gaps instead of disappearing from the inventory.
- * All sibling fixtures are preserved. Stock javac compiles both runtime selections.
+ * jtreg runs the corpus on a stock JDK and on Bali with the directives the tests declare —
+ * `@library`, `@build`, `@modules`, `@requires`, `@key`, multiple `@test` variants, junit and
+ * testng actions — exactly as it would upstream; the harness only replaces what depends on
+ * HotSpot internals. The original TEST.ROOT evaluates `@requires` through WhiteBox and
+ * diagnostic VM flags, so both runtimes use one portable root whose property definitions
+ * (`suites/drivers/jdk-jtreg/requires/VMProps.java`) come from public APIs only. `test/lib` is
+ * staged beside `test/jdk` so `@library /test/lib` resolves as upstream's `external.lib.roots`
+ * intends. Files the harness does not run stay in the inventory with an explicit reason: tests
+ * needing a display, printer, or audio device, manual and applet actions, files ignored upstream,
+ * and areas the manifest excludes by policy. Stock javac compiles both runtime selections.
  *
  * The reference outcome is a function of the pins alone (corpus, jtreg, reference JDK,
- * portable root, execution options, adapter protocol, runnable inventory), so it is kept
- * as a committed, fingerprinted baseline in expectations/ and the stock JDK is only run
- * when no matching baseline exists. `--ratchet` records a fresh reference run as the
- * baseline, like it records the ratchet.
+ * portable root and property definitions, jtreg options, execution options, adapter protocol,
+ * runnable inventory), so it is kept as a committed, fingerprinted baseline in expectations/ and
+ * the stock JDK is only run when no matching baseline exists. `--ratchet` records a fresh
+ * reference run as the baseline, like it records the ratchet.
  * Archives are verified on every use and each run gets fresh work directories.
  * Reports distinguish verified passes, Bali gaps, reference issues, and unsupported
  * files. Paired outcomes are flattened into Elide's single-status model, so the shared
@@ -21,10 +27,11 @@
  */
 import { $ } from "bun";
 import { createHash } from "node:crypto";
-import { closeSync, createReadStream, openSync } from "node:fs";
+import { closeSync, openSync } from "node:fs";
 import { mkdir, realpath, rename, rm } from "node:fs/promises";
 import { arch, release } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
+import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import { createJtregRunRoot, isJtregTimeout, jtregCommonArgs } from "./jtreg";
 import type { Result as HarnessResult, TestResult } from "../results/schema";
@@ -32,20 +39,92 @@ export const REPO = resolve(import.meta.dir, "../../..");
 const HEAP_CAP = "-Xmx2g";
 
 // Bump the protocol only when result meaning changes, not on ordinary refactors.
-export const PROTOCOL = 2;
-export const ROOT = "requiredVersion=7.5.1+1\nuseNewOptions=true\nuseNewPatchModule=true\n";
-/** manifests/bali-jdk.json: pinned corpus, jtreg build, and fixed execution options. */
+// 3: jtreg directives run natively; files aggregate their @test variants; filtered tests
+//    ("Not run") are skips rather than missing results.
+export const PROTOCOL = 3;
+
+/** Path of the portable `@requires` definitions, relative to the run's `src/test` directory. */
+export const REQUIRES_SOURCE = join(REPO, "suites/drivers/jdk-jtreg/requires/VMProps.java");
+const REQUIRES_STAGED = "portable/requires/VMProps.java";
+
+/** Upstream's `requires.properties` list; every name is answered by the portable VMProps. */
+export const REQUIRES_PROPERTIES = [
+  "sun.arch.data.model",
+  "java.runtime.name",
+  "java.enablePreview",
+  "vm.flagless",
+  "vm.gc.G1",
+  "vm.gc.Serial",
+  "vm.gc.Parallel",
+  "vm.gc.Shenandoah",
+  "vm.gc.Epsilon",
+  "vm.gc.Z",
+  "vm.graal.enabled",
+  "vm.compiler1.enabled",
+  "vm.compiler2.enabled",
+  "vm.cds",
+  "vm.cds.write.archived.java.heap",
+  "vm.continuations",
+  "vm.musl",
+  "vm.debug",
+  "vm.hasSA",
+  "vm.hasJFR",
+  "vm.jvmci",
+  "vm.jvmci.enabled",
+  "vm.jvmti",
+  "vm.cpu.features",
+  "container.support",
+  "systemd.support",
+  "release.implementor",
+  "jdk.containerized",
+  "jdk.foreign.linker",
+  "jlink.runtime.linkable",
+  "jlink.packagedModules",
+  "jdk.static",
+];
+
+/** The harness's half of TEST.ROOT; `portableRoot` appends the upstream lines it preserves. */
+export const ROOT =
+  "requiredVersion=7.5.1+1\n" +
+  "useNewOptions=true\n" +
+  "useNewPatchModule=true\n" +
+  // `/test/lib` and other absolute @library paths resolve against test/, as upstream declares.
+  "external.lib.roots=../../\n" +
+  `requires.extraPropDefns=../${REQUIRES_STAGED}\n` +
+  `requires.properties=${REQUIRES_PROPERTIES.join(" ")}\n`;
+
+/** Upstream TEST.ROOT settings carried into the portable root unchanged. */
+export const PRESERVED_ROOT_KEYS = ["keys", "othervm.dirs", "exclusiveAccess.dirs", "groups"];
+
+/** jtreg keywords naming a physical resource the measurement never has. */
+export const DEVICE_KEYS = ["headful", "printer", "sound", "multimon"];
+export const KEYWORD_FILTER = DEVICE_KEYS.map((key) => `!${key}`).join("&");
+
+/** Options every jtreg invocation gets beyond the shared ones; part of the reference fingerprint. */
+export const JTREG_OPTIONS = [
+  "-othervm",
+  // Files ignored upstream are "Not run" rather than errors.
+  "-ignore:quiet",
+  // The text summary then lists filtered tests too, which is how "Not run" is read back.
+  "-report:all",
+  `-k:${KEYWORD_FILTER}`,
+];
+
+/** manifests/bali-jdk.json: pinned corpus, jtreg build, exclusions, and fixed execution options. */
 export type Manifest = {
   id: string;
   scope: string;
   source: { url: string; sha256: string; revision: string };
   jtreg: { url: string; sha256: string };
   execution: { concurrency: number; timeoutFactor: number; headless: boolean };
+  /** Areas the lane does not run, each with the policy reason reports show. */
+  exclude?: { glob: string; reason: string }[];
 };
 const ARTIFACTS = ["bin/java", "bin/bali", "lib/modules", "release"];
 export type Status = "pass" | "fail" | "error" | "timeout" | "blocked" | "unsupported" | "skipped";
 export type Result = { status: Status; detail: string };
-export type Entry = { id: string; area: string; unsupported: string | null };
+/** One inventoried file; `variants` are its `@test` ids ("" for a lone unnamed description). */
+export type Entry = { id: string; area: string; unsupported: string | null; variants?: string[] };
 export type Row = Entry & { reference: Result; bali: Result };
 export type Report = {
   schema: 2;
@@ -58,9 +137,11 @@ export type Report = {
 const CACHE = resolve(process.env.BALI_JTREG_CACHE ?? join(REPO, ".harness/bali/archives"));
 
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
+// Bun's file stream, not node:fs createReadStream: iterating the latter never completes on
+// multi-hundred-megabyte files under Bun 1.3 on macOS (the Bali binary, the corpus tarball).
 async function fileDigest(path: string): Promise<string> {
   const hash = createHash("sha256");
-  for await (const chunk of createReadStream(path)) hash.update(chunk);
+  for await (const chunk of Bun.file(path).stream()) hash.update(chunk);
   return hash.digest("hex");
 }
 
@@ -79,21 +160,31 @@ export function parseJtr(text: string | undefined): Result {
   return { status: "blocked", detail };
 }
 
-/** Test-bearing files are counted once; multiple @test variants remain visible but unsupported. */
+/** Test-bearing files are counted once; their variants are measured together. */
 export function hasTest(source: string): boolean {
   return /(?:\/\*|^[ \t]*(?:\*|#)?|<!--)[ \t]*@test\b/m.test(source);
 }
 
-export function portableReason(id: string, source: string): string | null {
-  if (!id.endsWith(".java")) return "Non-Java test action";
-  const blocks = [...source.matchAll(/\/\*[\s\S]*?\*\//g)].map((match) => match[0]).filter(hasTest);
-  const tags: { name: string; value: string }[] = [];
-  for (const block of blocks) {
-    let current: { name: string; value: string } | undefined;
-    for (const raw of block.slice(2, -2).split(/\r?\n/)) {
+export type Tag = { name: string; value: string };
+export type Description = { id: string; tags: Tag[] };
+
+/**
+ * Every jtreg test description in a file, in order, with its tags and continued values.
+ * Java files carry them in block comments; shell tests in runs of `#` lines. Descriptions are
+ * the blocks containing an `@test` tag; a file may hold several, distinguished by `@test id=`.
+ */
+export function describe(id: string, source: string): Description[] {
+  const blocks = id.endsWith(".sh")
+    ? [...source.matchAll(/(?:^[ \t]*#.*(?:\r?\n|$))+/gm)].map((match) => match[0])
+    : [...source.matchAll(/\/\*[\s\S]*?\*\//g)].map((match) => match[0].slice(2, -2));
+  const descriptions: Description[] = [];
+  for (const block of blocks.filter(hasTest)) {
+    const tags: Tag[] = [];
+    let current: Tag | undefined;
+    for (const raw of block.split(/\r?\n/)) {
       const line = raw
         .trim()
-        .replace(/^\*\s?/, "")
+        .replace(/^[*#]\s?/, "")
         .trim();
       const tag = /^@(\w+)\b(.*)$/.exec(line);
       if (tag) {
@@ -101,59 +192,116 @@ export function portableReason(id: string, source: string): string | null {
         tags.push(current);
       } else if (current && line) current.value += ` ${line}`;
     }
+    const test = tags.find((tag) => tag.name === "test");
+    if (!test) continue;
+    descriptions.push({ id: /\bid=(\S+)/.exec(test.value)?.[1] ?? "", tags });
   }
-  if (tags.filter((tag) => tag.name === "test").length !== 1)
-    return "Multiple test descriptions or variants";
-  for (const { name, value } of tags) {
-    if (!["test", "bug", "summary", "author", "comment", "run"].includes(name))
-      return `Unsupported @${name} directive`;
-    if (name === "test" && value) return "Named test variant";
-    if (
-      name === "run" &&
-      !new RegExp(`^main(?:/othervm)?\\s+${basename(id, ".java")}$`).test(value)
-    )
-      return "Non-standalone main action or additional arguments";
+  // Ids matter only when a file holds several descriptions: jtreg then names an unnamed one
+  // `idN` by its position, and a lone description is `Foo.jtr` / `path/Foo.java` in results and
+  // the summary even when it declares an id.
+  if (descriptions.length > 1)
+    descriptions.forEach((description, index) => {
+      if (!description.id) description.id = `id${index}`;
+    });
+  else descriptions.forEach((description) => (description.id = ""));
+  return descriptions;
+}
+
+/**
+ * Why the harness will not hand a file to jtreg, or null when jtreg decides.
+ * Everything jtreg can evaluate itself — directives, `@requires`, `@modules`, libraries — is
+ * left to it; only what can never produce a meaningful result here is withheld.
+ */
+export function portableReason(id: string, source: string): string | null {
+  if (!/\.(java|sh)$/.test(id)) return "Unsupported test file type";
+  const descriptions = describe(id, source);
+  if (!descriptions.length) return "No parseable test description";
+  const ids = descriptions.map((description) => description.id);
+  if (new Set(ids).size !== ids.length) return "Duplicate test variant ids";
+  for (const { tags } of descriptions) {
+    for (const { name, value } of tags) {
+      if (name === "ignore") return "Ignored upstream (@ignore)";
+      if (name === "key" && value.split(/\s+/).some((key) => DEVICE_KEYS.includes(key)))
+        return "Requires a display, printer, or audio device (@key)";
+      if (name === "run") {
+        const action = value.split(/\s+/)[0] ?? "";
+        if (action.split("/")[0] === "applet") return "Applet test action";
+        if (action.split("/").some((part) => part === "manual" || part.startsWith("manual=")))
+          return "Manual test action";
+      }
+    }
   }
-  if (!/public\s+static\s+void\s+main\s*\(/.test(source)) return "No standalone main method";
   return null;
 }
 
-export function propertiesReason(text: string): string | null {
-  const lines = text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("#"));
-  return lines.every((line) => line === "allowSmartActionArgs=true")
-    ? null
-    : "Unsupported inherited TEST.properties";
+/** The variant ids of a file, as `describe` reads them; `[""]` when it is not parsed. */
+export function variantsOf(id: string, source: string): string[] {
+  const ids = describe(id, source).map((description) => description.id);
+  return ids.length ? ids : [""];
 }
 
-export async function discover(suite: string): Promise<Entry[]> {
-  const files = [...new Bun.Glob("**/*").scanSync({ cwd: suite, onlyFiles: true })].sort();
-  const properties = new Map<string, string>();
-  const nestedRoots = new Set(files.filter((id) => id.endsWith("/TEST.ROOT")));
-  for (const id of files.filter(
-    (id) => id === "TEST.properties" || id.endsWith("/TEST.properties"),
-  )) {
-    const reason = propertiesReason(await Bun.file(join(suite, id)).text());
-    if (reason) properties.set(id, reason);
+/** jtreg's result file for one variant: `Foo.jtr`, or `Foo_id.jtr` for `@test id=id`. */
+export function jtrPath(id: string, variant: string): string {
+  const stem = id.replace(/\.(java|sh)$/, "");
+  return variant ? `${stem}_${variant}.jtr` : `${stem}.jtr`;
+}
+
+/** Upstream TEST.ROOT settings, with continuation lines joined. */
+export function rootSettings(text: string): Map<string, string> {
+  const settings = new Map<string, string>();
+  for (const line of text.replace(/\\\r?\n\s*/g, " ").split(/\r?\n/)) {
+    const match = /^\s*([\w.]+)\s*=\s*(.*)$/.exec(line);
+    if (match) settings.set(match[1]!, match[2]!.trim().replace(/\s+/g, " "));
   }
+  return settings;
+}
+
+/** The portable TEST.ROOT: the harness's half plus the upstream settings it preserves. */
+export function portableRoot(upstream: string): string {
+  const settings = rootSettings(upstream);
+  return (
+    ROOT +
+    PRESERVED_ROOT_KEYS.filter((key) => settings.has(key))
+      .map((key) => `${key}=${settings.get(key)}\n`)
+      .join("")
+  );
+}
+
+export type Exclusion = { glob: string; reason: string };
+
+export function excludedReason(id: string, exclusions: Exclusion[]): string | null {
+  for (const exclusion of exclusions)
+    if (picomatch(exclusion.glob)(id)) return `Excluded by manifest: ${exclusion.reason}`;
+  return null;
+}
+
+export async function discover(
+  suite: string,
+  exclusions: Exclusion[] = [],
+  include: string[] = [],
+): Promise<Entry[]> {
+  const files = [...new Bun.Glob("**/*").scanSync({ cwd: suite, onlyFiles: true })].sort();
+  const nestedRoots = new Set(files.filter((id) => id.endsWith("/TEST.ROOT")));
+  const included = include.length ? include.map((glob) => picomatch(glob)) : [];
   const inventory: Entry[] = [];
   for (const id of files) {
     // jtreg's source formats; fixtures without a test marker are not denominator entries.
     if (!/\.(java|sh|jasm|jcod|html)$/.test(id)) continue;
+    if (included.length && !included.some((match) => match(id))) continue;
     const source = await Bun.file(join(suite, id)).text();
     if (!hasTest(source)) continue;
-    let unsupported = portableReason(id, source);
+    let unsupported = excludedReason(id, exclusions) ?? portableReason(id, source);
     let parent = dirname(id);
-    while (true) {
-      const prop = parent === "." ? "TEST.properties" : `${parent}/TEST.properties`;
-      if (properties.has(prop)) unsupported = `${properties.get(prop)}: ${prop}`;
+    while (parent !== ".") {
       if (nestedRoots.has(`${parent}/TEST.ROOT`)) unsupported = `Nested test root: ${parent}`;
-      if (parent === ".") break;
       parent = dirname(parent);
     }
-    inventory.push({ id, area: id.split("/").slice(0, 2).join("/"), unsupported });
+    inventory.push({
+      id,
+      area: id.split("/").slice(0, 2).join("/"),
+      unsupported,
+      variants: variantsOf(id, source),
+    });
   }
   if (!inventory.length) throw new Error("No OpenJDK test files discovered");
   return inventory;
@@ -241,7 +389,7 @@ export function markdown(report: Report): string {
   const gaps = report.tests.filter((row) => row.unsupported === null && !verifiedPass(row));
   return (
     `# Bali OpenJDK compatibility\n\n` +
-    `Suite: ${report.suite}. ${counts.inventory} test files inventoried (multiple variants count as one file).\n\n` +
+    `Suite: ${report.suite}. ${counts.inventory} test files inventoried (a file's @test variants count together).\n\n` +
     `| Outcome | Files |\n|---|---:|\n| Pass on both runtimes | ${counts.verifiedPassing} |\n| Reference passes; Bali does not | ${counts.baliFailures} |\n| Reference issues | ${counts.referenceIssues} |\n| Unsupported by adapter | ${counts.unsupported} |\n\n` +
     `${counts.incomplete ? "**Incomplete harness run.**" : "Completed inventory run; known failures remain visible."}\n\n` +
     `This measures the pinned test/jdk inventory, not Java SE certification. Stock javac compiles both runtime selections.\n\n` +
@@ -291,26 +439,33 @@ async function prepare(manifest: Manifest) {
   return { source, jtreg };
 }
 
-async function stage(out: string, archives: Awaited<ReturnType<typeof prepare>>, manifest: Manifest) {
-  const suite = join(out, "suite");
-  await mkdir(suite);
+/** The staged corpus: `src/test/jdk` is the suite, `src/test/lib` its shared library. */
+async function stage(
+  out: string,
+  archives: Awaited<ReturnType<typeof prepare>>,
+  manifest: Manifest,
+  include: string[],
+) {
+  const src = join(out, "src");
+  await mkdir(src);
   const prefix = `jdk-${manifest.source.revision}`;
-  // Keep all sibling support files; don't make an incomplete fixture selection.
-  await $`tar -xzf ${archives.source} -C ${suite} --strip-components=3 ${`${prefix}/${manifest.scope}`}`.quiet();
-  await $`tar -xzf ${archives.source} -C ${suite} --strip-components=1 ${`${prefix}/LICENSE`}`.quiet();
+  // Keep all sibling support files; don't make an incomplete fixture selection. `test/lib` is
+  // what `@library /test/lib` names through `external.lib.roots`.
+  await $`tar -xzf ${archives.source} -C ${src} --strip-components=1 ${`${prefix}/${manifest.scope}`} ${`${prefix}/test/lib`}`.quiet();
+  await $`tar -xzf ${archives.source} -C ${src} --strip-components=1 ${`${prefix}/LICENSE`}`.quiet();
+  const suite = join(src, manifest.scope);
+  const requires = await Bun.file(REQUIRES_SOURCE).text();
+  await Bun.write(join(src, "test", REQUIRES_STAGED), requires);
   const originalRoot = await Bun.file(join(suite, "TEST.ROOT")).text();
   await Bun.write(join(out, "UPSTREAM.TEST.ROOT"), originalRoot);
-  // Preserve upstream exclusive-access directories when running concurrent tests.
-  const exclusive =
-    originalRoot.replace(/\\\r?\n\s*/g, " ").match(/^exclusiveAccess\.dirs=.*$/m)?.[0] ?? "";
-  const root = ROOT + exclusive + "\n";
+  const root = portableRoot(originalRoot);
   await Bun.write(join(suite, "TEST.ROOT"), root);
   await $`unzip -q ${archives.jtreg} -d ${join(out, "harness")}`.quiet();
-  const inventory = await discover(suite);
+  const inventory = await discover(suite, manifest.exclude ?? [], include);
   console.log(
     `Discovered ${inventory.length} test files; ${inventory.filter((test) => test.unsupported === null).length} runnable`,
   );
-  return { suite, jar: join(out, "harness/jtreg/lib/jtreg.jar"), inventory, root };
+  return { suite, jar: join(out, "harness/jtreg/lib/jtreg.jar"), inventory, root, requires };
 }
 
 // Keep measurement locale independent of the invoking terminal. TZ stays unset,
@@ -345,13 +500,34 @@ export function cleanEnv(
   return env;
 }
 
+/**
+ * The execution options a run uses. The manifest fixes them for CI; `BALI_JTREG_CONCURRENCY`
+ * (or `--threads` above 1) raises the concurrency of a local run. The effective values are
+ * part of the reference fingerprint, so a baseline always states the concurrency it was
+ * measured at.
+ */
+export function effectiveExecution(
+  manifest: Manifest,
+  env: Record<string, string | undefined> = process.env,
+  threads = 1,
+): Manifest["execution"] {
+  const override = Number(env.BALI_JTREG_CONCURRENCY ?? "");
+  const concurrency =
+    Number.isInteger(override) && override > 0
+      ? override
+      : threads > 1
+        ? threads
+        : manifest.execution.concurrency;
+  return { ...manifest.execution, concurrency };
+}
+
 /** Progress is advisory; final results are always read again after jtreg exits. */
-export async function runtimeProgress(work: string, ids: string[]) {
+export async function runtimeProgress(work: string, jtrs: string[]) {
   let completed = 0;
   let passed = 0;
   let skipped = 0;
-  for (const id of ids) {
-    const file = Bun.file(join(work, id.replace(/\.java$/, ".jtr")));
+  for (const jtr of jtrs) {
+    const file = Bun.file(join(work, jtr));
     if (!(await file.exists())) continue;
     const result = parseJtr(await file.text());
     if (result.status === "blocked") continue;
@@ -360,6 +536,71 @@ export async function runtimeProgress(work: string, ids: string[]) {
     if (result.status === "skipped") skipped++;
   }
   return { completed, passed, skipped, failed: completed - passed - skipped };
+}
+
+/** jtreg's `-report:all` text summary: `path[#id]  status`, filtered tests included. */
+export function parseSummary(text: string): Map<string, string> {
+  const statuses = new Map<string, string>();
+  for (const line of text.split(/\r?\n/)) {
+    const match = /^(\S+)\s+(.+)$/.exec(line.trim());
+    if (match) statuses.set(match[1]!, match[2]!.trim());
+  }
+  return statuses;
+}
+
+/** The summary's name for a variant: `path#id`, or the path alone for the unnamed one. */
+export const summaryKey = (id: string, variant: string) => (variant ? `${id}#${variant}` : id);
+
+const PRECEDENCE: Status[] = ["blocked", "timeout", "error", "fail", "skipped", "unsupported", "pass"];
+
+/** A file's outcome is its worst variant's; the detail names the variant that decided it. */
+export function combine(variants: { variant: string; result: Result }[]): Result {
+  let worst = variants[0]!;
+  for (const candidate of variants)
+    if (PRECEDENCE.indexOf(candidate.result.status) < PRECEDENCE.indexOf(worst.result.status))
+      worst = candidate;
+  const prefix = worst.variant && worst.result.status !== "pass" ? `#${worst.variant}: ` : "";
+  return { status: worst.result.status, detail: `${prefix}${worst.result.detail}` };
+}
+
+/**
+ * One variant's result: its `.jtr` when jtreg ran it, the summary's "Not run" when a keyword,
+ * `@requires`, or `@ignore` filtered it (a skip, like a test that skips itself), and blocked
+ * when neither says anything.
+ */
+export function variantResult(jtr: string | undefined, summaryStatus: string | undefined): Result {
+  if (jtr !== undefined) return parseJtr(jtr);
+  if (summaryStatus?.startsWith("Not run"))
+    return { status: "skipped", detail: `${summaryStatus} (filtered by keywords, @requires, or @ignore)` };
+  return parseJtr(undefined);
+}
+
+export async function readResults(
+  out: string,
+  inventory: Entry[],
+): Promise<Map<string, Result>> {
+  const summaryFile = Bun.file(join(out, "report/text/summary.txt"));
+  const statuses = (await summaryFile.exists()) ? parseSummary(await summaryFile.text()) : new Map();
+  const results = new Map<string, Result>();
+  for (const test of inventory) {
+    if (test.unsupported !== null) {
+      results.set(test.id, { status: "unsupported", detail: test.unsupported });
+      continue;
+    }
+    const variants: { variant: string; result: Result }[] = [];
+    for (const variant of test.variants ?? [""]) {
+      const jtr = Bun.file(join(out, "work", jtrPath(test.id, variant)));
+      variants.push({
+        variant,
+        result: variantResult(
+          (await jtr.exists()) ? await jtr.text() : undefined,
+          statuses.get(summaryKey(test.id, variant)),
+        ),
+      });
+    }
+    results.set(test.id, combine(variants));
+  }
+  return results;
 }
 
 export async function runSuiteOnRuntime(
@@ -384,7 +625,7 @@ export async function runSuiteOnRuntime(
     join(reference, "bin/java"),
     "-jar",
     jar,
-    "-othervm",
+    ...JTREG_OPTIONS,
     ...jtregCommonArgs({
       concurrency: execution.concurrency,
       timeoutFactor: execution.timeoutFactor,
@@ -401,17 +642,20 @@ export async function runSuiteOnRuntime(
   await Bun.write(join(out, "command.json"), JSON.stringify(args, null, 2));
   const log = join(out, "harness.log");
   const label = basename(out) === "reference" ? "Stock Java (1/2)" : "Bali (2/2)";
-  const ids = inventory.filter((test) => test.unsupported === null).map((test) => test.id);
+  const runnable = inventory.filter((test) => test.unsupported === null);
+  const jtrs = runnable.flatMap((test) =>
+    (test.variants ?? [""]).map((variant) => jtrPath(test.id, variant)),
+  );
   const started = Date.now();
   const showProgress = async () => {
-    const progress = await runtimeProgress(join(out, "work"), ids);
+    const progress = await runtimeProgress(join(out, "work"), jtrs);
     const seconds = Math.floor((Date.now() - started) / 1000);
     console.log(
-      `${label}: ${progress.completed}/${ids.length} finished; ${progress.passed} passed, ${progress.failed} failed/error/timeout, ${progress.skipped} skipped; ${Math.floor(seconds / 60)}m ${seconds % 60}s elapsed`,
+      `${label}: ${progress.completed}/${jtrs.length} finished; ${progress.passed} passed, ${progress.failed} failed/error/timeout, ${progress.skipped} skipped; ${Math.floor(seconds / 60)}m ${seconds % 60}s elapsed`,
     );
   };
   console.log(
-    `${label}: starting ${ids.length} tests (${execution.concurrency} concurrent)`,
+    `${label}: starting ${runnable.length} files, ${jtrs.length} tests (${execution.concurrency} concurrent)`,
   );
   console.log(`Live test results: ${join(out, "work")}`);
   let pending: Promise<void> | undefined;
@@ -444,16 +688,7 @@ export async function runSuiteOnRuntime(
     console.warn(`${label}: could not read progress: ${error.message}`),
   );
   console.log(`${basename(out)}: jtreg exited ${exitCode}; ${log}`);
-  const results = new Map<string, Result>();
-  for (const test of inventory) {
-    if (test.unsupported !== null) {
-      results.set(test.id, { status: "unsupported", detail: test.unsupported });
-      continue;
-    }
-    const jtr = Bun.file(join(out, "work", test.id.replace(/\.java$/, ".jtr")));
-    results.set(test.id, parseJtr((await jtr.exists()) ? await jtr.text() : undefined));
-  }
-  return { exitCode, results };
+  return { exitCode, results: await readResults(out, inventory) };
 }
 
 /** Everything that determines the reference outcome; kernel and runner are provenance only. */
@@ -464,6 +699,10 @@ export type ReferenceInputs = {
   jtreg: string;
   execution: Manifest["execution"];
   root: string;
+  /** Digest of the portable `@requires` definitions staged beside the corpus. */
+  requires: string;
+  /** jtreg options beyond the shared ones, in order. */
+  options: string[];
   heap: string;
   referenceVersion: string;
   platform: string;
@@ -479,20 +718,25 @@ export type ReferenceBaseline = {
   results: Record<string, Result>;
 };
 export type RuntimeRun = { exitCode: number; results: Map<string, Result> };
-export const REFERENCE_BASELINE = "jdk-jtreg.reference.json";
+export const currentPlatform = () => `${process.platform}-${arch()}`;
+/** One baseline per platform: CI's linux-x64 file is committed, others are local caches. */
+export const referenceBaselineName = (platform = currentPlatform()) =>
+  `jdk-jtreg.reference.${platform}.json`;
 
 export function referenceInputs(args: {
   manifest: Manifest;
   root: string;
+  requires: string;
   referenceVersion: string;
   inventory: Entry[];
+  execution?: Manifest["execution"];
   platform?: string;
 }): ReferenceInputs {
   const runnable = args.inventory
     .filter((test) => test.unsupported === null)
     .map((test) => test.id)
     .sort();
-  const { concurrency, timeoutFactor, headless } = args.manifest.execution;
+  const { concurrency, timeoutFactor, headless } = args.execution ?? args.manifest.execution;
   return {
     protocol: PROTOCOL,
     manifest: args.manifest.id,
@@ -500,9 +744,11 @@ export function referenceInputs(args: {
     jtreg: args.manifest.jtreg.sha256,
     execution: { concurrency, timeoutFactor, headless },
     root: args.root,
+    requires: digest(args.requires),
+    options: [...JTREG_OPTIONS],
     heap: HEAP_CAP,
     referenceVersion: args.referenceVersion,
-    platform: args.platform ?? `${process.platform}-${arch()}`,
+    platform: args.platform ?? currentPlatform(),
     inventory: digest(runnable.join("\n")),
   };
 }
@@ -559,6 +805,29 @@ export function referenceComplete(run: RuntimeRun, inventory: Entry[]): boolean 
       return status !== undefined && status !== "blocked";
     })
   );
+}
+
+/**
+ * The baseline caches deterministic facts, so any run may refresh a missing or stale one.
+ * Docker mounts expectations/ read-only unless --ratchet, which is what keeps ordinary CI
+ * runs from writing; native runs record it for their own platform on first use.
+ */
+export async function recordReferenceBaseline(
+  path: string,
+  baseline: ReferenceBaseline,
+): Promise<{ written: boolean; message: string }> {
+  try {
+    await Bun.write(path, JSON.stringify(baseline, null, 2) + "\n");
+    return {
+      written: true,
+      message: `Recorded the reference baseline at ${path}; later runs on this platform skip the stock JDK`,
+    };
+  } catch (error) {
+    return {
+      written: false,
+      message: `Could not record the reference baseline at ${path} (${(error as Error).message}); run with --ratchet to write it`,
+    };
+  }
 }
 
 export function buildReferenceBaseline(
@@ -658,7 +927,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
   // Like Elide's javac adapter: a fresh scratch directory per run inside the workspace so
   // stale .jtr files never count; workspace-level report files are overwritten each run.
   const scratch = createJtregRunRoot(ctx.workspacePath);
-  const { suite, jar, inventory, root } = await stage(scratch, archives, manifest);
+  const { suite, jar, inventory, root, requires } = await stage(scratch, archives, manifest, ctx.include);
   await Bun.write(
     join(ctx.workspacePath, "inventory.json"),
     JSON.stringify(inventory, null, 2) + "\n",
@@ -666,16 +935,18 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
   const jtregVersion = await $`${join(reference, "bin/java")} -jar ${jar} -version`
     .env(cleanEnv(reference))
     .quiet();
+  const execution = effectiveExecution(manifest, process.env, ctx.threads);
   const inputs = referenceInputs({
     manifest,
     root,
+    requires,
     referenceVersion: versionText(refVersion),
     inventory,
+    execution,
   });
   const fingerprint = referenceFingerprint(inputs);
-  const baselinePath = ctx.expectationsDir
-    ? join(ctx.expectationsDir, REFERENCE_BASELINE)
-    : undefined;
+  const baselineName = referenceBaselineName(inputs.platform);
+  const baselinePath = ctx.expectationsDir ? join(ctx.expectationsDir, baselineName) : undefined;
   const loaded = baselinePath
     ? await loadReferenceBaseline(baselinePath, fingerprint)
     : { reason: "no expectations directory for a reference baseline" };
@@ -688,7 +959,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     referenceRun = baselineResults(loaded.baseline, inventory);
     Object.assign(referenceSource, {
       source: "baseline",
-      path: REFERENCE_BASELINE,
+      path: baselineName,
       generatedAt: loaded.baseline.generatedAt,
     });
   } else {
@@ -700,20 +971,19 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
       reference,
       reference,
       inventory,
-      manifest.execution,
+      execution,
     );
     referenceSource.source = "run";
-    // Like the ratchet: only a --ratchet run may write under expectations/, and only a
-    // complete reference run is worth keeping.
-    if (baselinePath && ctx.ratchet && referenceComplete(referenceRun, inventory)) {
-      const baseline = buildReferenceBaseline(inputs, referenceRun, inventory);
-      await Bun.write(baselinePath, JSON.stringify(baseline, null, 2) + "\n");
-      referenceSource.written = true;
-      console.log(`Recorded the reference baseline at ${baselinePath}; commit it with the ratchet`);
-    } else if (baselinePath && ctx.ratchet) {
-      console.warn("Reference run incomplete; the reference baseline was not updated");
+    // Only a complete reference run is worth keeping.
+    if (baselinePath && referenceComplete(referenceRun, inventory)) {
+      const outcome = await recordReferenceBaseline(
+        baselinePath,
+        buildReferenceBaseline(inputs, referenceRun, inventory),
+      );
+      referenceSource.written = outcome.written;
+      console.log(outcome.message);
     } else if (baselinePath) {
-      console.log("Run with --ratchet to record this reference run as the committed baseline");
+      console.warn("Reference run incomplete; the reference baseline was not updated");
     }
   }
   const baliRun = await runSuiteOnRuntime(
@@ -723,7 +993,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     reference,
     bali,
     inventory,
-    manifest.execution,
+    execution,
   );
   const metadata = {
     reference: referenceSource,
@@ -747,7 +1017,9 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     osRelease: release(),
     heap: HEAP_CAP,
     mode: "othervm",
-    execution: manifest.execution,
+    execution,
+    jtregOptions: JTREG_OPTIONS,
+    include: ctx.include,
     compiler: "stock reference JDK",
     rawResults: basename(scratch),
     root,

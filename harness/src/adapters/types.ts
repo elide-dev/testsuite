@@ -16,7 +16,6 @@ export interface AdapterContext {
   settings: Record<string, unknown>;
   workspacePath: string;
   expectationsDir?: string; // where <workload>.toml, the ratchet, and adapter baselines live
-  ratchet?: boolean; // this run may regenerate files under expectationsDir
 }
 
 export interface Adapter {

@@ -20,6 +20,10 @@ export interface BaliPlan {
   referenceHome?: string;
   suite: string;
   ratchet: boolean;
+  /** Comma-separated file globs over the inventory; a scoped run observes only that slice. */
+  include?: string;
+  /** jtreg concurrency above the manifest's, for local runs on larger machines. */
+  threads?: number;
 }
 export function baliPlan(argv: string[], cwd: string, suites: string[] = ["jdk-jtreg"]): BaliPlan {
   const args = [...argv];
@@ -32,12 +36,12 @@ export function baliPlan(argv: string[], cwd: string, suites: string[] = ["jdk-j
       continue;
     }
     if (
-      !["--bali-home", "--reference-home", "--suite"].includes(args[i]!) ||
+      !["--bali-home", "--reference-home", "--suite", "--include", "--threads"].includes(args[i]!) ||
       !args[i + 1] ||
       options.has(args[i]!)
     )
       throw new Error(
-        `Bali runs accept --bali-home <distribution> [--reference-home <jdk25>] [--ratchet] [--suite ${suites.join("|")}].`,
+        `Bali runs accept --bali-home <distribution> [--reference-home <jdk25>] [--ratchet] [--suite ${suites.join("|")}] [--include <globs>] [--threads <n>].`,
       );
     options.set(args[i]!, args[i + 1]!);
   }
@@ -45,7 +49,12 @@ export function baliPlan(argv: string[], cwd: string, suites: string[] = ["jdk-j
   if (!suites.includes(suite)) throw new Error(`Bali supports --suite ${suites.join(", ")}`);
   if (!options.has("--bali-home"))
     throw new Error("Bali runs require --bali-home pointing to a packaged distribution");
+  const threads = options.has("--threads") ? Number(options.get("--threads")) : undefined;
+  if (threads !== undefined && (!Number.isInteger(threads) || threads < 1))
+    throw new Error("--threads takes a positive integer");
   return {
+    ...(options.has("--include") ? { include: options.get("--include")! } : {}),
+    ...(threads !== undefined ? { threads } : {}),
     baliHome: resolve(cwd, options.get("--bali-home")!),
     referenceHome: options.has("--reference-home")
       ? resolve(cwd, options.get("--reference-home")!)
@@ -89,6 +98,8 @@ export function harnessArgs(plan: BaliPlan, digest: string, paths: HarnessPaths)
     "--failure-output",
     "hide",
     ...(plan.ratchet ? ["--ratchet"] : []),
+    ...(plan.include ? ["--include", plan.include] : []),
+    ...(plan.threads ? ["--threads", String(plan.threads)] : []),
   ];
 }
 export function containerArgs(

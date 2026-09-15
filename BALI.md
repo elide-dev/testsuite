@@ -5,7 +5,8 @@ through the shared harness: it discovers the pinned OpenJDK `test/jdk` inventory
 all files supported by the current portable jtreg adapter on a stock JDK and on Bali, and
 records the rest as unsupported with a reason. There is no handpicked passing-test list.
 This measures **test files**, not individual `@test` variants: a file containing
-multiple variants remains one inventory entry and is currently unsupported.
+multiple variants remains one inventory entry that passes only when every
+variant passes.
 It is separate from the existing Elide suites, and does not establish
 Java SE/JCK conformance. The original design is Bali RFC-0016.
 
@@ -57,18 +58,28 @@ problems are skips, not Bali regressions.
 ## Reference baseline
 
 The stock JDK's outcome depends only on pinned inputs: the corpus and jtreg
-archives, the reference JDK build in the image, the portable `TEST.ROOT`, the
-execution options, the adapter protocol, the platform, and the set of runnable
-files. `expectations/jdk-jtreg.reference.json` records one complete reference
-run together with a fingerprint of those inputs. When the fingerprint matches,
-the harness takes the reference outcomes from that file and runs only Bali,
-which halves the measurement. When the file is missing or stale (a pin bump, a
-new reference image, an adapter change that alters the runnable set, a different
-platform), the run logs the reason and runs the stock JDK as before. A
-`--ratchet` run then rewrites the baseline, and the CI workflows commit it
-beside the ratchet. Ordinary runs never write it. Delete the file to force a
-fresh reference measurement. The workspace report and `report.md` state whether
-the reference came from the baseline or from the run.
+archives, the reference JDK build in the image, the portable `TEST.ROOT` and its
+`@requires` property definitions, the jtreg options, the execution options
+(including the effective concurrency), the adapter protocol, the platform, and
+the set of runnable files. `expectations/jdk-jtreg.reference.<platform>.json` records one complete
+reference run together with a fingerprint of those inputs. When the fingerprint
+matches, the harness takes the reference outcomes from that file and runs only
+Bali, which halves the measurement. When the file is missing or stale (a pin
+bump, a new reference image, an adapter change that alters the runnable set),
+the run logs the reason, runs the stock JDK, and records the result as the new
+baseline for its platform if `expectations/` is writable. Delete the file to
+force a fresh reference measurement. The workspace report and `report.md` state
+whether the reference came from the baseline or from the run.
+
+The baseline is a cache of deterministic facts, not a tolerance list, so unlike
+the ratchet it needs no `--ratchet` to be refreshed. What keeps ordinary CI runs
+from writing it is the read-only `expectations/` mount; a `--ratchet` run mounts
+it writable, and the CI workflows commit the resulting
+`jdk-jtreg.reference.linux-x64.json` beside the ratchet. Native runs on other
+platforms, such as a macOS development machine, record their own
+`jdk-jtreg.reference.<platform>.json` on the first run and skip the stock JDK
+from the second run on. Those files are git-ignored; only the linux-x64 one is
+committed.
 
 One consequence: a runner-environment problem now shows up only on the Bali
 side and is scored as a Bali failure, whereas a live reference run could also
@@ -92,8 +103,10 @@ bun run testsuite --target bali --execution native --bali-home /path/to/bali
 bun run testsuite --target bali --execution native --bali-home /path/to/bali --ratchet
 ```
 
-Native runs use the same harness entry point as Docker runs, so they write the same
-files: reports under `reports/bali/` and the workspace under `.harness/work/jdk-jtreg/`.
+The first native run on a machine measures the stock JDK and records a
+platform-specific reference baseline; later runs skip it (see Reference
+baseline above). Native runs use the same harness entry point as Docker runs,
+so they write the same files: reports under `reports/bali/` and the workspace under `.harness/work/jdk-jtreg/`.
 Each run stages jtreg in a fresh `jtreg-run-*` subdirectory of that workspace, like
 Elide's javac adapter, so stale results are never counted; the workspace-level
 `report.json`, `report.md`, and `inventory.json` are overwritten each run.
@@ -109,34 +122,60 @@ The scope and archive pins live in
 Every `.java`, `.sh`, `.jasm`, `.jcod`, or `.html` file containing a jtreg
 `@test` marker is inventoried. Helper files without test markers are not counted.
 The entire `test/jdk` subtree is extracted unchanged, including supporting
-classfiles and resources, so tests keep their sibling fixtures. Tests with
-undeclared dependencies outside `test/jdk` can still produce reference/setup
-issues: this lane stages that subtree, not a full OpenJDK source/build tree.
+classfiles and resources, so tests keep their sibling fixtures, and `test/lib`
+is staged beside it so `@library /test/lib` resolves through upstream's
+`external.lib.roots`. Tests with undeclared dependencies elsewhere in the
+OpenJDK tree can still produce reference/setup issues: this lane stages those
+two subtrees, not a full OpenJDK source/build tree.
 
-The original OpenJDK `TEST.ROOT` probes HotSpot internals using WhiteBox and
-HotSpot diagnostic flags, which Bali rejects. Both runtimes therefore use the
-same small portable root. Upstream exclusive-access directory declarations
-are preserved. The original root is saved as `UPSTREAM.TEST.ROOT` for inspection.
-Other source and configuration files remain unchanged.
+The original OpenJDK `TEST.ROOT` evaluates `@requires` through WhiteBox and
+HotSpot diagnostic flags, which Bali rejects. Both runtimes use the same
+portable root: upstream's keywords, `othervm.dirs`, and `exclusiveAccess.dirs`
+are preserved, and the `@requires` property definitions come from
+[`suites/drivers/jdk-jtreg/requires/VMProps.java`](suites/drivers/jdk-jtreg/requires/VMProps.java),
+which answers upstream's `requires.properties` names from public APIs only. It
+reports availability, so a collector or subsystem Bali does not ship (`vm.gc.G1`,
+`vm.hasJFR`, `vm.cds`, ...) is `false` there: such a test runs on the reference
+JDK, is not run on Bali, and counts as a Bali difference. The original root is
+saved as `UPSTREAM.TEST.ROOT` for inspection. Other source and configuration
+files remain unchanged.
 
-The adapter currently executes one standalone main test per file. It reports
-`@requires`, `@library`, `@build`, `@modules`, preview, manual/non-main actions,
-extra action arguments, multiple variants, nested roots, and unsupported inherited
-`TEST.properties` as adapter gaps. It supports the inherited
-`allowSmartActionArgs=true` setting. It handles both modern starred comments
-and older unstarred jtreg descriptions, including continued tag values.
+jtreg evaluates the directives itself: `@library`, `@build`, `@compile`,
+`@modules`, `@requires`, `@key`, `@enablePreview`, inherited `TEST.properties`,
+multiple `@test` variants (`id=`, or jtreg's positional `idN`), and `main`,
+`driver`, `junit`, `testng`, and `shell` actions all run as upstream. A file's
+variants are measured together: it passes only when every variant passes, and
+its detail names the variant that decided the outcome.
 
-These gaps describe the adapter, not proof that Bali lacks the Java feature.
-There is no ProblemList; the only exclusions are the `[skip]` globs in the
-expectations file, which mute files without removing them from the inventory.
-Adding support for another test category can make previously unsupported files
-runnable, and a file that was passing and becomes unsupported loses its pass
-rather than hiding. Tests can contain their own platform branches, so a jtreg
-pass is not proof that every branch of a test ran on this platform.
+The adapter withholds only what can never produce a meaningful result here, and
+says so in the inventory:
+
+- files needing a display, printer, or audio device (`@key headful`, `printer`,
+  `sound`, `multimon`; jtreg also runs with `-k:!headful&!printer&!sound&!multimon`),
+- manual and applet actions, `.html`/`.jasm`/`.jcod` test files,
+- files ignored upstream (`@ignore`; jtreg runs with `-ignore:quiet`),
+- nested test roots,
+- areas the manifest's `exclude` list rules out by policy, each with its
+  reason: desktop, imaging, printing, and sound APIs (Bali divergence D4), Flight
+  Recorder, the debugger interface, incubator modules, the diagnostic
+  command-line tools and `jpackage` (D6), and certificate-authority
+  interoperability tests that need external network access.
+
+Tests jtreg filters out at run time — an unmet `@requires`, a keyword — are
+read back from its `-report:all` summary as "Not run" and treated like a test
+that skips itself. There is no ProblemList; the only other exclusions are the
+`[skip]` globs in the expectations file, which mute files without removing them
+from the inventory. Changing the manifest's exclusions or the portable root
+changes the runnable set, which re-measures the stock JDK.
 
 Stock Java hosts jtreg and stock javac compiles both selections. Runtime actions
-use the chosen `-testjdk`, `othervm` isolation, four concurrent tests, the shared
-corpus heap ceiling, and headless mode. The manifest fixes these options.
+use the chosen `-testjdk`, `othervm` isolation, the manifest's concurrency and
+timeout factor, the shared corpus heap ceiling, and headless mode. The manifest
+fixes these options for CI; locally, `--threads <n>` or `BALI_JTREG_CONCURRENCY=<n>`
+raises the concurrency, and the effective value is part of the reference
+baseline's fingerprint. `--include <globs>` scopes a run to part of the
+inventory (`--include 'java/lang/**,java/util/**'`); a scoped run records a
+scoped baseline and reports only that slice.
 Each runtime gets its own `JAVA_HOME` and `bin` first in `PATH`, passed through
 jtreg to subprocesses. Ambient Java option/classpath injection is cleared.
 This lane tests the runtime; Bali's javac implementation has separate coverage.
@@ -174,8 +213,9 @@ The workspace `.harness/work/jdk-jtreg/` (ignored, like every Elide workspace) c
 - `report.md`: totals, area breakdown, adapter gaps, and executed tests needing attention.
 - `jtreg-run-*/`: one fresh scratch directory per run, holding `reference/` and
   `bali/` (jtreg selection/command files, logs, `.jtr` results, HTML reports) plus
-  `suite/`, `harness/`, and `UPSTREAM.TEST.ROOT`, the inputs used by that run, and a
-  copy of that run's `report.json`/`report.md`. Old scratch directories accumulate
+  `src/test/jdk` (the suite), `src/test/lib`, `src/test/portable` (the staged
+  `@requires` definitions), `harness/`, and `UPSTREAM.TEST.ROOT`, the inputs used
+  by that run, and a copy of that run's `report.json`/`report.md`. Old scratch directories accumulate
   until deleted, as under Elide's `.harness/work/`.
 
 The committed report directory `reports/bali/<bali-version>/<binary-digest>/jdk-jtreg/`
@@ -248,7 +288,7 @@ repository.
 The expectations file starts empty, so the first runs return exit 1 for every
 Bali-only failure while still uploading results and writing `reports/bali/`. Run once with `ratchet: true`,
 review the generated `expectations/jdk-jtreg.ratchet.toml` and
-`expectations/jdk-jtreg.reference.json`, and commit both; after that the job is
+`expectations/jdk-jtreg.reference.linux-x64.json`, and commit both; after that the job is
 green unless a previously passing file regresses, and the stock JDK is not run
 again until a pin changes. Establish the
 ratchet on the actual CI runner before making the job required. The workflow is
