@@ -15,6 +15,8 @@ test("Bali plan drives the shared harness with --target bali and never forwards 
   expect(args).toContain("type=bind,src=/repo/dist,dst=/opt/bali,readonly");
   expect(args).toContain("type=bind,src=/repo/expectations,dst=/work/expectations");
   expect(args).toContain("type=bind,src=/repo/registry.toml,dst=/work/registry.toml,readonly");
+  // The adapter reads the portable VMProps driver from the repository, not the image.
+  expect(args).toContain("type=bind,src=/repo/suites/drivers,dst=/work/suites/drivers,readonly");
   expect(args.slice(args.indexOf("sha256:" + "a".repeat(64)) + 1)).toEqual(
     harnessArgs(plan, "digest1", {
       registry: "/work/registry.toml",

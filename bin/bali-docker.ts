@@ -132,6 +132,10 @@ export function containerArgs(
     `type=bind,src=${join(root, "registry.toml")},dst=/work/registry.toml,readonly`,
     "--mount",
     `type=bind,src=${join(root, "manifests")},dst=/work/manifests,readonly`,
+    // The suites tree comes from the image; the jdk-jtreg drivers (the portable `@requires`
+    // VMProps source the adapter stages) live in this repository and are mounted over it.
+    "--mount",
+    `type=bind,src=${join(root, "suites/drivers")},dst=/work/suites/drivers,readonly`,
     image,
     ...harnessArgs(plan, digest, {
       registry: "/work/registry.toml",
