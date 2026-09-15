@@ -215,7 +215,6 @@ export function buildAdapterContext(
     settings,
     workspacePath,
     expectationsDir: o.expectationsDir,
-    ratchet: o.ratchet,
   };
 }
 

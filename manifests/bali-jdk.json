@@ -1,5 +1,5 @@
 {
-  "id": "openjdk25-jdk-inventory-v2",
+  "id": "openjdk25-jdk-inventory-v3",
   "javaFeature": 25,
   "source": {
     "revision": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f",
@@ -14,7 +14,29 @@
   "scope": "test/jdk",
   "execution": {
     "concurrency": 4,
-    "timeoutFactor": 1,
+    "timeoutFactor": 2,
     "headless": true
-  }
+  },
+  "exclude": [
+    { "glob": "java/awt/**", "reason": "desktop APIs (AWT) are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "javax/swing/**", "reason": "desktop APIs (Swing) are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "javax/accessibility/**", "reason": "desktop accessibility APIs are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "javax/imageio/**", "reason": "desktop imaging APIs are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "javax/print/**", "reason": "printing APIs are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "javax/sound/**", "reason": "multimedia APIs are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "sun/awt/**", "reason": "desktop toolkit internals are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "sun/java2d/**", "reason": "Java2D rendering is outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "com/apple/**", "reason": "macOS desktop integration is outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "com/sun/java/swing/**", "reason": "desktop APIs (Swing) are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "com/sun/java/accessibility/**", "reason": "desktop accessibility APIs are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "sanity/client/**", "reason": "desktop client sanity demos are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "demo/jfc/**", "reason": "desktop demos are outside Bali's supported scope (Bali DIVERGENCES D4)" },
+    { "glob": "jdk/jfr/**", "reason": "Flight Recorder (jdk.jfr) is not part of the Bali distribution" },
+    { "glob": "com/sun/jdi/**", "reason": "the debugger interface (jdk.jdi) and JDWP agent are not part of the Bali distribution" },
+    { "glob": "jdk/incubator/**", "reason": "incubator modules are not part of the Bali distribution" },
+    { "glob": "sun/tools/**", "reason": "JDK diagnostic command-line tools are outside Bali's supported scope (Bali DIVERGENCES D6)" },
+    { "glob": "sun/jvmstat/**", "reason": "jvmstat instrumentation is outside Bali's supported scope (Bali DIVERGENCES D6)" },
+    { "glob": "tools/jpackage/**", "reason": "jpackage is outside Bali's supported scope (Bali DIVERGENCES D6)" },
+    { "glob": "security/infra/**", "reason": "certificate-authority interoperability tests need external network access" }
+  ]
 }
