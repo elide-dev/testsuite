@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "workload": "jdk-jtreg",
+    "kind": "test",
+    "elide": {
+      "semver": "0.6.0",
+      "digest": "6590c3ba50c03ef180625219bdee46003c59af8a795b7531f4d20b89af1dbd3b"
+    },
+    "target": {
+      "name": "bali",
+      "version": "0.6.0",
+      "artifactDigest": "6590c3ba50c03ef180625219bdee46003c59af8a795b7531f4d20b89af1dbd3b",
+      "platform": "linux-x64"
+    },
+    "startedAt": "2026-09-19T20:59:32.431Z",
+    "finishedAt": "2026-09-19T21:12:30.939Z"
+  },
+  "counts": {
+    "pass": 1432,
+    "fail": 25,
+    "skip": 11293,
+    "error": 5,
+    "total": 12755
+  },
+  "regressions": [
+    "java/nio/channels/DatagramChannel/StressNativeSignal.java"
+  ],
+  "newPasses": [
+    "java/net/URLClassLoader/B7050028.java",
+    "java/security/Principal/Implies.java",
+    "java/util/ResourceBundle/Control/LoadingStrategiesTest.java",
+    "javax/net/ssl/HttpsURLConnection/CriticalSubjectAltName.java",
+    "javax/security/auth/login/Exceptions/NewExceptions.java",
+    "javax/security/auth/login/LoginContext/SharedState.java",
+    "javax/xml/crypto/dsig/TransformService/UnknownProvider.java",
+    "javax/xml/crypto/dsig/XMLSignatureFactory/UnknownProvider.java",
+    "javax/xml/crypto/dsig/keyinfo/KeyInfoFactory/UnknownProvider.java",
+    "jdk/internal/loader/InterruptedClassLoad.java",
+    "sun/net/www/protocol/https/HttpsURLConnection/DNSIdentities.java",
+    "sun/net/www/protocol/https/HttpsURLConnection/Identities.java",
+    "sun/net/www/protocol/https/NewImpl/JavaxHostnameVerifier.java",
+    "sun/security/jgss/spnego/MSOID.java",
+    "sun/security/krb5/NullStringToKey.java",
+    "sun/security/krb5/etype/UnsupportedKeyType.java",
+    "sun/security/rsa/TestCACerts.java",
+    "tools/jlink/CheckExecutable.java",
+    "tools/jlink/ReleaseImplementorTest.java"
+  ]
+}

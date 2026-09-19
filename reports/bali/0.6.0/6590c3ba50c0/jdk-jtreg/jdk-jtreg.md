@@ -1,0 +1,245 @@
+# jdk-jtreg — `0.6.0`
+
+- Image digest: `6590c3ba50c03ef180625219bdee46003c59af8a795b7531f4d20b89af1dbd3b`
+- Suite version: `unknown`
+- Ran: 2026-09-19T20:59:32.431Z → 2026-09-19T21:12:30.939Z
+
+## Summary
+
+![Pass-rate chart](./pass-rate.svg)
+
+**Pass rate: 1432/12755 (97.95%)**
+
+| pass | fail | error | skip | regressions | new passes |
+|---:|---:|---:|---:|---:|---:|
+| 1432 | 25 | 5 | 11293 | 1 | 19 |
+
+## Observed cases (1462)
+
+- `build/releaseFile/CheckReleaseFile.java` — fail — Failed. Execution failed\: `main' threw exception\: java.lang.RuntimeException\: JAVA_RUNTIME_VERSION line was not found\!
+- `com/sun/crypto/provider/AlgorithmParameters/OAEPOrder.java` — pass
+- `com/sun/crypto/provider/CICO/CICOChainingTest.java` — pass
+- `com/sun/crypto/provider/CICO/CICODESFuncTest.java` — pass
+- `com/sun/crypto/provider/CICO/CICOSkipTest.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/AEADBufferTest.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/Encrypt.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/GCMLargeDataKAT.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/GCMParameterSpecTest.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/GCMShortBuffer.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/GCMShortInput.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/KeyWrapper.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/ReadWriteSkip.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/SealedObjectTest.java` — pass
+- `com/sun/crypto/provider/Cipher/AEAD/WrongAAD.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/Test4511676.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/Test4512524.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/Test4512704.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/Test4626070.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestAESCipher.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestAESCiphers/TestAESWithDefaultProvider.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestAESCiphers/TestAESWithRemoveAddProvider.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestCopySafe.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestNoPaddingModes.java` — pass
+- `com/sun/crypto/provider/Cipher/AES/TestShortBuffer.java` — pass
+- `com/sun/crypto/provider/Cipher/CTS/CTSMode.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/DESSecretKeySpec.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/DesAPITest.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/DoFinalReturnLen.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/PaddingTest.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/PerformanceTest.java` — pass
+- `com/sun/crypto/provider/Cipher/DES/TextPKCS5PaddingTest.java` — pass
+- `com/sun/crypto/provider/Cipher/JCE/Bugs/4686632/Empty.java` — pass
+- `com/sun/crypto/provider/Cipher/KeyWrap/TestGeneral.java` — pass
+- `com/sun/crypto/provider/Cipher/KeyWrap/TestKeySizeCheck.java` — pass
+- `com/sun/crypto/provider/Cipher/KeyWrap/XMLEncKAT.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/DecryptWithoutParameters.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBEInvalidParamsTest.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBEKeyTest.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBEKeysAlgorithmNames.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBEParametersTest.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBMacBuffer.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PBMacDoFinalVsUpdate.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PKCS12CipherKAT.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/PKCS12Oid.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/TestCipherPBE.java` — pass
+- `com/sun/crypto/provider/Cipher/PBE/TestCipherPBECons.java` — pass
+- `com/sun/crypto/provider/Cipher/RC2ArcFour/CipherKAT.java` — pass
+- `com/sun/crypto/provider/Cipher/RSA/TestOAEPParameterSpec.java` — pass
+- `com/sun/crypto/provider/Cipher/RSA/TestOAEP_KAT.java` — pass
+- `com/sun/crypto/provider/Cipher/TextLength/SameBufferOverwrite.java` — pass
+- `com/sun/crypto/provider/Cipher/TextLength/TestCipherTextLength.java` — pass
+- `com/sun/crypto/provider/Cipher/UTIL/StrongOrUnlimited.java` — pass
+- `com/sun/crypto/provider/Cipher/UTIL/SunJCEGetInstance.java` — pass
+- `com/sun/crypto/provider/KDF/HKDFKnownAnswerTests.java` — pass
+- `com/sun/crypto/provider/KeyAgreement/SupportedDHKeys.java` — pass
+- `com/sun/crypto/provider/KeyAgreement/TestExponentSize.java` — pass
+- `com/sun/crypto/provider/KeyAgreement/UnsupportedDHKeys.java` — pass
+- `com/sun/crypto/provider/KeyFactory/PBKDF2HmacSHA1FactoryTest.java` — pass
+- `com/sun/crypto/provider/KeyGenerator/Test4628062.java` — pass
+- `com/sun/crypto/provider/KeyGenerator/TestExplicitKeyLength.java` — pass
+- `com/sun/crypto/provider/Mac/DigestCloneabilityTest.java` — pass
+- `com/sun/crypto/provider/Mac/HmacMD5.java` — pass
+- `com/sun/crypto/provider/Mac/HmacPBESHA1.java` — pass
+- `com/sun/crypto/provider/Mac/MacKAT.java` — pass
+- `com/sun/crypto/provider/NSASuiteB/TestAESOids.java` — pass
+- `com/sun/crypto/provider/NSASuiteB/TestAESWrapOids.java` — pass
+- `com/sun/crypto/provider/NSASuiteB/TestHmacSHAOids.java` — pass
+- `com/sun/crypto/provider/TLS/TestLeadingZeroes.java` — pass
+- `java/io/BufferedInputStream/CloseStream.java` — pass
+- `java/io/BufferedInputStream/CountUpdate.java` — pass
+- `java/io/BufferedInputStream/Fill.java` — pass
+- `java/io/BufferedInputStream/ReadAfterClose.java` — pass
+- `java/io/BufferedInputStream/ReadZeroBytes.java` — pass
+- `java/io/BufferedReader/EOL.java` — pass
+- `java/io/BufferedReader/Fill.java` — pass
+- `java/io/BufferedReader/MarkedFillAtEOF.java` — pass
+- `java/io/BufferedReader/ReadLine.java` — pass
+- `java/io/BufferedReader/ReadLineSync.java` — pass
+- `java/io/BufferedReader/Ready.java` — pass
+- `java/io/BufferedReader/SkipNegative.java` — pass
+- `java/io/BufferedWriter/Cleanup.java` — pass
+- `java/io/ByteArrayInputStream/Skip.java` — pass
+- `java/io/ByteArrayOutputStream/ToString.java` — pass
+- `java/io/CharArrayReader/Constructor.java` — pass
+- `java/io/CharArrayReader/OverflowInSkip.java` — pass
+- `java/io/DataInputStream/OpsAfterClose.java` — pass
+- `java/io/DataInputStream/ReadLinePushback.java` — pass
+- `java/io/DataInputStream/SkipBytes.java` — pass
+- `java/io/DataOutputStream/CounterOverflow.java` — pass
+- `java/io/Externalizable/compatibility/ExternalizableBlockData.java` — pass
+- `java/io/Externalizable/definesWriteObject/DefinesWriteObject.java` — pass
+- `java/io/File/AccessDenied.java` — pass
+- `java/io/File/CheckTempDir.java` — pass
+- `java/io/File/CompareTo.java` — pass
+- `java/io/File/Cons.java` — pass
+- `java/io/File/Create.java` — pass
+- `java/io/File/CreateNewFile.java` — pass
+- `java/io/File/DeleteOnExit.java` — pass
+- `java/io/File/DeleteOnExitLong.java` — pass
+- `java/io/File/DeleteOnExitNPE.java` — pass
+- `java/io/File/FileMethods.java` — pass
+- `java/io/File/GetParent.java` — pass
+- `java/io/File/HashCodeEquals.java` — pass
+- `java/io/File/IsHidden.java` — pass
+- `java/io/File/ListNull.java` — pass
+- `java/io/File/ListRoots.java` — pass
+- `java/io/File/ListSpace.java` — pass
+- `java/io/File/MaxPathLength.java` — pass
+- `java/io/File/Mkdir.java` — pass
+- `java/io/File/NulFile.java` — pass
+- `java/io/File/NullArgs.java` — pass
+- `java/io/File/TimeZoneLastModified.java` — pass
+- `java/io/File/ToURI.java` — pass
+- `java/io/File/ToURL.java` — pass
+- `java/io/File/Unicode.java` — pass
+- `java/io/File/UserDirChangedTest.java` — pass
+- `java/io/File/createTempFile/NameTooLong.java` — pass
+- `java/io/File/createTempFile/Patterns.java` — pass
+- `java/io/File/createTempFile/TargetDirectory.java` — pass
+- `java/io/FileDescriptor/Finalize.java` — pass
+- `java/io/FileDescriptor/RememberAppend.java` — pass
+- `java/io/FileDescriptor/Sharing.java` — pass
+- `java/io/FileInputStream/NegativeAvailable.java` — pass
+- `java/io/FileInputStream/OpenDir.java` — pass
+- `java/io/FileInputStream/OpsAfterClose.java` — pass
+- `java/io/FileOutputStream/AtomicAppend.java` — pass
+- `java/io/FileOutputStream/OpsAfterClose.java` — pass
+- `java/io/FilePermission/FilePermissionCollection.java` — pass
+- `java/io/FilePermission/SpecTests.java` — pass
+- `java/io/FilterOutputStream/BoundsCheck.java` — pass
+- `java/io/FilterOutputStream/SuppressedException.java` — pass
+- `java/io/FilterOutputStream/Write.java` — pass
+- `java/io/InputStream/OpsAfterClose.java` — pass
+- `java/io/InputStream/ReadParams.java` — pass
+- `java/io/InputStream/Skip.java` — pass
+- `java/io/InputStreamReader/GrowAfterEOF.java` — pass
+- `java/io/InputStreamReader/NullCreate.java` — pass
+- `java/io/InputStreamReader/One.java` — pass
+- `java/io/InputStreamReader/ReadOffset.java` — pass
+- `java/io/LineNumberInputStream/Available.java` — pass
+- `java/io/LineNumberInputStream/MarkReset.java` — pass
+- `java/io/LineNumberInputStream/Skip.java` — pass
+- `java/io/LineNumberInputStream/SkipEOL.java` — pass
+- `java/io/LineNumberReader/MarkReset.java` — pass
+- `java/io/LineNumberReader/Read.java` — pass
+- `java/io/LineNumberReader/ReadReadLine.java` — pass
+- `java/io/LineNumberReader/Skip.java` — pass
+- `java/io/NegativeInitSize.java` — pass
+- `java/io/ObjectInputStream/NegativeArraySizeTest.java` — pass
+- `java/io/ObjectInputStream/TestObjectStreamClass.java` — pass
+- `java/io/OutputStream/WriteParams.java` — pass
+- `java/io/OutputStreamWriter/BoundsCheck.java` — pass
+- `java/io/OutputStreamWriter/CloseWriterOnFailedFlush.java` — pass
+- `java/io/OutputStreamWriter/Encode.java` — pass
+- `java/io/OutputStreamWriter/NullCreate.java` — pass
+- `java/io/OutputStreamWriter/TestWrite.java` — pass
+- `java/io/OutputStreamWriter/WriteAfterClose.java` — pass
+- `java/io/PipedInputStream/CloseAndAvailableRC.java` — pass
+- `java/io/PipedInputStream/ClosedWriter.java` — pass
+- `java/io/PipedInputStream/Constructors.java` — pass
+- `java/io/PipedInputStream/FasterWriter.java` — pass
+- `java/io/PipedInputStream/WriterLoop.java` — pass
+- `java/io/PipedOutputStream/ClosedWrite.java` — pass
+- `java/io/PipedOutputStream/DeadReader.java` — pass
+- `java/io/PipedOutputStream/MultipleConnect.java` — pass
+- `java/io/PipedOutputStream/NotConnected.java` — pass
+- `java/io/PipedOutputStream/WriteAfterClose.java` — pass
+- `java/io/PipedReader/Constructors.java` — pass
+- `java/io/PipedReader/ReadToArray.java` — pass
+- `java/io/PipedReader/Ready.java` — pass
+- `java/io/PipedWriter/ConnectAfterReaderClose.java` — pass
+- `java/io/PipedWriter/FlushAfterClose.java` — pass
+- `java/io/PipedWriter/WriteAfterReaderClose.java` — pass
+- `java/io/PrintStream/CheckError.java` — pass
+- `java/io/PrintStream/ClearErrorStream.java` — pass
+- `java/io/PrintStream/EncodingConstructor.java` — pass
+- `java/io/PrintStream/FailingConstructors.java` — pass
+- `java/io/PrintStream/NullConstructor.java` — pass
+- `java/io/PrintStream/WriteBytes.java` — pass
+- `java/io/PrintWriter/CheckError.java` — pass
+- `java/io/PrintWriter/ClearErrorWriter.java` — pass
+- `java/io/PrintWriter/FailingConstructors.java` — pass
+- `java/io/PrintWriter/OpsAfterClose.java` — pass
+- `java/io/PrintWriter/OversynchronizedTest.java` — pass
+- `java/io/PrintWriter/SubClass.java` — pass
+- `java/io/PushbackInputStream/Available.java` — pass
+- `java/io/PushbackInputStream/ClosedStream.java` — pass
+- `java/io/PushbackInputStream/MarkReset.java` — pass
+- `java/io/PushbackInputStream/Skip.java` — pass
+- `java/io/PushbackReader/MarkReset.java` — pass
+- `java/io/PushbackReader/ReadCloseRaceNPE.java` — pass
+- `java/io/PushbackReader/Skip.java` — pass
+- `java/io/RandomAccessFile/Close.java` — pass
+- `java/io/RandomAccessFile/EOF.java` — pass
+- `java/io/RandomAccessFile/FileLengthTest.java` — pass
+- `java/io/RandomAccessFile/OpenSync.java` — pass
+- `java/io/RandomAccessFile/OpsAfterClose.java` — pass
+- `java/io/RandomAccessFile/ParameterCheck.java` — pass
+- `java/io/RandomAccessFile/ReadLine.java` — pass
+- …and 1262 more
+
+## ❌ Regressions (1)
+
+- `java/nio/channels/DatagramChannel/StressNativeSignal.java` — Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120001ms).
+
+## 🟢 New passes (19) — consider advancing the baseline
+
+- `java/net/URLClassLoader/B7050028.java`
+- `java/security/Principal/Implies.java`
+- `java/util/ResourceBundle/Control/LoadingStrategiesTest.java`
+- `javax/net/ssl/HttpsURLConnection/CriticalSubjectAltName.java`
+- `javax/security/auth/login/Exceptions/NewExceptions.java`
+- `javax/security/auth/login/LoginContext/SharedState.java`
+- `javax/xml/crypto/dsig/TransformService/UnknownProvider.java`
+- `javax/xml/crypto/dsig/XMLSignatureFactory/UnknownProvider.java`
+- `javax/xml/crypto/dsig/keyinfo/KeyInfoFactory/UnknownProvider.java`
+- `jdk/internal/loader/InterruptedClassLoad.java`
+- `sun/net/www/protocol/https/HttpsURLConnection/DNSIdentities.java`
+- `sun/net/www/protocol/https/HttpsURLConnection/Identities.java`
+- `sun/net/www/protocol/https/NewImpl/JavaxHostnameVerifier.java`
+- `sun/security/jgss/spnego/MSOID.java`
+- `sun/security/krb5/NullStringToKey.java`
+- `sun/security/krb5/etype/UnsupportedKeyType.java`
+- `sun/security/rsa/TestCACerts.java`
+- `tools/jlink/CheckExecutable.java`
+- `tools/jlink/ReleaseImplementorTest.java`

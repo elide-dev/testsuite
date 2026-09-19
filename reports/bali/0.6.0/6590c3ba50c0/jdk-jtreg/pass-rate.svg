@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="170" viewBox="0 0 720 170" role="img" aria-labelledby="title desc">
+  <title id="title">jdk-jtreg pass-rate chart</title>
+  <desc id="desc">1432 of 12755 tests passed.</desc>
+  <rect width="720" height="170" fill="#ffffff"/>
+  <text x="40" y="34" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">jdk-jtreg</text>
+  <text x="40" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#57606a">1432/12755 pass (97.9%)</text>
+  <rect x="40" y="84" width="640" height="28" fill="#eaeef2"/>
+  <rect x="40.00" y="84" width="71.85" height="28" fill="#198754"><title>pass: 1432</title></rect>
+  <rect x="111.85" y="84" width="1.25" height="28" fill="#dc3545"><title>fail: 25</title></rect>
+  <rect x="113.11" y="84" width="0.25" height="28" fill="#6f42c1"><title>error: 5</title></rect>
+  <rect x="113.36" y="84" width="566.64" height="28" fill="#6c757d"><title>skip: 11293</title></rect>
+  <text x="40" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#57606a">fail 25 · error 5 · skip 11293 · regressions 1</text>
+</svg>

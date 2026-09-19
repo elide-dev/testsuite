@@ -1,0 +1,296 @@
+{
+  "bySignature": [
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Run into problems, see log for more details",
+      "count": 2,
+      "exampleIds": [
+        "sun/security/ssl/SSLContextImpl/DefaultDTLSEnabledProtocols.java",
+        "sun/security/ssl/SSLContextImpl/DefaultEnabledProtocols.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Run into problems, see log for more details"
+      ]
+    },
+    {
+      "signature": "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120001ms).",
+      "count": 1,
+      "exampleIds": [
+        "java/nio/channels/DatagramChannel/StressNativeSignal.java"
+      ],
+      "samples": [
+        "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120001ms)."
+      ]
+    },
+    {
+      "signature": "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120002ms).",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/System/finalization/FinThreads.java"
+      ],
+      "samples": [
+        "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120002ms)."
+      ]
+    },
+    {
+      "signature": "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120005ms).",
+      "count": 1,
+      "exampleIds": [
+        "java/net/Socket/asyncClose/Race.java"
+      ],
+      "samples": [
+        "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120005ms)."
+      ]
+    },
+    {
+      "signature": "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120006ms).",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/ref/FinalizeOverride.java"
+      ],
+      "samples": [
+        "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120006ms)."
+      ]
+    },
+    {
+      "signature": "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120008ms).",
+      "count": 1,
+      "exampleIds": [
+        "java/util/Collections/RotateHuge.java"
+      ],
+      "samples": [
+        "Error. Program `/opt/bali/bin/java' timed out (timeout set to 120000ms, elapsed time including timeout handling was 120008ms)."
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.AssertionError",
+      "count": 1,
+      "exampleIds": [
+        "tools/launcher/InstanceMainTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.AssertionError"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Error",
+      "count": 1,
+      "exampleIds": [
+        "java/io/Serializable/getSuidClinitError/GetSuidClinitError.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Error"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Error\\: failed to garbage collect object",
+      "count": 1,
+      "exampleIds": [
+        "java/io/Serializable/clearHandleTable/ClearHandleTable.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Error\\: failed to garbage collect object"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Byte \\!\\= <n>",
+      "count": 1,
+      "exampleIds": [
+        "sun/security/provider/SecureRandom/StrongSeedReader.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Byte \\!\\= 0"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: One or more tests failed",
+      "count": 1,
+      "exampleIds": [
+        "java/security/Provider/DefaultProviderList.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: One or more tests failed"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Test object not finalized",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/ref/Basic.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Test object not finalized"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Unexpected provider count. Expected\\: <n>. Actual\\: <n>",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/SecurityManager/CheckSecurityProvider.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: Unexpected provider count. Expected\\: 11. Actual\\: 9"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.NoClassDefFoundError\\: Ljdk/dynalink/NoSuchDynamicMethodException;",
+      "count": 1,
+      "exampleIds": [
+        "jdk/dynalink/BeanLinkerRecordsTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.NoClassDefFoundError\\: Ljdk/dynalink/NoSuchDynamicMethodException;"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: <n> failures",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/annotation/AnnotationToStringTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: 2 failures"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: JAVA_RUNTIME_VERSION line was not found\\!",
+      "count": 1,
+      "exampleIds": [
+        "build/releaseFile/CheckReleaseFile.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: JAVA_RUNTIME_VERSION line was not found\\!"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: javax.net.ssl.SSLHandshakeException\\: Remote host terminated the handshake",
+      "count": 1,
+      "exampleIds": [
+        "javax/net/ssl/TLSCommon/ConcurrentClientAccessTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: javax.net.ssl.SSLHandshakeException\\: Remote host terminated the handshake"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Principal can not be null",
+      "count": 1,
+      "exampleIds": [
+        "javax/net/ssl/TLSCommon/TestSessionLocalPrincipal.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Principal can not be null"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: StackTraceElements mismatch at index <n>. Expected [jdk.internal.reflect.Direct",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/StackWalker/DumpStackTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: StackTraceElements mismatch at index 3. Expected [jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java)], but get [org.graalvm.nativeimage.builder/com.oracle.svm.core.reflect.CremaMethodAccessor.invoke(CremaMethodAccessor.java\\:63)]"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: System classloader not parallel capable\\!?",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/ClassLoader/IsParallelCapable.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: System classloader not parallel capable\\!?"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: test failed. expected number system was not returned.",
+      "count": 1,
+      "exampleIds": [
+        "java/text/Format/NumberFormat/MultipleNumberScriptTest.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: test failed. expected number system was not returned."
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Timezone name is incorrect (should be CET)",
+      "count": 1,
+      "exampleIds": [
+        "sun/util/resources/TimeZone/Bug4848242.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Timezone name is incorrect (should be CET)"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Unexpected annotation status detected.",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/Class/IsAnnotationType.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Unexpected annotation status detected."
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Unexpected stack trace for\\: StackWalker.getInstance(StackWalker.Option.RETAIN_",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/StackWalker/VerifyStackTrace.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: Unexpected stack trace for\\: StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.lang.StackOverflowError",
+      "count": 1,
+      "exampleIds": [
+        "java/lang/StackWalker/MultiThreadStackWalk.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.StackOverflowError"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.security.NoSuchAlgorithmException\\: http\\://www.w3.org/<n>/<n>/xmldsig\\#base64 algorithm and DOM mechan",
+      "count": 1,
+      "exampleIds": [
+        "javax/xml/crypto/dsig/TransformService/NullParent.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.security.NoSuchAlgorithmException\\: http\\://www.w3.org/2000/09/xmldsig\\#base64 algorithm and DOM mechanism not available"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: java.security.NoSuchAlgorithmException\\: http\\://www.w3.org/TR/<n>/REC-xml-c14n-<n> algorithm and DOM mechan",
+      "count": 1,
+      "exampleIds": [
+        "javax/xml/crypto/dsig/GetInstanceTests.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.security.NoSuchAlgorithmException\\: http\\://www.w3.org/TR/2001/REC-xml-c14n-20010315 algorithm and DOM mechanism not available"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main' threw exception\\: javax.net.ssl.SSLHandshakeException\\: No appropriate protocol (protocol is disabled or cipher suites are ina",
+      "count": 1,
+      "exampleIds": [
+        "sun/security/ssl/ClientHandshaker/RSAExport.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: javax.net.ssl.SSLHandshakeException\\: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)"
+      ]
+    },
+    {
+      "signature": "Failed. Execution failed\\: `main<str>t match\\: run-time\\=2026b, tests\\=2025b",
+      "count": 1,
+      "exampleIds": [
+        "java/util/TimeZone/AssureTzdataVersion.java"
+      ],
+      "samples": [
+        "Failed. Execution failed\\: `main' threw exception\\: java.lang.RuntimeException\\: tzdata versions don't match\\: run-time\\=2026b, tests\\=2025b"
+      ]
+    }
+  ],
+  "byFeature": []
+}

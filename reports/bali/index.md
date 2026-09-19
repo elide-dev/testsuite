@@ -1,3 +1,7 @@
-# Bali OpenJDK compatibility
+# Elide compliance reports
 
-No recorded measurements yet. Run **Manual - Bali Release Compatibility** to measure the latest release on Linux AMD64 in Docker.
+![Latest compatibility pass rates](./pass-rate.svg)
+
+| Suite | Version | Digest | Pass rate | Status |
+|---|---|---|---:|:--:|
+| jdk-jtreg | `0.6.0` | `6590c3ba50c0` | 97.9% | ❌ |
