@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto";
-import { createReadStream } from "node:fs";
 
 interface ReleaseAsset {
   id: number;
@@ -44,7 +43,8 @@ export function selectBaliRelease(release: Release) {
 export async function verifyReleaseArchive(path: string, expected: string) {
   if (!/^[a-f0-9]{64}$/.test(expected)) throw new Error("Invalid expected SHA-256");
   const hash = createHash("sha256");
-  for await (const chunk of createReadStream(path)) hash.update(chunk);
+  // Bun's file stream: node:fs createReadStream never completes on large files under Bun 1.3 on macOS.
+  for await (const chunk of Bun.file(path).stream()) hash.update(chunk);
   if (hash.digest("hex") !== expected) throw new Error("Bali release archive SHA-256 mismatch");
 }
 if (import.meta.main) {

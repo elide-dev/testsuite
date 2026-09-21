@@ -1,3 +1,15 @@
 {
-  "runs": []
+  "runs": [
+    {
+      "workload": "jdk-jtreg",
+      "semver": "0.6.0",
+      "digest": "6590c3ba50c0",
+      "pass": 3905,
+      "total": 12755,
+      "skip": 6044,
+      "regressions": 0,
+      "finishedAt": "2026-09-21T00:25:45.274Z",
+      "reportDir": "0.6.0/6590c3ba50c0/jdk-jtreg"
+    }
+  ]
 }
