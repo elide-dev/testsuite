@@ -4,4 +4,4 @@
 
 | Suite | Version | Digest | Pass rate | Status |
 |---|---|---|---:|:--:|
-| jdk-jtreg | `0.6.0` | `6590c3ba50c0` | 58.2% | ✅ |
+| jdk-jtreg | `0.6.0` | `fcb69aa98812` | 77.9% | ✅ |

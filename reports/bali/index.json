@@ -3,6 +3,17 @@
     {
       "workload": "jdk-jtreg",
       "semver": "0.6.0",
+      "digest": "fcb69aa98812",
+      "pass": 5308,
+      "total": 12755,
+      "skip": 5941,
+      "regressions": 0,
+      "finishedAt": "2026-09-22T00:39:51.823Z",
+      "reportDir": "0.6.0/fcb69aa98812/jdk-jtreg"
+    },
+    {
+      "workload": "jdk-jtreg",
+      "semver": "0.6.0",
       "digest": "6590c3ba50c0",
       "pass": 3905,
       "total": 12755,

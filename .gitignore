@@ -8,3 +8,4 @@ artifacts/
 # Stock-JDK reference baselines for local platforms are caches; CI's linux-x64 one is committed.
 expectations/jdk-jtreg.reference.*.json
 !expectations/jdk-jtreg.reference.linux-x64.json
+diagnostics/

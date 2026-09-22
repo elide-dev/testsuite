@@ -1,0 +1,63 @@
+{
+  "reference": [
+    {
+      "area": "sun/management",
+      "survivors": [
+        {
+          "pid": 82400,
+          "command": "/Library/Java/JavaVirtualMachines/gvm.jdk25/Contents/Home/bin/java -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/reference/work/classes/3/sun/management/jmxremote/bootstrap/JMXInterfaceBindingTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/reference/work/classes/3/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -Dcom.sun.management.jmxremote.host=127.0.0.1 -Dcom.sun.management.jmxremote.port=9283 -Dcom.sun.management.jmxremote.rmi.port=9284 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=true -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.registry.ssl=true -Djavax.net.ssl.keyStore=/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap/ssl/keystore -Djavax.net.ssl.trustStore=/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap/ssl/truststore -Djavax.net.ssl.keyStorePassword=password -Djavax.net.ssl.trustStorePassword=trustword JMXAgentInterfaceBinding 127.0.0.1 9283 9284 true"
+        },
+        {
+          "pid": 82401,
+          "command": "/Library/Java/JavaVirtualMachines/gvm.jdk25/Contents/Home/bin/java -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/reference/work/classes/3/sun/management/jmxremote/bootstrap/JMXInterfaceBindingTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/reference/work/classes/3/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -Dcom.sun.management.jmxremote.host=10.5.0.129 -Dcom.sun.management.jmxremote.port=9262 -Dcom.sun.management.jmxremote.rmi.port=9263 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=true -Djava.rmi.server.hostname=10.5.0.129 -Dcom.sun.management.jmxremote.registry.ssl=true -Djavax.net.ssl.keyStore=/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap/ssl/keystore -Djavax.net.ssl.trustStore=/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap/ssl/truststore -Djavax.net.ssl.keyStorePassword=password -Djavax.net.ssl.trustStorePassword=trustword JMXAgentInterfaceBinding 10.5.0.129 9262 9263 true"
+        }
+      ]
+    }
+  ],
+  "bali": [
+    {
+      "area": "java/lang",
+      "survivors": [
+        {
+          "pid": 73016,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/java/lang/annotation/LoaderLeakTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/java/lang/annotation:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/testng-7.3.0.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/guice-5.1.0.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jcommander-1.82.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true Main foo"
+        }
+      ]
+    },
+    {
+      "area": "java/net",
+      "survivors": [
+        {
+          "pid": 98892,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/java/net/ServerSocket/AcceptInheritHandle.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/java/net/ServerSocket:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true AcceptInheritHandle JAVA_NET"
+        }
+      ]
+    },
+    {
+      "area": "javax/naming",
+      "survivors": [
+        {
+          "pid": 44062,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -Xmx2g -Djava.awt.headless=true -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/3/javax/naming/spi/FactoryCacheTest.d -Durl.dir=/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/3/javax/naming/spi/FactoryCacheTest.d DummyContextFactory"
+        }
+      ]
+    },
+    {
+      "area": "sun/management",
+      "survivors": [
+        {
+          "pid": 19527,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/sun/management/jmxremote/bootstrap/JMXInterfaceBindingTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -Dcom.sun.management.jmxremote.host=127.0.0.1 -Dcom.sun.management.jmxremote.port=9123 -Dcom.sun.management.jmxremote.rmi.port=9124 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 JMXAgentInterfaceBinding 127.0.0.1 9123 9124 false"
+        },
+        {
+          "pid": 19528,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/sun/management/jmxremote/bootstrap/JMXInterfaceBindingTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/0/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -Dcom.sun.management.jmxremote.host=10.5.0.129 -Dcom.sun.management.jmxremote.port=9144 -Dcom.sun.management.jmxremote.rmi.port=9145 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.5.0.129 JMXAgentInterfaceBinding 10.5.0.129 9144 9145 false"
+        },
+        {
+          "pid": 51907,
+          "command": "/Users/sam/workspace/bali/target/dist/bin/bali -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/sun/management/jmxremote/bootstrap/LocalManagementTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/jdk/sun/management/jmxremote/bootstrap:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/src/test/lib:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/javatest.jar:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/harness/jtreg/lib/jtreg.jar -Xmx2g -Djava.awt.headless=true -XX:+UsePerfData -Xmx2g -Djava.awt.headless=true -cp /Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/sun/management/jmxremote/bootstrap/LocalManagementTest.d:/Users/sam/workspace/testsuite/.harness/work/jdk-jtreg/jtreg-run-kl6HQ6/bali/work/classes/2/test/lib -Dcom.sun.management.jmxremote TestApplication"
+        }
+      ]
+    }
+  ]
+}

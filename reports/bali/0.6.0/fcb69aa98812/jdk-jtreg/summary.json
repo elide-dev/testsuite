@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "workload": "jdk-jtreg",
+    "kind": "test",
+    "elide": {
+      "semver": "0.6.0",
+      "digest": "fcb69aa9881236fbea3bdb0da092de93c93ea9ee67e89b22e05d6f30c468459c"
+    },
+    "target": {
+      "name": "bali",
+      "version": "0.6.0",
+      "artifactDigest": "fcb69aa9881236fbea3bdb0da092de93c93ea9ee67e89b22e05d6f30c468459c",
+      "platform": "darwin-arm64"
+    },
+    "startedAt": "2026-09-21T19:55:59.537Z",
+    "finishedAt": "2026-09-22T00:39:51.823Z"
+  },
+  "counts": {
+    "pass": 5308,
+    "fail": 1480,
+    "skip": 5941,
+    "error": 26,
+    "total": 12755
+  },
+  "regressions": [],
+  "newPasses": []
+}
