@@ -21,8 +21,11 @@ concurrency:
 jobs:
   compatibility:
     name: "Latest Bali release / Linux AMD64"
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    # The full test/jdk inventory is JVM-per-test: measured at ~7 hours at concurrency 4, which
+    # is all a 4-vCPU hosted runner can offer. It runs on the same self-hosted pool as the
+    # nightly compliance lane, where the concurrency can match the hardware.
+    runs-on: ["self-hosted", "linux"]
+    timeout-minutes: 600
     permissions:
       contents: write
       pull-requests: write

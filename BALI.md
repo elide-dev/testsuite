@@ -180,6 +180,20 @@ Each runtime gets its own `JAVA_HOME` and `bin` first in `PATH`, passed through
 jtreg to subprocesses. Ambient Java option/classpath injection is cleared.
 This lane tests the runtime; Bali's javac implementation has separate coverage.
 
+jtreg is invoked once per area rather than once per corpus, and each invocation
+gets its own process group, which is swept when the area finishes. `-othervm`
+tests fork servers and helpers that outlive them; left alone, those accumulate
+until a later area cannot fork at all, and its tests record compatibility
+failures for work that never ran. Survivors are killed between areas and
+recorded per area with their command lines in `leaked-processes.json` and the
+differential's leak table, so the test that leaks can be fixed rather than only
+contained. In Docker the container also carries `--pids-limit` (4096, or
+`BALI_PIDS_LIMIT`), so a leak that escapes its process group fails loudly inside
+the container instead of starving the runner; `metadata.limits` records the
+ceilings and the run's peak task count. A result whose `.jtr` shows the runner
+refused a fork or a thread is `blocked`, never `fail`, and a run with any
+blocked result is incomplete and publishes nothing.
+
 On macOS jtreg needs access to OS memory/swap metrics. A restricted sandbox may
 block it before tests start. A failed harness probe remains an incomplete run.
 

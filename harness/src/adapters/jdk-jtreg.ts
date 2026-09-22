@@ -28,12 +28,22 @@
 import { $ } from "bun";
 import { createHash } from "node:crypto";
 import { closeSync, openSync } from "node:fs";
-import { mkdir, realpath, rename, rm } from "node:fs/promises";
-import { arch, release } from "node:os";
+import { mkdir, readdir, realpath, rename, rm } from "node:fs/promises";
+import { arch, availableParallelism, release } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
-import { createJtregRunRoot, isJtregTimeout, jtregCommonArgs } from "./jtreg";
+import { reapProcessGroup, type Survivor } from "./process";
+import {
+  createJtregRunRoot,
+  harnessSections,
+  isForkFailure,
+  isJtregTimeout,
+  isResourceExhaustion,
+  jtregCommonArgs,
+} from "./jtreg";
+import { buildNative, HEADER_DIRS, NATIVE_BUILD, nativeTarget } from "./jtreg-native";
+import { normalizeSignature } from "../analyze/signature";
 import type { Result as HarnessResult, TestResult } from "../results/schema";
 export const REPO = resolve(import.meta.dir, "../../..");
 const HEAP_CAP = "-Xmx2g";
@@ -135,6 +145,10 @@ export type Report = {
   tests: Row[];
 };
 const CACHE = resolve(process.env.BALI_JTREG_CACHE ?? join(REPO, ".harness/bali/archives"));
+/** Built native test support, keyed by corpus pin, platform, compiler and build table. */
+const NATIVE_CACHE = resolve(
+  process.env.BALI_JTREG_NATIVE_CACHE ?? join(REPO, ".harness/bali/native"),
+);
 
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 // Bun's file stream, not node:fs createReadStream: iterating the latter never completes on
@@ -145,7 +159,37 @@ async function fileDigest(path: string): Promise<string> {
   return hash.digest("hex");
 }
 
-/** Missing/malformed results never become passes; only the result header counts. */
+/**
+ * The process and thread ceilings the run had, recorded beside its concurrency: a report that
+ * states how many JVMs it ran in parallel but not how many processes it was allowed says
+ * nothing about whether it had headroom, and exhaustion then reads as a compat failure.
+ * Linux-only sources; anything this platform does not publish is recorded as null, never guessed.
+ */
+export async function runnerLimits(): Promise<Record<string, unknown>> {
+  const read = async (path: string) => {
+    try {
+      const file = Bun.file(path);
+      return (await file.exists()) ? (await file.text()).trim() : null;
+    } catch {
+      return null;
+    }
+  };
+  const processes = (await read("/proc/self/limits"))?.match(/^Max processes\s+(\S+)\s+(\S+)/m);
+  return {
+    cpus: availableParallelism(),
+    maxProcessesSoft: processes?.[1] ?? null,
+    maxProcessesHard: processes?.[2] ?? null,
+    // cgroup v2; `pids.peak` is the run's high-water mark, which is the number worth keeping.
+    cgroupPidsMax: await read("/sys/fs/cgroup/pids.max"),
+    cgroupPidsPeak: await read("/sys/fs/cgroup/pids.peak"),
+    cgroupPidsCurrent: await read("/sys/fs/cgroup/pids.current"),
+  };
+}
+
+/**
+ * Missing/malformed results never become passes; the result header decides the status, and the
+ * body is consulted only to tell a runner that ran out of processes from a test that failed.
+ */
 export function parseJtr(text: string | undefined): Result {
   if (text === undefined) return { status: "blocked", detail: "No jtreg result; see harness.log" };
   const header = text.split("#-----testresult-----\n")[1]?.split("\n#section:")[0];
@@ -153,6 +197,15 @@ export function parseJtr(text: string | undefined): Result {
   if (!detail) return { status: "blocked", detail: "Missing execStatus in jtreg result" };
   if (detail.startsWith("Passed. Skipped")) return { status: "skipped", detail };
   if (detail.startsWith("Passed.")) return { status: "pass", detail };
+  // A fork or thread the runner refused says nothing about the runtime: the test never ran, so
+  // it is blocked rather than failed. Checked before the timeout branch because a test starved
+  // of processes can also run out its clock, and the ceiling is the fact worth reporting. Only
+  // the header and jtreg's own sections count; a test's output is a result, not a diagnosis.
+  if (
+    /^Failed\.|^Error\./.test(detail) &&
+    (isResourceExhaustion(detail) || isForkFailure(harnessSections(text)))
+  )
+    return { status: "blocked", detail };
   if (/^Failed\.|^Error\./.test(detail) && isJtregTimeout(detail))
     return { status: "timeout", detail };
   if (detail.startsWith("Failed.")) return { status: "fail", detail };
@@ -323,6 +376,33 @@ export function incomplete(report: Report): boolean {
 }
 
 /**
+ * Why a run is incomplete, in the terms that say what to do about it. Exit codes are only one
+ * of the four reasons, and the usual one — tests that never ran — leaves them at their normal
+ * values, so reporting them alone describes a healthy run while aborting it.
+ */
+export function incompleteReason(report: Report): string {
+  const runnable = report.tests.filter((row) => row.unsupported === null);
+  const reasons: string[] = [];
+  if (!runnable.length) reasons.push("no runnable tests in the inventory");
+  for (const [runtime, code] of [
+    ["reference", report.exitCodes.reference],
+    ["bali", report.exitCodes.bali],
+  ] as const)
+    if (![0, 2, 3].includes(code)) reasons.push(`${runtime} jtreg exited ${code}`);
+  for (const [runtime, result] of [
+    ["reference", (row: Row) => row.reference],
+    ["bali", (row: Row) => row.bali],
+  ] as const) {
+    const blocked = runnable.filter((row) => result(row).status === "blocked");
+    if (blocked.length)
+      reasons.push(
+        `${blocked.length} of ${runnable.length} tests never ran on ${runtime}, e.g. ${blocked[0]!.id}: ${result(blocked[0]!).detail}`,
+      );
+  }
+  return `incomplete jdk-jtreg run: ${reasons.join("; ")}`;
+}
+
+/**
  * Flatten paired outcomes into Elide's single-status model so the shared expectations,
  * ratchet, and report code apply unchanged: a file passes only when both runtimes pass,
  * a Bali-only failure fails, and reference issues or adapter gaps are skips. The paired
@@ -361,9 +441,15 @@ export function summary(report: Report) {
     runnable: runnable.length,
     unsupported: report.tests.length - runnable.length,
     verifiedPassing: runnable.filter(verifiedPass).length,
+    // A blocked row is not a Bali difference: nothing was measured. Counting the two together
+    // is what let a run whose tests never started read as a wall of compatibility failures.
     baliFailures: runnable.filter(
-      (row) => row.reference.status === "pass" && row.bali.status !== "pass",
+      (row) =>
+        row.reference.status === "pass" &&
+        row.bali.status !== "pass" &&
+        row.bali.status !== "blocked",
     ).length,
+    unmeasured: runnable.filter((row) => row.bali.status === "blocked").length,
     referenceIssues: runnable.filter((row) => row.reference.status !== "pass").length,
     incomplete: incomplete(report),
   };
@@ -390,7 +476,7 @@ export function markdown(report: Report): string {
   return (
     `# Bali OpenJDK compatibility\n\n` +
     `Suite: ${report.suite}. ${counts.inventory} test files inventoried (a file's @test variants count together).\n\n` +
-    `| Outcome | Files |\n|---|---:|\n| Pass on both runtimes | ${counts.verifiedPassing} |\n| Reference passes; Bali does not | ${counts.baliFailures} |\n| Reference issues | ${counts.referenceIssues} |\n| Unsupported by adapter | ${counts.unsupported} |\n\n` +
+    `| Outcome | Files |\n|---|---:|\n| Pass on both runtimes | ${counts.verifiedPassing} |\n| Reference passes; Bali does not | ${counts.baliFailures} |\n| Never measured (runner blocked) | ${counts.unmeasured} |\n| Reference issues | ${counts.referenceIssues} |\n| Unsupported by adapter | ${counts.unsupported} |\n\n` +
     `${counts.incomplete ? "**Incomplete harness run.**" : "Completed inventory run; known failures remain visible."}\n\n` +
     `This measures the pinned test/jdk inventory, not Java SE certification. Stock javac compiles both runtime selections.\n\n` +
     referenceNote(report.metadata) +
@@ -445,6 +531,7 @@ async function stage(
   archives: Awaited<ReturnType<typeof prepare>>,
   manifest: Manifest,
   include: string[],
+  reference: string,
 ) {
   const src = join(out, "src");
   await mkdir(src);
@@ -453,6 +540,10 @@ async function stage(
   // what `@library /test/lib` names through `external.lib.roots`.
   await $`tar -xzf ${archives.source} -C ${src} --strip-components=1 ${`${prefix}/${manifest.scope}`} ${`${prefix}/test/lib`}`.quiet();
   await $`tar -xzf ${archives.source} -C ${src} --strip-components=1 ${`${prefix}/LICENSE`}`.quiet();
+  // The native test support compiles against a few of the JDK's own headers; they are in the
+  // same tarball, so they are staged beside the corpus rather than requiring a JDK build.
+  const headers = HEADER_DIRS(nativeTarget().os).map((dir) => `${prefix}/src/${dir}`);
+  await $`tar -xzf ${archives.source} -C ${src} --strip-components=1 ${headers}`.quiet().nothrow();
   const suite = join(src, manifest.scope);
   const requires = await Bun.file(REQUIRES_SOURCE).text();
   await Bun.write(join(src, "test", REQUIRES_STAGED), requires);
@@ -462,10 +553,21 @@ async function stage(
   await Bun.write(join(suite, "TEST.ROOT"), root);
   await $`unzip -q ${archives.jtreg} -d ${join(out, "harness")}`.quiet();
   const inventory = await discover(suite, manifest.exclude ?? [], include);
+  const native = await buildNative({
+    suite,
+    srcRoot: join(src, "src"),
+    javaHome: reference,
+    cacheDir: NATIVE_CACHE,
+    sourceDigest: manifest.source.sha256,
+    scratch: out,
+  });
+  console.log(
+    `jtreg native test support: ${native.built} artifacts${native.cached ? " (cached)" : " built"}, ${native.excluded} excluded on this platform; ${native.path}`,
+  );
   console.log(
     `Discovered ${inventory.length} test files; ${inventory.filter((test) => test.unsupported === null).length} runnable`,
   );
-  return { suite, jar: join(out, "harness/jtreg/lib/jtreg.jar"), inventory, root, requires };
+  return { suite, jar: join(out, "harness/jtreg/lib/jtreg.jar"), inventory, root, requires, native };
 }
 
 // Keep measurement locale independent of the invoking terminal. TZ stays unset,
@@ -579,8 +681,12 @@ export async function readResults(
   out: string,
   inventory: Entry[],
 ): Promise<Map<string, Result>> {
-  const summaryFile = Bun.file(join(out, "report/text/summary.txt"));
-  const statuses = (await summaryFile.exists()) ? parseSummary(await summaryFile.text()) : new Map();
+  // One summary per area batch, plus the single-directory layout an unbatched run leaves.
+  const statuses = new Map<string, string>();
+  const summaries = new Bun.Glob("report/**/text/summary.txt");
+  for await (const relative of summaries.scan({ cwd: out, absolute: true }))
+    for (const [key, status] of parseSummary(await Bun.file(relative).text()))
+      statuses.set(key, status);
   const results = new Map<string, Result>();
   for (const test of inventory) {
     if (test.unsupported !== null) {
@@ -603,6 +709,146 @@ export async function readResults(
   return results;
 }
 
+/** How many examples of each distinct failure signature keep their diagnostics. */
+export const DIAGNOSTIC_CAP = 3;
+/** The most of any one file that is worth committing; a 7-hour harness log is mostly noise. */
+const DIAGNOSTIC_BYTES = 2_000_000;
+/** Crash reports a JVM writes on abort. Text, small, and the only record of a SIGABRT. */
+const CRASH_LOG = /(?:^|\/)(?:hs_err_pid\d+|replay_pid\d+)\.log$/;
+/**
+ * Artifacts too large to commit but worth naming, so the published report says what exists in
+ * the run workspace and how big it is. `.jfr` is listed here already: when flight recording is
+ * switched on, the recordings are indexed without further change.
+ */
+const BULK_ARTIFACT = /(?:^|\/)(?:core(?:\.\d+)?|.*\.jfr)$/;
+
+const truncate = (text: string, path: string) =>
+  text.length <= DIAGNOSTIC_BYTES
+    ? text
+    : `[truncated: kept the last ${DIAGNOSTIC_BYTES} bytes of ${text.length} from ${path}]\n` +
+      text.slice(-DIAGNOSTIC_BYTES);
+
+/**
+ * The diagnostics worth keeping from one runtime's run, as published path -> contents.
+ *
+ * A published report that says 55 tests aborted with exit 134 and keeps nothing is not
+ * actionable: the abort output lives in the `.jtr` and is thrown away with the workspace. So
+ * failures keep theirs — but capped at `DIAGNOSTIC_CAP` per distinct signature, because the
+ * 56th identical abort adds nothing and the report directory is committed. Crash logs and the
+ * harness log are kept whole; anything too big to commit is listed with its size instead.
+ */
+export async function collectDiagnostics(
+  out: string,
+  report: Report,
+  side: "reference" | "bali",
+): Promise<Record<string, string>> {
+  const files: Record<string, string> = {};
+  const prefix = `diagnostics/${side}`;
+  // The reference side normally comes from the committed baseline, in which case this runtime
+  // never ran and its directory does not exist. That is the common path, not an error.
+  const work = join(out, "work");
+  if ((await readdir(work).catch(() => null)) === null) return files;
+  const kept = new Map<string, number>();
+  const total = new Map<string, number>();
+  const bulk: { path: string; bytes: number }[] = [];
+  const failing = report.tests.filter((row) => {
+    const status = side === "bali" ? row.bali.status : row.reference.status;
+    return row.unsupported === null && ["fail", "error", "timeout", "blocked"].includes(status);
+  });
+  for (const row of failing) {
+    const result = side === "bali" ? row.bali : row.reference;
+    const signature = normalizeSignature(result.detail);
+    total.set(signature, (total.get(signature) ?? 0) + 1);
+    const seen = kept.get(signature) ?? 0;
+    if (seen >= DIAGNOSTIC_CAP) continue;
+    let wrote = false;
+    for (const variant of row.variants ?? [""]) {
+      const relative = jtrPath(row.id, variant);
+      const file = Bun.file(join(work, relative));
+      if (!(await file.exists())) continue;
+      files[`${prefix}/${relative}`] = truncate(await file.text(), relative);
+      wrote = true;
+    }
+    if (wrote) kept.set(signature, seen + 1);
+  }
+  // Crashes and bulk artifacts are found by sweeping the work tree: a JVM that aborts writes
+  // its report beside the scratch directory it happened to be using, not beside the test.
+  for await (const relative of new Bun.Glob("**/*").scan({ cwd: work, onlyFiles: true, throwErrorOnBrokenSymlink: false })) {
+    const path = join(work, relative);
+    if (CRASH_LOG.test(relative))
+      files[`${prefix}/crashes/${relative}`] = truncate(await Bun.file(path).text(), relative);
+    else if (BULK_ARTIFACT.test(relative)) bulk.push({ path: relative, bytes: Bun.file(path).size });
+  }
+  const log = Bun.file(join(out, "harness.log"));
+  if (await log.exists()) files[`${prefix}/harness.log`] = truncate(await log.text(), "harness.log");
+  files[`${prefix}/index.json`] = JSON.stringify(
+    {
+      cap: DIAGNOSTIC_CAP,
+      // Every signature with how many failures shared it and how many kept diagnostics, so a
+      // reader can tell a cluster of 55 from a one-off even though only 3 were retained.
+      signatures: [...total]
+        .map(([signature, count]) => ({ signature, failures: count, retained: kept.get(signature) ?? 0 }))
+        .sort((a, b) => b.failures - a.failures),
+      // Named, not kept: too large for the repository, still in the run workspace.
+      bulk: bulk.sort((a, b) => b.bytes - a.bytes),
+    },
+    null,
+    2,
+  );
+  return files;
+}
+
+/** Where `run` stages the files `reports` publishes, relative to the run workspace. */
+export const PUBLISHED_EXTRAS = "published-extras.json";
+
+/**
+ * Leaked processes, per area, as a table a machine fix can be aimed at.
+ *
+ * Reaping keeps one area's leak from starving the next, but it does not stop the leaking. The
+ * area and the surviving command line together name the test that needs a `finally` block or a
+ * process-group kill of its own, so the report carries them rather than only the log.
+ */
+export function leakSection(leaks: Record<string, Leak[]> | undefined): string {
+  const rows = Object.entries(leaks ?? {}).flatMap(([runtime, areas]) =>
+    areas.flatMap((leak) =>
+      leak.survivors.map((survivor) => ({ runtime, area: leak.area, command: survivor.command })),
+    ),
+  );
+  if (!rows.length) return "\n## Leaked processes\n\nNone: every area's process group was empty when it finished.\n";
+  const counts = new Map<string, { runtime: string; area: string; command: string; n: number }>();
+  for (const row of rows) {
+    const key = `${row.runtime}\u0000${row.area}\u0000${row.command}`;
+    const seen = counts.get(key);
+    if (seen) seen.n++;
+    else counts.set(key, { ...row, n: 1 });
+  }
+  return (
+    `\n## Leaked processes\n\n${rows.length} process(es) outlived the area that started them and were reaped. ` +
+    `Each row is a test that does not clean up after itself; leaked-processes.json has the pids.\n\n` +
+    `| Runtime | Area | Survivors | Command |\n|---|---|---:|---|\n` +
+    [...counts.values()]
+      .sort((a, b) => b.n - a.n)
+      .map((row) => `| ${row.runtime} | ${row.area} | ${row.n} | \`${row.command.slice(0, 120)}\` |`)
+      .join("\n") +
+    "\n"
+  );
+}
+
+/** A directory name for an area, so `java/net` gets its own batch directory. */
+export const areaSlug = (area: string) => area.replaceAll("/", "__");
+
+/** What one area's batch left running after jtreg exited, kept for the report. */
+export type Leak = { area: string; survivors: Survivor[] };
+
+/**
+ * Run the inventory one area at a time, reaping between areas.
+ *
+ * jtreg could take the whole corpus in one invocation, and did; the cost was that a leaked HTTP
+ * server from `java/net` was still holding processes when `java/text` ran an hour later, and the
+ * areas in between recorded 1,553 tests that never started. An area is the smallest boundary at
+ * which nothing of the run is legitimately still alive, so each one gets its own process group
+ * and is swept when it finishes. The work directory is shared, so results read back unchanged.
+ */
 export async function runSuiteOnRuntime(
   out: string,
   suite: string,
@@ -611,53 +857,30 @@ export async function runSuiteOnRuntime(
   home: string,
   inventory: Entry[],
   execution: Manifest["execution"],
+  nativePath?: string,
 ) {
   await mkdir(out);
-  const selection = join(out, "selection.txt");
-  await Bun.write(
-    selection,
-    inventory
-      .filter((test) => test.unsupported === null)
-      .map((test) => JSON.stringify(join(suite, test.id)))
-      .join("\n") + "\n",
-  );
-  const args = [
-    join(reference, "bin/java"),
-    "-jar",
-    jar,
-    ...JTREG_OPTIONS,
-    ...jtregCommonArgs({
-      concurrency: execution.concurrency,
-      timeoutFactor: execution.timeoutFactor,
-      workDir: join(out, "work"),
-      reportDir: join(out, "report"),
-    }),
-    "-e:JAVA_HOME,PATH",
-    `-testjdk:${home}`,
-    `-compilejdk:${reference}`,
-    `-javaoption:${HEAP_CAP}`,
-    `-javaoption:-Djava.awt.headless=${execution.headless}`,
-    `@${selection}`,
-  ];
-  await Bun.write(join(out, "command.json"), JSON.stringify(args, null, 2));
-  const log = join(out, "harness.log");
-  const label = basename(out) === "reference" ? "Stock Java (1/2)" : "Bali (2/2)";
   const runnable = inventory.filter((test) => test.unsupported === null);
+  const batches = new Map<string, Entry[]>();
+  for (const test of runnable) batches.set(test.area, [...(batches.get(test.area) ?? []), test]);
   const jtrs = runnable.flatMap((test) =>
     (test.variants ?? [""]).map((variant) => jtrPath(test.id, variant)),
   );
+  const work = join(out, "work");
+  const label = basename(out) === "reference" ? "Stock Java (1/2)" : "Bali (2/2)";
+  const log = join(out, "harness.log");
   const started = Date.now();
   const showProgress = async () => {
-    const progress = await runtimeProgress(join(out, "work"), jtrs);
+    const progress = await runtimeProgress(work, jtrs);
     const seconds = Math.floor((Date.now() - started) / 1000);
     console.log(
       `${label}: ${progress.completed}/${jtrs.length} finished; ${progress.passed} passed, ${progress.failed} failed/error/timeout, ${progress.skipped} skipped; ${Math.floor(seconds / 60)}m ${seconds % 60}s elapsed`,
     );
   };
   console.log(
-    `${label}: starting ${runnable.length} files, ${jtrs.length} tests (${execution.concurrency} concurrent)`,
+    `${label}: starting ${runnable.length} files, ${jtrs.length} tests in ${batches.size} areas (${execution.concurrency} concurrent)`,
   );
-  console.log(`Live test results: ${join(out, "work")}`);
+  console.log(`Live test results: ${work}`);
   let pending: Promise<void> | undefined;
   const timer = setInterval(() => {
     if (pending) return;
@@ -667,28 +890,88 @@ export async function runSuiteOnRuntime(
         pending = undefined;
       });
   }, 10_000);
-  // Write directly to disk so diagnostics survive cancellation and remain readable live.
-  let descriptor: number | undefined;
-  let exitCode: number;
+
+  const commands: Record<string, string[]> = {};
+  const leaks: Leak[] = [];
+  const areaExits: { area: string; exitCode: number }[] = [];
+  // jtreg exits 1 for no tests, 2 for failures and 3 for errors; those are ordinary per-area
+  // outcomes, so the run's code is the worst of them, and anything else wins outright.
+  let exitCode = 0;
   try {
-    descriptor = openSync(log, "w");
-    const child = Bun.spawn(args, {
-      cwd: out,
-      env: cleanEnv(home),
-      stdout: descriptor,
-      stderr: descriptor,
-    });
-    exitCode = await child.exited;
+    for (const [area, tests] of batches) {
+      const slug = areaSlug(area);
+      const selection = join(out, "selection", `${slug}.txt`);
+      await Bun.write(
+        selection,
+        tests.map((test) => JSON.stringify(join(suite, test.id))).join("\n") + "\n",
+      );
+      const args = [
+        join(reference, "bin/java"),
+        "-jar",
+        jar,
+        ...JTREG_OPTIONS,
+        ...jtregCommonArgs({
+          concurrency: execution.concurrency,
+          timeoutFactor: execution.timeoutFactor,
+          workDir: work,
+          // Per-area report directories: one shared directory would leave only the last area's
+          // "Not run" summary, and every earlier filtered test would read back as unmeasured.
+          reportDir: join(out, "report", slug),
+        }),
+        "-e:JAVA_HOME,PATH",
+        `-testjdk:${home}`,
+        `-compilejdk:${reference}`,
+        `-javaoption:${HEAP_CAP}`,
+        `-javaoption:-Djava.awt.headless=${execution.headless}`,
+        // Tests whose @run action carries /native refuse to start without this.
+        ...(nativePath ? [`-nativepath:${nativePath}`] : []),
+        `@${selection}`,
+      ];
+      commands[area] = args;
+      await Bun.write(join(out, "command.json"), JSON.stringify(commands, null, 2));
+      // Write directly to disk so diagnostics survive cancellation and remain readable live.
+      let descriptor: number | undefined;
+      let child: ReturnType<typeof Bun.spawn> | undefined;
+      try {
+        descriptor = openSync(log, "a");
+        child = Bun.spawn(args, {
+          cwd: out,
+          env: cleanEnv(home),
+          stdout: descriptor,
+          stderr: descriptor,
+          // Its own process group, so everything this area spawns can be swept as a unit.
+          detached: true,
+        });
+        const code = await child.exited;
+        areaExits.push({ area, exitCode: code });
+        // 2 (failures) and 3 (errors) are ordinary per-area outcomes, so the run takes the worst
+        // of them and anything else wins outright. 1 means jtreg selected no tests in this area,
+        // which a whole-corpus invocation could never return but a per-area one can; it is not
+        // itself a harness failure, and if those tests should have run they read back as blocked.
+        if (code === 1) console.warn(`${label}: ${area} selected no tests (jtreg exit 1)`);
+        else if ([0, 2, 3].includes(code)) exitCode = Math.max(exitCode, code);
+        else exitCode = code;
+      } finally {
+        if (descriptor !== undefined) closeSync(descriptor);
+      }
+      const survivors = child ? await reapProcessGroup(child.pid) : [];
+      if (survivors.length) {
+        leaks.push({ area, survivors });
+        console.warn(
+          `${label}: ${area} left ${survivors.length} process(es) running; reaped. First: ${survivors[0]!.command}`,
+        );
+      }
+    }
   } finally {
-    if (descriptor !== undefined) closeSync(descriptor);
     clearInterval(timer);
     await pending;
   }
+  await Bun.write(join(out, "leaks.json"), JSON.stringify(leaks, null, 2) + "\n");
   await showProgress().catch((error) =>
     console.warn(`${label}: could not read progress: ${error.message}`),
   );
   console.log(`${basename(out)}: jtreg exited ${exitCode}; ${log}`);
-  return { exitCode, results: await readResults(out, inventory) };
+  return { exitCode, leaks, batches: areaExits, results: await readResults(out, inventory) };
 }
 
 /** Everything that determines the reference outcome; kernel and runner are provenance only. */
@@ -698,6 +981,8 @@ export type ReferenceInputs = {
   source: string;
   jtreg: string;
   execution: Manifest["execution"];
+  /** Version of the native test-support build; what it produces changes reference outcomes. */
+  nativeBuild: number;
   root: string;
   /** Digest of the portable `@requires` definitions staged beside the corpus. */
   requires: string;
@@ -717,7 +1002,14 @@ export type ReferenceBaseline = {
   exitCode: number;
   results: Record<string, Result>;
 };
-export type RuntimeRun = { exitCode: number; results: Map<string, Result> };
+export type RuntimeRun = {
+  exitCode: number;
+  results: Map<string, Result>;
+  /** Areas that left processes behind; absent when the run came from a committed baseline. */
+  leaks?: Leak[];
+  /** Each area's own jtreg exit code, so a single odd area is attributable. */
+  batches?: { area: string; exitCode: number }[];
+};
 export const currentPlatform = () => `${process.platform}-${arch()}`;
 /** One baseline per platform: CI's linux-x64 file is committed, others are local caches. */
 export const referenceBaselineName = (platform = currentPlatform()) =>
@@ -743,6 +1035,7 @@ export function referenceInputs(args: {
     source: args.manifest.source.sha256,
     jtreg: args.manifest.jtreg.sha256,
     execution: { concurrency, timeoutFactor, headless },
+    nativeBuild: NATIVE_BUILD,
     root: args.root,
     requires: digest(args.requires),
     options: [...JTREG_OPTIONS],
@@ -887,6 +1180,7 @@ export function coverageChart(counts: ReturnType<typeof summary>): string {
   const segments = [
     ["Verified passes", counts.verifiedPassing, "#198754"],
     ["Bali differences", counts.baliFailures, "#dc3545"],
+    ["Never measured", counts.unmeasured, "#6f42c1"],
     ["Reference issues", counts.referenceIssues, "#d29922"],
     ["Runner unsupported", counts.unsupported, "#8c959f"],
   ] as const;
@@ -927,7 +1221,13 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
   // Like Elide's javac adapter: a fresh scratch directory per run inside the workspace so
   // stale .jtr files never count; workspace-level report files are overwritten each run.
   const scratch = createJtregRunRoot(ctx.workspacePath);
-  const { suite, jar, inventory, root, requires } = await stage(scratch, archives, manifest, ctx.include);
+  const { suite, jar, inventory, root, requires, native } = await stage(
+    scratch,
+    archives,
+    manifest,
+    ctx.include,
+    reference,
+  );
   await Bun.write(
     join(ctx.workspacePath, "inventory.json"),
     JSON.stringify(inventory, null, 2) + "\n",
@@ -972,6 +1272,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
       reference,
       inventory,
       execution,
+      native.path,
     );
     referenceSource.source = "run";
     // Only a complete reference run is worth keeping.
@@ -994,6 +1295,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     bali,
     inventory,
     execution,
+    native.path,
   );
   const metadata = {
     reference: referenceSource,
@@ -1018,6 +1320,10 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     heap: HEAP_CAP,
     mode: "othervm",
     execution,
+    native: { path: native.path, artifacts: native.built, excluded: native.excluded },
+    limits: await runnerLimits(),
+    leaks: { reference: referenceRun.leaks ?? [], bali: baliRun.leaks ?? [] },
+    batches: { reference: referenceRun.batches ?? [], bali: baliRun.batches ?? [] },
     jtregOptions: JTREG_OPTIONS,
     include: ctx.include,
     compiler: "stock reference JDK",
@@ -1042,13 +1348,29 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     await Bun.write(join(dir, "report.json"), JSON.stringify(report, null, 2) + "\n");
     await Bun.write(join(dir, "report.md"), markdown(report));
   }
+  // The reports hook runs later and only sees ctx and results, so what it needs to publish is
+  // staged at a fixed place in the workspace rather than threaded through the result stream.
+  // Best effort, always: these files are a convenience for reading the report afterwards, and
+  // a run that measured 7,000 tests must never be thrown away because one of them could not be
+  // gathered. Anything that goes wrong here is reported and the results still stand.
+  try {
+    await Bun.write(
+      join(ctx.workspacePath, PUBLISHED_EXTRAS),
+      JSON.stringify({
+        ...(await collectDiagnostics(join(scratch, "reference"), report, "reference")),
+        ...(await collectDiagnostics(join(scratch, "bali"), report, "bali")),
+        "leaked-processes.json": JSON.stringify(metadata.leaks, null, 2) + "\n",
+      }),
+    );
+  } catch (error) {
+    console.warn(
+      `${ctx.logPrefix ?? ""}could not collect run diagnostics (results are unaffected): ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
   console.log(`${ctx.logPrefix ?? ""}${JSON.stringify(summary(report))}`);
   console.log(`${ctx.logPrefix ?? ""}raw jtreg results: ${scratch}`);
   // Like any harness error: an incomplete run exits 2 and publishes nothing.
-  if (incomplete(report))
-    throw new Error(
-      `incomplete jdk-jtreg run (jtreg exit codes reference=${report.exitCodes.reference}, bali=${report.exitCodes.bali}); see ${scratch}`,
-    );
+  if (incomplete(report)) throw new Error(`${incompleteReason(report)}; see ${scratch}`);
   yield* flatten(report);
 }
 
@@ -1056,7 +1378,7 @@ export const jdkJtregAdapter: Adapter = {
   id: "jdk-jtreg",
   kind: "test",
   run: runJdkJtreg,
-  async reports(_ctx, results) {
+  async reports(ctx, results) {
     const report: Report = {
       schema: 2,
       suite: "jdk-jtreg",
@@ -1065,11 +1387,17 @@ export const jdkJtregAdapter: Adapter = {
       exitCodes: { reference: 0, bali: 0 },
       tests: unflatten(results),
     };
+    const staged = Bun.file(join(ctx.workspacePath ?? "", PUBLISHED_EXTRAS));
+    const extras: Record<string, string> = (await staged.exists()) ? await staged.json() : {};
+    const leaks = extras["leaked-processes.json"];
     return {
-      "differential.md": markdown(report).replace(
-        RAW_NOTE,
-        "results.json.gz keeps every file's paired outcome in its meta. Raw jtreg diagnostics remain in the run workspace or CI artifact.",
-      ),
+      ...extras,
+      "differential.md":
+        markdown(report).replace(
+          RAW_NOTE,
+          "results.json.gz keeps every file's paired outcome in its meta. diagnostics/ keeps the .jtr and crash logs for up to " +
+            `${DIAGNOSTIC_CAP} examples of each distinct failure signature; diagnostics/*/index.json lists every signature and anything too large to commit.`,
+        ) + leakSection(leaks ? (JSON.parse(leaks) as Record<string, Leak[]>) : undefined),
       "coverage.svg": coverageChart(summary(report)),
     };
   },

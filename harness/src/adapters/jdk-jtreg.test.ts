@@ -20,6 +20,7 @@ import {
   jdkJtregAdapter,
   hasTest,
   incomplete,
+  incompleteReason,
   markdown,
   parseJtr,
   portableReason,
@@ -35,6 +36,10 @@ import {
   JTREG_OPTIONS,
   KEYWORD_FILTER,
   REQUIRES_PROPERTIES,
+  areaSlug,
+  collectDiagnostics,
+  DIAGNOSTIC_CAP,
+  leakSection,
   runSuiteOnRuntime,
   runtimeProgress,
   summary,
@@ -45,6 +50,7 @@ import {
   type Result,
   type Status,
 } from "./jdk-jtreg";
+import { normalizeSignature } from "../analyze/signature";
 import { compare as compareExpectations } from "../expectations/compare";
 import { parseExpectations, type Expectations } from "../expectations/load";
 import { ratchetCandidates } from "../expectations/ratchet";
@@ -86,6 +92,53 @@ test("jtr parsing uses the result header, never guest output or missing results"
   expect(parseJtr(jtr("Not run. Filtered")).status).toBe("blocked");
   expect(parseJtr(undefined).status).toBe("blocked");
   expect(parseJtr("#section:main\nexecStatus=Passed. Fake output").status).toBe("blocked");
+});
+
+test("a runner that ran out of processes is blocked; a test that exhausts its own is not", () => {
+  // Strings kept verbatim from the 2026-09-20 linux-x64 run; jtreg escapes `:` as `\\:`.
+  const spawn =
+    "Error. Error invoking program `/opt/reference-jdk/bin/javac'\\: java.io.IOException\\: " +
+    'Cannot run program "/opt/reference-jdk/bin/javac"\\: posix_spawn failed, error\\: 11 ' +
+    "(Resource temporarily unavailable)";
+  expect(parseJtr(jtr(spawn)).status).toBe("blocked");
+  const helper = "Error. Error invoking program\\: Failed to exec spawn helper\\: pid\\: 1, exit code\\: 1";
+  expect(parseJtr(jtr(helper)).status).toBe("blocked");
+  // jtreg's own harness thread could not be created, so the test never ran.
+  const harness =
+    "Error. Unexpected error caught from test java/math/BigInteger/StringConstructor.java\\: " +
+    "java.lang.OutOfMemoryError\\: unable to create native thread\\: possibly out of memory or process/resource limits reached";
+  expect(parseJtr(jtr(harness)).status).toBe("blocked");
+
+  // A build action that could not fork says only "Compilation failed" in its header; the cause
+  // is in its own section, which is why jtreg's sections are searched.
+  const section = (name: string, body: string) => `#section:${name}\n${body}\n`;
+  const result = (status: string, ...sections: string[]) =>
+    `#Test Results (version 2)\n#-----testresult-----\nexecStatus=${status}\n${sections.join("")}`;
+  const forked =
+    'Cannot run program "javac"\\: posix_spawn failed, error\\: 11 (Resource temporarily unavailable)';
+  expect(
+    parseJtr(result("Failed. Compilation failed\\: Compilation failed", section("build", forked))).status,
+  ).toBe("blocked");
+  // A genuine compile failure with the same header stays a failure; it was measured.
+  expect(parseJtr(jtr("Failed. Compilation failed\\: Compilation failed")).status).toBe("fail");
+
+  // The discriminator is whose thread failed, and where it was reported. These four shapes are
+  // the virtual-thread and concurrency stress tests, whose whole subject is exhausting threads:
+  // the words appear in their own output, and a scan of the whole file mistook every one of
+  // them for a starved runner. Verified against the .jtr files of the 2026-09-21 darwin run.
+  const oome = "java.lang.OutOfMemoryError: Unable to create native thread: possibly out of memory or process/resource limits reached";
+  // The test's own main threw it — that is a result, and for these tests it is the result.
+  expect(
+    parseJtr(jtr(`Failed. Execution failed\\: \`main' threw exception\\: ${oome.replaceAll(":", "\\:")}`)).status,
+  ).toBe("fail");
+  // A timeout whose output mentions it stays a timeout.
+  expect(parseJtr(result("Error. Program `bin/java' timed out", section("main", oome))).status).toBe("timeout");
+  // A JUnit failure whose output mentions it stays a failure.
+  expect(
+    parseJtr(result("Failed. Execution failed\\: `main' threw exception\\: java.lang.Exception\\: JUnit test failure", section("junit", oome))).status,
+  ).toBe("fail");
+  // Even a test that prints the launch-refusal text itself is reporting, not diagnosing.
+  expect(parseJtr(result("Failed. main threw exception", section("main", forked))).status).toBe("fail");
 });
 
 test("discovery parses test descriptions without mistaking ordinary javadoc for jtreg tags", () => {
@@ -353,11 +406,23 @@ test("summary exposes reference problems and adapter gaps in the fixed inventory
     unsupported: 1,
     verifiedPassing: 1,
     baliFailures: 1,
+    unmeasured: 0,
     referenceIssues: 0,
     incomplete: false,
   });
   expect(markdown(data)).toContain("3 test files inventoried");
   expect(markdown(data)).toContain("not Java SE certification");
+
+  // A test the runner never started is counted apart from tests Bali got wrong, so the
+  // report cannot present an unmeasured corpus as a wall of compatibility failures.
+  const starved = report(["pass", "fail", "blocked"]);
+  expect(summary(starved)).toMatchObject({ baliFailures: 1, unmeasured: 1, incomplete: true });
+  expect(markdown(starved)).toContain("| Never measured (runner blocked) | 1 |");
+  expect(incompleteReason(starved)).toContain("1 of 3 tests never ran on bali");
+  // The usual cause leaves jtreg's own exit codes healthy, so the reason must not be about them.
+  expect(incompleteReason(starved)).not.toContain("exited");
+  const crashed = { ...report(["pass"]), exitCodes: { reference: 0, bali: 137 } };
+  expect(incompleteReason(crashed)).toContain("bali jtreg exited 137");
 });
 
 test("measurement environment ignores terminal locale and uses fixed settings", async () => {
@@ -474,8 +539,14 @@ console.log("fixture jtreg completed");
       detail: "#b: Not run. (filtered by keywords, @requires, or @ignore)",
     });
     expect(result.results.get("Filtered.java")?.status).toBe("skipped");
-    const args = await Bun.file(join(output, "command.json")).json();
+    // One invocation per area, each recorded under the area it ran.
+    const commands = await Bun.file(join(output, "command.json")).json();
+    expect(Object.keys(commands)).toEqual(["fixture"]);
+    const args = commands.fixture as string[];
     for (const option of JTREG_OPTIONS) expect(args).toContain(option);
+    expect(args).toContain("-r:" + join(output, "report", "fixture"));
+    // Nothing leaked, so the reaper recorded nothing.
+    expect(await Bun.file(join(output, "leaks.json")).json()).toEqual([]);
     expect(args).toContain("-testjdk:" + home);
     expect(args).toContain("-compilejdk:" + ref);
     expect(args).toContain("-javaoption:-Xmx2g");
@@ -483,6 +554,159 @@ console.log("fixture jtreg completed");
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+});
+
+test("each area runs in its own process group and leaked processes are reaped and recorded", async () => {
+  const root = await mkdtemp(join(tmpdir(), "bali-reap-"));
+  try {
+    const ref = join(root, "reference-jdk");
+    await mkdir(join(ref, "bin"), { recursive: true });
+    await Bun.write(
+      join(ref, "bin/java"),
+      `#!/bin/sh\nexec '${process.execPath.replaceAll("'", "'\\''")}' '${join(root, "fake-jtreg.ts")}' "$@"\n`,
+    );
+    await chmod(join(ref, "bin/java"), 0o755);
+    // Leaks a grandchild that outlives it, exactly as an -othervm test's HTTP server does.
+    await Bun.write(
+      join(root, "fake-jtreg.ts"),
+      `
+const args = process.argv.slice(2);
+const work = args.find(a => a.startsWith("-w:")).slice(3);
+const selection = args.find(a => a.startsWith("@")).slice(1);
+const suite = args.find(a => a.startsWith("-testjdk:")) && ${JSON.stringify(join(root, "suite"))};
+for (const line of (await Bun.file(selection).text()).trim().split("\\n")) {
+  const id = JSON.parse(line).slice(suite.length + 1).replace(/\\.java$/, "");
+  await Bun.write(work + "/" + id + ".jtr", "#-----testresult-----\\nexecStatus=Passed. Execution successful\\n#section:main\\n");
+}
+// unref so this process can exit while the helper keeps running: that is the leak.
+Bun.spawn(["sleep", "300"], { stdio: ["ignore", "ignore", "ignore"] }).unref();
+`,
+    );
+    const output = join(root, "bali");
+    const { exitCode, leaks } = await runSuiteOnRuntime(
+      output,
+      join(root, "suite"),
+      "/fixture/jtreg.jar",
+      ref,
+      join(root, "bali-jdk"),
+      [
+        { id: "java/net/Alpha.java", area: "java/net", unsupported: null },
+        { id: "java/text/Beta.java", area: "java/text", unsupported: null },
+      ],
+      manifest.execution,
+    );
+    expect(exitCode).toBe(0);
+
+    // One invocation per area, each with its own report directory.
+    expect(Object.keys(await Bun.file(join(output, "command.json")).json())).toEqual([
+      "java/net",
+      "java/text",
+    ]);
+    expect(areaSlug("java/net")).toBe("java__net");
+
+    // Both areas leaked, and both were caught — the point being that java/net's leak is gone
+    // before java/text starts, which is what stops the starvation cascading across areas.
+    expect(leaks.map((leak) => leak.area)).toEqual(["java/net", "java/text"]);
+    for (const leak of leaks) {
+      expect(leak.survivors.length).toBeGreaterThan(0);
+      expect(leak.survivors.some((s) => s.command.includes("sleep"))).toBe(true);
+      // Reaped: signalling the recorded pid now fails because nothing is there.
+      for (const survivor of leak.survivors)
+        expect(() => process.kill(survivor.pid, 0)).toThrow();
+    }
+    expect(await Bun.file(join(output, "leaks.json")).json()).toEqual(leaks);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+}, 30_000);
+
+test("failure diagnostics are retained per signature, with crashes kept whole", async () => {
+  const out = await mkdtemp(join(tmpdir(), "bali-diagnostics-"));
+  try {
+    // Five tests aborting identically, plus one distinct failure: the shape of the real run,
+    // where 55 of javax/management/remote exited 134 the same way.
+    const aborts = [0, 1, 2, 3, 4].map((n) => ({
+      id: `javax/management/remote/Abort${n}.java`,
+      area: "javax/management",
+      unsupported: null,
+      reference: { status: "pass", detail: "Passed. Execution successful" } as Result,
+      bali: { status: "error", detail: "Error. Exit code 134" } as Result,
+    }));
+    const data: Report = {
+      ...report([]),
+      tests: [
+        ...aborts,
+        {
+          id: "java/lang/Solo.java",
+          area: "java/lang",
+          unsupported: null,
+          reference: { status: "pass", detail: "Passed. Execution successful" },
+          bali: { status: "fail", detail: "Failed. main threw exception" },
+        },
+        {
+          id: "java/lang/Fine.java",
+          area: "java/lang",
+          unsupported: null,
+          reference: { status: "pass", detail: "Passed. Execution successful" },
+          bali: { status: "pass", detail: "Passed. Execution successful" },
+        },
+      ],
+    };
+    for (const row of data.tests)
+      await Bun.write(join(out, "work", jtrPath(row.id, "")), `jtr for ${row.id}`);
+    await Bun.write(join(out, "work", "scratch/3/hs_err_pid99.log"), "SIGSEGV in libjvm");
+    await Bun.write(join(out, "work", "scratch/3/core.99"), "not really a core");
+    await Bun.write(join(out, "harness.log"), "jtreg said things");
+
+    const files = await collectDiagnostics(out, data, "bali");
+    // Capped: the five identical aborts keep three examples between them.
+    const retained = Object.keys(files).filter((name) => name.endsWith(".jtr"));
+    expect(retained.filter((name) => name.includes("Abort")).length).toBe(DIAGNOSTIC_CAP);
+    // The one-off failure is kept, and a passing test contributes nothing.
+    expect(retained).toContain("diagnostics/bali/java/lang/Solo.jtr");
+    expect(retained.some((name) => name.includes("Fine"))).toBe(false);
+    // A crash log is a crash log; it is never subject to the cap.
+    expect(files["diagnostics/bali/crashes/scratch/3/hs_err_pid99.log"]).toBe("SIGSEGV in libjvm");
+    expect(files["diagnostics/bali/harness.log"]).toBe("jtreg said things");
+
+    const index = JSON.parse(files["diagnostics/bali/index.json"]!);
+    // The index still states the true size of the cluster the three examples came from, so a
+    // capped report cannot understate how many tests share one root cause.
+    expect(index.signatures[0]).toEqual({
+      signature: normalizeSignature("Error. Exit code 134"),
+      failures: 5,
+      retained: DIAGNOSTIC_CAP,
+    });
+    // Too big to commit, so named rather than kept.
+    expect(index.bulk.map((entry: { path: string }) => entry.path)).toEqual(["scratch/3/core.99"]);
+
+    // The reference side usually comes from the committed baseline, so its directory never
+    // exists. Collecting from it yields nothing and must not throw: a finished run is not
+    // thrown away because there were no diagnostics to gather.
+    expect(await collectDiagnostics(join(out, "never-ran"), data, "reference")).toEqual({});
+  } finally {
+    await rm(out, { recursive: true, force: true });
+  }
+});
+
+test("leaked processes are reported per area so the leaking test can be fixed", () => {
+  expect(leakSection({ bali: [], reference: [] })).toContain("None");
+  const section = leakSection({
+    bali: [
+      {
+        area: "java/net",
+        survivors: [
+          { pid: 11, command: "java HttpServerHelper" },
+          { pid: 12, command: "java HttpServerHelper" },
+        ],
+      },
+      { area: "java/rmi", survivors: [{ pid: 13, command: "rmiregistry" }] },
+    ],
+  });
+  // Identical survivors collapse into one row with a count, so the table names distinct leaks.
+  expect(section).toContain("| bali | java/net | 2 | `java HttpServerHelper` |");
+  expect(section).toContain("| bali | java/rmi | 1 | `rmiregistry` |");
+  expect(section).toContain("3 process(es) outlived");
 });
 
 test("flattened results rebuild the paired report for the differential files", async () => {

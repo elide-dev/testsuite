@@ -45,7 +45,8 @@ jobs:
       actions: read
     with:
       source: "release"
-      runner: ubuntu-24.04
+      runner: '["ubuntu-24.04"]'
+
     secrets:
       bali_release_token: ${{ secrets.BALI_RELEASE_TOKEN }}
 

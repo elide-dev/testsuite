@@ -15,6 +15,51 @@ import {
 
 const PLATFORM = "linux/amd64";
 
+/**
+ * The container's task ceiling.
+ *
+ * cgroup v2 counts tasks, so every JVM thread spends one. A healthy run's steady state is the
+ * jtreg JVM plus `concurrency` test JVMs plus whatever helpers those tests fork — on the order
+ * of a thousand tasks at concurrency 4, which this leaves roomy headroom over. What it buys is
+ * the other end: a leak that would otherwise climb until it hit the machine's ~30k default and
+ * starve unrelated areas an hour later now hits a wall inside the container, while the run is
+ * still attributable to the area that caused it. Bounding it is the point; the number is
+ * deliberately generous, and `metadata.limits.cgroupPidsPeak` reports each run's high-water
+ * mark so it can be tightened from evidence rather than guessed again.
+ */
+export const PIDS_LIMIT = 4096;
+
+/** Mach-O headers, thin and universal, in both byte orders: a macOS executable. */
+const MACH_O = new Set([0xfeedface, 0xcefaedfe, 0xfeedfacf, 0xcffaedfe, 0xcafebabe, 0xbebafeca]);
+
+/**
+ * The platform a distribution's launcher was built for, read from its executable header, or
+ * null when the header is neither ELF nor Mach-O.
+ *
+ * Handing the wrong build to a run fails as `ENOEXEC` from `posix_spawn` somewhere deep in
+ * target identification, which names neither the cause nor the fix. The header says outright
+ * what the binary is, so both launchers check it before spending anything.
+ */
+export function distributionPlatform(magic: Uint8Array): string | null {
+  if (magic[0] === 0x7f && magic[1] === 0x45 && magic[2] === 0x4c && magic[3] === 0x46) {
+    if (magic[4] !== 2 || magic[5] !== 1) return "linux-unknown";
+    const machine = magic[18]! | (magic[19]! << 8);
+    return machine === 62 ? "linux-amd64" : machine === 183 ? "linux-arm64" : "linux-unknown";
+  }
+  const little = (magic[0]! | (magic[1]! << 8) | (magic[2]! << 16) | (magic[3]! << 24)) >>> 0;
+  const big = ((magic[0]! << 24) | (magic[1]! << 16) | (magic[2]! << 8) | magic[3]!) >>> 0;
+  return MACH_O.has(little) || MACH_O.has(big) ? "darwin" : null;
+}
+
+/** What this host can execute directly, in the same vocabulary. */
+export const hostPlatform = () =>
+  process.platform === "darwin" ? "darwin" : `linux-${process.arch === "x64" ? "amd64" : process.arch}`;
+
+/** The launcher's first bytes; enough for any executable header. */
+async function distributionMagic(baliHome: string): Promise<Uint8Array> {
+  return new Uint8Array(await Bun.file(join(baliHome, "bin/java")).slice(0, 20).arrayBuffer());
+}
+
 export interface BaliPlan {
   baliHome: string;
   referenceHome?: string;
@@ -115,6 +160,10 @@ export function containerArgs(
     "run",
     "--rm",
     "--init",
+    // Make exhaustion a loud, attributable container-level failure instead of a silent one that
+    // reads as a wall of compatibility failures. BALI_PIDS_LIMIT tunes it for an unusual runner.
+    "--pids-limit",
+    process.env.BALI_PIDS_LIMIT ?? String(PIDS_LIMIT),
     ...platformArgs(PLATFORM),
     "--label",
     label,
@@ -165,22 +214,14 @@ export async function runBaliDocker(
       "--reference-home is not accepted for Docker runs: the reference JDK is fixed in the image. Use --execution native.",
     );
   plan.baliHome = await realpath(plan.baliHome);
-  // Reject macOS binaries before spending time building a Linux image.
-  const magic = new Uint8Array(
-    await Bun.file(join(plan.baliHome, "bin/bali")).slice(0, 20).arrayBuffer(),
+  // Reject a foreign build before spending time building a Linux image.
+  const built = distributionPlatform(
+    new Uint8Array(await Bun.file(join(plan.baliHome, "bin/bali")).slice(0, 20).arrayBuffer()),
   );
-  if (
-    magic[0] !== 0x7f ||
-    magic[1] !== 0x45 ||
-    magic[2] !== 0x4c ||
-    magic[3] !== 0x46 ||
-    magic[4] !== 2 ||
-    magic[5] !== 1 ||
-    magic[18] !== 62 ||
-    magic[19] !== 0
-  )
+  if (built !== "linux-amd64")
     throw new Error(
-      "Docker tests need the Linux AMD64 Bali release, not a macOS/ARM64 distribution. Use --execution native for native platform testing.",
+      `Docker tests need the Linux AMD64 Bali release; ${plan.baliHome} holds a ${built ?? "unrecognized"} build. ` +
+        "Use --execution native for native platform testing.",
     );
   const digest = await artifactDigest(plan.baliHome);
   await prepareRoot(root);
@@ -215,6 +256,15 @@ export async function runBaliDocker(
 export async function runBaliNative(argv: string[], root: string, suites?: string[]): Promise<number> {
   const plan = baliPlan(argv, process.cwd(), suites);
   const baliHome = await realpath(plan.baliHome);
+  // A native run execs the distribution directly, so a build for another platform cannot work.
+  // .harness/distribution is where the Docker path stages the Linux release, so pointing a
+  // native run at it is the easy mistake; say so rather than leaving an ENOEXEC to decode.
+  const built = distributionPlatform(await distributionMagic(baliHome));
+  if (built !== null && built !== hostPlatform())
+    throw new Error(
+      `${baliHome} holds a ${built} Bali build, which this ${hostPlatform()} host cannot execute. ` +
+        "Point --bali-home at a distribution for this platform, or use --execution docker to run the Linux build.",
+    );
   if (plan.referenceHome) process.env.JAVA_HOME = plan.referenceHome;
   await prepareRoot(root);
   const { main, parseArgs } = await import("../harness/src/cli");

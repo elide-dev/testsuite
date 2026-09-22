@@ -2,9 +2,22 @@ import { expect, test } from "bun:test";
 import { mkdtemp, mkdir, rm } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
-import { baliPlan, containerArgs, harnessArgs, runBaliDocker } from "./bali-docker";
+import { baliPlan, containerArgs, distributionPlatform, harnessArgs, hostPlatform, PIDS_LIMIT, runBaliDocker } from "./bali-docker";
 
 const user = ["--user", "1000:1000"];
+
+test("a distribution built for another platform is named, not left as an ENOEXEC", () => {
+  const elf = (machine: number) =>
+    new Uint8Array([0x7f, 0x45, 0x4c, 0x46, 2, 1, ...Array(12).fill(0), machine, 0]);
+  expect(distributionPlatform(elf(62))).toBe("linux-amd64");
+  expect(distributionPlatform(elf(183))).toBe("linux-arm64");
+  // Mach-O, thin 64-bit and universal, in the byte orders each is written in.
+  expect(distributionPlatform(new Uint8Array([0xcf, 0xfa, 0xed, 0xfe]))).toBe("darwin");
+  expect(distributionPlatform(new Uint8Array([0xca, 0xfe, 0xba, 0xbe]))).toBe("darwin");
+  // A shell script launcher is neither, and is not something to reject on a guess.
+  expect(distributionPlatform(new Uint8Array([0x23, 0x21, 0x2f, 0x62]))).toBeNull();
+  expect(hostPlatform()).toBe(process.platform === "darwin" ? "darwin" : `linux-${process.arch === "x64" ? "amd64" : process.arch}`);
+});
 
 test("Bali plan drives the shared harness with --target bali and never forwards release credentials", () => {
   const plan = baliPlan(["--ratchet", "--bali-home", "dist"], "/repo");
@@ -27,6 +40,10 @@ test("Bali plan drives the shared harness with --target bali and never forwards 
       expectations: "/work/expectations",
     }),
   );
+  // The container caps tasks so a process leak fails loudly inside it rather than starving
+  // later areas, and the cap stays ahead of the harness arguments it must not be confused with.
+  expect(args.slice(0, args.indexOf("sha256:" + "a".repeat(64)))).toContain("--pids-limit");
+  expect(args[args.indexOf("--pids-limit") + 1]).toBe(String(PIDS_LIMIT));
   expect(args).toContain("--target");
   expect(args).toContain("/work/reports/bali");
   expect(args).toContain("--ratchet");

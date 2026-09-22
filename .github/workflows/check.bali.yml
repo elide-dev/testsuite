@@ -26,8 +26,14 @@ on:
         default: ""
         type: string
       runner:
+        description: "Runner pool. The jdk-jtreg lane is a multi-hour, JVM-per-test workload; a 4-vCPU GitHub-hosted runner caps it at concurrency 4 and takes ~7 hours."
         required: false
-        default: ubuntu-24.04
+        default: '["self-hosted","linux"]'
+        type: string
+      threads:
+        description: "jtreg concurrency, overriding the manifest's. Match it to the runner's vCPUs, allowing ~2GB of heap per concurrent test. Changing it re-fingerprints the reference baseline, so a change here needs a reference re-run."
+        required: false
+        default: ""
         type: string
       ratchet:
         description: "Regenerate expectations/jdk-jtreg.ratchet.toml from this run's failures, like Elide's ratchet; also records the stock-JDK reference baseline when it is missing or stale"
@@ -62,7 +68,7 @@ permissions:
 jobs:
   compatibility:
     name: "Bali"
-    runs-on: ${{ inputs.runner }}
+    runs-on: ${{ fromJSON(inputs.runner) }}
     timeout-minutes: 60
     steps:
       - uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411
@@ -130,11 +136,13 @@ jobs:
       - name: Run OpenJDK runtime tests
         env:
           RATCHET: ${{ inputs.ratchet }}
+          THREADS: ${{ inputs.threads }}
         shell: bash
         run: |
           set -euo pipefail
           args=(--bali-home "$PWD/.harness/distribution")
           if [[ "$RATCHET" == "true" ]]; then args+=(--ratchet); fi
+          [[ -n "$THREADS" ]] && args+=(--threads "$THREADS")
           bun run testsuite --target bali "${args[@]}"
       - name: Job summary
         if: always()

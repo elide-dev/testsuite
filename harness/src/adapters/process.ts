@@ -1,3 +1,4 @@
+import { readdir } from "node:fs/promises";
 export interface ProcessRunOptions {
   cwd: string;
   env?: Record<string, string | undefined>;
@@ -146,4 +147,82 @@ export async function runProcess(argv: string[], options: ProcessRunOptions): Pr
     durationMs: Math.round(performance.now() - started),
     timedOut,
   };
+}
+
+/** A process still alive after the run that spawned it finished. */
+export interface Survivor {
+  pid: number;
+  command: string;
+}
+
+/**
+ * The live members of a process group. Read from `/proc` on Linux so that counting survivors
+ * never itself needs a fork — the one thing that is known to be unavailable when a run has
+ * exhausted its process limit. Other platforms pay for a `ps`.
+ */
+export async function processGroupMembers(pgid: number): Promise<Survivor[]> {
+  const survivors: Survivor[] = [];
+  if (process.platform === "linux") {
+    let entries: string[];
+    try {
+      entries = await readdir("/proc");
+    } catch {
+      return [];
+    }
+    for (const entry of entries) {
+      if (!/^\d+$/.test(entry) || Number(entry) === process.pid) continue;
+      try {
+        const stat = await Bun.file(`/proc/${entry}/stat`).text();
+        // `comm` is parenthesized and may contain spaces, so fields are counted from the last
+        // `)`: state, ppid, pgrp.
+        if (Number(stat.slice(stat.lastIndexOf(")") + 2).split(" ")[2]) !== pgid) continue;
+        const cmdline = await Bun.file(`/proc/${entry}/cmdline`).text();
+        survivors.push({ pid: Number(entry), command: cmdline.replaceAll("\0", " ").trim() });
+      } catch {
+        // It exited while being read, which is the outcome we were after anyway.
+      }
+    }
+    return survivors;
+  }
+  const ps = Bun.spawn(["ps", "-A", "-o", "pgid=,pid=,command="], { stdout: "pipe", stderr: "ignore" });
+  const text = await new Response(ps.stdout).text();
+  await ps.exited;
+  for (const line of text.split("\n")) {
+    const match = /^\s*(\d+)\s+(\d+)\s+(.*)$/.exec(line);
+    if (!match || Number(match[1]) !== pgid) continue;
+    const pid = Number(match[2]);
+    if (pid !== process.pid) survivors.push({ pid, command: match[3]!.trim() });
+  }
+  return survivors;
+}
+
+/**
+ * Kill whatever a finished run left behind in its process group and report what was there.
+ *
+ * jtreg's `-othervm` JVMs fork servers and helpers of their own; those grandchildren outlive a
+ * test that timed out, and enough of them starve the next area of processes an hour later. Once
+ * the group's leader has exited nothing in it is legitimate, so the group is signalled whole.
+ * The survivors are returned rather than merely counted: the command line is what identifies
+ * the test that leaked, which is what a fix needs.
+ */
+export async function reapProcessGroup(pgid: number, graceMs = 2_000): Promise<Survivor[]> {
+  const survivors = await processGroupMembers(pgid);
+  if (!survivors.length) return [];
+  const signal = (name: "SIGTERM" | "SIGKILL") => {
+    try {
+      // Negative pid addresses the group. The leader has already exited, so its pid could in
+      // principle have been reused; reaping immediately after the wait keeps that window shut.
+      process.kill(-pgid, name);
+    } catch {
+      // Already gone between listing and signalling.
+    }
+  };
+  signal("SIGTERM");
+  const deadline = Date.now() + graceMs;
+  while (Date.now() < deadline) {
+    await Bun.sleep(100);
+    if (!(await processGroupMembers(pgid)).length) return survivors;
+  }
+  signal("SIGKILL");
+  return survivors;
 }

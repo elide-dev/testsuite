@@ -6,6 +6,9 @@ RUN npm install -g bun@1.4.0 \
  && apt-get update \
  && apt-get install -y --no-install-recommends ca-certificates curl git unzip \
       libzstd1 libfreetype6 fontconfig libx11-6 libxext6 libxi6 libxrender1 libxtst6 libasound2t64 \
+      `# jtreg tests whose @run action carries /native call into C helpers the adapter compiles` \
+      `# from the corpus; without a toolchain they cannot start at all.` \
+      gcc libc6-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=reference /opt/java/openjdk /opt/reference-jdk
 ENV JAVA_HOME=/opt/reference-jdk
