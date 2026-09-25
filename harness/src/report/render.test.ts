@@ -66,8 +66,8 @@ test("status marks: regressions with new passes read as an advanced floor, not a
   expect(statusMark({ regressions: 0, newPasses: 0 })).toBe("✅");
   expect(statusMark({ regressions: 0, newPasses: 5 })).toBe("✅");
   expect(statusMark({ regressions: 2, newPasses: 0 })).toBe("❌");
-  expect(statusMark({ regressions: 2, newPasses: 5 })).toBe("🔵");
+  expect(statusMark({ regressions: 2, newPasses: 5 })).toBe("⬆️");
   const md = renderRunIndex(meta, cmp); // 1 regression + 1 new pass
-  expect(md).toContain("🔵 1 regressions, 1 new passes");
+  expect(md).toContain("⬆️ 1 regressions, 1 new passes");
   expect(md).toContain("ratchet");
 });

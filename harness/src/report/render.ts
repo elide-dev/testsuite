@@ -15,8 +15,8 @@ export interface RunSummary {
 
 export function statusMark(r: Pick<RunSummary, "regressions" | "newPasses">): string {
   if (r.regressions === 0) return "✅";
-  // Regressions alongside new passes: the floor moved, ratchet to lock it in.
-  return r.newPasses > 0 ? "🔵" : "❌";
+  // Regressions alongside new passes: the floor moved; --ratchet updates the baseline.
+  return r.newPasses > 0 ? "⬆️" : "❌";
 }
 
 export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
@@ -69,7 +69,7 @@ export function renderRunIndex(meta: RunMeta, c: Comparison): string {
   const status = c.regressions.length === 0
     ? "✅ green"
     : c.newPasses.length > 0
-      ? `🔵 ${c.regressions.length} regressions, ${c.newPasses.length} new passes — floor advanced, ratchet to lock it in`
+      ? `⬆️ ${c.regressions.length} regressions, ${c.newPasses.length} new passes — floor advanced, run with --ratchet to update the baseline`
       : `❌ ${c.regressions.length} regressions`;
   return [
     `# Compliance run — \`${meta.elide.semver}\` (\`${meta.elide.digest}\`)`,
@@ -101,7 +101,7 @@ export function renderTopIndex(runs: RunSummary[]): string {
     "",
     "_Pass rate_ is over every test in the selection, including skipped/suppressed ones.",
     "_vs expectations_ is the share of tests at or above the checked-in baseline (only regressions count against it).",
-    "🔵 marks a run with regressions **and** new passes: the floor advanced, ratchet to lock it in.",
+    "⬆️ marks a run with regressions **and** new passes: the floor advanced; run with --ratchet to update the baseline.",
   );
   lines.push("");
   return lines.join("\n");

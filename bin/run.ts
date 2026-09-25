@@ -459,7 +459,7 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
 const STATUS_LABEL: Record<string, (s: string) => string> = {
   ERROR: (s) => ansi.red(`🛑 ${s}`),
   REGRESSED: (s) => ansi.red(`🔴 ${s}`),
-  ADVANCED: (s) => ansi.cyan(`🔵 ${s}`),
+  ADVANCED: (s) => ansi.cyan(`⬆️ ${s}`),
   GAINED: (s) => ansi.cyan(`🔵 ${s}`),
   IMPROVED: (s) => ansi.green(`🟢 ${s}`),
   RED: (s) => ansi.yellow(`🟡 ${s}`),
@@ -546,7 +546,7 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
   );
   const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;
   const needRatchet = Math.max(0, totalExpRegressions - totalDriftRegressed);
-  const plural = (n: number, word: string): string => `${n} ${word}${n === 1 ? "" : "s"}`;
+  const plural = (n: number, word: string): string => `${n} ${n === 1 ? word : word.endsWith("s") ? `${word}es` : `${word}s`}`;
   const headline = errored
     ? ansi.red(`🛑 ${plural(errored, "suite")} had harness errors`)
     : totalDriftRegressed && totalDriftRegressed >= totalAdvanced
@@ -554,12 +554,12 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
       : totalAdvanced
         ? totalDriftRegressed || totalExpRegressions
           ? ansi.cyan(
-              `🔵 floor advanced: ${plural(totalAdvanced, "new pass")}` +
+              `⬆️ floor advanced: ${plural(totalAdvanced, "new pass")}` +
                 (totalDriftRegressed ? `, ${totalDriftRegressed} regressed` : "") +
                 (needRatchet ? `, ${needRatchet} need ratchet` : "") +
-                " — ratchet to lock in the gain",
+                " — run with --ratchet to update the baseline",
             )
-          : ansi.green(`🟢 floor advanced: ${plural(totalAdvanced, "new pass")}, no regressions — ratchet to lock in the gain`)
+          : ansi.green(`⬆️ floor advanced: ${plural(totalAdvanced, "new pass")}, no regressions — run with --ratchet to update the baseline`)
         : hasDrift && totalExpRegressions
           ? totalAdded >= totalExpRegressions
             ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)

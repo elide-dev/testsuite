@@ -345,7 +345,7 @@ export async function main(o: CliOptions): Promise<number> {
   const verdict = green
     ? "GREEN"
     : comparison.newPasses.length > 0
-      ? "ADVANCED (regressions + new passes: ratchet to lock in the gain)"
+      ? "ADVANCED (regressions and new passes: run with --ratchet to update the baseline)"
       : "RED";
   console.log(
     `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass ` +
