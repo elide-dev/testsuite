@@ -98,7 +98,7 @@ printf 'NODE_TEST_KNOWN_GLOBALS=%s\\nNODE_SKIP_FLAG_CHECK=%s\\nNODE_API_OVERLAY_
   expect(readFileSync(envLog, "utf8")).toContain("NODE_TEST_KNOWN_GLOBALS=0\n");
   expect(readFileSync(envLog, "utf8")).toContain("NODE_API_OVERLAY_CWD=");
   expect(readFileSync(envLog, "utf8")).toContain("NODE_TEST_SAMPLE=1\n");
-  expect(readFileSync(envLog, "utf8")).toContain(`${workspacePath}/node-test`);
+  expect(readFileSync(envLog, "utf8")).toContain(`NODE_TEST_DIR=${workspacePath}/node-api-overlay/test\n`);
 });
 
 test("runs Node API files from an overlay with common shims", async () => {

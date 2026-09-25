@@ -459,7 +459,10 @@ async function runNodeApiTask(
   const source = readFileSync(join(ctx.suitePath, task.rel), "utf8");
   const metadata = readNodeTestMetadata(source);
   const nodeTest = usesNodeTest(task.rel, source);
-  const workspaceTestDir = join(ctx.workspacePath, "node-test");
+  // Node's own runner keeps `.tmp.N` under the checkout's `test/` directory. Keeping it inside the
+  // overlay (the process cwd) matters: Elide confines path `require`s to the cwd, and many tests
+  // write a module into their tmpdir and then require it.
+  const workspaceTestDir = join(ctx.suitePath, "test");
   mkdirSync(workspaceTestDir, { recursive: true });
   const command = nodeTest
     ? ["test", ...configuredElideRunArgs(ctx), "--reporter", "tap", writeNodeTestEntry(ctx.suitePath, task.rel)]
