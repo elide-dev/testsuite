@@ -3,14 +3,17 @@ import type { Comparison } from "../expectations/compare";
 import type { RunSummary } from "./render";
 
 const FONT = "system-ui, -apple-system, Segoe UI, sans-serif";
+// A single-hue purple ramp: outcomes are told apart by lightness (and by the
+// text beside every bar), never by hue, so the charts read the same under
+// red-green colour-vision deficiency. Darker == better.
 const COLORS = {
-  pass: "#198754",
-  fail: "#dc3545",
-  error: "#6f42c1",
-  skip: "#6c757d",
-  regression: "#d29922",
-  expected: "#0969da",
-  track: "#eaeef2",
+  pass: "#3b0764", // darkest: passed
+  fail: "#7e22ce",
+  error: "#a855f7",
+  skip: "#d8b4fe", // lightest: not scored
+  regression: "#7e22ce", // overall bar when regressions are present (paired with a text note)
+  expected: "#c084fc", // the vs-expectations bar
+  track: "#f5f3ff",
   ink: "#1f2328",
   muted: "#57606a",
 };
@@ -122,8 +125,10 @@ export function renderTopPassRateSvg(runs: RunSummary[]): string {
   <text x="32" y="32" font-family="${FONT}" font-size="20" font-weight="700" fill="${COLORS.ink}">Latest compatibility</text>
   <rect x="32" y="48" width="12" height="12" rx="2" fill="${COLORS.pass}"/>
   <text x="50" y="58" font-family="${FONT}" font-size="11" fill="${COLORS.muted}">overall pass rate (all tests, incl. skipped/suppressed)</text>
-  <rect x="352" y="48" width="12" height="12" rx="2" fill="${COLORS.expected}"/>
-  <text x="370" y="58" font-family="${FONT}" font-size="11" fill="${COLORS.muted}">vs expectations (100% = at or above baseline)</text>
+  <rect x="332" y="48" width="12" height="12" rx="2" fill="${COLORS.regression}"/>
+  <text x="350" y="58" font-family="${FONT}" font-size="11" fill="${COLORS.muted}">overall, with regressions</text>
+  <rect x="502" y="48" width="12" height="12" rx="2" fill="${COLORS.expected}"/>
+  <text x="520" y="58" font-family="${FONT}" font-size="11" fill="${COLORS.muted}">vs expectations (100% = baseline)</text>
   ${rows}
 </svg>
 `;
