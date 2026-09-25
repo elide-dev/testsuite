@@ -20,7 +20,9 @@ path = "suites/cpython"
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 600000
   caseTimeoutMs = 65000
-  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
+  # Threads and subprocesses as CPython's own suite expects; network stays on loopback, because
+  # test.support.requires('network') lets everything through outside regrtest.
+  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write", "--allow-threads", "--allow-run", "--allow-net=localhost,127.0.0.1,::1"]
 
 [[workload]]
 id = "javac-jtreg"
