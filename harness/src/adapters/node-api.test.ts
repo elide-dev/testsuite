@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
 import type { AdapterContext } from "./types";
-import { expandNodeApiManifestPaths, readNodeTestMetadata, runNodeApi } from "./node-api";
+import { expandNodeApiManifestPaths, readNodeTestMetadata, runNodeApi, usesNodeTest } from "./node-api";
 
 function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
   return Array.fromAsync(items);
@@ -235,6 +235,78 @@ test("maps Node common skip output to skip", async () => {
     id: "test/parallel/test-process.js",
     status: "skip",
   });
+});
+
+test("detects node:test files, leaving ESM entries on elide run", () => {
+  expect(usesNodeTest("test/parallel/a.js", "const test = require('node:test');")).toBe(true);
+  expect(usesNodeTest("test/parallel/b.js", "const { describe, it } = require(\"node:test\");")).toBe(true);
+  expect(usesNodeTest("test/parallel/c.js", "import { test } from 'node:test';")).toBe(true);
+  expect(usesNodeTest("test/parallel/d.js", "require('../common');")).toBe(false);
+  expect(usesNodeTest("test/parallel/e.mjs", "import test from 'node:test';")).toBe(false);
+});
+
+test("runs node:test files through elide test from an overlay-root entry", async () => {
+  const root = mkdtempSync(join(tmpdir(), "node-api-"));
+  const suitePath = join(root, "node");
+  const workspacePath = join(root, "workspace");
+  const manifest = join(root, "node-api.toml");
+  const argsLog = join(root, "args.log");
+  const entryLog = join(root, "entry.log");
+  mkdirSync(join(suitePath, "test/parallel"), { recursive: true });
+  mkdirSync(workspacePath, { recursive: true });
+  writeFileSync(
+    join(suitePath, "test/parallel/test-url-x.js"),
+    "// Flags: --expose-internals\n'use strict';\nrequire('../common');\nconst test = require('node:test');\ntest('x', () => {});\n",
+  );
+  writeFileSync(manifest, '[[group]]\nid = "url"\ninclude = ["test/parallel/test-url-*.js"]\n');
+  // Emulates `elide test`: TAP on stdout, the build summary on stderr, and a failed file.
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+printf '%s\\n' "$@" > ${JSON.stringify(argsLog)}
+entry=""
+for arg in "$@"; do case "$arg" in __elide_node_test__*) entry="$arg" ;; esac; done
+cat "$entry" > ${JSON.stringify(entryLog)}
+printf 'TAP version 13\\nnot ok 1 - x\\n  ---\\n  message: "1 !== 2"\\n'
+printf 'JavaScript tests failed\\n' >&2
+exit 1
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: root,
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 5_000, elideRunArgs: ["--sandbox", "--allow-read"] },
+    workspacePath,
+  };
+
+  const results = await collect(runNodeApi(ctx));
+
+  expect(results).toEqual([
+    expect.objectContaining({
+      id: "test/parallel/test-url-x.js",
+      status: "fail",
+      message: expect.stringContaining('message: "1 !== 2"'),
+    }),
+  ]);
+  const entry = "__elide_node_test__test__parallel__test-url-x.js";
+  expect(readFileSync(argsLog, "utf8").trim().split(/\n/)).toEqual([
+    "test",
+    "--sandbox",
+    "--allow-read",
+    "--reporter",
+    "tap",
+    entry,
+    "--",
+    "--expose-internals",
+  ]);
+  const source = readFileSync(entryLog, "utf8");
+  expect(source).toContain("require(\"./test/parallel/test-url-x.js\")");
+  expect(source).toContain("process.emit('exit', process.exitCode ?? 0)");
 });
 
 test("skipped tests are never launched", async () => {

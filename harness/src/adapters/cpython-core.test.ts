@@ -418,3 +418,31 @@ done
     .sort();
   expect(shardModules).toEqual(["test_a", "test_b", "test_c"]);
 });
+
+test("fails the run when the Elide under test has no Python support", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re", "test_json"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+echo "Python support is not installed. Run 'elide setup python' to add it." >&2
+exit 2
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 2,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  await expect(collect(runCpythonCore(ctx))).rejects.toThrow(/no Python support.*\n.*PYTHON=yes/s);
+});

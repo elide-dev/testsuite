@@ -16,6 +16,9 @@ interface CpythonRecord {
 
 const CPYTHON_STATUSES = new Set(["pass", "fail", "skip", "error", "running"]);
 
+// Elide's `elide_run_python_not_installed` message.
+const PYTHON_NOT_INSTALLED_RE = /Python support is not installed/;
+
 function parseCpythonRecord(line: string): CpythonRecord | null {
   const s = line.trim();
   if (!s) return null;
@@ -297,6 +300,17 @@ async function* runCpythonShard(
     return;
   }
   if (exitCode !== 0 && parsedCount === 0) {
+    // An Elide built without Python (`PYTHON=no`, or an install missing the python overlay) says so
+    // on every shard. That is a property of the build under test, not a result: recorded, it would
+    // ratchet the whole suite as expected failures. Throwing makes it a harness error (exit 2),
+    // which publishes nothing.
+    if (PYTHON_NOT_INSTALLED_RE.test(stderrText || stdout)) {
+      throw new Error(
+        `cpython-core: the Elide under test has no Python support: ${(stderrText || stdout).trim()}\n` +
+          "Rebuild it with PYTHON=yes. (`elide setup python` is only safe on a published release: on a local build it\n" +
+          "installs the published overlay, whose bin/elide replaces the binary under test.)",
+      );
+    }
     yield runnerErrorResult(stderrText || stdout, durationMs);
   }
 }
