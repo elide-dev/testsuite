@@ -1,4 +1,4 @@
-import { mkdirSync } from "node:fs";
+import { mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
@@ -217,6 +217,9 @@ async function* runCpythonShard(
   const progress = progressEnabled(ctx);
   const elideRunArgs = configuredElideRunArgs(ctx);
   const cwd = join(ctx.workspacePath, `shard-${shardIndex}`);
+  // Fresh for every launch: CPython's TESTFN is `@test_<pid>_tmp…`, pids repeat in the container,
+  // and a driver killed mid-test (or a resumed shard) leaves its files behind for the next test.
+  rmSync(cwd, { recursive: true, force: true });
   mkdirSync(cwd, { recursive: true });
   const proc = Bun.spawn([
     ctx.elidePath,

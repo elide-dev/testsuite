@@ -78,6 +78,11 @@ forwards it to `test262-harness`, `wpt-wintertc` runs multiple WPT files at once
 overrides how many suite containers run concurrently. `CONCURRENCY_MULTIPLIER`
 or `--concurrency-multiplier N` can change the default multiplier from `2`.
 
+`--timeout-scale N` (or `TIMEOUT_SCALE`) multiplies every registry time limit
+(`timeoutMs`, `caseTimeoutMs`): per test, per CPython case and per CPython shard.
+Pass it for a non-release Elide build, which runs far slower than a release build
+and would otherwise hit limits sized for release.
+
 `--log` streams one normalized mark per completed test to stderr (`✅` pass ·
 `❌` fail · `🛑` error · `⊘` skip); the summary line goes to stdout. Add
 `--verbose` to also mirror raw runner stdout/stderr, which is useful for

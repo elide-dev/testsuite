@@ -43,6 +43,7 @@ export interface CliOptions {
   suiteVersion?: string;
   ratchet: boolean;
   updateSummaries: boolean;
+  timeoutScale?: number; // --timeout-scale: multiplies every per-test/case/shard limit (dev builds run slower)
 }
 
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
@@ -90,8 +91,12 @@ export function parseArgs(argv: string[]): CliOptions {
     suiteVersion: get("--suite-version", "") || undefined,
     ratchet: rest.includes("--ratchet"),
     updateSummaries: rest.includes("--update-summaries"),
+    timeoutScale: Number(get("--timeout-scale", "1")) || 1,
   };
 }
+
+// Registry settings that bound how long a test, case or shard may run.
+const TIMEOUT_SETTINGS = ["timeoutMs", "caseTimeoutMs"];
 
 const DB_PATH = resolve(REPO_ROOT, ".harness/results.sqlite");
 
@@ -204,6 +209,12 @@ export function buildAdapterContext(
   workspacePath = resolve(WORK_DIR, wl.id),
 ): AdapterContext {
   const settings = { ...wl.settings };
+  const scale = o.timeoutScale ?? 1;
+  if (scale !== 1) {
+    for (const key of TIMEOUT_SETTINGS) {
+      if (typeof settings[key] === "number") settings[key] = Math.round((settings[key] as number) * scale);
+    }
+  }
   if (typeof settings.manifest === "string" && !isAbsolute(settings.manifest)) {
     settings.manifest = resolve(o.repoRoot, settings.manifest);
   }

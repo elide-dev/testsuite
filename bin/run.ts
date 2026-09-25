@@ -46,6 +46,7 @@ interface Options {
   threads?: number;
   suiteWorkers?: number;
   concurrencyMultiplier: number;
+  timeoutScale: number; // --timeout-scale: multiplies every per-test/case/shard limit (dev builds)
   platform: string;
   log: boolean;
   verbose: boolean;
@@ -153,6 +154,7 @@ function parseArgs(argv: string[]): Options {
     threads: parsePositiveInt(process.env.THREADS, "THREADS"),
     suiteWorkers: parsePositiveInt(process.env.SUITE_WORKERS, "SUITE_WORKERS"),
     concurrencyMultiplier: parsePositiveInt(process.env.CONCURRENCY_MULTIPLIER, "CONCURRENCY_MULTIPLIER") ?? 2,
+    timeoutScale: Number(process.env.TIMEOUT_SCALE) || 1,
     platform: process.env.PLATFORM || "",
     log: false,
     verbose: false,
@@ -190,6 +192,12 @@ function parseArgs(argv: string[]): Options {
       case "--concurrency-multiplier":
         options.concurrencyMultiplier = parsePositiveInt(value(arg), arg) ?? 2;
         break;
+      case "--timeout-scale": {
+        const scale = Number(value(arg));
+        if (!(scale > 0)) throw new Error(`${arg} expects a positive number`);
+        options.timeoutScale = scale;
+        break;
+      }
       case "--platform":
         options.platform = value(arg);
         break;
@@ -715,6 +723,7 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
       `[${suite}] `,
       ...(options.log ? ["--log"] : []),
       ...(options.verbose ? ["--verbose"] : []),
+      ...(options.timeoutScale !== 1 ? ["--timeout-scale", String(options.timeoutScale)] : []),
       ...(options.include ? ["--include", options.include] : []),
       ...patternsForSuite(filters, suite).flatMap((pattern) => ["--filter", pattern]),
       ...(options.ratchet ? ["--ratchet"] : []),
