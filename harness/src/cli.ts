@@ -21,6 +21,7 @@ import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
 import { ingestAll } from "./db/ingest";
 import { computeImpact, renderImpactMd } from "./analyze/impact";
+import { parseFilterSpecs, patternsForSuite } from "./filter";
 
 export interface CliOptions {
   command: string;
@@ -228,7 +229,8 @@ export function buildAdapterContext(
       ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
       : Array.isArray(wl.settings.include) ? (wl.settings.include as string[]) : [],
     skipGlobs: skipGlobs(exp),
-    filter: o.filter,
+    // `<suite>:` prefixes scope a pattern the way bin/run.ts does; patterns for other suites drop out.
+    filter: patternsForSuite(parseFilterSpecs(o.filter, [wl.id]), wl.id),
     threads: o.threads,
     log: o.log,
     verbose: o.verbose,
