@@ -7,7 +7,7 @@ import { loadRegistry, type TargetName } from "./registry";
 import { resolveTargetIdentity } from "./target";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import type { Expectations } from "./expectations/load";
-import { compare, expectationKeysOf, expectedFor, passRate as scoredPassRate } from "./expectations/compare";
+import { compare, expectationKeysOf, expectedFor, passRatesOf } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath, loadRatchet, mergeRatchet } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
@@ -330,11 +330,17 @@ export async function main(o: CliOptions): Promise<number> {
       await Bun.write(join(outDir, name), content);
 
   const green = comparison.regressions.length === 0;
-  // Pass rate is over scored (non-skipped) tests; muted areas are excluded from the denominator.
-  const passRate = scoredPassRate(comparison.counts) * 100;
+  // Both rates are over the whole selection; skipped/suppressed tests stay in the denominator.
+  const rates = passRatesOf(comparison.counts, comparison.regressions.length);
+  const verdict = green
+    ? "GREEN"
+    : comparison.newPasses.length > 0
+      ? "ADVANCED (regressions + new passes: ratchet to lock in the gain)"
+      : "RED";
   console.log(
-    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass (${passRate.toFixed(1)}%), ` +
-      `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${green ? "GREEN" : "RED"}`,
+    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass ` +
+      `(${(rates.overall * 100).toFixed(1)}% overall, ${(rates.expected * 100).toFixed(1)}% vs expectations), ` +
+      `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${verdict}`,
   );
   return green ? 0 : 1;
 }

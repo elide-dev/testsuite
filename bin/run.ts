@@ -21,7 +21,7 @@ import {
 import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { classifySuiteStatus } from "./suite-status";
+import { classifySuiteStatus, floorAdvance } from "./suite-status";
 import {
   ROOT,
   RUN_LABEL,
@@ -408,15 +408,24 @@ function loadSuiteSummaryRows(suites: string[], suiteExitCodes: number[], digest
   });
 }
 
-// Pass rate over scored (non-skipped) tests; muted areas are excluded from the denominator.
+// Non-skipped tests; used only to detect a changed selection between runs.
 function scoredTotal(counts: { pass: number; fail: number; error: number }): number {
   return counts.pass + counts.fail + counts.error;
 }
 
-function passRate(summary: SuiteRunSummary | undefined): number | undefined {
+// Overall pass rate: passes over EVERY test in the selection. Skipped and
+// suppressed tests stay in the denominator so muting never flatters the number.
+function overallPassRate(summary: SuiteRunSummary | undefined): number | undefined {
   if (!summary) return undefined;
-  const denom = scoredTotal(summary.counts);
-  return denom === 0 ? undefined : summary.counts.pass / denom;
+  return summary.counts.total === 0 ? undefined : summary.counts.pass / summary.counts.total;
+}
+
+// Pass rate vs the expectations: everything except regressions is on the floor
+// (expected skips, baselined fails, and new passes all count). 100% == at/above baseline.
+function expectationPassRate(summary: SuiteRunSummary | undefined): number | undefined {
+  if (!summary) return undefined;
+  const total = summary.counts.total;
+  return total === 0 ? undefined : Math.max(0, total - summary.regressions.length) / total;
 }
 
 function formatPercent(value: number | undefined): string {
@@ -424,8 +433,8 @@ function formatPercent(value: number | undefined): string {
 }
 
 function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSummary | undefined): string {
-  const cur = passRate(current);
-  const prev = passRate(previous);
+  const cur = overallPassRate(current);
+  const prev = overallPassRate(previous);
   if (cur === undefined || prev === undefined) return ansi.dim("n/a");
   // A pass-rate delta between different selections (a scoped --include run vs
   // a full run) is meaningless — flag it instead of reporting a fake swing.
@@ -442,6 +451,7 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
 const STATUS_LABEL: Record<string, (s: string) => string> = {
   ERROR: (s) => ansi.red(`🛑 ${s}`),
   REGRESSED: (s) => ansi.red(`🔴 ${s}`),
+  ADVANCED: (s) => ansi.cyan(`🔵 ${s}`),
   GAINED: (s) => ansi.cyan(`🔵 ${s}`),
   IMPROVED: (s) => ansi.green(`🟢 ${s}`),
   RED: (s) => ansi.yellow(`🟡 ${s}`),
@@ -453,6 +463,7 @@ function statusLabel(row: SuiteSummaryRow): string {
     rc: row.rc,
     hasCurrent: !!row.current,
     expRegressions: row.current?.regressions.length ?? 0,
+    newPasses: row.current?.newPasses.length ?? 0,
     driftRegressed: row.changes?.regressed.length ?? 0,
     added: row.changes?.added ?? 0,
     fixed: row.changes?.fixed.length ?? 0,
@@ -493,13 +504,14 @@ function padVisible(value: string, width: number): string {
 }
 
 function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
-  const headers = ["Suite", "Status", "Pass rate", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
+  const headers = ["Suite", "Status", "Pass rate", "vs expected", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
   const body = rows.map((row) => {
     const counts = row.current?.counts;
     return [
       row.suite,
       statusLabel(row),
-      formatPercent(passRate(row.current)),
+      formatPercent(overallPassRate(row.current)),
+      formatPercent(expectationPassRate(row.current)),
       formatDelta(row.current, row.previous),
       counts ? `${counts.pass}/${counts.total}` : "n/a",
       counts ? String(counts.fail) : "n/a",
@@ -514,29 +526,49 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
   const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
   const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
   const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
-  const totalTests = rows.reduce((sum, row) => sum + (row.current ? scoredTotal(row.current.counts) : 0), 0);
+  const totalTests = rows.reduce((sum, row) => sum + (row.current?.counts.total ?? 0), 0);
   const totalExpRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
   const totalDriftRegressed = rows.reduce((sum, row) => sum + (row.changes?.regressed.length ?? 0), 0);
   const totalAdded = rows.reduce((sum, row) => sum + (row.changes?.added ?? 0), 0);
   const hasDrift = rows.some((row) => row.changes);
   const totalNewPasses = rows.reduce((sum, row) => sum + (row.current?.newPasses.length ?? 0), 0);
+  const totalAdvanced = rows.reduce(
+    (sum, row) => sum + floorAdvance({ newPasses: row.current?.newPasses.length ?? 0, fixed: row.changes?.fixed.length ?? 0 }),
+    0,
+  );
   const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;
   const needRatchet = Math.max(0, totalExpRegressions - totalDriftRegressed);
+  const plural = (n: number, word: string): string => `${n} ${word}${n === 1 ? "" : "s"}`;
   const headline = errored
-    ? ansi.red(`🛑 ${errored} suite${errored === 1 ? "" : "s"} had harness errors`)
-    : totalDriftRegressed
-      ? ansi.red(`🔴 ${totalDriftRegressed} regression${totalDriftRegressed === 1 ? "" : "s"} across selected suites`)
-      : hasDrift && totalExpRegressions
-        ? totalAdded >= totalExpRegressions
-          ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)
-          : ansi.yellow(`🟡 ${needRatchet} unratcheted failure${needRatchet === 1 ? "" : "s"} (no drift regressions)`)
-        : totalExpRegressions
-          ? ansi.red(`🔴 ${totalExpRegressions} regression${totalExpRegressions === 1 ? "" : "s"} across selected suites`)
-          : ansi.green("🟢 No regressions across selected suites");
+    ? ansi.red(`🛑 ${plural(errored, "suite")} had harness errors`)
+    : totalDriftRegressed && totalDriftRegressed >= totalAdvanced
+      ? ansi.red(`🔴 ${plural(totalDriftRegressed, "regression")} across selected suites`)
+      : totalAdvanced
+        ? totalDriftRegressed || totalExpRegressions
+          ? ansi.cyan(
+              `🔵 floor advanced: ${plural(totalAdvanced, "new pass")}` +
+                (totalDriftRegressed ? `, ${totalDriftRegressed} regressed` : "") +
+                (needRatchet ? `, ${needRatchet} need ratchet` : "") +
+                " — ratchet to lock in the gain",
+            )
+          : ansi.green(`🟢 floor advanced: ${plural(totalAdvanced, "new pass")}, no regressions — ratchet to lock in the gain`)
+        : hasDrift && totalExpRegressions
+          ? totalAdded >= totalExpRegressions
+            ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)
+            : ansi.yellow(`🟡 ${plural(needRatchet, "unratcheted failure")} (no drift regressions)`)
+          : totalExpRegressions
+            ? ansi.red(`🔴 ${plural(totalExpRegressions, "regression")} across selected suites`)
+            : ansi.green("🟢 No regressions across selected suites");
+  const totalOnFloor = Math.max(0, totalTests - totalExpRegressions);
 
   process.stderr.write("\n");
   process.stderr.write(`${ansi.bold("Compliance Summary")} ${headline}\n`);
-  process.stderr.write(`${ansi.dim(`Selected suites: ${rows.length} · Aggregate pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} · New passes: ${totalNewPasses}`)}\n`);
+  process.stderr.write(
+    `${ansi.dim(
+      `Selected suites: ${rows.length} · Overall pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} (all tests, incl. skipped)` +
+        ` · vs expectations: ${formatPercent(totalTests ? totalOnFloor / totalTests : undefined)} · New passes: ${totalNewPasses}`,
+    )}\n`,
+  );
   process.stderr.write(`${top}\n`);
   process.stderr.write(`${line(headers.map((header) => ansi.bold(header)))}\n`);
   process.stderr.write(`${sep}\n`);
@@ -667,7 +699,7 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
         log(`DONE: ${suite} GREEN (no regressions). reports/ updated.`);
         break;
       case 1:
-        log(`DONE: ${suite} RED — regressions found (see the summary above and reports/).`);
+        log(`DONE: ${suite} RED — unbaselined failures (see the summary above and reports/; new passes, if any, are counted there).`);
         break;
       case 2:
         log(`harness ERROR for ${suite} (exit 2): the run did not complete; see the error above.`);

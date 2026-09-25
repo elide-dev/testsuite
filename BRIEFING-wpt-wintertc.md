@@ -106,8 +106,9 @@ machine).
 5. **Park / skip candidates**: `fetch/fetch-later` (136 — browser-only,
    needs window/iframe/BFCache), `.window.js` tests requiring `document`/
    `XMLHttpRequest` (~90). Consider adding these to `[skip]` in
-   `expectations/wpt-wintertc.toml` with a comment, so the pass-rate
-   denominator reflects reachable tests.
+   `expectations/wpt-wintertc.toml` with a comment. Note this only cleans up
+   the "vs expectations" rate; the overall pass rate keeps skipped tests in
+   its denominator on purpose.
 
 Items 1–3 alone should move the suite from 75.3% to roughly **88–90%**.
 

@@ -278,7 +278,7 @@ test("prints pass percentage in the run summary", async () => {
     await writeHarnessFixture(root, adapterId, ["alpha"]);
 
     expect(await runFixtureWorkload(root, "alpha", adapterId)).toBe(0);
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0%)"));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0% overall, 100.0% vs expectations)"));
   } finally {
     logSpy.mockRestore();
     delete ADAPTERS[adapterId];

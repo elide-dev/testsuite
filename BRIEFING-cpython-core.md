@@ -96,8 +96,9 @@ Start with `test_builtin` (17), `test_descr`/`test_dict` (12), then
 
 - Runtime fixes happen in the Elide repo (GraalPy-based Python engine); this
   repo pins nightlies and measures.
-- 103 skips are already classified in `expectations/cpython-core.toml` and
-  excluded from the denominator; keep skip entries commented.
+- 103 skips are already classified in `expectations/cpython-core.toml`; keep
+  skip entries commented. Skips still count against the overall pass rate, but
+  not against the "vs expectations" rate.
 - The pass rate is already 95.9% — the value here is *classification honesty*
   (separating defects from platform limits) more than raw number movement.
 - After a fix lands: full run → check `changes.md` → `--ratchet` → commit.

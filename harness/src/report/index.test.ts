@@ -11,13 +11,13 @@ test("buildIndexJson lists workload-scoped runs with counts and paths", async ()
   await Bun.write(join(dir, "summary.json"), JSON.stringify({
     meta: { workload: "test262", elide: { semver: "1.3.5", digest: "abcd1234ef56" }, finishedAt: "2026-06-26T00:00:00Z" },
     counts: { pass: 90, fail: 10, skip: 0, error: 0, total: 100 },
-    regressions: [], newPasses: [],
+    regressions: [], newPasses: ["a", "b"],
   }));
   const idx = await buildIndexJson(root) as any;
   expect(idx.runs).toHaveLength(1);
   expect(idx.runs[0]).toMatchObject({
     workload: "test262", semver: "1.3.5", digest: "abcd1234ef56",
-    pass: 90, total: 100, regressions: 0,
+    pass: 90, total: 100, regressions: 0, newPasses: 2,
     reportDir: "1.3.5/abcd1234ef56/test262",
   });
 });
@@ -51,6 +51,7 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
         total: 10,
         skip: 0,
         regressions: 1,
+        newPasses: 0,
         finishedAt: "2026-01-02T00:00:00.000Z",
         reportDir: "1.1.0/bbbbbbbbbbbb/alpha",
       },
@@ -62,6 +63,7 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
         total: 10,
         skip: 0,
         regressions: 9,
+        newPasses: 0,
         finishedAt: "2026-01-01T00:00:00.000Z",
         reportDir: "1.0.0/aaaaaaaaaaaa/alpha",
       },
@@ -73,12 +75,13 @@ test("latestRunSummariesFromIndex keeps the newest run per workload", () => {
       workload: "alpha",
       semver: "1.1.0",
       passRate: 0.8,
+      expectedRate: 0.9, // 1 regression over 10 tests
       regressions: 1,
     }),
   ]);
 });
 
-test("latestRunSummariesFromIndex excludes skipped tests from the pass-rate denominator", () => {
+test("latestRunSummariesFromIndex keeps skipped tests in the denominator and reports both rates", () => {
   const latest = latestRunSummariesFromIndex({
     runs: [
       {
@@ -87,21 +90,23 @@ test("latestRunSummariesFromIndex excludes skipped tests from the pass-rate deno
         digest: "3d3ea83ed640",
         pass: 70,
         total: 100,
-        skip: 10, // scored denominator = total - skip = 90, not 100
-        regressions: 0,
+        skip: 10, // suppressed tests still count against the overall rate
+        regressions: 5,
+        newPasses: 3,
         finishedAt: "2026-06-29T00:00:00.000Z",
         reportDir: "1.3.6/3d3ea83ed640/javac-jtreg",
       },
     ],
   });
-  // 70 / (100 - 10) = 0.777…, not the old 70/100 = 0.70.
-  expect(latest[0]!.passRate).toBeCloseTo(70 / 90, 5);
+  expect(latest[0]!.passRate).toBeCloseTo(0.7, 5); // 70/100, not 70/90
+  expect(latest[0]!.expectedRate).toBeCloseTo(0.95, 5); // (100 - 5 regressions)/100
+  expect(latest[0]!.newPasses).toBe(3);
 });
 
 test("top-level summaries include all workloads (mute set is empty)", () => {
   const mk = (workload: string, reportDir: string) => ({
     workload, semver: "1.3.6", digest: "3d3ea83ed640",
-    pass: 1, total: 10, skip: 0, regressions: 0,
+    pass: 1, total: 10, skip: 0, regressions: 0, newPasses: 0,
     finishedAt: "2026-06-29T00:00:00.000Z", reportDir,
   });
   const latest = latestRunSummariesFromIndex({

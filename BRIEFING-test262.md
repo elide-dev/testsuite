@@ -95,8 +95,10 @@ Signature view of the top clusters:
 
 - Fixes happen in the Elide runtime (GraalJS-based); this repo pins nightlies
   and measures. `--elide nightly` picks up a fresh build.
-- 10,587 skips are intentional (see `expectations/test262.toml`) and excluded
-  from the pass-rate denominator.
+- 10,587 skips are intentional (see `expectations/test262.toml`). They still
+  count against the overall pass rate (the headline is over every selected
+  test), but they are expected skips, so they do not count against the
+  "vs expectations" rate.
 - Some failing features are proposal-stage (immutable ArrayBuffer, source-
   phase imports). If Elide won't ship them yet, classify as `[skip]` with a
   comment rather than leaving them as permanent failures.

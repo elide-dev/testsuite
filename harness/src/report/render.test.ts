@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { renderSuiteReport, renderTopIndex } from "./render";
+import { renderRunIndex, renderSuiteReport, renderTopIndex, statusMark } from "./render";
 import type { RunMeta, TestResult } from "../results/schema";
 import { compare, type Comparison } from "../expectations/compare";
 
@@ -25,7 +25,9 @@ test("suite report includes pass rate, regressions, new passes", () => {
   expect(md).toContain("test262");
   expect(md).toContain("1.3.5+abc");
   expect(md).toContain("90/100");
-  expect(md).toContain("94.74%"); // 90 / (90+5+0 scored); the 5 skips are excluded from the rate
+  expect(md).toContain("90.00%"); // 90/100: the 5 skips stay in the denominator
+  expect(md).not.toContain("94.74%");
+  expect(md).toContain("vs expectations: 99/100 (99.00%)"); // 1 regression over 100 tests
   expect(md).toContain("pass-rate.svg");
   expect(md).toContain("language/r.js default");
   expect(md).toContain("built-ins/n.js default");
@@ -50,11 +52,22 @@ test("renders non-test262 suite reports with normalized counts", () => {
   expect(md).toContain("url/a.any.js :: a");
 });
 
-test("top index renders a version matrix with a checkmark when no regressions", () => {
+test("top index renders a version matrix with both rates and a checkmark when no regressions", () => {
   const md = renderTopIndex([
-    { workload: "test262", semver: "1.3.5", digest: "abcd12", passRate: 1, regressions: 0 },
+    { workload: "test262", semver: "1.3.5", digest: "abcd12", passRate: 0.9, expectedRate: 1, regressions: 0, newPasses: 0 },
   ]);
   expect(md).toContain("test262");
   expect(md).toContain("pass-rate.svg");
-  expect(md).toContain("✅");
+  expect(md).toContain("| vs expectations |");
+  expect(md).toContain("| 90.0% | 100.0% | ✅ |");
+});
+
+test("status marks: regressions with new passes read as an advanced floor, not a failure", () => {
+  expect(statusMark({ regressions: 0, newPasses: 0 })).toBe("✅");
+  expect(statusMark({ regressions: 0, newPasses: 5 })).toBe("✅");
+  expect(statusMark({ regressions: 2, newPasses: 0 })).toBe("❌");
+  expect(statusMark({ regressions: 2, newPasses: 5 })).toBe("🔵");
+  const md = renderRunIndex(meta, cmp); // 1 regression + 1 new pass
+  expect(md).toContain("🔵 1 regressions, 1 new passes");
+  expect(md).toContain("ratchet");
 });

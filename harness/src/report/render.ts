@@ -1,18 +1,30 @@
 import type { RunMeta } from "../results/schema";
-import { passRate, type Comparison } from "../expectations/compare";
+import { passRatesOf, type Comparison } from "../expectations/compare";
 
 export interface RunSummary {
   workload: string;
   semver: string;
   digest: string; // short
-  passRate: number; // 0..1
+  /** Overall pass rate, 0..1: passes over all tests incl. skipped/suppressed. */
+  passRate: number;
+  /** Pass rate vs expectations, 0..1: everything but regressions is on the floor. */
+  expectedRate: number;
   regressions: number;
+  newPasses: number;
+}
+
+export function statusMark(r: Pick<RunSummary, "regressions" | "newPasses">): string {
+  if (r.regressions === 0) return "✅";
+  // Regressions alongside new passes: the floor moved, ratchet to lock it in.
+  return r.newPasses > 0 ? "🔵" : "❌";
 }
 
 export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
   const { pass, total } = c.counts;
-  // Rate is over scored (non-skipped) tests; the pass/total figure still shows the full selection.
-  const rate = (passRate(c.counts) * 100).toFixed(2);
+  // Both rates are over the whole selection: skipped/suppressed tests stay in the denominator.
+  const rates = passRatesOf(c.counts, c.regressions.length);
+  const rate = (rates.overall * 100).toFixed(2);
+  const expectedRate = (rates.expected * 100).toFixed(2);
   const lines: string[] = [];
   lines.push(`# ${meta.workload} — \`${meta.elide.semver}\``, "");
   lines.push(`- Image digest: \`${meta.elide.digest}\``);
@@ -20,7 +32,8 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
   lines.push(`- Ran: ${meta.startedAt} → ${meta.finishedAt}`, "");
   lines.push(`## Summary`, "");
   lines.push("![Pass-rate chart](./pass-rate.svg)", "");
-  lines.push(`**Pass rate: ${pass}/${total} (${rate}%)**`, "");
+  lines.push(`**Pass rate: ${pass}/${total} (${rate}%)** — overall, over all tests including skipped/suppressed`, "");
+  lines.push(`**vs expectations: ${total - c.regressions.length}/${total} (${expectedRate}%)** — tests at or above the baseline (only regressions count against it)`, "");
   lines.push(`| pass | fail | error | skip | regressions | new passes |`);
   lines.push(`|---:|---:|---:|---:|---:|---:|`);
   lines.push(
@@ -53,7 +66,11 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
 }
 
 export function renderRunIndex(meta: RunMeta, c: Comparison): string {
-  const status = c.regressions.length === 0 ? "✅ green" : `❌ ${c.regressions.length} regressions`;
+  const status = c.regressions.length === 0
+    ? "✅ green"
+    : c.newPasses.length > 0
+      ? `🔵 ${c.regressions.length} regressions, ${c.newPasses.length} new passes — floor advanced, ratchet to lock it in`
+      : `❌ ${c.regressions.length} regressions`;
   return [
     `# Compliance run — \`${meta.elide.semver}\` (\`${meta.elide.digest}\`)`,
     "",
@@ -70,16 +87,22 @@ export function renderTopIndex(runs: RunSummary[]): string {
     "",
     "![Latest compatibility pass rates](./pass-rate.svg)",
     "",
-    "| Suite | Version | Digest | Pass rate | Status |",
-    "|---|---|---|---:|:--:|",
+    "| Suite | Version | Digest | Pass rate | vs expectations | Status |",
+    "|---|---|---|---:|---:|:--:|",
   ];
   for (const r of runs) {
-    const mark = r.regressions === 0 ? "✅" : "❌";
     const pct = (r.passRate * 100).toFixed(1);
+    const expected = (r.expectedRate * 100).toFixed(1);
     lines.push(
-      `| ${r.workload} | \`${r.semver}\` | \`${r.digest}\` | ${pct}% | ${mark} |`,
+      `| ${r.workload} | \`${r.semver}\` | \`${r.digest}\` | ${pct}% | ${expected}% | ${statusMark(r)} |`,
     );
   }
+  lines.push(
+    "",
+    "_Pass rate_ is over every test in the selection, including skipped/suppressed ones.",
+    "_vs expectations_ is the share of tests at or above the checked-in baseline (only regressions count against it).",
+    "🔵 marks a run with regressions **and** new passes: the floor advanced, ratchet to lock it in.",
+  );
   lines.push("");
   return lines.join("\n");
 }
