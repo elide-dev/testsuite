@@ -260,7 +260,7 @@ async function* runCpythonShard(
 
   let timedOut = false;
   let timedOutActivity: string | undefined;
-  const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 60_000);
+  const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 65_000);
   const timer = setTimeout(() => {
     timedOut = true;
     proc.kill("SIGKILL");

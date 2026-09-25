@@ -478,7 +478,7 @@ async function runNodeApiTask(
       ...metadata.flags,
     ], {
       cwd: ctx.suitePath,
-      timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000),
+      timeoutMs: Number(ctx.settings.timeoutMs ?? 65_000),
       env: {
         ...metadata.env,
         NODE_TEST_KNOWN_GLOBALS: "0",

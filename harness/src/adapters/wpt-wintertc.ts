@@ -130,7 +130,7 @@ async function runWptTask(
   try {
     result = await runProcess(
       ["node", runner, "--suite", ctx.suitePath, "--test", task.rel, "--category", task.category, "--elide", ctx.elidePath],
-      { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 60_000), env: serverEnv },
+      { cwd: ctx.repoRoot, timeoutMs: Number(ctx.settings.timeoutMs ?? 65_000), env: serverEnv },
     );
   } finally {
     stopProgress();

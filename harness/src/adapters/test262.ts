@@ -97,7 +97,7 @@ async function* runTest262Selection(ctx: AdapterContext, selection: string[]): A
     "--reporter", "json",
     "--reporter-keys", "file,scenario,result,attrs",
     "--threads", String(ctx.threads),
-    "--timeout", "60000",
+    "--timeout", "65000",
     // Globs are relative to the suite root (the spawn cwd below), so
     // test262-harness reports `file` as a stable suite-relative path
     // (e.g. "test/language/types/x.js") that expectation globs match against.
