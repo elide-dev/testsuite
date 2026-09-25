@@ -93,6 +93,7 @@ test("passes CPython driver arguments after the elide run separator", async () =
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -143,6 +144,7 @@ test("passes only included CPython modules to the driver", async () => {
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -178,6 +180,7 @@ test("runs CPython shards from writable workspace directories", async () => {
 set -euo pipefail
 pwd > ${JSON.stringify(cwdLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -214,6 +217,7 @@ sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"running"}\\n'
 sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -258,6 +262,7 @@ set -euo pipefail
 printf '{"status":"ok","value":1}\\n'
 printf '{"module":"test_re","case":"test_re.Case.test_one","status":"pass"}\\n'
 printf '{"module":"test_re","case":"test_re.Case.test_two","status":"fail","message":"boom"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -294,6 +299,7 @@ set -euo pipefail
 printf '{"module":"test_re","case":"test_re.Streaming.test_first","status":"pass"}\\n'
 while [[ ! -f ${JSON.stringify(continueFile)} ]]; do sleep 0.05; done
 printf '{"module":"test_re","case":"test_re.Streaming.test_second","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -390,6 +396,7 @@ printf '%s\\n' "\${modules[@]}" > ${JSON.stringify(root)}/shard-$$.args
 for module in "\${modules[@]}"; do
   printf '{"module":"%s","case":"%s.Case.test","status":"pass"}\\n' "$module" "$module"
 done
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {

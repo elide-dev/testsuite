@@ -53,6 +53,7 @@ path = "suites/test262"
   [workload.settings]
   # Globs (relative to path) to execute. Skip globs live in expectations/.
   include = ["test/**/*.js"]
+  caseTimeoutMs = 65000
 
 [[workload]]
 id = "node-api"

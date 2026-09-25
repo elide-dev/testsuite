@@ -229,7 +229,8 @@ async function* runCpythonShard(
     "--",
     "--cpython-root",
     ctx.suitePath,
-    ...(progress ? ["--progress-stderr"] : []),
+    // Always: the phase lines keep the watchdog below informed; they are echoed only with --log.
+    "--progress-stderr",
     ...driverSkipArgs,
     ...modules,
   ], {
@@ -240,6 +241,7 @@ async function* runCpythonShard(
   });
   let activeCase: string | undefined;
   let activeSince = performance.now();
+  let lastSignal = performance.now();
   const setActiveCase = (activity: string | undefined): void => {
     if (activity === activeCase) return;
     activeCase = activity;
@@ -250,17 +252,16 @@ async function* runCpythonShard(
     `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`,
     () => activeCase,
   );
-  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
-    ? (line) => {
-        if (line.startsWith("progress: ")) {
-          const activity = line.slice("progress: ".length);
-          setActiveCase(activity.startsWith("done ") ? undefined : activity);
-          process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
-          return;
-        }
-        if (ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
-      }
-    : undefined);
+  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, (line) => {
+    if (line.startsWith("progress: ")) {
+      const activity = line.slice("progress: ".length);
+      lastSignal = performance.now();
+      setActiveCase(activity.startsWith("done ") ? undefined : activity);
+      if (progress) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+      return;
+    }
+    if (progress && ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+  });
 
   let timedOut = false;
   let timedOutActivity: string | undefined;
@@ -269,11 +270,13 @@ async function* runCpythonShard(
     timedOut = true;
     proc.kill("SIGKILL");
   }, timeoutMs);
+  // A case running too long, or the driver going quiet between cases (module setup/teardown, a hung
+  // import, interpreter shutdown) for as long: either way the driver is stuck, not working.
   const caseTimer = setInterval(() => {
-    if (!activeCase) return;
-    if (performance.now() - activeSince < caseTimeoutMs) return;
+    const since = activeCase ? activeSince : lastSignal;
+    if (performance.now() - since < caseTimeoutMs) return;
     timedOut = true;
-    timedOutActivity = activeCase;
+    timedOutActivity = activeCase ?? (state.lastModule ? `running ${state.lastModule.split(".")[0]}` : undefined);
     proc.kill("SIGKILL");
   }, Math.min(1_000, Math.max(100, caseTimeoutMs / 10)));
 
@@ -282,6 +285,7 @@ async function* runCpythonShard(
   let pending = "";
   const decoder = new TextDecoder();
   const emitLine = function* (line: string): Iterable<TestResult> {
+    lastSignal = performance.now();
     if (line.trim() === DRIVER_COMPLETE) {
       state.completed = true;
       return;

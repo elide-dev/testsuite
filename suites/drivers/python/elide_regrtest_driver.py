@@ -259,4 +259,10 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    code = main()
+    # Leave without the interpreter's shutdown: it joins every non-daemon thread a test left behind,
+    # and one that never finishes would hold the shard until its whole budget runs out.
+    sys.stdout.flush()
+    sys.stderr.flush()
+    sys.__stdout__.flush()
+    os._exit(code)
