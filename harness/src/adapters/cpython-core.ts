@@ -211,6 +211,7 @@ async function* runCpythonShard(
   skip: Array<(value: string) => boolean>,
   timeoutMs: number,
   shardIndex: number,
+  state: ShardState = { aborted: false },
 ): AsyncIterable<TestResult> {
   const started = performance.now();
   const progress = progressEnabled(ctx);
@@ -278,7 +279,12 @@ async function* runCpythonShard(
   let pending = "";
   const decoder = new TextDecoder();
   const emitLine = function* (line: string): Iterable<TestResult> {
+    if (line.trim() === DRIVER_COMPLETE) {
+      state.completed = true;
+      return;
+    }
     const record = parseCpythonRecord(line);
+    if (record) state.lastModule = record.module;
     if (record?.status === "running") {
       setActiveCase(record.case || record.module);
       return;
@@ -314,12 +320,23 @@ async function* runCpythonShard(
   clearInterval(caseTimer);
   stopProgress();
   const durationMs = Math.round(performance.now() - started);
+  // The driver exits 1 whenever a test fails; only a missing completion sentinel means it died.
+  const crashed = !state.completed;
+  if (timedOut || crashed) state.aborted = true;
   if (timedOut) {
     if (timedOutActivity) {
       yield activityTimeoutResult(timedOutActivity, durationMs, caseTimeoutMs);
       return;
     }
     yield runnerErrorResult("CPython driver timed out", durationMs);
+    return;
+  }
+  // A driver that dies mid-shard (an interpreter crash) takes the case it was running with it; say so
+  // instead of letting that case and every module after it vanish from the run.
+  if (crashed && parsedCount > 0) {
+    const activity = activeCase ?? state.lastModule ?? "<runner>";
+    const lost = activityTimeoutResult(activity, durationMs, 0);
+    yield { ...lost, message: `CPython driver exited with code ${exitCode} while ${activity}` };
     return;
   }
   if (exitCode !== 0 && parsedCount === 0) {
@@ -358,8 +375,44 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
   const shards = shardItems(modules, ctx.threads);
   yield* mergeAsyncIterables(
-    shards.map((shard, index) => runCpythonShard(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
+    shards.map((shard, index) => runCpythonShardResuming(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
   );
+}
+
+interface ShardState {
+  lastModule?: string;
+  completed?: boolean;
+  aborted: boolean;
+}
+
+// The driver's last stdout line on a normal exit (`emit({"driver": "complete"})`, sorted keys).
+const DRIVER_COMPLETE = '{"driver": "complete"}';
+
+/** Index of the manifest module a driver record's (possibly dotted) module id belongs to. */
+export function manifestModuleIndex(modules: string[], recordModule: string | undefined): number {
+  if (!recordModule) return -1;
+  return modules.findIndex((m) => recordModule === m || recordModule.startsWith(`${m}.`));
+}
+
+// A killed or crashed driver takes the rest of its shard with it; relaunch it on the modules after the
+// one it died in. Skipping at least one module each time guarantees progress.
+async function* runCpythonShardResuming(
+  ctx: AdapterContext,
+  driver: string,
+  modules: string[],
+  driverSkipArgs: string[],
+  skip: Array<(value: string) => boolean>,
+  timeoutMs: number,
+  shardIndex: number,
+): AsyncIterable<TestResult> {
+  let remaining = modules;
+  while (remaining.length > 0) {
+    const state: ShardState = { aborted: false };
+    yield* runCpythonShard(ctx, driver, remaining, driverSkipArgs, skip, timeoutMs, shardIndex, state);
+    if (!state.aborted) return;
+    const at = manifestModuleIndex(remaining, state.lastModule);
+    remaining = remaining.slice(Math.max(at, 0) + 1);
+  }
 }
 
 export const cpythonCoreAdapter: Adapter = {

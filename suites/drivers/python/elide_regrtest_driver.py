@@ -253,6 +253,8 @@ def main():
         except BaseException as exc:
             ok = False
             emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+    # The harness reads a missing sentinel as an interpreter crash, not as failing tests.
+    emit({"driver": "complete"})
     return 0 if ok else 1
 
 
