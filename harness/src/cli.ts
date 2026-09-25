@@ -45,6 +45,7 @@ export interface CliOptions {
   ratchet: boolean;
   updateSummaries: boolean;
   timeoutScale?: number; // --timeout-scale: multiplies every per-test/case/shard limit (dev builds run slower)
+  workDir?: string; // --work-dir: per-run scratch root (default .harness/work), so concurrent runs do not share overlays
 }
 
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
@@ -93,6 +94,7 @@ export function parseArgs(argv: string[]): CliOptions {
     ratchet: rest.includes("--ratchet"),
     updateSummaries: rest.includes("--update-summaries"),
     timeoutScale: Number(get("--timeout-scale", "1")) || 1,
+    workDir: get("--work-dir", "") || undefined,
   };
 }
 
@@ -254,7 +256,7 @@ export async function main(o: CliOptions): Promise<number> {
   const exp = loadExpectations(join(o.expectationsDir, `${wl.id}.toml`));
   const startedAt = new Date().toISOString();
 
-  const workspacePath = resolve(o.repoRoot, ".harness/work", wl.id);
+  const workspacePath = resolve(o.workDir ?? resolve(o.repoRoot, ".harness/work"), wl.id);
   mkdirSync(workspacePath, { recursive: true });
   const ctx = buildAdapterContext(o, wl, identity, exp, workspacePath);
 
