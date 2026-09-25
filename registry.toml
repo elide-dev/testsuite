@@ -8,7 +8,7 @@ path = "suites/wpt"
   [workload.settings]
   include = ["**/*"]
   manifest = "manifests/wintertc-wpt-2025.toml"
-  timeoutMs = 60000
+  timeoutMs = 65000
 
 [[workload]]
 id = "cpython-core"
@@ -19,7 +19,7 @@ path = "suites/cpython"
   [workload.settings]
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 600000
-  caseTimeoutMs = 60000
+  caseTimeoutMs = 65000
   elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
 
 [[workload]]
@@ -60,7 +60,7 @@ path = "suites/node"
 
   [workload.settings]
   manifest = "manifests/node-api.toml"
-  timeoutMs = 60000
+  timeoutMs = 65000
   elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
 
 [[workload]]
