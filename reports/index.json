@@ -3,6 +3,42 @@
     {
       "workload": "node-api",
       "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 886,
+      "total": 1563,
+      "skip": 347,
+      "regressions": 1,
+      "newPasses": 34,
+      "finishedAt": "2026-09-25T19:16:08.798Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/node-api"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 3884,
+      "total": 4484,
+      "skip": 425,
+      "regressions": 121,
+      "newPasses": 6,
+      "finishedAt": "2026-09-25T19:15:24.687Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 17435,
+      "total": 21660,
+      "skip": 2979,
+      "regressions": 172,
+      "newPasses": 371,
+      "finishedAt": "2026-09-25T19:13:29.665Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/wpt-wintertc"
+    },
+    {
+      "workload": "node-api",
+      "semver": "1.6.0+dd7116a51",
       "digest": "2cccc16871e1",
       "pass": 887,
       "total": 1563,

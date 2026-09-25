@@ -1,0 +1,17 @@
+{
+  "from": {
+    "semver": "1.6.0+dd7116a51",
+    "digest": "2cccc16871e167acc63a9ed16dea7832c0b60ad31a2604564619df92b18da30e"
+  },
+  "to": {
+    "semver": "1.6.0+dd7116a51",
+    "digest": "85762dd3efe4426821f8741049b219e38ec43d75312dea10b3f5f3b3b794fce6"
+  },
+  "fixed": [],
+  "regressed": [
+    "test/parallel/test-dns-channel-cancel.js"
+  ],
+  "added": 0,
+  "removed": 0,
+  "stillFailing": 329
+}
