@@ -11,11 +11,8 @@ This repository runs upstream conformance test suites against pinned builds of
 | `javac-jtreg` | OpenJDK langtools `tools/javac` through jtreg, compiling with Elide |
 | `node-api` | sparse Node.js core JavaScript API tests |
 
-[Bali](BALI.md) is also supported as a Docker-based runtime target; see
-[running](docs/running.md#bali-runtime-target).
-
-Tracking: [Compliance Testing meta (WHIPLASH#1172)](https://github.com/elide-dev/WHIPLASH/issues/1172),
-[Test262 (WHIPLASH#1173)](https://github.com/elide-dev/WHIPLASH/issues/1173).
+Tracking: [Compliance Testing meta (elide-dev/runtime#1172)](https://github.com/elide-dev/runtime/issues/1172),
+[Test262 (elide-dev/runtime#1173)](https://github.com/elide-dev/runtime/issues/1173).
 
 ## Compatibility
 
@@ -62,7 +59,7 @@ bun run testsuite --elide nightly --all-suites --log
 
 ## Further reading
 
-- [Running the suites](docs/running.md): prerequisites, every launcher flag, targeted runs with `--filter`, concurrency, Bali.
+- [Running the suites](docs/running.md): prerequisites, every launcher flag, targeted runs with `--filter`, concurrency.
 - [Reports, expectations and analysis](docs/reports.md): the report layout, why tests are skipped, the ratchet, and the SQLite analysis CLI.
 - [Contributing](docs/contributing.md): local development, tests, and the repository layout.
 - Per-suite briefings: [test262](BRIEFING-test262.md), [wpt-wintertc](BRIEFING-wpt-wintertc.md), [cpython-core](BRIEFING-cpython-core.md), [javac-jtreg](BRIEFING-javac-jtreg.md), [node-api](BRIEFING-node-api.md).
