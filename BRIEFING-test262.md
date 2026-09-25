@@ -33,6 +33,8 @@ Counts are test executions (a file can run in both default and strict mode).
 bun run setup                       # once: deps + submodules
 # quick slice (seconds):
 bun run testsuite --elide nightly --suite test262 --include 'test/built-ins/Error/prototype/stack/**/*.js' --log
+# by name, any file whose path contains 'getTime' (case-insensitive glob, see README 'Targeted runs'):
+bun run testsuite --elide nightly --log --filter 'test262:*gettime*'
 # full suite (~20 min):
 bun run testsuite --elide nightly --suite test262
 # after fixes land in an Elide nightly, re-baseline:

@@ -38,6 +38,8 @@ bun run setup                       # once: deps + submodules + sparse checkouts
 bun run testsuite --elide nightly --suite node-api --include 'test/parallel/test-path.js' --log
 # a target group:
 bun run testsuite --elide nightly --suite node-api --include 'test/parallel/test-buffer*.js' --log
+# by name, any file whose path contains 'timers' (case-insensitive glob, see README 'Targeted runs'):
+bun run testsuite --elide nightly --log --filter 'node-api:*timers*'
 # full suite (~6 min):
 bun run testsuite --elide nightly --suite node-api
 # after fixes land in an Elide nightly, re-baseline:

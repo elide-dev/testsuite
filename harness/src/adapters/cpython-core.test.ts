@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { AdapterContext } from "./types";
-import { filterIncludedModules, parseCpythonLines, remapCpythonSkip, runCpythonCore } from "./cpython-core";
+import { cpythonMatchArgs, filterIncludedModules, parseCpythonLines, remapCpythonSkip, runCpythonCore, selectCpythonModules } from "./cpython-core";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/cpython-core.ndjson`).text();
 
@@ -445,4 +445,21 @@ exit 2
   };
 
   await expect(collect(runCpythonCore(ctx))).rejects.toThrow(/no Python support.*\n.*PYTHON=yes/s);
+});
+
+test("selectCpythonModules keeps modules the pattern or its leading dotted segment matches", () => {
+  const modules = ["test_ast", "test_time", "test_datetime", "test_json", "test_re"];
+  expect(selectCpythonModules(modules, undefined)).toBe(modules);
+  expect(selectCpythonModules(modules, ["*time*"])).toEqual(["test_time", "test_datetime"]);
+  expect(selectCpythonModules(modules, ["test_ast.*literal_eval*"])).toEqual(["test_ast"]);
+  expect(selectCpythonModules(modules, ["test_ast.test_ast.AST_Tests.test_dump", "test_json"])).toEqual(["test_ast", "test_json"]);
+  expect(selectCpythonModules(modules, ["*.ReTests.*"])).toEqual(modules); // head `*`: every module, driver prunes cases
+});
+
+test("cpythonMatchArgs hands the driver one --match-re per pattern", () => {
+  expect(cpythonMatchArgs(undefined)).toEqual([]);
+  const args = cpythonMatchArgs(["test_ast.*literal_eval*"]);
+  expect(args[0]).toBe("--match-re");
+  expect(new RegExp(args[1], "i").test("test_ast.test_ast.ASTHelpers_Test.test_literal_eval_str_int_limit")).toBe(true);
+  expect(new RegExp(args[1], "i").test("test_ast.test_ast.AST_Tests.test_dump")).toBe(false);
 });

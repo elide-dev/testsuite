@@ -36,6 +36,8 @@ bun run setup                       # once: deps + submodules + sparse checkouts
 bun run testsuite --elide nightly --suite wpt-wintertc --include 'url/urlsearchparams-constructor.any.js' --log
 # a target area:
 bun run testsuite --elide nightly --suite wpt-wintertc --include 'encoding/textdecoder-fatal-single-byte.any.js' --log
+# by name, any file whose path contains 'encodeInto' (case-insensitive glob, see README 'Targeted runs'):
+bun run testsuite --elide nightly --log --filter 'wpt-wintertc:*encodeinto*'
 # full suite (~12s of harness runtime inside Docker):
 bun run testsuite --elide nightly --suite wpt-wintertc --threads 8
 # after fixes land in an Elide nightly, re-baseline:

@@ -3,6 +3,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { applyFilter, describeFilter } from "../filter";
 import { runProcess } from "./process";
 import { runTaskPool } from "./pool";
 import { type WptServer, startWptServer } from "./wpt-server";
@@ -153,9 +154,12 @@ export async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestRe
   const manifest = loadManifest(manifestPath);
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
   const runner = join(ctx.repoRoot, "suites/drivers/wpt/wintertc-runner.js");
-  const tasks = manifest.groups.flatMap((group) => {
+  const included = manifest.groups.flatMap((group) => {
     return filterIncludedPaths(group.include, ctx.include).map((rel) => ({ category: group.id, rel }));
   });
+  const tasks = applyFilter(included, ctx.filter, (task) => task.rel, (kept, total) =>
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, kept, total, "files")}\n`),
+  );
 
   // The fetch tests resolve relative URLs against the document location and fetch WPT resources /
   // handlers; they need a real WPT server (the `fetch/` group — equivalently the `fetch/` path

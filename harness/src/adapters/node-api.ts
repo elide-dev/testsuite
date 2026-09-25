@@ -4,6 +4,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { applyFilter, describeFilter } from "../filter";
 import { runProcess, type ProcessRunResult } from "./process";
 import { runTaskPool } from "./pool";
 
@@ -522,12 +523,15 @@ export async function* runNodeApi(ctx: AdapterContext): AsyncIterable<TestResult
   if (!manifestPath) throw new Error("node-api requires settings.manifest");
   const manifest = loadManifest(manifestPath);
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
-  const tasks = manifest.groups.flatMap((group) => {
+  const included = manifest.groups.flatMap((group) => {
     return expandNodeApiManifestPaths(ctx.suitePath, group.include, ctx.include).map((rel) => ({
       category: group.id,
       rel,
     }));
   });
+  const tasks = applyFilter(included, ctx.filter, (task) => task.rel, (kept, total) =>
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, kept, total, "files")}\n`),
+  );
   const runtimeCtx = { ...ctx, suitePath: prepareNodeApiOverlay(ctx, tasks) };
 
   yield* runTaskPool(tasks, ctx.threads, (task, index) => runNodeApiTask(runtimeCtx, skip, task, index));

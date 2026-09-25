@@ -4,6 +4,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { compileFilter, describeFilter, hasFilter } from "../filter";
 import { shardItems, mergeAsyncIterables } from "./pool";
 
 interface CpythonRecord {
@@ -70,6 +71,28 @@ export function filterIncludedModules(modules: string[], includeGlobs: string[])
   if (!includeGlobs.length) return modules;
   const matchers = includeGlobs.map((glob) => picomatch(glob));
   return modules.filter((module) => matchers.some((match) => match(module)));
+}
+
+// --filter for cpython-core works at two levels. Here, a module is kept when a
+// pattern matches its name, or when the pattern's leading dotted segment does
+// (`test_ast.*literal*` -> `test_ast`), since case ids start with the module.
+// Inside the driver the same patterns then prune individual cases (see
+// cpythonMatchArgs), so `cpython-core:test_ast.*literal_eval*` runs only those.
+export function selectCpythonModules(modules: string[], filter: string[] | undefined): string[] {
+  if (!hasFilter(filter)) return modules;
+  const heads = filter!.map((pattern) => {
+    const dot = pattern.indexOf(".");
+    return dot > 0 ? pattern.slice(0, dot) : pattern;
+  });
+  const matches = compileFilter([...filter!, ...heads]);
+  return modules.filter((module) => matches(module));
+}
+
+// The driver speaks Python `re`, not globs; picomatch's regex output for
+// `{contains, nocase}` uses only constructs both engines share.
+export function cpythonMatchArgs(filter: string[] | undefined): string[] {
+  if (!hasFilter(filter)) return [];
+  return filter!.flatMap((pattern) => ["--match-re", picomatch.makeRe(pattern, { contains: true, nocase: true }).source]);
 }
 
 function progressEnabled(ctx: AdapterContext): boolean {
@@ -319,9 +342,13 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
   const manifest = loadManifest(manifestPath);
-  const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
+  const included = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
+  const modules = selectCpythonModules(included, ctx.filter);
+  if (hasFilter(ctx.filter)) {
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, modules.length, included.length, "modules")}\n`);
+  }
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
-  const driverSkipArgs = ctx.skipGlobs.flatMap((glob) => ["--skip", glob]);
+  const driverSkipArgs = [...ctx.skipGlobs.flatMap((glob) => ["--skip", glob]), ...cpythonMatchArgs(ctx.filter)];
   const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
   if (modules.length === 0) {
     yield runnerErrorResult("cpython-core selected no modules");

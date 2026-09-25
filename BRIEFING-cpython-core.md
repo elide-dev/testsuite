@@ -37,6 +37,8 @@ bun run setup                       # once: deps + submodules
 bun run testsuite --elide nightly --suite cpython-core --include 'test_json' --log
 # one module under investigation:
 bun run testsuite --elide nightly --suite cpython-core --include 'test_builtin' --log
+# by name, any module/case whose id contains 'time' (case-insensitive glob; 'test_ast.*literal_eval*' picks cases):
+bun run testsuite --elide nightly --log --filter 'cpython-core:*time*'
 # full suite (~90s):
 bun run testsuite --elide nightly --suite cpython-core
 # after fixes land in an Elide nightly, re-baseline:

@@ -39,6 +39,7 @@ export interface CliOptions {
   logPrefix: string;
   failureOutput: "show" | "hide";
   include?: string; // comma-separated glob override (else registry settings.include)
+  filter: string[]; // --filter patterns, repeatable; narrow the include selection by test id
   suiteVersion?: string;
   ratchet: boolean;
   updateSummaries: boolean;
@@ -54,6 +55,13 @@ export function parseArgs(argv: string[]): CliOptions {
   const get = (flag: string, dflt: string): string => {
     const i = rest.indexOf(flag);
     return i >= 0 ? rest[i + 1] : dflt;
+  };
+  const getAll = (...flags: string[]): string[] => {
+    const values: string[] = [];
+    rest.forEach((arg, i) => {
+      if (flags.includes(arg) && rest[i + 1] !== undefined) values.push(rest[i + 1]);
+    });
+    return values;
   };
   const failureOutputValue = get("--failure-output", rest.includes("--hide-failure-output") ? "hide" : "show");
   if (failureOutputValue !== "show" && failureOutputValue !== "hide") {
@@ -78,6 +86,7 @@ export function parseArgs(argv: string[]): CliOptions {
     logPrefix: get("--log-prefix", ""),
     failureOutput: rest.includes("--show-failure-output") ? "show" : failureOutputValue,
     include: get("--include", "") || undefined,
+    filter: getAll("--filter", "--test-filter").map((s) => s.trim()).filter(Boolean),
     suiteVersion: get("--suite-version", "") || undefined,
     ratchet: rest.includes("--ratchet"),
     updateSummaries: rest.includes("--update-summaries"),
@@ -208,6 +217,7 @@ export function buildAdapterContext(
       ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
       : Array.isArray(wl.settings.include) ? (wl.settings.include as string[]) : [],
     skipGlobs: skipGlobs(exp),
+    filter: o.filter,
     threads: o.threads,
     log: o.log,
     verbose: o.verbose,

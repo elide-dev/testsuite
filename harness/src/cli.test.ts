@@ -515,3 +515,16 @@ test("ad-hoc impact uses the requested workload from ingested runs", async () =>
   expect(output).toContain("beta-feature");
   expect(output).not.toContain("test262-fail");
 });
+
+test("collects repeatable --filter / --test-filter patterns without comma-splitting", () => {
+  expect(parseArgs(["run", "test262"]).filter).toEqual([]);
+  const o = parseArgs(["run", "test262", "--filter", "*time*", "--test-filter", "{a,b}/**", "--filter", " ", "--threads", "2"]);
+  expect(o.filter).toEqual(["*time*", "{a,b}/**"]);
+  expect(o.threads).toBe(2);
+});
+
+test("buildAdapterContext passes --filter patterns through to the adapter", () => {
+  const o = parseArgs(["run", "test262", "--filter", "*Date*"]);
+  const ctx = buildAdapterContext(o, { id: "test262", path: "suites/test262", settings: {} }, { semver: "0", digest: "d" }, { entries: [], ratchet: new Set() });
+  expect(ctx.filter).toEqual(["*Date*"]);
+});

@@ -22,6 +22,7 @@ import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classifySuiteStatus, floorAdvance } from "./suite-status";
+import { parseFilterSpecs, patternsForSuite, selectSuites } from "../harness/src/filter";
 import {
   ROOT,
   RUN_LABEL,
@@ -49,6 +50,7 @@ interface Options {
   log: boolean;
   verbose: boolean;
   include?: string;
+  filter: string[]; // raw --filter specs: [<suite>:]<pattern>, see harness/src/filter.ts
   ratchet: boolean;
   updateSummaries: boolean;
   prepareSuites: boolean;
@@ -154,6 +156,7 @@ function parseArgs(argv: string[]): Options {
     platform: process.env.PLATFORM || "",
     log: false,
     verbose: false,
+    filter: [],
     ratchet: false,
     updateSummaries: false,
     prepareSuites: process.env.PREPARE_SUITES === "1",
@@ -210,6 +213,11 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--include":
         options.include = value(arg);
+        break;
+      case "--filter":
+      case "--test-filter":
+        // Not comma-split: `{a,b}` alternation is more useful; repeat the flag instead.
+        options.filter.push(value(arg));
         break;
       case "--ratchet":
         options.ratchet = true;
@@ -586,9 +594,29 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
   const registryPath = resolve(ROOT, "registry.toml");
   const workloads = parseRegistry(registryPath);
   // Workloads for other runtimes (registry `target`) are run through `--target <name>`.
-  const suites = options.allSuites && options.suites.length === 0
-    ? workloads.filter((workload) => (workload.target ?? "elide") === "elide").map((workload) => workload.id)
-    : options.suites.length ? options.suites : ["test262"];
+  // Suite selection: --suite / --all-suites win; otherwise suite-prefixed --filter
+  // specs pick the suites; otherwise test262.
+  let filters: ReturnType<typeof parseFilterSpecs>;
+  let suites: string[];
+  try {
+    filters = parseFilterSpecs(options.filter, workloads.map((workload) => workload.id));
+    suites = selectSuites(
+      options.suites,
+      options.allSuites && options.suites.length === 0
+        ? workloads.filter((workload) => (workload.target ?? "elide") === "elide").map((workload) => workload.id)
+        : undefined,
+      filters,
+      ["test262"],
+    );
+  } catch (err) {
+    usageError(err instanceof Error ? err.message : String(err));
+  }
+  if (filters.length) {
+    for (const suite of suites) {
+      const patterns = patternsForSuite(filters, suite);
+      log(`filter for ${suite}: ${patterns.length ? patterns.map((p) => `'${p}'`).join(" | ") : "<none: whole selection>"}`);
+    }
+  }
   for (const suite of suites) {
     const target = workloads.find((workload) => workload.id === suite)?.target;
     if (target && target !== "elide") usageError(`suite '${suite}' targets ${target}; run it with --target ${target}`);
@@ -688,6 +716,7 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
       ...(options.log ? ["--log"] : []),
       ...(options.verbose ? ["--verbose"] : []),
       ...(options.include ? ["--include", options.include] : []),
+      ...patternsForSuite(filters, suite).flatMap((pattern) => ["--filter", pattern]),
       ...(options.ratchet ? ["--ratchet"] : []),
       ...(options.updateSummaries ? ["--update-summaries"] : []),
       "--failure-output",

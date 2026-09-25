@@ -1,5 +1,6 @@
 import argparse
 import fnmatch
+import re
 import importlib
 import importlib.util
 import json
@@ -112,15 +113,35 @@ def should_skip(test, patterns):
     )
 
 
-def filter_suite(suite, skip_patterns):
+def compile_match_patterns(patterns):
+    """`--match-re` regexes (from the harness's --filter globs); searched, case-insensitively."""
+    return [re.compile(pattern, re.IGNORECASE) for pattern in patterns]
+
+
+def is_selected(test, match_patterns):
+    """A case is selected when no --match-re was given, or one of them hits its case or module id."""
+    if not match_patterns:
+        return True
+    test_case_id = case_id(test)
+    test_module_id = module_id(test)
+    return any(
+        pattern.search(test_case_id) or pattern.search(test_module_id)
+        for pattern in match_patterns
+    )
+
+
+def filter_suite(suite, skip_patterns, match_patterns=()):
     filtered = unittest.TestSuite()
     skipped = 0
     for item in suite:
         if isinstance(item, unittest.TestSuite):
-            child_suite, child_skipped = filter_suite(item, skip_patterns)
+            child_suite, child_skipped = filter_suite(item, skip_patterns, match_patterns)
             skipped += child_skipped
             if child_suite.countTestCases() > 0:
                 filtered.addTest(child_suite)
+        elif not is_selected(item, match_patterns):
+            # Deselected by --filter: not a result at all (unlike a skip, which is reported).
+            continue
         elif should_skip(item, skip_patterns):
             emit({
                 "module": module_id(item),
@@ -201,10 +222,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cpython-root", required=True)
     parser.add_argument("--skip", action="append", default=[])
+    parser.add_argument("--match-re", action="append", default=[], help="only run cases whose id matches (regex search)")
     parser.add_argument("--progress-stderr", action="store_true")
     parser.add_argument("modules", nargs="+")
     args = parser.parse_args()
     install_cpython_test_package(args.cpython_root)
+    match_patterns = compile_match_patterns(args.match_re)
 
     ok = True
     for module_name in args.modules:
@@ -218,7 +241,7 @@ def main():
             suite = unittest.defaultTestLoader.loadTestsFromModule(module)
             if args.progress_stderr:
                 emit_progress("filtering " + module_name)
-            suite, _ = filter_suite(suite, args.skip)
+            suite, _ = filter_suite(suite, args.skip, match_patterns)
             if args.progress_stderr:
                 emit_progress("running " + module_name)
             result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)

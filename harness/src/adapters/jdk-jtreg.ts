@@ -44,6 +44,7 @@ import {
 } from "./jtreg";
 import { buildNative, HEADER_DIRS, NATIVE_BUILD, nativeTarget } from "./jtreg-native";
 import { normalizeSignature } from "../analyze/signature";
+import { compileFilter } from "../filter";
 import type { Result as HarnessResult, TestResult } from "../results/schema";
 export const REPO = resolve(import.meta.dir, "../../..");
 const HEAP_CAP = "-Xmx2g";
@@ -332,8 +333,10 @@ export async function discover(
   suite: string,
   exclusions: Exclusion[] = [],
   include: string[] = [],
+  filter: string[] = [],
 ): Promise<Entry[]> {
   const files = [...new Bun.Glob("**/*").scanSync({ cwd: suite, onlyFiles: true })].sort();
+  const filtered = compileFilter(filter);
   const nestedRoots = new Set(files.filter((id) => id.endsWith("/TEST.ROOT")));
   const included = include.length ? include.map((glob) => picomatch(glob)) : [];
   const inventory: Entry[] = [];
@@ -341,6 +344,7 @@ export async function discover(
     // jtreg's source formats; fixtures without a test marker are not denominator entries.
     if (!/\.(java|sh|jasm|jcod|html)$/.test(id)) continue;
     if (included.length && !included.some((match) => match(id))) continue;
+    if (!filtered(id)) continue;
     const source = await Bun.file(join(suite, id)).text();
     if (!hasTest(source)) continue;
     let unsupported = excludedReason(id, exclusions) ?? portableReason(id, source);
@@ -531,6 +535,7 @@ async function stage(
   archives: Awaited<ReturnType<typeof prepare>>,
   manifest: Manifest,
   include: string[],
+  filter: string[],
   reference: string,
 ) {
   const src = join(out, "src");
@@ -552,7 +557,7 @@ async function stage(
   const root = portableRoot(originalRoot);
   await Bun.write(join(suite, "TEST.ROOT"), root);
   await $`unzip -q ${archives.jtreg} -d ${join(out, "harness")}`.quiet();
-  const inventory = await discover(suite, manifest.exclude ?? [], include);
+  const inventory = await discover(suite, manifest.exclude ?? [], include, filter);
   const native = await buildNative({
     suite,
     srcRoot: join(src, "src"),
@@ -1226,6 +1231,7 @@ export async function* runJdkJtreg(ctx: AdapterContext): AsyncIterable<HarnessRe
     archives,
     manifest,
     ctx.include,
+    ctx.filter ?? [],
     reference,
   );
   await Bun.write(
