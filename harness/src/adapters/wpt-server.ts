@@ -70,8 +70,8 @@ export async function startWptServer(
 
   // Override merged over wptserve's `_default` config: bind loopback explicitly (bind_address +
   // browser_host → 127.0.0.1, not 0.0.0.0), skip the subdomain check, auto-pick every port, and
-  // disable TLS (the pregenerated cert is for web-platform.test). The ssl-"none" https listeners
-  // fail to start and are logged-and-skipped; the http listener serves regardless.
+  // disable TLS (the pregenerated cert is for web-platform.test). TLS listeners get no ports at all:
+  // with ssl "none" they exit on start, and wptserve shuts every listener down when any child exits.
   const configDir = mkdtempSync(join(tmpdir(), "wpt-serve-"));
   const configPath = join(configDir, "config.json");
   const cleanupConfig = (): void => {
@@ -88,7 +88,15 @@ export async function startWptServer(
       bind_address: true,
       alternate_hosts: {},
       check_subdomains: false,
-      ports: { http: ["auto", "auto"], https: ["auto", "auto"] },
+      ports: {
+        http: ["auto", "auto"],
+        https: [],
+        "https-local": [],
+        "https-public": [],
+        wss: [],
+        h2: [],
+        "webtransport-h3": [],
+      },
       ssl: { type: "none" },
     }),
   );

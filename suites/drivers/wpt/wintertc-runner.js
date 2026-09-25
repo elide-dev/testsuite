@@ -135,6 +135,8 @@ function get_host_info() {
     HTTP_REMOTE_ORIGIN_WITH_DIFFERENT_PORT: 'http://' + REMOTE_HOST + HTTP_PORT2_ELIDED,
     HTTP_NOTSAMESITE_ORIGIN: 'http://' + NOTSAMESITE_HOST + HTTP_PORT_ELIDED,
     HTTPS_ORIGIN: 'https://' + ORIGINAL_HOST + HTTPS_PORT_ELIDED,
+    HTTPS_REMOTE_ORIGIN: 'https://' + REMOTE_HOST + HTTPS_PORT_ELIDED,
+    HTTPS_REMOTE_ORIGIN_WITH_DIFFERENT_PORT: 'https://' + REMOTE_HOST + ':' + HTTPS_PORT2,
     HTTPS_NOTSAMESITE_ORIGIN: 'https://' + NOTSAMESITE_HOST + HTTPS_PORT_ELIDED,
     REMOTE_ORIGIN: PROTOCOL + '//' + REMOTE_HOST + PORT_ELIDED,
     OTHER_ORIGIN: PROTOCOL + '//' + OTHER_HOST + PORT_ELIDED,
@@ -196,10 +198,11 @@ export function buildMetaPreamble(suiteRoot, testRel, source) {
     const { path, key } = resolveMetaScript(suiteRoot, testRel, script);
     if (seen.has(key)) continue;
     seen.add(key);
-    if (existsSync(path)) {
-      chunks.push(`// wintertc-runner: inlined META script ${script}\n${readFileSync(path, "utf8")}`);
-    } else if (VIRTUAL_SCRIPTS[key]) {
+    // Shims win over the checkout: upstream `.sub.js` files carry unsubstituted `{{…}}` templates.
+    if (VIRTUAL_SCRIPTS[key]) {
       chunks.push(`// wintertc-runner: shimmed META script ${script}\n${VIRTUAL_SCRIPTS[key]}`);
+    } else if (existsSync(path)) {
+      chunks.push(`// wintertc-runner: inlined META script ${script}\n${readFileSync(path, "utf8")}`);
     } else {
       chunks.push(`// wintertc-runner: missing META script ${script}`);
     }

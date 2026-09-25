@@ -71,6 +71,17 @@ def install_tracemalloc_compat():
         tracemalloc.is_tracing = lambda: False
 
 
+def install_opcode_compat():
+    # CPython 3.13's test.support imports the C `_opcode` module at top level, only to read
+    # `ENABLE_SPECIALIZATION`; GraalPy has no `_opcode`. Tests of `_opcode` itself still fail.
+    try:
+        importlib.import_module("_opcode")
+    except ImportError:
+        stub = type(sys)("_opcode")
+        stub.ENABLE_SPECIALIZATION = False
+        sys.modules["_opcode"] = stub
+
+
 def emit(record):
     print(json.dumps(record, sort_keys=True), file=sys.__stdout__, flush=True)
 
@@ -126,6 +137,7 @@ def filter_suite(suite, skip_patterns):
 def install_cpython_test_package(cpython_root):
     sanitize_cpython_lib_from_sys_path(cpython_root)
     install_tracemalloc_compat()
+    install_opcode_compat()
     test_dir = os.path.realpath(os.path.abspath(os.path.join(cpython_root, "Lib", "test")))
     if not os.path.isdir(test_dir):
         raise FileNotFoundError("CPython test package not found: " + test_dir)
