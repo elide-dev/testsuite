@@ -21,6 +21,9 @@ export interface Expectations {
   // `[exclude-skipped]`: message patterns for skips the suite itself reports as not applicable to
   // this runtime (e.g. CPython implementation details, other platforms).
   excludedSkips?: ExcludedSkip[];
+  // `[exclude-ids]`: patterns over the full test id (subtest included) for tests out of scope in any
+  // outcome, where a file glob would be too coarse (e.g. DOM-only subtests of a mixed WPT file).
+  excludedIds?: ExcludedSkip[];
 }
 
 export function parseExpectations(toml: string): Expectations {
@@ -29,6 +32,7 @@ export function parseExpectations(toml: string): Expectations {
     fail?: Record<string, string>;
     exclude?: Record<string, string>;
     "exclude-skipped"?: Record<string, string>;
+    "exclude-ids"?: Record<string, string>;
   };
   const entries: ExpectationEntry[] = [];
   for (const [glob, reason] of Object.entries(raw.skip ?? {})) {
@@ -44,7 +48,11 @@ export function parseExpectations(toml: string): Expectations {
     pattern: new RegExp(pattern, "i"),
     reason,
   }));
-  return { entries, ratchet: new Set<string>(), excludedSkips };
+  const excludedIds = Object.entries(raw["exclude-ids"] ?? {}).map(([pattern, reason]) => ({
+    pattern: new RegExp(pattern),
+    reason,
+  }));
+  return { entries, ratchet: new Set<string>(), excludedSkips, excludedIds };
 }
 
 export function loadExpectations(path: string): Expectations {

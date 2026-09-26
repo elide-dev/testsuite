@@ -166,6 +166,9 @@ test("excluded tests leave every count and rate; excluded skips match only real 
 
 [exclude-skipped]
 "specific to cpython" = "CPython implementation detail"
+
+[exclude-ids]
+'^mixed\\.js :: .*\\(using <a>\\)$' = "DOM-only subtest"
 `);
   const t = (id: string, status: TestResult["status"], message?: string): TestResult => ({
     kind: "test",
@@ -180,10 +183,12 @@ test("excluded tests leave every count and rate; excluded skips match only real 
       t("c.py", "skip", "implementation detail specific to CPython"),
       t("d.py", "skip", "don't have recvmsg"),
       t("e.py", "fail", "implementation detail specific to CPython"),
+      t("mixed.js :: x (using <a>)", "fail"),
+      t("mixed.js :: x (using URL)", "pass"),
     ],
     exp,
   );
-  expect(c.counts).toEqual({ pass: 1, fail: 1, skip: 1, error: 0, total: 3, excluded: 2 });
-  expect(overallPassRate(c.counts)).toBeCloseTo(1 / 3);
+  expect(c.counts).toEqual({ pass: 2, fail: 1, skip: 1, error: 0, total: 4, excluded: 3 });
+  expect(overallPassRate(c.counts)).toBeCloseTo(2 / 4);
   expect(c.regressions.map((r) => r.id)).toEqual(["e.py"]);
 });

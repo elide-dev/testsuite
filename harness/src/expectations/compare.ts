@@ -93,6 +93,8 @@ export function passRatesOf(counts: ScoredCounts, regressions: number): PassRate
 
 /** Why `r` is out of scope (never counted), or undefined when it is in scope. */
 export function exclusionOf(r: TestResult, exp: Expectations, entries = compile(exp)): string | undefined {
+  const byId = exp.excludedIds?.find((x) => x.pattern.test(r.id));
+  if (byId) return byId.reason;
   const keys = expectationKeysOf(r);
   const entry = entries.find((e) => keys.some((key) => e.isMatch(key)));
   if (entry?.expected === "exclude") return entry.reason;
