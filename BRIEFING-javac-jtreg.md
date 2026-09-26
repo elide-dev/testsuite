@@ -37,6 +37,8 @@ bun run setup                       # once: deps + submodules + sparse checkout
 bun run testsuite --elide nightly --suite javac-jtreg --include 'tools/javac/IllDefinedOrderOfInit.java' --log
 # one failing test with full output:
 bun run testsuite --elide nightly --suite javac-jtreg --include 'tools/javac/T6411379.java' --log --show-failure-output
+# by name, any test whose path contains 'lambda' (case-insensitive glob, see docs/running.md 'Targeted runs'):
+bun run testsuite --elide nightly --log --filter 'javac-jtreg:*lambda*'
 # full suite (~12 min):
 bun run testsuite --elide nightly --suite javac-jtreg
 # after fixes land in an Elide nightly, re-baseline:

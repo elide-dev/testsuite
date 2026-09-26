@@ -42,7 +42,8 @@ const SUITES: SuiteSetup[] = [
     path: "suites/wpt",
     // `tools` carries wptserve (`wpt serve`) + its vendored deps, needed to serve fetch/ tests
     // against a real WPT server (see harness/src/adapters/wpt-server.ts).
-    sparse: ["resources", "url", "encoding", "fetch", "tools"],
+    // `common` holds shared fixtures fetched at runtime (e.g. common/text-plain.txt).
+    sparse: ["resources", "url", "encoding", "fetch", "tools", "common"],
     required: ["resources", "url", "encoding", "fetch", "tools/serve/serve.py"],
     filterBlobNone: true,
   },

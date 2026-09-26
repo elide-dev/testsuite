@@ -1,9 +1,10 @@
-import { mkdirSync } from "node:fs";
+import { mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { compileFilter, describeFilter, hasFilter } from "../filter";
 import { shardItems, mergeAsyncIterables } from "./pool";
 
 interface CpythonRecord {
@@ -15,6 +16,9 @@ interface CpythonRecord {
 }
 
 const CPYTHON_STATUSES = new Set(["pass", "fail", "skip", "error", "running"]);
+
+// Elide's `elide_run_python_not_installed` message.
+const PYTHON_NOT_INSTALLED_RE = /Python support is not installed/;
 
 function parseCpythonRecord(line: string): CpythonRecord | null {
   const s = line.trim();
@@ -67,6 +71,28 @@ export function filterIncludedModules(modules: string[], includeGlobs: string[])
   if (!includeGlobs.length) return modules;
   const matchers = includeGlobs.map((glob) => picomatch(glob));
   return modules.filter((module) => matchers.some((match) => match(module)));
+}
+
+// --filter for cpython-core works at two levels. Here, a module is kept when a
+// pattern matches its name, or when the pattern's leading dotted segment does
+// (`test_ast.*literal*` -> `test_ast`), since case ids start with the module.
+// Inside the driver the same patterns then prune individual cases (see
+// cpythonMatchArgs), so `cpython-core:test_ast.*literal_eval*` runs only those.
+export function selectCpythonModules(modules: string[], filter: string[] | undefined): string[] {
+  if (!hasFilter(filter)) return modules;
+  const heads = filter!.map((pattern) => {
+    const dot = pattern.indexOf(".");
+    return dot > 0 ? pattern.slice(0, dot) : pattern;
+  });
+  const matches = compileFilter([...filter!, ...heads]);
+  return modules.filter((module) => matches(module));
+}
+
+// The driver speaks Python `re`, not globs; picomatch's regex output for
+// `{contains, nocase}` uses only constructs both engines share.
+export function cpythonMatchArgs(filter: string[] | undefined): string[] {
+  if (!hasFilter(filter)) return [];
+  return filter!.flatMap((pattern) => ["--match-re", picomatch.makeRe(pattern, { contains: true, nocase: true }).source]);
 }
 
 function progressEnabled(ctx: AdapterContext): boolean {
@@ -185,11 +211,15 @@ async function* runCpythonShard(
   skip: Array<(value: string) => boolean>,
   timeoutMs: number,
   shardIndex: number,
+  state: ShardState = { aborted: false },
 ): AsyncIterable<TestResult> {
   const started = performance.now();
   const progress = progressEnabled(ctx);
   const elideRunArgs = configuredElideRunArgs(ctx);
   const cwd = join(ctx.workspacePath, `shard-${shardIndex}`);
+  // Fresh for every launch: CPython's TESTFN is `@test_<pid>_tmp…`, pids repeat in the container,
+  // and a driver killed mid-test (or a resumed shard) leaves its files behind for the next test.
+  rmSync(cwd, { recursive: true, force: true });
   mkdirSync(cwd, { recursive: true });
   const proc = Bun.spawn([
     ctx.elidePath,
@@ -199,7 +229,8 @@ async function* runCpythonShard(
     "--",
     "--cpython-root",
     ctx.suitePath,
-    ...(progress ? ["--progress-stderr"] : []),
+    // Always: the phase lines keep the watchdog below informed; they are echoed only with --log.
+    "--progress-stderr",
     ...driverSkipArgs,
     ...modules,
   ], {
@@ -210,6 +241,7 @@ async function* runCpythonShard(
   });
   let activeCase: string | undefined;
   let activeSince = performance.now();
+  let lastSignal = performance.now();
   const setActiveCase = (activity: string | undefined): void => {
     if (activity === activeCase) return;
     activeCase = activity;
@@ -220,30 +252,31 @@ async function* runCpythonShard(
     `CPython shard: ${modules.slice(0, 4).join(", ")}${modules.length > 4 ? ", ..." : ""}`,
     () => activeCase,
   );
-  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, progress
-    ? (line) => {
-        if (line.startsWith("progress: ")) {
-          const activity = line.slice("progress: ".length);
-          setActiveCase(activity.startsWith("done ") ? undefined : activity);
-          process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
-          return;
-        }
-        if (ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
-      }
-    : undefined);
+  const stderr = readCappedText(proc.stderr as ReadableStream<Uint8Array>, 1_000_000, (line) => {
+    if (line.startsWith("progress: ")) {
+      const activity = line.slice("progress: ".length);
+      lastSignal = performance.now();
+      setActiveCase(activity.startsWith("done ") ? undefined : activity);
+      if (progress) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+      return;
+    }
+    if (progress && ctx.verbose) process.stderr.write(`${ctx.logPrefix ?? ""}${line}\n`);
+  });
 
   let timedOut = false;
   let timedOutActivity: string | undefined;
-  const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 60_000);
+  const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 65_000);
   const timer = setTimeout(() => {
     timedOut = true;
     proc.kill("SIGKILL");
   }, timeoutMs);
+  // A case running too long, or the driver going quiet between cases (module setup/teardown, a hung
+  // import, interpreter shutdown) for as long: either way the driver is stuck, not working.
   const caseTimer = setInterval(() => {
-    if (!activeCase) return;
-    if (performance.now() - activeSince < caseTimeoutMs) return;
+    const since = activeCase ? activeSince : lastSignal;
+    if (performance.now() - since < caseTimeoutMs) return;
     timedOut = true;
-    timedOutActivity = activeCase;
+    timedOutActivity = activeCase ?? (state.lastModule ? `running ${state.lastModule.split(".")[0]}` : undefined);
     proc.kill("SIGKILL");
   }, Math.min(1_000, Math.max(100, caseTimeoutMs / 10)));
 
@@ -252,7 +285,13 @@ async function* runCpythonShard(
   let pending = "";
   const decoder = new TextDecoder();
   const emitLine = function* (line: string): Iterable<TestResult> {
+    lastSignal = performance.now();
+    if (line.trim() === DRIVER_COMPLETE) {
+      state.completed = true;
+      return;
+    }
     const record = parseCpythonRecord(line);
+    if (record) state.lastModule = record.module;
     if (record?.status === "running") {
       setActiveCase(record.case || record.module);
       return;
@@ -288,6 +327,9 @@ async function* runCpythonShard(
   clearInterval(caseTimer);
   stopProgress();
   const durationMs = Math.round(performance.now() - started);
+  // The driver exits 1 whenever a test fails; only a missing completion sentinel means it died.
+  const crashed = !state.completed;
+  if (timedOut || crashed) state.aborted = true;
   if (timedOut) {
     if (timedOutActivity) {
       yield activityTimeoutResult(timedOutActivity, durationMs, caseTimeoutMs);
@@ -296,7 +338,26 @@ async function* runCpythonShard(
     yield runnerErrorResult("CPython driver timed out", durationMs);
     return;
   }
+  // A driver that dies mid-shard (an interpreter crash) takes the case it was running with it; say so
+  // instead of letting that case and every module after it vanish from the run.
+  if (crashed && parsedCount > 0) {
+    const activity = activeCase ?? state.lastModule ?? "<runner>";
+    const lost = activityTimeoutResult(activity, durationMs, 0);
+    yield { ...lost, message: `CPython driver exited with code ${exitCode} while ${activity}` };
+    return;
+  }
   if (exitCode !== 0 && parsedCount === 0) {
+    // An Elide built without Python (`PYTHON=no`, or an install missing the python overlay) says so
+    // on every shard. That is a property of the build under test, not a result: recorded, it would
+    // ratchet the whole suite as expected failures. Throwing makes it a harness error (exit 2),
+    // which publishes nothing.
+    if (PYTHON_NOT_INSTALLED_RE.test(stderrText || stdout)) {
+      throw new Error(
+        `cpython-core: the Elide under test has no Python support: ${(stderrText || stdout).trim()}\n` +
+          "Rebuild it with PYTHON=yes. (`elide setup python` is only safe on a published release: on a local build it\n" +
+          "installs the published overlay, whose bin/elide replaces the binary under test.)",
+      );
+    }
     yield runnerErrorResult(stderrText || stdout, durationMs);
   }
 }
@@ -305,9 +366,13 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
   const manifest = loadManifest(manifestPath);
-  const modules = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
+  const included = filterIncludedModules(manifest.groups.flatMap((g) => g.include), ctx.include);
+  const modules = selectCpythonModules(included, ctx.filter);
+  if (hasFilter(ctx.filter)) {
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, modules.length, included.length, "modules")}\n`);
+  }
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
-  const driverSkipArgs = ctx.skipGlobs.flatMap((glob) => ["--skip", glob]);
+  const driverSkipArgs = [...ctx.skipGlobs.flatMap((glob) => ["--skip", glob]), ...cpythonMatchArgs(ctx.filter)];
   const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
   if (modules.length === 0) {
     yield runnerErrorResult("cpython-core selected no modules");
@@ -317,8 +382,44 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
   const shards = shardItems(modules, ctx.threads);
   yield* mergeAsyncIterables(
-    shards.map((shard, index) => runCpythonShard(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
+    shards.map((shard, index) => runCpythonShardResuming(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
   );
+}
+
+interface ShardState {
+  lastModule?: string;
+  completed?: boolean;
+  aborted: boolean;
+}
+
+// The driver's last stdout line on a normal exit (`emit({"driver": "complete"})`, sorted keys).
+const DRIVER_COMPLETE = '{"driver": "complete"}';
+
+/** Index of the manifest module a driver record's (possibly dotted) module id belongs to. */
+export function manifestModuleIndex(modules: string[], recordModule: string | undefined): number {
+  if (!recordModule) return -1;
+  return modules.findIndex((m) => recordModule === m || recordModule.startsWith(`${m}.`));
+}
+
+// A killed or crashed driver takes the rest of its shard with it; relaunch it on the modules after the
+// one it died in. Skipping at least one module each time guarantees progress.
+async function* runCpythonShardResuming(
+  ctx: AdapterContext,
+  driver: string,
+  modules: string[],
+  driverSkipArgs: string[],
+  skip: Array<(value: string) => boolean>,
+  timeoutMs: number,
+  shardIndex: number,
+): AsyncIterable<TestResult> {
+  let remaining = modules;
+  while (remaining.length > 0) {
+    const state: ShardState = { aborted: false };
+    yield* runCpythonShard(ctx, driver, remaining, driverSkipArgs, skip, timeoutMs, shardIndex, state);
+    if (!state.aborted) return;
+    const at = manifestModuleIndex(remaining, state.lastModule);
+    remaining = remaining.slice(Math.max(at, 0) + 1);
+  }
 }
 
 export const cpythonCoreAdapter: Adapter = {

@@ -7,7 +7,7 @@ import { loadRegistry, type TargetName } from "./registry";
 import { resolveTargetIdentity } from "./target";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import type { Expectations } from "./expectations/load";
-import { compare, expectationKeysOf, expectedFor, passRate as scoredPassRate } from "./expectations/compare";
+import { compare, expectationKeysOf, expectedFor, passRatesOf } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath, loadRatchet, mergeRatchet } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
@@ -21,6 +21,7 @@ import { openDb } from "./db/open";
 import { resetDb } from "./db/schema";
 import { ingestAll } from "./db/ingest";
 import { computeImpact, renderImpactMd } from "./analyze/impact";
+import { parseFilterSpecs, patternsForSuite } from "./filter";
 
 export interface CliOptions {
   command: string;
@@ -39,9 +40,12 @@ export interface CliOptions {
   logPrefix: string;
   failureOutput: "show" | "hide";
   include?: string; // comma-separated glob override (else registry settings.include)
+  filter: string[]; // --filter patterns, repeatable; narrow the include selection by test id
   suiteVersion?: string;
   ratchet: boolean;
   updateSummaries: boolean;
+  timeoutScale?: number; // --timeout-scale: multiplies every per-test/case/shard limit (dev builds run slower)
+  workDir?: string; // --work-dir: per-run scratch root (default .harness/work), so concurrent runs do not share overlays
 }
 
 export const REPO_ROOT = resolve(import.meta.dir, "../..");
@@ -54,6 +58,13 @@ export function parseArgs(argv: string[]): CliOptions {
   const get = (flag: string, dflt: string): string => {
     const i = rest.indexOf(flag);
     return i >= 0 ? rest[i + 1] : dflt;
+  };
+  const getAll = (...flags: string[]): string[] => {
+    const values: string[] = [];
+    rest.forEach((arg, i) => {
+      if (flags.includes(arg) && rest[i + 1] !== undefined) values.push(rest[i + 1]);
+    });
+    return values;
   };
   const failureOutputValue = get("--failure-output", rest.includes("--hide-failure-output") ? "hide" : "show");
   if (failureOutputValue !== "show" && failureOutputValue !== "hide") {
@@ -78,11 +89,17 @@ export function parseArgs(argv: string[]): CliOptions {
     logPrefix: get("--log-prefix", ""),
     failureOutput: rest.includes("--show-failure-output") ? "show" : failureOutputValue,
     include: get("--include", "") || undefined,
+    filter: getAll("--filter", "--test-filter").map((s) => s.trim()).filter(Boolean),
     suiteVersion: get("--suite-version", "") || undefined,
     ratchet: rest.includes("--ratchet"),
     updateSummaries: rest.includes("--update-summaries"),
+    timeoutScale: Number(get("--timeout-scale", "1")) || 1,
+    workDir: get("--work-dir", "") || undefined,
   };
 }
+
+// Registry settings that bound how long a test, case or shard may run.
+const TIMEOUT_SETTINGS = ["timeoutMs", "caseTimeoutMs"];
 
 const DB_PATH = resolve(REPO_ROOT, ".harness/results.sqlite");
 
@@ -195,6 +212,12 @@ export function buildAdapterContext(
   workspacePath = resolve(WORK_DIR, wl.id),
 ): AdapterContext {
   const settings = { ...wl.settings };
+  const scale = o.timeoutScale ?? 1;
+  if (scale !== 1) {
+    for (const key of TIMEOUT_SETTINGS) {
+      if (typeof settings[key] === "number") settings[key] = Math.round((settings[key] as number) * scale);
+    }
+  }
   if (typeof settings.manifest === "string" && !isAbsolute(settings.manifest)) {
     settings.manifest = resolve(o.repoRoot, settings.manifest);
   }
@@ -208,6 +231,8 @@ export function buildAdapterContext(
       ? o.include.split(",").map((s) => s.trim()).filter(Boolean)
       : Array.isArray(wl.settings.include) ? (wl.settings.include as string[]) : [],
     skipGlobs: skipGlobs(exp),
+    // `<suite>:` prefixes scope a pattern the way bin/run.ts does; patterns for other suites drop out.
+    filter: patternsForSuite(parseFilterSpecs(o.filter, [wl.id]), wl.id),
     threads: o.threads,
     log: o.log,
     verbose: o.verbose,
@@ -231,7 +256,7 @@ export async function main(o: CliOptions): Promise<number> {
   const exp = loadExpectations(join(o.expectationsDir, `${wl.id}.toml`));
   const startedAt = new Date().toISOString();
 
-  const workspacePath = resolve(o.repoRoot, ".harness/work", wl.id);
+  const workspacePath = resolve(o.workDir ?? resolve(o.repoRoot, ".harness/work"), wl.id);
   mkdirSync(workspacePath, { recursive: true });
   const ctx = buildAdapterContext(o, wl, identity, exp, workspacePath);
 
@@ -330,11 +355,17 @@ export async function main(o: CliOptions): Promise<number> {
       await Bun.write(join(outDir, name), content);
 
   const green = comparison.regressions.length === 0;
-  // Pass rate is over scored (non-skipped) tests; muted areas are excluded from the denominator.
-  const passRate = scoredPassRate(comparison.counts) * 100;
+  // Both rates are over the whole selection; skipped/suppressed tests stay in the denominator.
+  const rates = passRatesOf(comparison.counts, comparison.regressions.length);
+  const verdict = green
+    ? "GREEN"
+    : comparison.newPasses.length > 0
+      ? "ADVANCED (regressions and new passes: run with --ratchet to update the baseline)"
+      : "RED";
   console.log(
-    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass (${passRate.toFixed(1)}%), ` +
-      `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${green ? "GREEN" : "RED"}`,
+    `${wl.id} @ ${identity.semver}: ${comparison.counts.pass}/${comparison.counts.total} pass ` +
+      `(${(rates.overall * 100).toFixed(1)}% overall, ${(rates.expected * 100).toFixed(1)}% vs expectations), ` +
+      `${comparison.regressions.length} regressions, ${comparison.newPasses.length} new passes — ${verdict}`,
   );
   return green ? 0 : 1;
 }

@@ -1,26 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="232" viewBox="0 0 760 232" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="330" viewBox="0 0 820 330" role="img" aria-labelledby="title desc">
   <title id="title">Elide compatibility pass rates</title>
-  <desc id="desc">Latest pass rate by compliance suite.</desc>
-  <rect width="760" height="232" fill="#ffffff"/>
+  <desc id="desc">Latest pass rate by compliance suite: overall (over all tests, including skipped and suppressed) and vs expectations (only regressions count against it).</desc>
+  <rect width="820" height="330" fill="#ffffff"/>
   <text x="32" y="32" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="20" font-weight="700" fill="#1f2328">Latest compatibility</text>
-  <text x="32" y="69" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">cpython-core</text>
-  <rect x="210" y="54" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="54" width="417.21" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="68" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">97.0%</text>
-  <text x="32" y="103" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">javac-jtreg</text>
-  <rect x="210" y="88" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="88" width="430.00" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="102" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">100.0%</text>
-  <text x="32" y="137" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">node-api</text>
-  <rect x="210" y="122" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="122" width="301.53" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="136" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">70.1%</text>
-  <text x="32" y="171" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">test262</text>
-  <rect x="210" y="156" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="156" width="429.55" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="170" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">99.9%</text>
-  <text x="32" y="205" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">wpt-wintertc</text>
-  <rect x="210" y="190" width="430" height="18" rx="3" fill="#eaeef2"/>
-  <rect x="210" y="190" width="386.62" height="18" rx="3" fill="#198754"/>
-  <text x="658" y="204" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">89.9%</text>
+  <rect x="32" y="48" width="12" height="12" rx="2" fill="#3b0764"/>
+  <text x="50" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">overall pass rate (all tests, incl. skipped/suppressed)</text>
+  <rect x="332" y="48" width="12" height="12" rx="2" fill="#7e22ce"/>
+  <text x="350" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">overall, with regressions</text>
+  <rect x="502" y="48" width="12" height="12" rx="2" fill="#c084fc"/>
+  <text x="520" y="58" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">vs expectations (100% = baseline)</text>
+  <text x="32" y="91" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">cpython-core</text>
+  <rect x="210" y="78" width="380" height="14" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="78" width="329.15" height="14" rx="3" fill="#7e22ce"><title>cpython-core overall: 86.6%</title></rect>
+  <text x="604" y="90" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">86.6%</text>
+  <rect x="210" y="96" width="380" height="8" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="96" width="369.75" height="8" rx="3" fill="#c084fc"><title>cpython-core vs expectations: 97.3%</title></rect>
+  <text x="604" y="105" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">97.3% exp · 121 regr, 6 new</text>
+  <text x="32" y="139" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">javac-jtreg</text>
+  <rect x="210" y="126" width="380" height="14" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="126" width="353.53" height="14" rx="3" fill="#3b0764"><title>javac-jtreg overall: 93.0%</title></rect>
+  <text x="604" y="138" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">93.0%</text>
+  <rect x="210" y="144" width="380" height="8" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="144" width="380.00" height="8" rx="3" fill="#c084fc"><title>javac-jtreg vs expectations: 100.0%</title></rect>
+  <text x="604" y="153" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">100.0% exp</text>
+  <text x="32" y="187" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">node-api</text>
+  <rect x="210" y="174" width="380" height="14" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="174" width="215.41" height="14" rx="3" fill="#7e22ce"><title>node-api overall: 56.7%</title></rect>
+  <text x="604" y="186" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">56.7%</text>
+  <rect x="210" y="192" width="380" height="8" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="192" width="379.76" height="8" rx="3" fill="#c084fc"><title>node-api vs expectations: 99.9%</title></rect>
+  <text x="604" y="201" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">99.9% exp · 1 regr, 34 new</text>
+  <text x="32" y="235" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">test262</text>
+  <rect x="210" y="222" width="380" height="14" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="222" width="353.21" height="14" rx="3" fill="#3b0764"><title>test262 overall: 92.9%</title></rect>
+  <text x="604" y="234" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">92.9%</text>
+  <rect x="210" y="240" width="380" height="8" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="240" width="380.00" height="8" rx="3" fill="#c084fc"><title>test262 vs expectations: 100.0%</title></rect>
+  <text x="604" y="249" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">100.0% exp</text>
+  <text x="32" y="283" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13" fill="#24292f">wpt-wintertc</text>
+  <rect x="210" y="270" width="380" height="14" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="270" width="305.88" height="14" rx="3" fill="#7e22ce"><title>wpt-wintertc overall: 80.5%</title></rect>
+  <text x="604" y="282" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#57606a">80.5%</text>
+  <rect x="210" y="288" width="380" height="8" rx="3" fill="#f5f3ff"/>
+  <rect x="210" y="288" width="376.98" height="8" rx="3" fill="#c084fc"><title>wpt-wintertc vs expectations: 99.2%</title></rect>
+  <text x="604" y="297" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" fill="#57606a">99.2% exp · 172 regr, 371 new</text>
 </svg>

@@ -1,10 +1,11 @@
 import { expect, test } from "bun:test";
-import { classifySuiteStatus, type SuiteStatusInput } from "./suite-status";
+import { classifySuiteStatus, floorAdvance, type SuiteStatusInput } from "./suite-status";
 
 const base: SuiteStatusInput = {
   rc: 0,
   hasCurrent: true,
   expRegressions: 0,
+  newPasses: 0,
   driftRegressed: 0,
   added: 0,
   fixed: 0,
@@ -51,6 +52,35 @@ test("unbaselined fails with NO baseline are conservatively REGRESSED", () => {
 
 test("green run that fixed tests is IMPROVED", () => {
   expect(classifySuiteStatus({ ...base, rc: 0, fixed: 3 })).toBe("IMPROVED");
+  expect(classifySuiteStatus({ ...base, rc: 0, newPasses: 3, hasChanges: false })).toBe("IMPROVED");
+});
+
+test("new passes with unratcheted failures is ADVANCED, not RED", () => {
+  // e.g. node-api: 35 tests now beat the baseline, 1 unbaselined fail → reward the advance.
+  expect(
+    classifySuiteStatus({ ...base, rc: 1, expRegressions: 1, newPasses: 35, fixed: 35 }),
+  ).toBe("ADVANCED");
+  // Same without a previous-run baseline: the new passes are proof of progress.
+  expect(
+    classifySuiteStatus({ ...base, rc: 1, expRegressions: 1, newPasses: 35, hasChanges: false }),
+  ).toBe("ADVANCED");
+});
+
+test("drift regressions outweighed by fixes is ADVANCED (regressions still listed in changes)", () => {
+  // e.g. wpt-wintertc: 5 regressed vs 371 fixed.
+  expect(
+    classifySuiteStatus({ ...base, rc: 1, expRegressions: 172, driftRegressed: 5, fixed: 371, newPasses: 371, added: 5974 }),
+  ).toBe("ADVANCED");
+});
+
+test("drift regressions that match or exceed the gains are REGRESSED", () => {
+  expect(classifySuiteStatus({ ...base, rc: 1, driftRegressed: 3, fixed: 3, newPasses: 3 })).toBe("REGRESSED");
+  expect(classifySuiteStatus({ ...base, rc: 1, driftRegressed: 4, fixed: 1 })).toBe("REGRESSED");
+});
+
+test("floorAdvance takes the larger of newPasses and fixed", () => {
+  expect(floorAdvance({ newPasses: 2, fixed: 5 })).toBe(5);
+  expect(floorAdvance({ fixed: 0 })).toBe(0);
 });
 
 test("green run that added passing coverage is IMPROVED", () => {

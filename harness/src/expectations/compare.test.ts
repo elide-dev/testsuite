@@ -2,17 +2,27 @@ import { test, expect } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseExpectations } from "./load";
-import { compare, passRate, scoredTotal } from "./compare";
+import { compare, expectationPassRate, overallPassRate, scoredTotal } from "./compare";
 import type { TestResult } from "../results/schema";
 
-test("scoredTotal and passRate exclude skipped tests", () => {
+test("scoredTotal excludes skipped tests; overallPassRate keeps them in the denominator", () => {
   const counts = { pass: 90, fail: 5, error: 5, skip: 100, total: 200 };
   expect(scoredTotal(counts)).toBe(100); // skip excluded
-  expect(passRate(counts)).toBeCloseTo(0.9, 5); // 90 / (90+5+5), not 90/200
+  expect(overallPassRate(counts)).toBeCloseTo(0.45, 5); // 90/200: muting never flatters the headline
 });
 
-test("passRate is 0 when nothing scored (everything skipped)", () => {
-  expect(passRate({ pass: 0, fail: 0, error: 0, skip: 12, total: 12 })).toBe(0);
+test("expectationPassRate only counts regressions against the run", () => {
+  const counts = { pass: 90, fail: 5, error: 5, skip: 100, total: 200 };
+  expect(expectationPassRate(counts, 0)).toBe(1); // every fail is baselined, every skip is expected
+  expect(expectationPassRate(counts, 4)).toBeCloseTo(196 / 200, 5);
+  expect(expectationPassRate(counts, 500)).toBe(0); // clamped
+});
+
+test("rates are 0 when the selection is empty", () => {
+  expect(overallPassRate({ pass: 0, fail: 0, error: 0, skip: 0, total: 0 })).toBe(0);
+  expect(expectationPassRate({ pass: 0, fail: 0, error: 0, skip: 0, total: 0 }, 0)).toBe(0);
+  // Older summaries lack `total`; fall back to scored + skip.
+  expect(overallPassRate({ pass: 1, fail: 0, error: 0, skip: 1 })).toBeCloseTo(0.5, 5);
 });
 
 const toml = `

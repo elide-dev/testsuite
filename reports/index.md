@@ -2,10 +2,14 @@
 
 ![Latest compatibility pass rates](./pass-rate.svg)
 
-| Suite | Version | Digest | Pass rate | Status |
-|---|---|---|---:|:--:|
-| cpython-core | `1.4.99+8b374d579` | `4094eb2fb1ff` | 97.0% | ✅ |
-| javac-jtreg | `1.4.99+8b374d579` | `4094eb2fb1ff` | 100.0% | ✅ |
-| node-api | `1.4.99+8b374d579` | `4094eb2fb1ff` | 70.1% | ✅ |
-| test262 | `1.4.99+8b374d579` | `4094eb2fb1ff` | 99.9% | ✅ |
-| wpt-wintertc | `1.4.99+8b374d579` | `4094eb2fb1ff` | 89.9% | ✅ |
+| Suite | Version | Digest | Pass rate | vs expectations | Status |
+|---|---|---|---:|---:|:--:|
+| cpython-core | `1.6.0+dd7116a51` | `85762dd3efe4` | 86.6% | 97.3% | ⬆️ |
+| javac-jtreg | `1.4.99+8b374d579` | `4094eb2fb1ff` | 93.0% | 100.0% | ✅ |
+| node-api | `1.6.0+dd7116a51` | `85762dd3efe4` | 56.7% | 99.9% | ⬆️ |
+| test262 | `1.4.99+8b374d579` | `4094eb2fb1ff` | 92.9% | 100.0% | ✅ |
+| wpt-wintertc | `1.6.0+dd7116a51` | `85762dd3efe4` | 80.5% | 99.2% | ⬆️ |
+
+_Pass rate_ is over every test in the selection, including skipped/suppressed ones.
+_vs expectations_ is the share of tests at or above the checked-in baseline (only regressions count against it).
+⬆️ marks a run with regressions **and** new passes: the floor advanced; run with --ratchet to update the baseline.

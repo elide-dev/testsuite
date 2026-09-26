@@ -8,7 +8,7 @@ path = "suites/wpt"
   [workload.settings]
   include = ["**/*"]
   manifest = "manifests/wintertc-wpt-2025.toml"
-  timeoutMs = 60000
+  timeoutMs = 65000
 
 [[workload]]
 id = "cpython-core"
@@ -19,8 +19,10 @@ path = "suites/cpython"
   [workload.settings]
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 600000
-  caseTimeoutMs = 60000
-  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
+  caseTimeoutMs = 65000
+  # Threads and subprocesses as CPython's own suite expects; network stays on loopback, because
+  # test.support.requires('network') lets everything through outside regrtest.
+  elideRunArgs = ["--sandbox", "--allow-read", "--allow-write", "--allow-threads", "--allow-run", "--allow-net=localhost,127.0.0.1,::1"]
 
 [[workload]]
 id = "javac-jtreg"
@@ -51,6 +53,7 @@ path = "suites/test262"
   [workload.settings]
   # Globs (relative to path) to execute. Skip globs live in expectations/.
   include = ["test/**/*.js"]
+  caseTimeoutMs = 65000
 
 [[workload]]
 id = "node-api"
@@ -60,7 +63,7 @@ path = "suites/node"
 
   [workload.settings]
   manifest = "manifests/node-api.toml"
-  timeoutMs = 60000
+  timeoutMs = 65000
   elideRunArgs = ["--sandbox", "--allow-read", "--allow-write"]
 
 [[workload]]

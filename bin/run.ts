@@ -21,7 +21,9 @@ import {
 import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { classifySuiteStatus } from "./suite-status";
+import { classifySuiteStatus, floorAdvance } from "./suite-status";
+import { packItems, renderSummaryTable, terminalWidth, type SummaryRow } from "./summary-table";
+import { parseFilterSpecs, patternsForSuite, selectSuites } from "../harness/src/filter";
 import {
   ROOT,
   RUN_LABEL,
@@ -45,10 +47,12 @@ interface Options {
   threads?: number;
   suiteWorkers?: number;
   concurrencyMultiplier: number;
+  timeoutScale: number; // --timeout-scale: multiplies every per-test/case/shard limit (dev builds)
   platform: string;
   log: boolean;
   verbose: boolean;
   include?: string;
+  filter: string[]; // raw --filter specs: [<suite>:]<pattern>, see harness/src/filter.ts
   ratchet: boolean;
   updateSummaries: boolean;
   prepareSuites: boolean;
@@ -151,9 +155,11 @@ function parseArgs(argv: string[]): Options {
     threads: parsePositiveInt(process.env.THREADS, "THREADS"),
     suiteWorkers: parsePositiveInt(process.env.SUITE_WORKERS, "SUITE_WORKERS"),
     concurrencyMultiplier: parsePositiveInt(process.env.CONCURRENCY_MULTIPLIER, "CONCURRENCY_MULTIPLIER") ?? 2,
+    timeoutScale: Number(process.env.TIMEOUT_SCALE) || 1,
     platform: process.env.PLATFORM || "",
     log: false,
     verbose: false,
+    filter: [],
     ratchet: false,
     updateSummaries: false,
     prepareSuites: process.env.PREPARE_SUITES === "1",
@@ -187,6 +193,12 @@ function parseArgs(argv: string[]): Options {
       case "--concurrency-multiplier":
         options.concurrencyMultiplier = parsePositiveInt(value(arg), arg) ?? 2;
         break;
+      case "--timeout-scale": {
+        const scale = Number(value(arg));
+        if (!(scale > 0)) throw new Error(`${arg} expects a positive number`);
+        options.timeoutScale = scale;
+        break;
+      }
       case "--platform":
         options.platform = value(arg);
         break;
@@ -210,6 +222,11 @@ function parseArgs(argv: string[]): Options {
         break;
       case "--include":
         options.include = value(arg);
+        break;
+      case "--filter":
+      case "--test-filter":
+        // Not comma-split: `{a,b}` alternation is more useful; repeat the flag instead.
+        options.filter.push(value(arg));
         break;
       case "--ratchet":
         options.ratchet = true;
@@ -408,15 +425,24 @@ function loadSuiteSummaryRows(suites: string[], suiteExitCodes: number[], digest
   });
 }
 
-// Pass rate over scored (non-skipped) tests; muted areas are excluded from the denominator.
+// Non-skipped tests; used only to detect a changed selection between runs.
 function scoredTotal(counts: { pass: number; fail: number; error: number }): number {
   return counts.pass + counts.fail + counts.error;
 }
 
-function passRate(summary: SuiteRunSummary | undefined): number | undefined {
+// Overall pass rate: passes over EVERY test in the selection. Skipped and
+// suppressed tests stay in the denominator so muting never flatters the number.
+function overallPassRate(summary: SuiteRunSummary | undefined): number | undefined {
   if (!summary) return undefined;
-  const denom = scoredTotal(summary.counts);
-  return denom === 0 ? undefined : summary.counts.pass / denom;
+  return summary.counts.total === 0 ? undefined : summary.counts.pass / summary.counts.total;
+}
+
+// Pass rate vs the expectations: everything except regressions is on the floor
+// (expected skips, baselined fails, and new passes all count). 100% == at/above baseline.
+function expectationPassRate(summary: SuiteRunSummary | undefined): number | undefined {
+  if (!summary) return undefined;
+  const total = summary.counts.total;
+  return total === 0 ? undefined : Math.max(0, total - summary.regressions.length) / total;
 }
 
 function formatPercent(value: number | undefined): string {
@@ -424,8 +450,8 @@ function formatPercent(value: number | undefined): string {
 }
 
 function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSummary | undefined): string {
-  const cur = passRate(current);
-  const prev = passRate(previous);
+  const cur = overallPassRate(current);
+  const prev = overallPassRate(previous);
   if (cur === undefined || prev === undefined) return ansi.dim("n/a");
   // A pass-rate delta between different selections (a scoped --include run vs
   // a full run) is meaningless — flag it instead of reporting a fake swing.
@@ -442,6 +468,7 @@ function formatDelta(current: SuiteRunSummary | undefined, previous: SuiteRunSum
 const STATUS_LABEL: Record<string, (s: string) => string> = {
   ERROR: (s) => ansi.red(`🛑 ${s}`),
   REGRESSED: (s) => ansi.red(`🔴 ${s}`),
+  ADVANCED: (s) => ansi.cyan(`⬆️ ${s}`),
   GAINED: (s) => ansi.cyan(`🔵 ${s}`),
   IMPROVED: (s) => ansi.green(`🟢 ${s}`),
   RED: (s) => ansi.yellow(`🟡 ${s}`),
@@ -453,6 +480,7 @@ function statusLabel(row: SuiteSummaryRow): string {
     rc: row.rc,
     hasCurrent: !!row.current,
     expRegressions: row.current?.regressions.length ?? 0,
+    newPasses: row.current?.newPasses.length ?? 0,
     driftRegressed: row.changes?.regressed.length ?? 0,
     added: row.changes?.added ?? 0,
     fixed: row.changes?.fixed.length ?? 0,
@@ -461,7 +489,7 @@ function statusLabel(row: SuiteSummaryRow): string {
   return STATUS_LABEL[status](status);
 }
 
-function changesLabel(row: SuiteSummaryRow): string {
+function changesLabel(row: SuiteSummaryRow): string[] {
   const parts: string[] = [];
   const expRegressions = row.current?.regressions.length ?? 0;
   if (row.current?.newPasses.length) parts.push(ansi.green(`✨ ${row.current.newPasses.length} new passes`));
@@ -479,69 +507,77 @@ function changesLabel(row: SuiteSummaryRow): string {
     if (expRegressions) parts.push(ansi.red(`🚨 ${expRegressions} regressions`));
     if (!parts.length) parts.push(ansi.dim("baseline n/a"));
   }
-  return parts.join(", ");
-}
-
-// Display width: Bun.stringWidth handles ANSI escapes AND double-width
-// glyphs (emoji), which .length miscounts — that's what broke the box borders.
-function visibleWidth(value: string): number {
-  return Bun.stringWidth(value);
-}
-
-function padVisible(value: string, width: number): string {
-  return value + " ".repeat(Math.max(0, width - visibleWidth(value)));
+  return parts;
 }
 
 function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
-  const headers = ["Suite", "Status", "Pass rate", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
-  const body = rows.map((row) => {
+  const headers = ["Suite", "Status", "Pass rate", "vs expected", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
+  const body = rows.map((row): SummaryRow => {
     const counts = row.current?.counts;
-    return [
-      row.suite,
-      statusLabel(row),
-      formatPercent(passRate(row.current)),
-      formatDelta(row.current, row.previous),
-      counts ? `${counts.pass}/${counts.total}` : "n/a",
-      counts ? String(counts.fail) : "n/a",
-      counts ? String(counts.error) : "n/a",
-      counts ? String(counts.skip) : "n/a",
-      changesLabel(row),
-    ];
+    return {
+      cells: [
+        row.suite,
+        statusLabel(row),
+        formatPercent(overallPassRate(row.current)),
+        formatPercent(expectationPassRate(row.current)),
+        formatDelta(row.current, row.previous),
+        counts ? `${counts.pass}/${counts.total}` : "n/a",
+        counts ? String(counts.fail) : "n/a",
+        counts ? String(counts.error) : "n/a",
+        counts ? String(counts.skip) : "n/a",
+      ],
+      notes: changesLabel(row),
+    };
   });
-  const widths = headers.map((header, i) => Math.max(header.length, ...body.map((row) => visibleWidth(row[i]))));
-  const line = (cells: string[]): string => `│ ${cells.map((cell, i) => padVisible(cell, widths[i])).join(" │ ")} │`;
-  const sep = `├${widths.map((width) => "─".repeat(width + 2)).join("┼")}┤`;
-  const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
-  const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
   const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
-  const totalTests = rows.reduce((sum, row) => sum + (row.current ? scoredTotal(row.current.counts) : 0), 0);
+  const totalTests = rows.reduce((sum, row) => sum + (row.current?.counts.total ?? 0), 0);
   const totalExpRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
   const totalDriftRegressed = rows.reduce((sum, row) => sum + (row.changes?.regressed.length ?? 0), 0);
   const totalAdded = rows.reduce((sum, row) => sum + (row.changes?.added ?? 0), 0);
   const hasDrift = rows.some((row) => row.changes);
   const totalNewPasses = rows.reduce((sum, row) => sum + (row.current?.newPasses.length ?? 0), 0);
+  const totalAdvanced = rows.reduce(
+    (sum, row) => sum + floorAdvance({ newPasses: row.current?.newPasses.length ?? 0, fixed: row.changes?.fixed.length ?? 0 }),
+    0,
+  );
   const errored = rows.filter((row) => row.rc === 2 || row.rc > 2 || !row.current).length;
   const needRatchet = Math.max(0, totalExpRegressions - totalDriftRegressed);
+  const plural = (n: number, word: string): string => `${n} ${n === 1 ? word : word.endsWith("s") ? `${word}es` : `${word}s`}`;
   const headline = errored
-    ? ansi.red(`🛑 ${errored} suite${errored === 1 ? "" : "s"} had harness errors`)
-    : totalDriftRegressed
-      ? ansi.red(`🔴 ${totalDriftRegressed} regression${totalDriftRegressed === 1 ? "" : "s"} across selected suites`)
-      : hasDrift && totalExpRegressions
-        ? totalAdded >= totalExpRegressions
-          ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)
-          : ansi.yellow(`🟡 ${needRatchet} unratcheted failure${needRatchet === 1 ? "" : "s"} (no drift regressions)`)
-        : totalExpRegressions
-          ? ansi.red(`🔴 ${totalExpRegressions} regression${totalExpRegressions === 1 ? "" : "s"} across selected suites`)
-          : ansi.green("🟢 No regressions across selected suites");
+    ? ansi.red(`🛑 ${plural(errored, "suite")} had harness errors`)
+    : totalDriftRegressed && totalDriftRegressed >= totalAdvanced
+      ? ansi.red(`🔴 ${plural(totalDriftRegressed, "regression")} across selected suites`)
+      : totalAdvanced
+        ? totalDriftRegressed || totalExpRegressions
+          ? ansi.cyan(
+              `⬆️ floor advanced: ${plural(totalAdvanced, "new pass")}` +
+                (totalDriftRegressed ? `, ${totalDriftRegressed} regressed` : "") +
+                (needRatchet ? `, ${needRatchet} need ratchet` : "") +
+                " — run with --ratchet to update the baseline",
+            )
+          : ansi.green(`⬆️ floor advanced: ${plural(totalAdvanced, "new pass")}, no regressions — run with --ratchet to update the baseline`)
+        : hasDrift && totalExpRegressions
+          ? totalAdded >= totalExpRegressions
+            ? ansi.cyan(`🔵 coverage gained: ${totalAdded} tests added, ${needRatchet} need ratchet`)
+            : ansi.yellow(`🟡 ${plural(needRatchet, "unratcheted failure")} (no drift regressions)`)
+          : totalExpRegressions
+            ? ansi.red(`🔴 ${plural(totalExpRegressions, "regression")} across selected suites`)
+            : ansi.green("🟢 No regressions across selected suites");
+  const totalOnFloor = Math.max(0, totalTests - totalExpRegressions);
+
+  const width = terminalWidth();
+  const stats = [
+    `Selected suites: ${rows.length}`,
+    `Overall pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} (all tests, incl. skipped)`,
+    `vs expectations: ${formatPercent(totalTests ? totalOnFloor / totalTests : undefined)}`,
+    `New passes: ${totalNewPasses}`,
+  ];
 
   process.stderr.write("\n");
   process.stderr.write(`${ansi.bold("Compliance Summary")} ${headline}\n`);
-  process.stderr.write(`${ansi.dim(`Selected suites: ${rows.length} · Aggregate pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} · New passes: ${totalNewPasses}`)}\n`);
-  process.stderr.write(`${top}\n`);
-  process.stderr.write(`${line(headers.map((header) => ansi.bold(header)))}\n`);
-  process.stderr.write(`${sep}\n`);
-  for (const row of body) process.stderr.write(`${line(row)}\n`);
-  process.stderr.write(`${bottom}\n\n`);
+  for (const line of packItems(stats, width, " · ")) process.stderr.write(`${ansi.dim(line)}\n`);
+  for (const line of renderSummaryTable(headers, body, width, ansi.bold)) process.stderr.write(`${line}\n`);
+  process.stderr.write("\n");
 }
 
 async function main(argv = Bun.argv.slice(2)): Promise<number> {
@@ -554,9 +590,29 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
   const registryPath = resolve(ROOT, "registry.toml");
   const workloads = parseRegistry(registryPath);
   // Workloads for other runtimes (registry `target`) are run through `--target <name>`.
-  const suites = options.allSuites && options.suites.length === 0
-    ? workloads.filter((workload) => (workload.target ?? "elide") === "elide").map((workload) => workload.id)
-    : options.suites.length ? options.suites : ["test262"];
+  // Suite selection: --suite / --all-suites win; otherwise suite-prefixed --filter
+  // specs pick the suites; otherwise test262.
+  let filters: ReturnType<typeof parseFilterSpecs>;
+  let suites: string[];
+  try {
+    filters = parseFilterSpecs(options.filter, workloads.map((workload) => workload.id));
+    suites = selectSuites(
+      options.suites,
+      options.allSuites && options.suites.length === 0
+        ? workloads.filter((workload) => (workload.target ?? "elide") === "elide").map((workload) => workload.id)
+        : undefined,
+      filters,
+      ["test262"],
+    );
+  } catch (err) {
+    usageError(err instanceof Error ? err.message : String(err));
+  }
+  if (filters.length) {
+    for (const suite of suites) {
+      const patterns = patternsForSuite(filters, suite);
+      log(`filter for ${suite}: ${patterns.length ? patterns.map((p) => `'${p}'`).join(" | ") : "<none: whole selection>"}`);
+    }
+  }
   for (const suite of suites) {
     const target = workloads.find((workload) => workload.id === suite)?.target;
     if (target && target !== "elide") usageError(`suite '${suite}' targets ${target}; run it with --target ${target}`);
@@ -655,7 +711,9 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
       `[${suite}] `,
       ...(options.log ? ["--log"] : []),
       ...(options.verbose ? ["--verbose"] : []),
+      ...(options.timeoutScale !== 1 ? ["--timeout-scale", String(options.timeoutScale)] : []),
       ...(options.include ? ["--include", options.include] : []),
+      ...patternsForSuite(filters, suite).flatMap((pattern) => ["--filter", pattern]),
       ...(options.ratchet ? ["--ratchet"] : []),
       ...(options.updateSummaries ? ["--update-summaries"] : []),
       "--failure-output",
@@ -667,7 +725,7 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
         log(`DONE: ${suite} GREEN (no regressions). reports/ updated.`);
         break;
       case 1:
-        log(`DONE: ${suite} RED — regressions found (see the summary above and reports/).`);
+        log(`DONE: ${suite} RED — unbaselined failures (see the summary above and reports/; new passes, if any, are counted there).`);
         break;
       case 2:
         log(`harness ERROR for ${suite} (exit 2): the run did not complete; see the error above.`);

@@ -84,6 +84,10 @@ test("Bali plan validates suites from the registry and accepts --ratchet anywher
   expect(scopedArgs.slice(scopedArgs.indexOf("--include"))).toEqual(["--include", "java/lang/**,java/util/**", "--threads", "8"]);
   expect(() => baliPlan(["--bali-home", "dist", "--threads", "zero"], "/repo")).toThrow("--threads");
   expect(baliPlan(["--bali-home", "dist"], "/repo")).not.toHaveProperty("include");
+  const filtered = baliPlan(["--bali-home", "dist", "--filter", "*Date*"], "/repo");
+  expect(filtered.filter).toBe("*Date*");
+  const filteredArgs = harnessArgs(filtered, "d", { registry: "/r", repoRoot: "/w", baliHome: "/b", suiteRoot: "/s", reports: "/p", expectations: "/e" });
+  expect(filteredArgs.slice(filteredArgs.indexOf("--filter"))).toEqual(["--filter", "*Date*"]);
 });
 
 test("Docker launcher rejects macOS artifacts and a host reference JDK, and propagates build errors", async () => {

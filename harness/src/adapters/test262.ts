@@ -2,6 +2,7 @@ import { z } from "zod";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { Result, TestResult } from "../results/schema";
+import { applyFilter, describeFilter, hasFilter } from "../filter";
 
 const RecordZ = z.object({
   file: z.string(),
@@ -47,7 +48,46 @@ function parseRecordLine(line: string): unknown | null {
   return JSON.parse(s);
 }
 
+// test262-harness takes minimatch globs, anchored and case-sensitive, and
+// truncates each to its deepest literal directory to decide what to walk. A
+// --filter pattern (unanchored, case-insensitive) can't be expressed that way,
+// so the files are resolved here and handed over as explicit paths, in chunks
+// that stay well under the argv limit.
+const TEST262_CHUNK = 500;
+
+export function selectTest262Files(
+  suitePath: string,
+  include: string[],
+  filter: string[] | undefined,
+  onNarrowed?: (kept: number, total: number) => void,
+): string[] {
+  const files = new Set<string>();
+  for (const glob of include) {
+    for (const file of new Bun.Glob(glob).scanSync({ cwd: suitePath, onlyFiles: true })) {
+      if (!file.endsWith("_FIXTURE.js")) files.add(file);
+    }
+  }
+  return applyFilter([...files].sort(), filter, (file) => file, onNarrowed);
+}
+
 async function* runTest262(ctx: AdapterContext): AsyncIterable<Result> {
+  if (!hasFilter(ctx.filter)) {
+    yield* runTest262Selection(ctx, ctx.include);
+    return;
+  }
+  const files = selectTest262Files(ctx.suitePath, ctx.include, ctx.filter, (kept, total) =>
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, kept, total, "files")}\n`),
+  );
+  if (files.length === 0) {
+    yield { kind: "test", id: "test262::<runner>", status: "error", message: "test262: --filter selected no files" };
+    return;
+  }
+  for (let i = 0; i < files.length; i += TEST262_CHUNK) {
+    yield* runTest262Selection(ctx, files.slice(i, i + TEST262_CHUNK));
+  }
+}
+
+async function* runTest262Selection(ctx: AdapterContext, selection: string[]): AsyncIterable<Result> {
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
   const args = [
     `${import.meta.dir}/../../node_modules/.bin/test262-harness`,
@@ -57,11 +97,12 @@ async function* runTest262(ctx: AdapterContext): AsyncIterable<Result> {
     "--reporter", "json",
     "--reporter-keys", "file,scenario,result,attrs",
     "--threads", String(ctx.threads),
-    "--timeout", "60000",
+    // Per-test limit; a registry setting so `--timeout-scale` reaches it.
+    "--timeout", String(Number(ctx.settings.caseTimeoutMs ?? 65_000)),
     // Globs are relative to the suite root (the spawn cwd below), so
     // test262-harness reports `file` as a stable suite-relative path
     // (e.g. "test/language/types/x.js") that expectation globs match against.
-    ...ctx.include,
+    ...selection,
   ];
   const proc = Bun.spawn(["node", ...args], {
     cwd: ctx.suitePath,

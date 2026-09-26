@@ -67,6 +67,7 @@ export interface BaliPlan {
   ratchet: boolean;
   /** Comma-separated file globs over the inventory; a scoped run observes only that slice. */
   include?: string;
+  filter?: string;
   /** jtreg concurrency above the manifest's, for local runs on larger machines. */
   threads?: number;
 }
@@ -81,12 +82,12 @@ export function baliPlan(argv: string[], cwd: string, suites: string[] = ["jdk-j
       continue;
     }
     if (
-      !["--bali-home", "--reference-home", "--suite", "--include", "--threads"].includes(args[i]!) ||
+      !["--bali-home", "--reference-home", "--suite", "--include", "--filter", "--threads"].includes(args[i]!) ||
       !args[i + 1] ||
       options.has(args[i]!)
     )
       throw new Error(
-        `Bali runs accept --bali-home <distribution> [--reference-home <jdk25>] [--ratchet] [--suite ${suites.join("|")}] [--include <globs>] [--threads <n>].`,
+        `Bali runs accept --bali-home <distribution> [--reference-home <jdk25>] [--ratchet] [--suite ${suites.join("|")}] [--include <globs>] [--filter <pattern>] [--threads <n>].`,
       );
     options.set(args[i]!, args[i + 1]!);
   }
@@ -99,6 +100,7 @@ export function baliPlan(argv: string[], cwd: string, suites: string[] = ["jdk-j
     throw new Error("--threads takes a positive integer");
   return {
     ...(options.has("--include") ? { include: options.get("--include")! } : {}),
+    ...(options.has("--filter") ? { filter: options.get("--filter")! } : {}),
     ...(threads !== undefined ? { threads } : {}),
     baliHome: resolve(cwd, options.get("--bali-home")!),
     referenceHome: options.has("--reference-home")
@@ -144,6 +146,7 @@ export function harnessArgs(plan: BaliPlan, digest: string, paths: HarnessPaths)
     "hide",
     ...(plan.ratchet ? ["--ratchet"] : []),
     ...(plan.include ? ["--include", plan.include] : []),
+    ...(plan.filter ? ["--filter", plan.filter] : []),
     ...(plan.threads ? ["--threads", String(plan.threads)] : []),
   ];
 }

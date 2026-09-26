@@ -148,6 +148,30 @@ class DriverNormalizationTests(unittest.TestCase):
         self.assertTrue(driver.should_skip(test, ["test_re"]))
         self.assertFalse(driver.should_skip(test, ["test_json*"]))
 
+    def test_is_selected_searches_case_and_module_ids_case_insensitively(self):
+        test = RealFakeReTest("test_basic_re_sub")
+        self.assertTrue(driver.is_selected(test, []))
+        self.assertTrue(driver.is_selected(test, driver.compile_match_patterns(["BASIC_RE"])))
+        self.assertTrue(driver.is_selected(test, driver.compile_match_patterns(["^test_re$"])))
+        self.assertFalse(driver.is_selected(test, driver.compile_match_patterns(["test_other"])))
+
+    def test_filter_suite_drops_deselected_cases_without_emitting(self):
+        suite = unittest.TestSuite([
+            RealFakeReTest("test_basic_re_sub"),
+            RealFakeReTest("test_other"),
+        ])
+        records = []
+        original_emit = driver.emit
+        driver.emit = records.append
+        try:
+            filtered, skipped = driver.filter_suite(suite, [], driver.compile_match_patterns(["[^/]*other[^/]*"]))
+        finally:
+            driver.emit = original_emit
+
+        self.assertEqual(skipped, 0)
+        self.assertEqual(filtered.countTestCases(), 1)
+        self.assertEqual(records, [])
+
     def test_filter_suite_emits_skip_and_excludes_matching_case(self):
         suite = unittest.TestSuite([
             RealFakeReTest("test_basic_re_sub"),

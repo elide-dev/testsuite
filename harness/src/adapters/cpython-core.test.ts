@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { AdapterContext } from "./types";
-import { filterIncludedModules, parseCpythonLines, remapCpythonSkip, runCpythonCore } from "./cpython-core";
+import { cpythonMatchArgs, filterIncludedModules, parseCpythonLines, remapCpythonSkip, runCpythonCore, selectCpythonModules } from "./cpython-core";
 
 const fixture = await Bun.file(`${import.meta.dir}/../../fixtures/cpython-core.ndjson`).text();
 
@@ -93,6 +93,7 @@ test("passes CPython driver arguments after the elide run separator", async () =
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -143,6 +144,7 @@ test("passes only included CPython modules to the driver", async () => {
 set -euo pipefail
 printf '%s\n' "$@" > ${JSON.stringify(argsLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -178,6 +180,7 @@ test("runs CPython shards from writable workspace directories", async () => {
 set -euo pipefail
 pwd > ${JSON.stringify(cwdLog)}
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -214,6 +217,7 @@ sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"running"}\\n'
 sleep 0.08
 printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -258,6 +262,7 @@ set -euo pipefail
 printf '{"status":"ok","value":1}\\n'
 printf '{"module":"test_re","case":"test_re.Case.test_one","status":"pass"}\\n'
 printf '{"module":"test_re","case":"test_re.Case.test_two","status":"fail","message":"boom"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -294,6 +299,7 @@ set -euo pipefail
 printf '{"module":"test_re","case":"test_re.Streaming.test_first","status":"pass"}\\n'
 while [[ ! -f ${JSON.stringify(continueFile)} ]]; do sleep 0.05; done
 printf '{"module":"test_re","case":"test_re.Streaming.test_second","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -390,6 +396,7 @@ printf '%s\\n' "\${modules[@]}" > ${JSON.stringify(root)}/shard-$$.args
 for module in "\${modules[@]}"; do
   printf '{"module":"%s","case":"%s.Case.test","status":"pass"}\\n' "$module" "$module"
 done
+printf '{"driver": "complete"}\\n'
 `,
   );
   const ctx: AdapterContext = {
@@ -417,4 +424,49 @@ done
     .flatMap((entry) => readFileSync(join(root, entry), "utf8").trim().split(/\n/).filter(Boolean))
     .sort();
   expect(shardModules).toEqual(["test_a", "test_b", "test_c"]);
+});
+
+test("fails the run when the Elide under test has no Python support", async () => {
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re", "test_json"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+echo "Python support is not installed. Run 'elide setup python' to add it." >&2
+exit 2
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 2,
+    settings: { manifest, timeoutMs: 5_000 },
+    workspacePath: join(root, "workspace"),
+  };
+
+  await expect(collect(runCpythonCore(ctx))).rejects.toThrow(/no Python support.*\n.*PYTHON=yes/s);
+});
+
+test("selectCpythonModules keeps modules the pattern or its leading dotted segment matches", () => {
+  const modules = ["test_ast", "test_time", "test_datetime", "test_json", "test_re"];
+  expect(selectCpythonModules(modules, undefined)).toBe(modules);
+  expect(selectCpythonModules(modules, ["*time*"])).toEqual(["test_time", "test_datetime"]);
+  expect(selectCpythonModules(modules, ["test_ast.*literal_eval*"])).toEqual(["test_ast"]);
+  expect(selectCpythonModules(modules, ["test_ast.test_ast.AST_Tests.test_dump", "test_json"])).toEqual(["test_ast", "test_json"]);
+  expect(selectCpythonModules(modules, ["*.ReTests.*"])).toEqual(modules); // head `*`: every module, driver prunes cases
+});
+
+test("cpythonMatchArgs hands the driver one --match-re per pattern", () => {
+  expect(cpythonMatchArgs(undefined)).toEqual([]);
+  const args = cpythonMatchArgs(["test_ast.*literal_eval*"]);
+  expect(args[0]).toBe("--match-re");
+  expect(new RegExp(args[1], "i").test("test_ast.test_ast.ASTHelpers_Test.test_literal_eval_str_int_limit")).toBe(true);
+  expect(new RegExp(args[1], "i").test("test_ast.test_ast.AST_Tests.test_dump")).toBe(false);
 });

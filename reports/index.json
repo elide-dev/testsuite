@@ -1,6 +1,78 @@
 {
   "runs": [
     {
+      "workload": "node-api",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 886,
+      "total": 1563,
+      "skip": 347,
+      "regressions": 1,
+      "newPasses": 34,
+      "finishedAt": "2026-09-25T19:16:08.798Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/node-api"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 3884,
+      "total": 4484,
+      "skip": 425,
+      "regressions": 121,
+      "newPasses": 6,
+      "finishedAt": "2026-09-25T19:15:24.687Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "85762dd3efe4",
+      "pass": 17435,
+      "total": 21660,
+      "skip": 2979,
+      "regressions": 172,
+      "newPasses": 371,
+      "finishedAt": "2026-09-25T19:13:29.665Z",
+      "reportDir": "1.6.0+dd7116a51/85762dd3efe4/wpt-wintertc"
+    },
+    {
+      "workload": "node-api",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "2cccc16871e1",
+      "pass": 887,
+      "total": 1563,
+      "skip": 347,
+      "regressions": 1,
+      "newPasses": 35,
+      "finishedAt": "2026-09-25T18:28:05.079Z",
+      "reportDir": "1.6.0+dd7116a51/2cccc16871e1/node-api"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "2cccc16871e1",
+      "pass": 3866,
+      "total": 4453,
+      "skip": 422,
+      "regressions": 119,
+      "newPasses": 7,
+      "finishedAt": "2026-09-25T18:26:43.853Z",
+      "reportDir": "1.6.0+dd7116a51/2cccc16871e1/cpython-core"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.6.0+dd7116a51",
+      "digest": "2cccc16871e1",
+      "pass": 17435,
+      "total": 21660,
+      "skip": 2979,
+      "regressions": 172,
+      "newPasses": 371,
+      "finishedAt": "2026-09-25T18:25:29.873Z",
+      "reportDir": "1.6.0+dd7116a51/2cccc16871e1/wpt-wintertc"
+    },
+    {
       "workload": "test262",
       "semver": "1.4.99+8b374d579",
       "digest": "4094eb2fb1ff",
@@ -8,6 +80,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-08-31T23:46:11.051Z",
       "reportDir": "1.4.99+8b374d579/4094eb2fb1ff/test262"
     },
@@ -19,6 +92,7 @@
       "total": 3934,
       "skip": 274,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-08-31T23:38:20.682Z",
       "reportDir": "1.4.99+8b374d579/4094eb2fb1ff/javac-jtreg"
     },
@@ -30,6 +104,7 @@
       "total": 1563,
       "skip": 348,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-08-31T23:37:16.669Z",
       "reportDir": "1.4.99+8b374d579/4094eb2fb1ff/node-api"
     },
@@ -41,6 +116,7 @@
       "total": 5822,
       "skip": 243,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-08-31T23:35:33.674Z",
       "reportDir": "1.4.99+8b374d579/4094eb2fb1ff/cpython-core"
     },
@@ -52,6 +128,7 @@
       "total": 15690,
       "skip": 1455,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-08-31T23:33:49.459Z",
       "reportDir": "1.4.99+8b374d579/4094eb2fb1ff/wpt-wintertc"
     },
@@ -63,6 +140,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-20T02:32:31.053Z",
       "reportDir": "1.4.2+8bf2c6fb1/dce38dd7dc4c/test262"
     },
@@ -74,6 +152,7 @@
       "total": 1563,
       "skip": 344,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-20T02:25:45.911Z",
       "reportDir": "1.4.2+8bf2c6fb1/dce38dd7dc4c/node-api"
     },
@@ -85,6 +164,7 @@
       "total": 3934,
       "skip": 274,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-20T02:25:18.539Z",
       "reportDir": "1.4.2+8bf2c6fb1/dce38dd7dc4c/javac-jtreg"
     },
@@ -96,6 +176,7 @@
       "total": 5822,
       "skip": 242,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-20T02:21:49.962Z",
       "reportDir": "1.4.2+8bf2c6fb1/dce38dd7dc4c/cpython-core"
     },
@@ -107,6 +188,7 @@
       "total": 15171,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-20T02:20:28.588Z",
       "reportDir": "1.4.2+8bf2c6fb1/dce38dd7dc4c/wpt-wintertc"
     },
@@ -118,6 +200,7 @@
       "total": 103361,
       "skip": 10587,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-17T21:06:56.786Z",
       "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/test262"
     },
@@ -129,6 +212,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-17T20:58:52.135Z",
       "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/javac-jtreg"
     },
@@ -140,6 +224,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-17T20:52:51.868Z",
       "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/node-api"
     },
@@ -151,6 +236,7 @@
       "total": 1865,
       "skip": 103,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-17T20:47:59.909Z",
       "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/cpython-core"
     },
@@ -162,6 +248,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-17T20:46:39.248Z",
       "reportDir": "1.4.1+20260716.b8b6531/3d3ea83ed640/wpt-wintertc"
     },
@@ -173,6 +260,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-15T00:55:02.773Z",
       "reportDir": "1.4.1+d089fc65d/4efe10f815d4/test262"
     },
@@ -184,6 +272,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-15T00:45:33.077Z",
       "reportDir": "1.4.1+d089fc65d/4efe10f815d4/javac-jtreg"
     },
@@ -195,6 +284,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 1,
       "finishedAt": "2026-07-15T00:43:42.806Z",
       "reportDir": "1.4.1+d089fc65d/4efe10f815d4/node-api"
     },
@@ -206,6 +296,7 @@
       "total": 6851,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 36,
       "finishedAt": "2026-07-15T00:42:56.763Z",
       "reportDir": "1.4.1+d089fc65d/4efe10f815d4/cpython-core"
     },
@@ -217,6 +308,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-15T00:40:33.315Z",
       "reportDir": "1.4.1+d089fc65d/4efe10f815d4/wpt-wintertc"
     },
@@ -228,6 +320,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-07T01:48:15.866Z",
       "reportDir": "1.4.0+5e7d6a48e/dd28294684cf/test262"
     },
@@ -239,6 +332,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-07T01:41:19.360Z",
       "reportDir": "1.4.0+5e7d6a48e/dd28294684cf/javac-jtreg"
     },
@@ -250,6 +344,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 1,
+      "newPasses": 1,
       "finishedAt": "2026-07-07T01:39:58.268Z",
       "reportDir": "1.4.0+5e7d6a48e/dd28294684cf/node-api"
     },
@@ -261,6 +356,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 5,
       "finishedAt": "2026-07-07T01:38:27.498Z",
       "reportDir": "1.4.0+5e7d6a48e/dd28294684cf/cpython-core"
     },
@@ -272,6 +368,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-07T01:36:39.982Z",
       "reportDir": "1.4.0+5e7d6a48e/dd28294684cf/wpt-wintertc"
     },
@@ -283,6 +380,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-06T22:41:38.153Z",
       "reportDir": "1.4.0+1dd82c7d1/89f18cc38a8a/test262"
     },
@@ -294,6 +392,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-06T22:31:54.990Z",
       "reportDir": "1.4.0+1dd82c7d1/89f18cc38a8a/javac-jtreg"
     },
@@ -305,6 +404,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 1,
       "finishedAt": "2026-07-06T22:30:11.383Z",
       "reportDir": "1.4.0+1dd82c7d1/89f18cc38a8a/node-api"
     },
@@ -316,6 +416,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 5,
       "finishedAt": "2026-07-06T22:29:15.676Z",
       "reportDir": "1.4.0+1dd82c7d1/89f18cc38a8a/cpython-core"
     },
@@ -327,6 +428,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-06T22:26:46.057Z",
       "reportDir": "1.4.0+1dd82c7d1/89f18cc38a8a/wpt-wintertc"
     },
@@ -338,6 +440,7 @@
       "total": 103361,
       "skip": 7187,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T20:56:05.249Z",
       "reportDir": "1.4.0+e90472917/5bd510eb4c72/test262"
     },
@@ -349,6 +452,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T20:46:16.305Z",
       "reportDir": "1.4.0+e90472917/5bd510eb4c72/javac-jtreg"
     },
@@ -360,6 +464,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 2,
       "finishedAt": "2026-07-05T20:44:24.881Z",
       "reportDir": "1.4.0+e90472917/5bd510eb4c72/node-api"
     },
@@ -371,6 +476,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 5,
       "finishedAt": "2026-07-05T20:43:31.898Z",
       "reportDir": "1.4.0+e90472917/5bd510eb4c72/cpython-core"
     },
@@ -382,6 +488,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T20:41:01.194Z",
       "reportDir": "1.4.0+e90472917/5bd510eb4c72/wpt-wintertc"
     },
@@ -393,6 +500,7 @@
       "total": 780,
       "skip": 4,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T19:20:46.095Z",
       "reportDir": "1.4.0+74fd89408/2d434594fa00/test262"
     },
@@ -404,6 +512,7 @@
       "total": 780,
       "skip": 0,
       "regressions": 222,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T19:09:37.069Z",
       "reportDir": "1.4.0+801fbbc34/6c16d7655051/test262"
     },
@@ -415,6 +524,7 @@
       "total": 6682,
       "skip": 4058,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T18:21:14.923Z",
       "reportDir": "1.4.0+edea5ebd9/d0a092aa83f7/test262"
     },
@@ -426,6 +536,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T18:07:20.895Z",
       "reportDir": "1.4.0+edea5ebd9/d0a092aa83f7/javac-jtreg"
     },
@@ -437,6 +548,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T18:05:53.363Z",
       "reportDir": "1.4.0+edea5ebd9/d0a092aa83f7/node-api"
     },
@@ -448,6 +560,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T18:04:29.376Z",
       "reportDir": "1.4.0+edea5ebd9/d0a092aa83f7/cpython-core"
     },
@@ -459,6 +572,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-05T18:02:34.186Z",
       "reportDir": "1.4.0+edea5ebd9/d0a092aa83f7/wpt-wintertc"
     },
@@ -470,6 +584,7 @@
       "total": 103361,
       "skip": 10587,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T21:38:22.840Z",
       "reportDir": "1.4.0+fe8ca1ef6/eae94dd2ac6f/test262"
     },
@@ -481,6 +596,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T21:31:23.645Z",
       "reportDir": "1.4.0+fe8ca1ef6/eae94dd2ac6f/javac-jtreg"
     },
@@ -492,6 +608,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T21:30:01.995Z",
       "reportDir": "1.4.0+fe8ca1ef6/eae94dd2ac6f/node-api"
     },
@@ -503,6 +620,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T21:28:28.709Z",
       "reportDir": "1.4.0+fe8ca1ef6/eae94dd2ac6f/cpython-core"
     },
@@ -514,6 +632,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T21:26:44.496Z",
       "reportDir": "1.4.0+fe8ca1ef6/eae94dd2ac6f/wpt-wintertc"
     },
@@ -525,6 +644,7 @@
       "total": 103361,
       "skip": 10587,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T19:10:32.500Z",
       "reportDir": "1.4.0+2c357b1e3/6fdd4c41f473/test262"
     },
@@ -536,6 +656,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T19:03:40.353Z",
       "reportDir": "1.4.0+2c357b1e3/6fdd4c41f473/javac-jtreg"
     },
@@ -547,6 +668,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T19:02:16.464Z",
       "reportDir": "1.4.0+2c357b1e3/6fdd4c41f473/node-api"
     },
@@ -558,6 +680,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T19:00:49.240Z",
       "reportDir": "1.4.0+2c357b1e3/6fdd4c41f473/cpython-core"
     },
@@ -569,6 +692,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-04T18:59:01.423Z",
       "reportDir": "1.4.0+2c357b1e3/6fdd4c41f473/wpt-wintertc"
     },
@@ -580,6 +704,7 @@
       "total": 103361,
       "skip": 10587,
       "regressions": 113,
+      "newPasses": 495,
       "finishedAt": "2026-07-03T22:43:52.299Z",
       "reportDir": "1.4.0+4a7803beb/611c87beec05/test262"
     },
@@ -591,6 +716,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T22:34:50.270Z",
       "reportDir": "1.4.0+4a7803beb/611c87beec05/javac-jtreg"
     },
@@ -602,6 +728,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 32,
       "finishedAt": "2026-07-03T22:33:14.190Z",
       "reportDir": "1.4.0+4a7803beb/611c87beec05/node-api"
     },
@@ -613,6 +740,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T22:32:16.533Z",
       "reportDir": "1.4.0+4a7803beb/611c87beec05/cpython-core"
     },
@@ -624,6 +752,7 @@
       "total": 14575,
       "skip": 661,
       "regressions": 1102,
+      "newPasses": 172,
       "finishedAt": "2026-07-03T22:29:49.385Z",
       "reportDir": "1.4.0+4a7803beb/611c87beec05/wpt-wintertc"
     },
@@ -635,6 +764,7 @@
       "total": 1377,
       "skip": 118,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T17:00:54.733Z",
       "reportDir": "1.4.0+eaef25c61/ecf9c74d8466/test262"
     },
@@ -646,6 +776,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T16:13:06.036Z",
       "reportDir": "1.4.0+eaef25c61/ecf9c74d8466/javac-jtreg"
     },
@@ -657,6 +788,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 12,
       "finishedAt": "2026-07-03T16:10:24.037Z",
       "reportDir": "1.4.0+eaef25c61/ecf9c74d8466/node-api"
     },
@@ -668,6 +800,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T16:09:46.910Z",
       "reportDir": "1.4.0+eaef25c61/ecf9c74d8466/cpython-core"
     },
@@ -679,6 +812,7 @@
       "total": 14544,
       "skip": 661,
       "regressions": 1092,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T16:07:16.825Z",
       "reportDir": "1.4.0+eaef25c61/ecf9c74d8466/wpt-wintertc"
     },
@@ -690,6 +824,7 @@
       "total": 37139,
       "skip": 1997,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T04:33:53.156Z",
       "reportDir": "1.4.0+f3e1d901f/cdd2b244210c/test262"
     },
@@ -701,6 +836,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T04:32:37.853Z",
       "reportDir": "1.4.0+f3e1d901f/cdd2b244210c/javac-jtreg"
     },
@@ -712,6 +848,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T04:30:12.317Z",
       "reportDir": "1.4.0+f3e1d901f/cdd2b244210c/node-api"
     },
@@ -723,6 +860,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T04:29:45.974Z",
       "reportDir": "1.4.0+f3e1d901f/cdd2b244210c/cpython-core"
     },
@@ -734,6 +872,7 @@
       "total": 7650,
       "skip": 661,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T04:27:22.139Z",
       "reportDir": "1.4.0+f3e1d901f/cdd2b244210c/wpt-wintertc"
     },
@@ -745,6 +884,7 @@
       "total": 6291,
       "skip": 661,
       "regressions": 1639,
+      "newPasses": 219,
       "finishedAt": "2026-07-03T02:02:38.828Z",
       "reportDir": "1.4.0+48fa1f4f6/019e3f7a34bb/wpt-wintertc"
     },
@@ -756,6 +896,7 @@
       "total": 103361,
       "skip": 10256,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T01:35:18.766Z",
       "reportDir": "1.4.0+48fa1f4f6/019e3f7a34bb/test262"
     },
@@ -767,6 +908,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T01:27:46.292Z",
       "reportDir": "1.4.0+48fa1f4f6/019e3f7a34bb/javac-jtreg"
     },
@@ -778,6 +920,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T01:25:01.162Z",
       "reportDir": "1.4.0+48fa1f4f6/019e3f7a34bb/node-api"
     },
@@ -789,6 +932,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T01:24:52.793Z",
       "reportDir": "1.4.0+48fa1f4f6/019e3f7a34bb/cpython-core"
     },
@@ -800,6 +944,7 @@
       "total": 1563,
       "skip": 345,
       "regressions": 2,
+      "newPasses": 206,
       "finishedAt": "2026-07-03T00:50:29.706Z",
       "reportDir": "1.4.0+48fa1f4f6/08afc26bcec1/node-api"
     },
@@ -811,6 +956,7 @@
       "total": 1563,
       "skip": 343,
       "regressions": 2,
+      "newPasses": 199,
       "finishedAt": "2026-07-03T00:39:01.903Z",
       "reportDir": "1.4.0+48fa1f4f6/49df108fc4b8/node-api"
     },
@@ -822,6 +968,7 @@
       "total": 1,
       "skip": 0,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-03T00:16:44.287Z",
       "reportDir": "1.4.0+48fa1f4f6/6d808bff2407/node-api"
     },
@@ -833,6 +980,7 @@
       "total": 1563,
       "skip": 299,
       "regressions": 2,
+      "newPasses": 184,
       "finishedAt": "2026-07-02T23:36:43.174Z",
       "reportDir": "1.4.0+48fa1f4f6/d256b49f15ac/node-api"
     },
@@ -844,6 +992,7 @@
       "total": 1563,
       "skip": 299,
       "regressions": 2,
+      "newPasses": 168,
       "finishedAt": "2026-07-02T23:17:18.920Z",
       "reportDir": "1.4.0+48fa1f4f6/f41b0353f4b5/node-api"
     },
@@ -855,6 +1004,7 @@
       "total": 1563,
       "skip": 156,
       "regressions": 2,
+      "newPasses": 112,
       "finishedAt": "2026-07-02T22:22:39.536Z",
       "reportDir": "1.4.0+f97795e57/12389379467d/node-api"
     },
@@ -866,6 +1016,7 @@
       "total": 1563,
       "skip": 156,
       "regressions": 2,
+      "newPasses": 112,
       "finishedAt": "2026-07-02T21:03:53.355Z",
       "reportDir": "1.4.0+7dced7031/bee2c2cef0f8/node-api"
     },
@@ -877,6 +1028,7 @@
       "total": 103361,
       "skip": 10256,
       "regressions": 23,
+      "newPasses": 4531,
       "finishedAt": "2026-07-02T17:08:43.765Z",
       "reportDir": "1.4.0+7dced7031/6574f10b0f51/test262"
     },
@@ -888,6 +1040,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-02T17:01:15.565Z",
       "reportDir": "1.4.0+7dced7031/6574f10b0f51/javac-jtreg"
     },
@@ -899,6 +1052,7 @@
       "total": 1563,
       "skip": 156,
       "regressions": 2,
+      "newPasses": 105,
       "finishedAt": "2026-07-02T17:00:17.827Z",
       "reportDir": "1.4.0+7dced7031/6574f10b0f51/node-api"
     },
@@ -910,6 +1064,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 3,
       "finishedAt": "2026-07-02T16:57:30.123Z",
       "reportDir": "1.4.0+7dced7031/6574f10b0f51/cpython-core"
     },
@@ -921,6 +1076,7 @@
       "total": 2393,
       "skip": 0,
       "regressions": 6,
+      "newPasses": 0,
       "finishedAt": "2026-07-02T16:55:14.275Z",
       "reportDir": "1.4.0+7dced7031/6574f10b0f51/wpt-wintertc"
     },
@@ -932,6 +1088,7 @@
       "total": 103361,
       "skip": 10256,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-01T21:59:43.089Z",
       "reportDir": "1.4.0+ff263a815/f35eaed61d09/test262"
     },
@@ -943,6 +1100,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-01T21:52:23.587Z",
       "reportDir": "1.4.0+ff263a815/f35eaed61d09/javac-jtreg"
     },
@@ -954,6 +1112,7 @@
       "total": 1563,
       "skip": 157,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-01T21:51:38.758Z",
       "reportDir": "1.4.0+ff263a815/f35eaed61d09/node-api"
     },
@@ -965,6 +1124,7 @@
       "total": 6852,
       "skip": 277,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-01T21:49:01.658Z",
       "reportDir": "1.4.0+ff263a815/f35eaed61d09/cpython-core"
     },
@@ -976,6 +1136,7 @@
       "total": 2300,
       "skip": 0,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-07-01T21:46:50.075Z",
       "reportDir": "1.4.0+ff263a815/f35eaed61d09/wpt-wintertc"
     },
@@ -987,6 +1148,7 @@
       "total": 103361,
       "skip": 10256,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-29T20:09:19.468Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/test262"
     },
@@ -998,6 +1160,7 @@
       "total": 3934,
       "skip": 232,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-29T20:04:28.512Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/javac-jtreg"
     },
@@ -1009,6 +1172,7 @@
       "total": 1563,
       "skip": 157,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-29T19:57:46.632Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/node-api"
     },
@@ -1020,6 +1184,7 @@
       "total": 1972,
       "skip": 80,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-29T19:56:10.369Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/cpython-core"
     },
@@ -1031,6 +1196,7 @@
       "total": 2300,
       "skip": 0,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-29T19:54:35.081Z",
       "reportDir": "1.3.6+20260629.e4591fc/3d3ea83ed640/wpt-wintertc"
     },
@@ -1042,6 +1208,7 @@
       "total": 1563,
       "skip": 157,
       "regressions": 1367,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T23:57:42.981Z",
       "reportDir": "1.3.6+20260628.e4591fc/3d3ea83ed640/node-api"
     },
@@ -1053,6 +1220,7 @@
       "total": 12964,
       "skip": 726,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T05:56:31.805Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/cpython-core"
     },
@@ -1064,6 +1232,7 @@
       "total": 103361,
       "skip": 10256,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T04:38:17.260Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/test262"
     },
@@ -1075,6 +1244,7 @@
       "total": 3934,
       "skip": 4,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T04:32:57.657Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/javac-jtreg"
     },
@@ -1086,6 +1256,7 @@
       "total": 2300,
       "skip": 0,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T04:25:04.738Z",
       "reportDir": "1.3.5+20260628.3b80cf3/3583aceded8e/wpt-wintertc"
     },
@@ -1097,6 +1268,7 @@
       "total": 4564,
       "skip": 448,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T02:08:18.298Z",
       "reportDir": "1.3.5+20260628.3b80cf3/c8be44d98f1f/cpython-core"
     },
@@ -1108,6 +1280,7 @@
       "total": 2937,
       "skip": 4,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-28T01:27:56.248Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/javac-jtreg"
     },
@@ -1119,6 +1292,7 @@
       "total": 92276,
       "skip": 780,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-27T19:23:31.987Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/test262"
     },
@@ -1130,6 +1304,7 @@
       "total": 1017,
       "skip": 527,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-27T19:16:00.736Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/cpython-core"
     },
@@ -1141,6 +1316,7 @@
       "total": 64,
       "skip": 0,
       "regressions": 0,
+      "newPasses": 0,
       "finishedAt": "2026-06-27T19:15:25.591Z",
       "reportDir": "1.3.5+20260626.bfb28f6/c8be44d98f1f/wpt-wintertc"
     }
