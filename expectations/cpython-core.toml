@@ -86,8 +86,8 @@
 
 # --- Driver-truncating hangs (run 1.6.0+83f5b7e6d, 2026-09-26) ---
 # A case that exceeds the 65 s driver limit ends its whole module; gate each so the rest runs.
-"test_shutil.TestArchives.test_tarfile_vs_tar" = "Hangs past the driver limit comparing against the system tar"
 "test_zipfile64.TestsWithSourceFile.testDeflated" = "Multi-GB zip64 stress exceeds the driver limit"
+"test_zipfile64.TestsWithSourceFile.testStored" = "Multi-GB zip64 stress exceeds the driver limit"
 "test_socket.GeneralModuleTests.test_sendall_interrupted" = "SIGALRM does not interrupt a blocking native sendall; hangs and truncates test_socket"
 "test_signal.ItimerTest.test_itimer_virtual" = "setitimer(ITIMER_VIRTUAL, 0) does not disarm; the stray SIGVTALRM kills a later module's driver"
 "test_signal.ItimerTest.test_itimer_prof" = "setitimer(ITIMER_PROF, 0) disarm has the same stray-signal hazard as ITIMER_VIRTUAL"
