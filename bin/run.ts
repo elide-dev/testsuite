@@ -22,6 +22,7 @@ import { availableParallelism } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classifySuiteStatus, floorAdvance } from "./suite-status";
+import { packItems, renderSummaryTable, terminalWidth, type SummaryRow } from "./summary-table";
 import { parseFilterSpecs, patternsForSuite, selectSuites } from "../harness/src/filter";
 import {
   ROOT,
@@ -488,7 +489,7 @@ function statusLabel(row: SuiteSummaryRow): string {
   return STATUS_LABEL[status](status);
 }
 
-function changesLabel(row: SuiteSummaryRow): string {
+function changesLabel(row: SuiteSummaryRow): string[] {
   const parts: string[] = [];
   const expRegressions = row.current?.regressions.length ?? 0;
   if (row.current?.newPasses.length) parts.push(ansi.green(`✨ ${row.current.newPasses.length} new passes`));
@@ -506,41 +507,28 @@ function changesLabel(row: SuiteSummaryRow): string {
     if (expRegressions) parts.push(ansi.red(`🚨 ${expRegressions} regressions`));
     if (!parts.length) parts.push(ansi.dim("baseline n/a"));
   }
-  return parts.join(", ");
-}
-
-// Display width: Bun.stringWidth handles ANSI escapes AND double-width
-// glyphs (emoji), which .length miscounts — that's what broke the box borders.
-function visibleWidth(value: string): number {
-  return Bun.stringWidth(value);
-}
-
-function padVisible(value: string, width: number): string {
-  return value + " ".repeat(Math.max(0, width - visibleWidth(value)));
+  return parts;
 }
 
 function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
   const headers = ["Suite", "Status", "Pass rate", "vs expected", "Δ", "Pass/Total", "Fail", "Err", "Skip", "Changes"];
-  const body = rows.map((row) => {
+  const body = rows.map((row): SummaryRow => {
     const counts = row.current?.counts;
-    return [
-      row.suite,
-      statusLabel(row),
-      formatPercent(overallPassRate(row.current)),
-      formatPercent(expectationPassRate(row.current)),
-      formatDelta(row.current, row.previous),
-      counts ? `${counts.pass}/${counts.total}` : "n/a",
-      counts ? String(counts.fail) : "n/a",
-      counts ? String(counts.error) : "n/a",
-      counts ? String(counts.skip) : "n/a",
-      changesLabel(row),
-    ];
+    return {
+      cells: [
+        row.suite,
+        statusLabel(row),
+        formatPercent(overallPassRate(row.current)),
+        formatPercent(expectationPassRate(row.current)),
+        formatDelta(row.current, row.previous),
+        counts ? `${counts.pass}/${counts.total}` : "n/a",
+        counts ? String(counts.fail) : "n/a",
+        counts ? String(counts.error) : "n/a",
+        counts ? String(counts.skip) : "n/a",
+      ],
+      notes: changesLabel(row),
+    };
   });
-  const widths = headers.map((header, i) => Math.max(header.length, ...body.map((row) => visibleWidth(row[i]))));
-  const line = (cells: string[]): string => `│ ${cells.map((cell, i) => padVisible(cell, widths[i])).join(" │ ")} │`;
-  const sep = `├${widths.map((width) => "─".repeat(width + 2)).join("┼")}┤`;
-  const top = `┌${widths.map((width) => "─".repeat(width + 2)).join("┬")}┐`;
-  const bottom = `└${widths.map((width) => "─".repeat(width + 2)).join("┴")}┘`;
   const totalPass = rows.reduce((sum, row) => sum + (row.current?.counts.pass ?? 0), 0);
   const totalTests = rows.reduce((sum, row) => sum + (row.current?.counts.total ?? 0), 0);
   const totalExpRegressions = rows.reduce((sum, row) => sum + (row.current?.regressions.length ?? 0), 0);
@@ -577,19 +565,19 @@ function renderFinalSuiteSummary(rows: SuiteSummaryRow[]): void {
             : ansi.green("🟢 No regressions across selected suites");
   const totalOnFloor = Math.max(0, totalTests - totalExpRegressions);
 
+  const width = terminalWidth();
+  const stats = [
+    `Selected suites: ${rows.length}`,
+    `Overall pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} (all tests, incl. skipped)`,
+    `vs expectations: ${formatPercent(totalTests ? totalOnFloor / totalTests : undefined)}`,
+    `New passes: ${totalNewPasses}`,
+  ];
+
   process.stderr.write("\n");
   process.stderr.write(`${ansi.bold("Compliance Summary")} ${headline}\n`);
-  process.stderr.write(
-    `${ansi.dim(
-      `Selected suites: ${rows.length} · Overall pass rate: ${formatPercent(totalTests ? totalPass / totalTests : undefined)} (all tests, incl. skipped)` +
-        ` · vs expectations: ${formatPercent(totalTests ? totalOnFloor / totalTests : undefined)} · New passes: ${totalNewPasses}`,
-    )}\n`,
-  );
-  process.stderr.write(`${top}\n`);
-  process.stderr.write(`${line(headers.map((header) => ansi.bold(header)))}\n`);
-  process.stderr.write(`${sep}\n`);
-  for (const row of body) process.stderr.write(`${line(row)}\n`);
-  process.stderr.write(`${bottom}\n\n`);
+  for (const line of packItems(stats, width, " · ")) process.stderr.write(`${ansi.dim(line)}\n`);
+  for (const line of renderSummaryTable(headers, body, width, ansi.bold)) process.stderr.write(`${line}\n`);
+  process.stderr.write("\n");
 }
 
 async function main(argv = Bun.argv.slice(2)): Promise<number> {
