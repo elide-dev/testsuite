@@ -3,7 +3,14 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
 import type { AdapterContext } from "./types";
-import { expandNodeApiManifestPaths, readNodeTestMetadata, runNodeApi, usesNodeTest } from "./node-api";
+import {
+  NODE_INTERNALS_SKIP,
+  expandNodeApiManifestPaths,
+  readNodeTestMetadata,
+  requiresNodeInternals,
+  runNodeApi,
+  usesNodeTest,
+} from "./node-api";
 
 function collect<T>(items: AsyncIterable<T>): Promise<T[]> {
   return Array.fromAsync(items);
@@ -256,7 +263,7 @@ test("runs node:test files through elide test from an overlay-root entry", async
   mkdirSync(workspacePath, { recursive: true });
   writeFileSync(
     join(suitePath, "test/parallel/test-url-x.js"),
-    "// Flags: --expose-internals\n'use strict';\nrequire('../common');\nconst test = require('node:test');\ntest('x', () => {});\n",
+    "// Flags: --expose-gc\n'use strict';\nrequire('../common');\nconst test = require('node:test');\ntest('x', () => {});\n",
   );
   writeFileSync(manifest, '[[group]]\nid = "url"\ninclude = ["test/parallel/test-url-*.js"]\n');
   // Emulates `elide test`: TAP on stdout, the build summary on stderr, and a failed file.
@@ -302,11 +309,18 @@ exit 1
     "tap",
     entry,
     "--",
-    "--expose-internals",
+    "--expose-gc",
   ]);
   const source = readFileSync(entryLog, "utf8");
   expect(source).toContain("require(\"./test/parallel/test-url-x.js\")");
   expect(source).toContain("process.emit('exit', process.exitCode ?? 0)");
+});
+
+test("tests that need Node internals are skipped with the exclusion marker", () => {
+  expect(requiresNodeInternals("// Flags: --expose-internals\n'use strict';\n")).toBe(true);
+  expect(requiresNodeInternals("'use strict';\nconst { x } = require('internal/util');\n")).toBe(true);
+  expect(requiresNodeInternals("// Flags: --expose-gc\n'use strict';\n")).toBe(false);
+  expect(NODE_INTERNALS_SKIP).toMatch(/^requires --expose-internals/);
 });
 
 test("skipped tests are never launched", async () => {

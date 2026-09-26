@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { parse } from "smol-toml";
 
-export type ExpectedStatus = "pass" | "fail" | "skip";
+export type ExpectedStatus = "pass" | "fail" | "skip" | "exclude";
 
 export interface ExpectationEntry {
   glob: string;
@@ -9,15 +9,26 @@ export interface ExpectationEntry {
   reason: string;
 }
 
+/** A runtime skip whose message matches `pattern` is out of scope and leaves the denominator. */
+export interface ExcludedSkip {
+  pattern: RegExp;
+  reason: string;
+}
+
 export interface Expectations {
   entries: ExpectationEntry[];
   ratchet: Set<string>;
+  // `[exclude-skipped]`: message patterns for skips the suite itself reports as not applicable to
+  // this runtime (e.g. CPython implementation details, other platforms).
+  excludedSkips?: ExcludedSkip[];
 }
 
 export function parseExpectations(toml: string): Expectations {
   const raw = parse(toml) as {
     skip?: Record<string, string>;
     fail?: Record<string, string>;
+    exclude?: Record<string, string>;
+    "exclude-skipped"?: Record<string, string>;
   };
   const entries: ExpectationEntry[] = [];
   for (const [glob, reason] of Object.entries(raw.skip ?? {})) {
@@ -26,7 +37,14 @@ export function parseExpectations(toml: string): Expectations {
   for (const [glob, reason] of Object.entries(raw.fail ?? {})) {
     entries.push({ glob, expected: "fail", reason });
   }
-  return { entries, ratchet: new Set<string>() };
+  for (const [glob, reason] of Object.entries(raw.exclude ?? {})) {
+    entries.push({ glob, expected: "exclude", reason });
+  }
+  const excludedSkips = Object.entries(raw["exclude-skipped"] ?? {}).map(([pattern, reason]) => ({
+    pattern: new RegExp(pattern, "i"),
+    reason,
+  }));
+  return { entries, ratchet: new Set<string>(), excludedSkips };
 }
 
 export function loadExpectations(path: string): Expectations {
@@ -39,6 +57,7 @@ export function loadExpectations(path: string): Expectations {
   return exp;
 }
 
+/** Globs the adapter should not run: suppressed (`[skip]`) and out-of-scope (`[exclude]`) tests. */
 export function skipGlobs(exp: Expectations): string[] {
-  return exp.entries.filter((e) => e.expected === "skip").map((e) => e.glob);
+  return exp.entries.filter((e) => e.expected === "skip" || e.expected === "exclude").map((e) => e.glob);
 }

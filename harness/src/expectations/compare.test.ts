@@ -158,3 +158,32 @@ test("wpt-wintertc baseline skips unreachable tests but keeps window.js files th
   expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure, not skipped
   expect(scoredTotal(c.counts)).toBe(3); // only the four unreachable tests leave the denominator
 });
+
+test("excluded tests leave every count and rate; excluded skips match only real skips", () => {
+  const exp = parseExpectations(`
+[exclude]
+"internal/*.js" = "out of scope"
+
+[exclude-skipped]
+"specific to cpython" = "CPython implementation detail"
+`);
+  const t = (id: string, status: TestResult["status"], message?: string): TestResult => ({
+    kind: "test",
+    id,
+    status,
+    message,
+  });
+  const c = compare(
+    [
+      t("a.js", "pass"),
+      t("internal/b.js", "fail"),
+      t("c.py", "skip", "implementation detail specific to CPython"),
+      t("d.py", "skip", "don't have recvmsg"),
+      t("e.py", "fail", "implementation detail specific to CPython"),
+    ],
+    exp,
+  );
+  expect(c.counts).toEqual({ pass: 1, fail: 1, skip: 1, error: 0, total: 3, excluded: 2 });
+  expect(overallPassRate(c.counts)).toBeCloseTo(1 / 3);
+  expect(c.regressions.map((r) => r.id)).toEqual(["e.py"]);
+});

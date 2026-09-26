@@ -1,6 +1,28 @@
 # CPython 3.12 pure-core expectations baseline.
 # Keys are picomatch globs over CPython module names or unittest case ids.
 
+# Skips CPython itself takes on linux-x64 (implementation details, C accelerators and C-API test
+# modules, other platforms) are out of scope: matching skip messages count in no pass rate. Gaps
+# in Elide/GraalPy (fork, recvmsg, poll/epoll selectors, ...) stay in the denominator.
+[exclude-skipped]
+# CPython internals: C-level details and CPython-only test modules.
+"implementation detail specific to cpython" = "CPython implementation detail"
+"specific to CPython" = "CPython implementation detail"
+"not relevant in pure python" = "CPython C-accelerator detail"
+"requires C version" = "tests the C accelerator of a module that also ships a Python version"
+"requires the C _\\w+ module" = "tests a CPython C accelerator module"
+"^requires _(heapq|statistics|elementtree|asyncio|uuid|decimal|json|bisect|datetime)$" = "tests a CPython C accelerator module"
+"^need _stat extension" = "tests a CPython C accelerator module"
+"_test(internal)?capi\\b|_testlimitedcapi|_testembed|_testmultiphase|_testsinglephase" = "CPython C-API test module"
+"debug build" = "needs a CPython debug build"
+"subinterpreters required" = "CPython subinterpreters"
+# Other platforms: skipped by CPython itself on linux-x64.
+"windows|win32|code pages" = "Windows-only"
+"\\bos x\\b|macos|darwin" = "macOS-only"
+"kqueue|devpoll" = "BSD/Solaris-only selector"
+"32-bit" = "32-bit platforms only"
+"case-insensitive filesystem" = "case-insensitive filesystems only"
+
 [skip]
 "test_re.ReTests.test_look_behind_overflow" = "Pathological large fixed-width lookbehind test is too slow under Elide Python"
 "test_bytes.ByteArrayAsStringTest.test_adaptive_find" = "Pathological string-search complexity test hangs under Elide Python"

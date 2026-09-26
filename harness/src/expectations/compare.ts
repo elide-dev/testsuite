@@ -6,7 +6,8 @@ export interface Comparison {
   regressions: TestResult[]; // expected pass, actual fail/error
   newPasses: TestResult[]; // expected fail, actual pass
   observed: TestResult[]; // non-skipped tests seen during the run
-  counts: { pass: number; fail: number; skip: number; error: number; total: number };
+  // `total` covers every in-scope test; `excluded` ones (out of scope for this runtime) are in no rate.
+  counts: { pass: number; fail: number; skip: number; error: number; total: number; excluded: number };
 }
 
 // Normalize result ids to the path segment used by expectation globs.
@@ -90,22 +91,36 @@ export function passRatesOf(counts: ScoredCounts, regressions: number): PassRate
   return { overall: overallPassRate(counts), expected: expectationPassRate(counts, regressions) };
 }
 
+/** Why `r` is out of scope (never counted), or undefined when it is in scope. */
+export function exclusionOf(r: TestResult, exp: Expectations, entries = compile(exp)): string | undefined {
+  const keys = expectationKeysOf(r);
+  const entry = entries.find((e) => keys.some((key) => e.isMatch(key)));
+  if (entry?.expected === "exclude") return entry.reason;
+  if (r.status !== "skip") return undefined;
+  const message = String(r.message ?? "");
+  return exp.excludedSkips?.find((x) => x.pattern.test(message))?.reason;
+}
+
 export function compare(results: TestResult[], exp: Expectations): Comparison {
   const entries = compile(exp);
   const c: Comparison = {
     regressions: [],
     newPasses: [],
     observed: [],
-    counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0 },
+    counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0, excluded: 0 },
   };
   for (const r of results) {
+    if (exclusionOf(r, exp, entries) !== undefined) {
+      c.counts.excluded++;
+      continue;
+    }
     c.counts.total++;
     if (r.status === "skip") {
       c.counts.skip++;
       continue;
     }
     const globExpected = expectedForEntries(entries, expectationKeysOf(r));
-    if (globExpected === "skip") {
+    if (globExpected === "skip" || globExpected === "exclude") {
       c.counts.skip++;
       continue;
     }

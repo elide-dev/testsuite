@@ -191,7 +191,7 @@ function shouldSuppressLog(result: Result): boolean {
 export function logMarkForResult(result: TestResult, exp: Expectations, ratchetMode: boolean): string {
   if (result.status === "skip") return LOG_MARK.skip;
   const expected = expectedFor(exp, expectationKeysOf(result));
-  if (expected === "skip") return LOG_MARK.skip;
+  if (expected === "skip" || expected === "exclude") return LOG_MARK.skip;
   if (result.status === "pass") return LOG_MARK.pass;
   return expected === "fail" || exp.ratchet.has(result.id) || ratchetMode
     ? LOG_MARK.expectedFailure

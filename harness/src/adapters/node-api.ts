@@ -364,6 +364,14 @@ export function readNodeTestMetadata(source: string): NodeTestMetadata {
   return metadata;
 }
 
+/** Skip message for tests that need Node's internals; `[exclude-skipped]` keeps them out of every rate. */
+export const NODE_INTERNALS_SKIP = "requires --expose-internals (Node internals)";
+
+/** Whether a test needs Node's internal modules (`// Flags: --expose-internals` or `require('internal/…')`). */
+export function requiresNodeInternals(source: string): boolean {
+  return readNodeTestMetadata(source).flags.includes("--expose-internals") || /\brequire\(\s*['"]internal\//.test(source);
+}
+
 const NODE_TEST_IMPORT_RE = /\brequire\(\s*['"]node:test['"]\s*\)|\bfrom\s+['"]node:test['"]|\bimport\(\s*['"]node:test['"]\s*\)/;
 
 /**
@@ -439,12 +447,14 @@ async function runNodeApiTask(
   // Skip before spawning, not after. A skipped test is one we have decided not
   // to run at all, and some of them (vm SIGINT, for one) hang hard enough to
   // outlive their own timeout, so running them anyway costs the whole suite.
-  if (skip.some((match) => match(task.rel))) {
+  const source = readFileSync(join(ctx.suitePath, task.rel), "utf8");
+  const internals = requiresNodeInternals(source);
+  if (internals || skip.some((match) => match(task.rel))) {
     return [{
       kind: "test",
       id: task.rel,
       status: "skip",
-      message: "",
+      message: internals ? NODE_INTERNALS_SKIP : "",
       durationMs: 0,
       meta: {
         suite: "node-api",
@@ -457,7 +467,6 @@ async function runNodeApiTask(
     }];
   }
 
-  const source = readFileSync(join(ctx.suitePath, task.rel), "utf8");
   const metadata = readNodeTestMetadata(source);
   const nodeTest = usesNodeTest(task.rel, source);
   // Node's own runner keeps `.tmp.N` under the checkout's `test/` directory. Keeping it inside the
