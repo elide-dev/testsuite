@@ -1,6 +1,8 @@
 # Static expectations for the Node.js API suite.
 
 [skip]
+"test/parallel/test-diagnostics-channel-process.js" = "requires node:cluster, which Elide does not implement"
+"test/parallel/test-worker-process-env.js" = "child loads test/common, which requires node:cluster once crypto is present; Elide does not implement node:cluster"
 "test/parallel/test-vfs-fs-accessSync.js" = "node:vfs is an experimental Node subsystem not yet implemented in Elide"
 "test/parallel/test-vfs-fs-callback-error-paths.js" = "node:vfs is an experimental Node subsystem not yet implemented in Elide"
 "test/parallel/test-vfs-fs-chmod-callback.js" = "node:vfs is an experimental Node subsystem not yet implemented in Elide"
