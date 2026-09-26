@@ -83,4 +83,31 @@
 "test_class.ClassTests.testObjectAttributeAccessErrorMessages" = "AttributeError message wording differs (del/setattr/read-only phrasing)"
 "test_class.ClassTests.testTypeAttributeAccessErrorMessages" = "AttributeError says \"'A' object\" instead of \"type object 'A'\""
 
+
+# --- Driver-truncating hangs (run 1.6.0+83f5b7e6d, 2026-09-26) ---
+# A case that exceeds the 65 s driver limit ends its whole module; gate each so the rest runs.
+"test_shutil.TestArchives.test_tarfile_vs_tar" = "Hangs past the driver limit comparing against the system tar"
+"test_zipfile64.TestsWithSourceFile.testDeflated" = "Multi-GB zip64 stress exceeds the driver limit"
+"test_socket.GeneralModuleTests.test_sendall_interrupted" = "SIGALRM does not interrupt a blocking native sendall; hangs and truncates test_socket"
+"test_signal.ItimerTest.test_itimer_virtual" = "setitimer(ITIMER_VIRTUAL, 0) does not disarm; the stray SIGVTALRM kills a later module's driver"
+"test_signal.ItimerTest.test_itimer_prof" = "setitimer(ITIMER_PROF, 0) disarm has the same stray-signal hazard as ITIMER_VIRTUAL"
+"test_json.test_recursion.TestPyRecursion.test_highly_nested_objects_encoding" = "Quadratic deep-recursion test exceeds the driver limit"
+"test_isinstance.TestIsInstanceIsSubclass.test_infinite_cycle_in_bases" = "Recursion-limit cycle test exceeds the driver limit"
+"test_tokenize.TestRoundtrip.test_random_files" = "Round-trips random stdlib files; exceeds the driver limit"
+"test_math.MathTests.test_sumprod_stress" = "Stress test exceeds the driver limit"
+"test_pickle.CIdPersPicklerTests.test_unpickler_super" = "Hangs past the driver limit"
+"test_str.StrTest.test_adaptive_find" = "Pathological string-search complexity test hangs under Elide Python"
+"test_httpservers.RequestHandlerLoggingTestCase.test_get" = "Hangs past the driver limit"
+"test_concurrent_futures.test_shutdown.ThreadPoolShutdownTest.test_del_shutdown" = "Executor teardown hang"
+"test_cmd_line_script.CmdLineTest.test_repl_stderr_flush" = "Interactive REPL child never exits"
+"test_pdb.PdbTestReadline.test_basic_completion" = "Readline pty completion child never exits"
+"test_cmd.CmdTestReadline.test_basic_completion" = "Readline pty completion child never exits"
+"test_thread.ThreadRunningTests.test_join_from_self" = "Hangs past the driver limit"
+"test_multiprocessing_main_handling.SpawnCmdLineTest.test_ipython_workaround" = "Spawn child blocked on Python CLI argument passthrough"
+"test_logging.LogRecordTest.test_multiprocessing" = "Spawn child blocked on Python CLI argument passthrough"
+"test_multiprocessing_spawn.test_misc.TestResourceTracker.test_resource_tracker_reused" = "Spawn teardown hang"
+"test_multiprocessing_fork.test_misc.TestWait.test_wait_socket" = "fork start method is unavailable; hangs"
+"test_asyncio.test_events.SelectEventLoopTests.test_subprocess_close_after_finish" = "Subprocess close teardown hang"
+"test_sys_settrace.JumpTestCase.test_jump_extended_args_for_iter" = "Hangs past the driver limit"
+
 [fail]
