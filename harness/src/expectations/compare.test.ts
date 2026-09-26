@@ -128,35 +128,35 @@ test("CPython module-level skip expectations match upstreamPath metadata", () =>
   expect(c.counts.skip).toBe(1);
 });
 
-test("wpt-wintertc baseline skips unreachable tests but keeps window.js files that pass headless", () => {
+test("wpt-wintertc baseline skips unreachable transports and excludes browser-only tests", () => {
   const wpt = parseExpectations(
     readFileSync(join(import.meta.dir, "../../../expectations/wpt-wintertc.toml"), "utf8"),
   );
-  const mkWpt = (path: string, status: TestResult["status"]): TestResult =>
-    mk(`${path} :: t`, status, {
+  const mkWpt = (path: string, status: TestResult["status"], subtest = "t"): TestResult =>
+    mk(`${path} :: ${subtest}`, status, {
       suite: "wpt-wintertc",
       upstreamPath: path,
       runner: "wpt",
-      subtest: "t",
+      subtest,
     });
   const c = compare(
     [
-      mkWpt("url/toascii.window.js", "fail"), // browser-only, explicitly listed -> skip
+      mkWpt("url/toascii.window.js", "fail", "x (using <a>)"), // DOM-only subtest -> excluded
+      mkWpt("url/toascii.window.js", "pass", "x (using URL)"), // portable subtest of a mixed file -> scored
       mkWpt("fetch/api/cors/cors-basic.https.any.js", "fail"), // no TLS -> skip
       mkWpt("fetch/api/redirect/redirect-upload.h2.any.js", "fail"), // no HTTP/2 -> skip
-      mkWpt("fetch/fetch-later/basic.any.js", "fail"), // browser-only -> skip
-      // A .window.js file that passes headless is deliberately NOT skipped, so its pass counts.
-      mkWpt("encoding/single-byte-decoder.window.js", "pass"),
+      mkWpt("fetch/fetch-later/basic.any.js", "fail"), // browser-only -> excluded
       mkWpt("url/urlsearchparams-constructor.any.js", "pass"),
       // encodeInto is deliberately NOT skipped: its valid-destination branch passes, so it stays scored.
       mkWpt("encoding/encodeInto.any.js", "fail"),
     ],
     wpt,
   );
-  expect(c.counts.skip).toBe(4); // listed .window.js + .https + .h2 + fetch-later
-  expect(c.counts.pass).toBe(2); // the headless-passing .window.js keeper and the url test are scored
-  expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure, not skipped
-  expect(scoredTotal(c.counts)).toBe(3); // only the four unreachable tests leave the denominator
+  expect(c.counts.excluded).toBe(2); // the DOM subtest and fetchLater count nowhere
+  expect(c.counts.skip).toBe(2); // .https + .h2 stay in the denominator as skips
+  expect(c.counts.pass).toBe(2);
+  expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure
+  expect(c.counts.total).toBe(5);
 });
 
 test("excluded tests leave every count and rate; excluded skips match only real skips", () => {
