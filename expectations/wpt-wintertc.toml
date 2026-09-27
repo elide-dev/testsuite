@@ -9,27 +9,27 @@
 # only their DOM subtests are excluded (`[exclude-ids]`). A new `.window.js` on re-vendor runs
 # until triaged here.
 [exclude]
-"fetch/fetch-later/**" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"encoding/streams/invalid-realm.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"encoding/streams/realms.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"encoding/unsupported-labels.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/api/basic/mediasource.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/api/request/multi-globals/construct-in-detached-frame.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/content-type/response.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/content-type/script.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/data-urls/navigate.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/h1-parsing/resources-with-0x00-in-header.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/local-network-access/navigate.tentative.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/nosniff/parsing-nosniff.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/origin/assorted.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"fetch/range/general.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"url/javascript-urls.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"url/percent-encoding.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
-"url/url-setters-a-area.window.js" = "browser-only: needs a DOM (document, iframe, navigation or media elements)"
+"fetch/fetch-later/**" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/streams/invalid-realm.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/streams/realms.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/unsupported-labels.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/api/basic/mediasource.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/api/request/multi-globals/construct-in-detached-frame.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/content-type/response.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/content-type/script.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/data-urls/navigate.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/h1-parsing/resources-with-0x00-in-header.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/local-network-access/navigate.tentative.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/nosniff/parsing-nosniff.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/origin/assorted.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/range/general.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/javascript-urls.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/percent-encoding.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/url-setters-a-area.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
 
 [exclude-ids]
-'^url/toascii\.window\.js :: .* \(using <a(rea)?>(\.host(name)?)?\)$' = "browser-only: tests <a>/<area> element URL parsing"
-'^encoding/single-byte-decoder\.window\.js :: .* \((XMLHttpRequest|document\.characterSet and document\.inputEncoding)\)$' = "browser-only: XMLHttpRequest / document encoding variants"
+'^url/toascii\.window\.js :: .* \(using <a(rea)?>(\.host(name)?)?\)$' = "unsupported: browser-only — tests <a>/<area> element URL parsing"
+'^encoding/single-byte-decoder\.window\.js :: .* \((XMLHttpRequest|document\.characterSet and document\.inputEncoding)\)$' = "unsupported: browser-only — XMLHttpRequest / document encoding variants"
 # CORS enforcement (the preflight protocol, and rejecting responses a server or CORP withholds) is
 # the browser's security model; server runtimes, Node and Deno included, do not enforce it. The
 # positive cross-origin tests stay in.

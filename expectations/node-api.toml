@@ -1,9 +1,9 @@
 # Static expectations for the Node.js API suite.
 
-# Tests that need Node's internal modules are out of scope for Elide: the adapter skips them with
-# this message and they count in no pass rate.
+# Tests that need Node's internal modules are unsupported (Elide will not expose them): the adapter
+# skips them with this message and they count in no pass rate.
 [exclude-skipped]
-"^requires --expose-internals" = "Node internals (--expose-internals); Elide will not expose them"
+"^requires --expose-internals" = "unsupported: Node internals — needs --expose-internals"
 
 [skip]
 "test/parallel/test-diagnostics-channel-process.js" = "requires node:cluster, which Elide does not implement"

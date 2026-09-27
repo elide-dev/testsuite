@@ -51,7 +51,7 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
   }
   const excluded = Object.entries(c.excludedByReason ?? {}).sort(([, a], [, b]) => b - a);
   if (excluded.length) {
-    lines.push(`## Unsupported / out of scope (${c.counts.excluded}) — excluded from every rate`, "");
+    lines.push(`## Excluded (${c.counts.excluded}) — unsupported, out of scope or not applicable; in no rate`, "");
     lines.push(`| tests | reason |`, `|---:|---|`);
     for (const [reason, n] of excluded) lines.push(`| ${n} | ${reason} |`);
     lines.push("");
