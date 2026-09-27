@@ -225,9 +225,11 @@ module.exports = {
 function patchCommonIndexPreamble(commonPath: string): void {
   const indexPath = join(commonPath, "index.js");
   if (!existsSync(indexPath)) return;
+  // common's own `process.umask(0o022)` setup stays off: under Elide's worker bootstrap it can run in
+  // a worker, where setting the umask throws.
   const source = readFileSync(indexPath, "utf8").replaceAll(
     "process.umask(0o022);",
-    "if (typeof process.umask === 'function') process.umask(0o022); /* elide node-api overlay */",
+    "void 0; /* elide node-api overlay: common's umask setup is skipped. */",
   );
   writeFileSync(indexPath, `'use strict';
 
