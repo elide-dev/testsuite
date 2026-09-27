@@ -238,7 +238,20 @@ async function* runCpythonShard(
     env: process.env,
     stdout: "pipe",
     stderr: "pipe",
+    // Its own process group, so the driver goes down with everything it started: multiprocessing
+    // children and resource trackers outlive a killed driver otherwise, and holding its stdout they
+    // keep this shard waiting for an EOF that never comes.
+    detached: true,
   });
+  const killGroup = (): void => {
+    try {
+      process.kill(-proc.pid, "SIGKILL");
+    } catch {
+      // Already gone.
+    }
+  };
+  // Whatever the driver left running once it exits is an orphan holding its pipes.
+  void proc.exited.then(killGroup);
   let activeCase: string | undefined;
   let activeSince = performance.now();
   let lastSignal = performance.now();
@@ -268,7 +281,7 @@ async function* runCpythonShard(
   const caseTimeoutMs = Number(ctx.settings.caseTimeoutMs ?? 65_000);
   const timer = setTimeout(() => {
     timedOut = true;
-    proc.kill("SIGKILL");
+    killGroup();
   }, timeoutMs);
   // A case running too long, or the driver going quiet between cases (module setup/teardown, a hung
   // import, interpreter shutdown) for as long: either way the driver is stuck, not working.
@@ -277,7 +290,7 @@ async function* runCpythonShard(
     if (performance.now() - since < caseTimeoutMs) return;
     timedOut = true;
     timedOutActivity = activeCase ?? (state.lastModule ? `running ${state.lastModule.split(".")[0]}` : undefined);
-    proc.kill("SIGKILL");
+    killGroup();
   }, Math.min(1_000, Math.max(100, caseTimeoutMs / 10)));
 
   let parsedCount = 0;

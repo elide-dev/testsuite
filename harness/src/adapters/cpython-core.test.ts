@@ -131,6 +131,38 @@ printf '{"driver": "complete"}\\n'
   expect(argv.indexOf("--skip")).toBeLessThan(argv.indexOf("test_re"));
 });
 
+test("a driver's leftover children do not hold its shard open", async () => {
+  // multiprocessing children and resource trackers can outlive the driver holding its stdout.
+  const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
+  const manifest = join(root, "manifest.toml");
+  const suitePath = join(root, "cpython");
+  mkdirSync(suitePath, { recursive: true });
+  writeFileSync(manifest, '[[group]]\nid = "core"\ninclude = ["test_re"]\n');
+  const elidePath = writeExecutable(
+    join(root, "fake-elide.sh"),
+    `#!/usr/bin/env bash
+sleep 60 &
+printf '{"module":"test_re","case":"test_re.ReTests.test_basic","status":"pass"}\\n'
+printf '{"driver": "complete"}\\n'
+`,
+  );
+  const ctx: AdapterContext = {
+    elide: { semver: "test", digest: "deadbeef" },
+    elidePath,
+    repoRoot: resolve(import.meta.dir, "../..", ".."),
+    suitePath,
+    include: [],
+    skipGlobs: [],
+    threads: 1,
+    settings: { manifest, timeoutMs: 30_000 },
+    workspacePath: join(root, "workspace"),
+  };
+  const started = performance.now();
+  const results = await collect(runCpythonCore(ctx));
+  expect(performance.now() - started).toBeLessThan(10_000);
+  expect(results).toEqual([expect.objectContaining({ id: "test_re.ReTests.test_basic", status: "pass" })]);
+});
+
 test("passes only included CPython modules to the driver", async () => {
   const root = mkdtempSync(join(tmpdir(), "cpython-core-"));
   const argsLog = join(root, "elide.args");
