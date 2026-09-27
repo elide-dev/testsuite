@@ -1,4 +1,4 @@
-import { mkdirSync, rmSync } from "node:fs";
+import { cpSync, mkdirSync, readdirSync, rmSync, symlinkSync } from "node:fs";
 import { join } from "node:path";
 import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
@@ -228,7 +228,7 @@ async function* runCpythonShard(
     driver,
     "--",
     "--cpython-root",
-    ctx.suitePath,
+    String(ctx.settings.cpythonRoot ?? ctx.suitePath),
     // Always: the phase lines keep the watchdog below informed; they are echoed only with --log.
     "--progress-stderr",
     ...driverSkipArgs,
@@ -362,6 +362,28 @@ async function* runCpythonShard(
   }
 }
 
+/**
+ * A writable CPython root for the run. The suite checkout is mounted read-only, and CPython's tests
+ * write beside their sources (`import_helper.forget` unlinks a `.pyc` in every `sys.path` entry, which
+ * a read-only mount refuses with EROFS even when none exists). `Lib` and the driver are copied into
+ * the workspace; every other top-level entry (Tools, Modules, ...) is linked, as tests only read it.
+ */
+export function prepareWritableCpythonRoot(ctx: AdapterContext): { root: string; driver: string } {
+  const root = join(ctx.workspacePath, "cpython-root");
+  rmSync(root, { recursive: true, force: true });
+  mkdirSync(root, { recursive: true });
+  for (const entry of readdirSync(ctx.suitePath)) {
+    const from = join(ctx.suitePath, entry);
+    if (entry === "Lib") cpSync(from, join(root, entry), { recursive: true });
+    else symlinkSync(from, join(root, entry));
+  }
+  const driverDir = join(ctx.workspacePath, "cpython-driver");
+  rmSync(driverDir, { recursive: true, force: true });
+  cpSync(join(ctx.repoRoot, "suites/drivers/python"), driverDir, { recursive: true });
+  ctx.settings.cpythonRoot = root;
+  return { root, driver: join(driverDir, "elide_regrtest_driver.py") };
+}
+
 export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestResult> {
   const manifestPath = String(ctx.settings.manifest ?? "");
   if (!manifestPath) throw new Error("cpython-core requires settings.manifest");
@@ -373,7 +395,7 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   }
   const skip = ctx.skipGlobs.map((g) => picomatch(g));
   const driverSkipArgs = [...ctx.skipGlobs.flatMap((glob) => ["--skip", glob]), ...cpythonMatchArgs(ctx.filter)];
-  const driver = join(ctx.repoRoot, "suites/drivers/python/elide_regrtest_driver.py");
+  const { driver } = prepareWritableCpythonRoot(ctx); // also sets settings.cpythonRoot for the shards
   if (modules.length === 0) {
     yield runnerErrorResult("cpython-core selected no modules");
     return;
