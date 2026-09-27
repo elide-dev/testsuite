@@ -53,7 +53,7 @@ test.skipIf(!python)("startWptServer parses the bound port, becomes ready, and s
   try {
     expect(server.host).toBe("127.0.0.1");
     expect(server.httpPort).toBeGreaterThan(0);
-    expect(server.origin).toBe(`http://127.0.0.1:${server.httpPort}`);
+    expect(server.origin).toBe(`http://localhost:${server.httpPort}`);
 
     // The server the parsed port points at genuinely serves testharness.js.
     const resp = await fetch(`${server.origin}/resources/testharness.js`);

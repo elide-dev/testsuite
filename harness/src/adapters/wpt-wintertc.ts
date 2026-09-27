@@ -97,13 +97,32 @@ const PORT_PLACEHOLDER = "127.0.0.1:<port>";
 
 function normalizeServerPort(text: string, origin: string | undefined): string {
   if (!origin || !text) return text;
-  let host: string;
+  let port: string;
   try {
-    host = new URL(origin).host; // e.g. "127.0.0.1:54321"
+    port = new URL(origin).port; // e.g. "54321"
   } catch {
     return text;
   }
-  return host ? text.split(host).join(PORT_PLACEHOLDER) : text;
+  if (!port) return text;
+  // The document origin (`localhost`) and the cross-origin alias (`127.0.0.1`) share the port; both
+  // map to the placeholder, which keeps ids recorded before the origin moved to `localhost`.
+  return text.split(`localhost:${port}`).join(PORT_PLACEHOLDER).split(`127.0.0.1:${port}`).join(PORT_PLACEHOLDER);
+}
+
+/** Runs at most `limit` of the tasks handed to it at once, in arrival order. */
+function semaphore(limit: number): <T>(task: () => Promise<T>) => Promise<T> {
+  let active = 0;
+  const waiting: Array<() => void> = [];
+  return async <T>(task: () => Promise<T>): Promise<T> => {
+    if (active >= Math.max(1, limit)) await new Promise<void>((resolve) => waiting.push(resolve));
+    active++;
+    try {
+      return await task();
+    } finally {
+      active--;
+      waiting.shift()?.();
+    }
+  };
 }
 
 /** A file-level `error` result (the runner never ran, or ran and failed before per-test output). */
@@ -188,6 +207,10 @@ export async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestRe
     }
   }
   const serverEnv = server ? { WPT_SERVER_ORIGIN: server.origin } : undefined;
+  // One Python wptserve serves every fetch task. Left at the full pool it saturates, and files making
+  // many real (cross-origin, stash) requests run past the bridge timeout; serverless tasks keep the
+  // whole pool.
+  const serverSlots = semaphore(Number(ctx.settings.serverConcurrency ?? 8));
 
   try {
     yield* runTaskPool(tasks, ctx.threads, (task) => {
@@ -196,7 +219,8 @@ export async function* runWptWintertc(ctx: AdapterContext): AsyncIterable<TestRe
       if (serverError && isFetchTask(task)) {
         return Promise.resolve([fileErrorResult(task, `wpt-server unavailable: ${serverError}`)]);
       }
-      return runWptTask(ctx, runner, skip, task, serverEnv);
+      if (!isFetchTask(task)) return runWptTask(ctx, runner, skip, task, serverEnv);
+      return serverSlots(() => runWptTask(ctx, runner, skip, task, serverEnv));
     });
   } finally {
     server?.stop();

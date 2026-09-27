@@ -15,7 +15,7 @@ import { join } from "node:path";
  * TLS-trust concern), and are gated in `expectations/wpt-wintertc.toml`.
  */
 export interface WptServer {
-  /** Same-origin base, e.g. `http://127.0.0.1:8123`. */
+  /** Same-origin base, e.g. `http://localhost:8123`. */
   origin: string;
   host: string;
   httpPort: number;
@@ -24,6 +24,10 @@ export interface WptServer {
 }
 
 const HOST = "127.0.0.1";
+// The document origin is `localhost` on the loopback-bound server, so `get-host-info` picks
+// `127.0.0.1` as the cross-origin host: the same server under another origin, as upstream wptrunner
+// does. The default `www1.<host>` would be `www1.127.0.0.1`, which is not a valid URL host.
+const DOCUMENT_HOST = "localhost";
 
 // wptserve tags each listener line "[<ts> <scheme> on port <port>] ...". Reading the bound port
 // from the log (rather than pre-allocating one) removes the bind-then-hope-it's-free TOCTOU race.
@@ -174,7 +178,7 @@ export async function startWptServer(
     throw new Error(`wptserve did not report a bound HTTP port\n${capture.slice(-2000)}`);
   }
 
-  const origin = `http://${HOST}:${port}`;
+  const origin = `http://${DOCUMENT_HOST}:${port}`;
   const ready = await waitReady(origin, deadline);
   if (!ready) {
     stop();

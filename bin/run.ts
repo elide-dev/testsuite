@@ -124,6 +124,8 @@ function parsePositiveInt(value: string | undefined, name: string): number | und
   return parsed;
 }
 
+const WPT_LOOPBACK_HOSTS = ["www.localhost", "www1.localhost", "www2.localhost"];
+
 /** `HARNESS_MEMORY` (docker syntax, e.g. `48g`), else 70% of host memory. */
 function containerMemoryLimit(): string {
   const configured = process.env.HARNESS_MEMORY?.trim();
@@ -683,6 +685,10 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
       containerMemoryLimit(),
       "--memory-swap",
       containerMemoryLimit(),
+      // WPT's extra test hosts, on loopback as `wpt make-hosts-file` would map them: with the document
+      // origin on `localhost`, `get-host-info` names `www1.`/`www2.localhost`, and an unmapped name
+      // costs a full DNS timeout per request.
+      ...WPT_LOOPBACK_HOSTS.flatMap((host) => ["--add-host", `${host}:127.0.0.1`]),
       ...plat,
       ...user,
       "-v",
