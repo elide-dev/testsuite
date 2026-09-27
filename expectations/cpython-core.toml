@@ -18,6 +18,9 @@
 "test_dict_version.*" = "PEP 509 dict versions (CPython-only, via _testcapi)"
 "test__opcode" = "CPython opcode tables"
 "test__opcode.*" = "CPython opcode tables"
+# The C-accelerator variant of a module's tests where the runtime ships only the Python version
+# (the same case as the excluded "requires C version" skips, but these classes fail instead).
+"test_bisect.Test*C.*" = "tests CPython's _bisect C accelerator; the runtime ships the Python bisect"
 
 [exclude-skipped]
 # CPython internals: C-level details and CPython-only test modules.
