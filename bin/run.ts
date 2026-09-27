@@ -18,7 +18,7 @@ import {
   unlinkSync,
   readdirSync,
 } from "node:fs";
-import { availableParallelism } from "node:os";
+import { availableParallelism, totalmem } from "node:os";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classifySuiteStatus, floorAdvance } from "./suite-status";
@@ -122,6 +122,13 @@ function parsePositiveInt(value: string | undefined, name: string): number | und
   const parsed = Number.parseInt(value, 10);
   if (!Number.isFinite(parsed) || parsed < 1) usageError(`${name} must be a positive integer`);
   return parsed;
+}
+
+/** `HARNESS_MEMORY` (docker syntax, e.g. `48g`), else 70% of host memory. */
+function containerMemoryLimit(): string {
+  const configured = process.env.HARNESS_MEMORY?.trim();
+  if (configured) return configured;
+  return `${Math.floor(totalmem() * 0.7)}b`;
 }
 
 function cpuCount(): number {
@@ -670,6 +677,12 @@ async function main(argv = Bun.argv.slice(2)): Promise<number> {
       "--rm",
       "--label",
       RUN_LABEL,
+      // A memory ceiling, so a runaway suite (CPython's multiprocessing tests start a full runtime per
+      // worker) is OOM-killed inside the container instead of taking the host's session with it.
+      "--memory",
+      containerMemoryLimit(),
+      "--memory-swap",
+      containerMemoryLimit(),
       ...plat,
       ...user,
       "-v",

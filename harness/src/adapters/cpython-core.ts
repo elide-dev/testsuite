@@ -415,7 +415,9 @@ export async function* runCpythonCore(ctx: AdapterContext): AsyncIterable<TestRe
   }
 
   const timeoutMs = Number(ctx.settings.timeoutMs ?? 120_000);
-  const shards = shardItems(modules, ctx.threads);
+  // Each shard can fan out: multiprocessing tests start a full runtime per pool worker.
+  const maxShards = Number(ctx.settings.maxShards ?? ctx.threads);
+  const shards = shardItems(modules, Math.max(1, Math.min(ctx.threads, maxShards)));
   yield* mergeAsyncIterables(
     shards.map((shard, index) => runCpythonShardResuming(ctx, driver, shard, driverSkipArgs, skip, timeoutMs, index)),
   );

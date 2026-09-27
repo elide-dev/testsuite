@@ -20,6 +20,8 @@ path = "suites/cpython"
   manifest = "manifests/cpython-core.toml"
   timeoutMs = 600000
   caseTimeoutMs = 65000
+  # Concurrent drivers. Each can fan out into spawn workers (~0.9 GiB each, one per CPU in a Pool).
+  maxShards = 12
   # Threads and subprocesses as CPython's own suite expects; network stays on loopback, because
   # test.support.requires('network') lets everything through outside regrtest.
   elideRunArgs = ["--sandbox", "--allow-read", "--allow-write", "--allow-threads", "--allow-run", "--allow-net=localhost,127.0.0.1,::1"]
