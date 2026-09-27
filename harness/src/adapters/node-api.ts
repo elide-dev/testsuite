@@ -225,7 +225,10 @@ module.exports = {
 function patchCommonIndexPreamble(commonPath: string): void {
   const indexPath = join(commonPath, "index.js");
   if (!existsSync(indexPath)) return;
-  const source = readFileSync(indexPath, "utf8").replaceAll("process.umask(0o022);", "void 0; /* elide node-api overlay: process.umask is unavailable. */");
+  const source = readFileSync(indexPath, "utf8").replaceAll(
+    "process.umask(0o022);",
+    "if (typeof process.umask === 'function') process.umask(0o022); /* elide node-api overlay */",
+  );
   writeFileSync(indexPath, `'use strict';
 
 const __elideNodeApiProcess = globalThis.process ??= {};
@@ -286,8 +289,10 @@ function __elideNodeApiInstallCwdShim() {
     writable: true,
   });
 }
-__elideNodeApiInstallUmaskShim();
-__elideNodeApiInstallCwdShim();
+// Only for a runtime that lacks them: a stub over a real process.umask/cwd hides its behaviour from
+// the tests that exercise it (test-process-umask*, test-process-chdir).
+if (typeof __elideNodeApiProcess.umask !== 'function') __elideNodeApiInstallUmaskShim();
+if (typeof __elideNodeApiProcess.cwd !== 'function') __elideNodeApiInstallCwdShim();
 
 ${source.replace(/^'use strict';\s*/, "")}`);
 }

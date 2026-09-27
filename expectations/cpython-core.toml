@@ -4,6 +4,21 @@
 # Skips CPython itself takes on linux-x64 (implementation details, C accelerators and C-API test
 # modules, other platforms) are out of scope: matching skip messages count in no pass rate. Gaps
 # in Elide/GraalPy (fork, recvmsg, poll/epoll selectors, ...) stay in the denominator.
+# Whole modules whose subject is CPython's implementation (its bytecode, peephole optimizer,
+# C API, PEP 509 dict versions, opcode tables) rather than the language or stdlib; the Python docs
+# mark bytecode an implementation detail. Out of scope for any other runtime.
+[exclude]
+"test_dis" = "CPython bytecode (dis); an implementation detail per the docs"
+"test_dis.*" = "CPython bytecode (dis); an implementation detail per the docs"
+"test_peepholer" = "CPython bytecode peephole optimizer"
+"test_peepholer.*" = "CPython bytecode peephole optimizer"
+"test_capi" = "CPython C API"
+"test_capi.*" = "CPython C API"
+"test_dict_version" = "PEP 509 dict versions (CPython-only, via _testcapi)"
+"test_dict_version.*" = "PEP 509 dict versions (CPython-only, via _testcapi)"
+"test__opcode" = "CPython opcode tables"
+"test__opcode.*" = "CPython opcode tables"
+
 [exclude-skipped]
 # CPython internals: C-level details and CPython-only test modules.
 "implementation detail specific to cpython" = "CPython implementation detail"
