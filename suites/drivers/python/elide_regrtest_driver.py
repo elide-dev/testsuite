@@ -1,6 +1,7 @@
 import argparse
 import fnmatch
 import re
+import signal
 import importlib
 import importlib.util
 import json
@@ -231,31 +232,50 @@ def main():
 
     ok = True
     for module_name in args.modules:
-        started = time.monotonic()
-        try:
-            if args.progress_stderr:
-                emit_progress("importing " + module_name)
-            module = importlib.import_module("test." + module_name)
-            if args.progress_stderr:
-                emit_progress("loading " + module_name)
-            suite = unittest.defaultTestLoader.loadTestsFromModule(module)
-            if args.progress_stderr:
-                emit_progress("filtering " + module_name)
-            suite, _ = filter_suite(suite, args.skip, match_patterns)
-            if args.progress_stderr:
-                emit_progress("running " + module_name)
-            result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)
-            if args.progress_stderr:
-                emit_progress("done " + module_name)
-            ok = ok and result.wasSuccessful()
-        except unittest.SkipTest as exc:
-            emit({"module": module_name, "case": module_name, "status": "skip", "message": str(exc), "durationMs": int((time.monotonic() - started) * 1000)})
-        except BaseException as exc:
-            ok = False
-            emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        ok = run_module(module_name, args, match_patterns) and ok
     # The harness reads a missing sentinel as an interpreter crash, not as failing tests.
     emit({"driver": "complete"})
     return 0 if ok else 1
+
+
+def run_module(module_name, args, match_patterns, retries=1):
+    """Run one test module; False when it did not succeed.
+
+    A SIGINT a previous module sent itself (test_unittest's TestBreak, test_signal) can be delivered
+    late, while the next module imports; that module is retried once with the default handler back.
+    """
+    signal.signal(signal.SIGINT, signal.default_int_handler)
+    started = time.monotonic()
+    running = False
+    try:
+        if args.progress_stderr:
+            emit_progress("importing " + module_name)
+        module = importlib.import_module("test." + module_name)
+        if args.progress_stderr:
+            emit_progress("loading " + module_name)
+        suite = unittest.defaultTestLoader.loadTestsFromModule(module)
+        if args.progress_stderr:
+            emit_progress("filtering " + module_name)
+        suite, _ = filter_suite(suite, args.skip, match_patterns)
+        if args.progress_stderr:
+            emit_progress("running " + module_name)
+        running = True
+        result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)
+        if args.progress_stderr:
+            emit_progress("done " + module_name)
+        return result.wasSuccessful()
+    except unittest.SkipTest as exc:
+        emit({"module": module_name, "case": module_name, "status": "skip", "message": str(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return True
+    except KeyboardInterrupt as exc:
+        if retries > 0 and not running:
+            sys.modules.pop("test." + module_name, None)
+            return run_module(module_name, args, match_patterns, retries - 1)
+        emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return False
+    except BaseException as exc:
+        emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return False
 
 
 if __name__ == "__main__":
