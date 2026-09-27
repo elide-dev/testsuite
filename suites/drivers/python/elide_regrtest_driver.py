@@ -1,5 +1,6 @@
 import argparse
 import fnmatch
+import gc
 import re
 import signal
 import importlib
@@ -185,6 +186,19 @@ def install_cpython_test_package(cpython_root):
     spec.loader.exec_module(module)
 
 
+# CPython closes a dropped file the moment its last reference goes; a tracing GC closes it only when
+# it collects. A test that drops thousands (test_bz2's testOpenDel) would push later tests' fds past
+# select()'s FD_SETSIZE, so collect between tests once many are open, as regrtest does for PyPy.
+FD_COLLECT_THRESHOLD = 256
+
+
+def open_fd_count():
+    try:
+        return len(os.listdir("/proc/self/fd"))
+    except OSError:
+        return 0
+
+
 class JsonResult(unittest.TextTestResult):
     def _case_id(self, test):
         return case_id(test)
@@ -201,6 +215,11 @@ class JsonResult(unittest.TextTestResult):
     def startTest(self, test):
         self._emit(test, "running")
         super().startTest(test)
+
+    def stopTest(self, test):
+        super().stopTest(test)
+        if open_fd_count() > FD_COLLECT_THRESHOLD:
+            gc.collect()
 
     def addSuccess(self, test):
         super().addSuccess(test)
