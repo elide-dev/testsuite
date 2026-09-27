@@ -1,0 +1,36 @@
+{
+  "from": {
+    "semver": "1.4.99+8b374d579",
+    "digest": "4094eb2fb1ff122e2707260d4bea151c43278a01e4d16e2ac400c66de8cdff77"
+  },
+  "to": {
+    "semver": "1.6.0+834e9f50f",
+    "digest": "3cd8cc55c96309aa76fd663b85e0834ae98b962d107fcaf9b606d07603fd1669"
+  },
+  "fixed": [
+    "test_builtin.BuiltinTest.test_compile",
+    "test_copy.TestCopy.test_copy_weakkeydict",
+    "test_copy.TestCopy.test_deepcopy_weakkeydict",
+    "test_difflib.TestSFpatches.test_html_diff",
+    "test_fstring.TestCase.test_debug_expressions_are_raw_strings",
+    "test_grammar.GrammarTests.test_comparison_is_literal",
+    "test_itertools.TestBasicOps.test_batched",
+    "test_list.ListTest.test_list_resize_overflow",
+    "test_minidom.MinidomTest.testAppendChildNoQuadraticComplexity",
+    "test_modulefinder.ModuleFinderTest.test_bytecode",
+    "test_random.MersenneTwister_TestBasicOps.test_sample_with_counts",
+    "test_random.SystemRandom_TestBasicOps.test_sample_with_counts",
+    "test_string_literals.TestLiterals.test_eval_bytes_invalid_escape",
+    "test_string_literals.TestLiterals.test_eval_bytes_invalid_octal_escape",
+    "test_string_literals.TestLiterals.test_invalid_escape_locations_with_offset",
+    "test_urlparse.UrlParseTestCase.test_invalid_bracketed_hosts",
+    "test_urlparse.UrlParseTestCase.test_urlsplit_normalization",
+    "test_weakset.TestWeakSet.test_add",
+    "test_weakset.TestWeakSet.test_len",
+    "test_weakset.TestWeakSet.test_len_cycles"
+  ],
+  "regressed": [],
+  "added": 30322,
+  "removed": 785,
+  "stillFailing": 113
+}

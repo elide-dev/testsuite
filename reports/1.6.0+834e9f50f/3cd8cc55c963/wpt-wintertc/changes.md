@@ -1,0 +1,212 @@
+# Changes — `1.4.99+8b374d579` → `1.6.0+834e9f50f`
+
+- From: `1.4.99+8b374d579` (`4094eb2fb1ff122e2707260d4bea151c43278a01e4d16e2ac400c66de8cdff77`)
+- To: `1.6.0+834e9f50f` (`3cd8cc55c96309aa76fd663b85e0834ae98b962d107fcaf9b606d07603fd1669`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 0 | 359 | 2047 | 11 | 907 |
+
+## ✅ Fixed (359)
+
+- `fetch/api/abort/general.any.js :: Fetch aborted & connection closed when aborted after calling response.arrayBuffer()`
+- `fetch/api/abort/general.any.js :: Fetch aborted & connection closed when aborted after calling response.blob()`
+- `fetch/api/abort/general.any.js :: Fetch aborted & connection closed when aborted after calling response.bytes()`
+- `fetch/api/abort/general.any.js :: Fetch aborted & connection closed when aborted after calling response.json()`
+- `fetch/api/abort/general.any.js :: Fetch aborted & connection closed when aborted after calling response.text()`
+- `fetch/api/abort/general.any.js :: Stream errors once aborted, after reading. Underlying connection closed.`
+- `fetch/api/abort/general.any.js :: Stream errors once aborted. Underlying connection closed.`
+- `fetch/api/abort/general.any.js :: Stream will not error if body is empty. It's closed with an empty queue before it errors.`
+- `fetch/api/abort/general.any.js :: Underlying connection is closed when aborting after receiving response`
+- `fetch/api/abort/general.any.js :: Underlying connection is closed when aborting after receiving response - no-cors`
+- `fetch/api/basic/gc.any.js :: GC/CC should not abruptly close the stream while being consumed by Response`
+- `fetch/api/basic/request-headers-nonascii.any.js :: Non-ascii bytes in request headers`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with method=HEAD`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=204 (method=GET)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=204 (method=OPTIONS)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=204 (method=POST)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=205 (method=GET)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=205 (method=OPTIONS)`
+- `fetch/api/basic/response-null-body.any.js :: Response.body is null for responses with status=205 (method=POST)`
+- `fetch/api/basic/stream-response.any.js :: Stream response's body when content-type is not present`
+- `fetch/api/basic/stream-response.any.js :: Stream response's body when content-type is present`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.highWaterMark accessor returning invalid value should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.size accessor returning invalid value should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'consumeNonEmptyRequest'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'consumeNonEmptyResponse'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'request'`
+- `fetch/api/basic/stream-safe-creation.any.js :: Object.prototype.start accessor returning invalid value should not affect stream creation by 'response'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.highWaterMark accessor should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.start accessor should not affect stream creation by 'consumeNonEmptyRequest'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.start accessor should not affect stream creation by 'consumeNonEmptyResponse'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.start accessor should not affect stream creation by 'fetch'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.start accessor should not affect stream creation by 'request'`
+- `fetch/api/basic/stream-safe-creation.any.js :: throwing Object.prototype.start accessor should not affect stream creation by 'response'`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16 without BOM decoded as UTF-8 with fetched data (UTF-16 charset)`
+- `fetch/api/basic/text-utf8.any.js :: UTF-16 without BOM decoded as UTF-8 with fetched data (UTF-8 charset)`
+- `fetch/api/cors/cors-cookies.any.js :: Include mode: local cookies are not sent with remote request`
+- `fetch/api/cors/cors-cookies.any.js :: Include mode: remote cookies are not sent with local request`
+- `fetch/api/cors/cors-cookies.any.js :: Include mode: remote cookies are not sent with other remote request`
+- `fetch/api/cors/cors-cookies.any.js :: Omit mode: no cookie sent`
+- `fetch/api/cors/cors-cookies.any.js :: Same-origin mode: cookies are discarded in cors request`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Accept-Language: fr]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Accept: */*]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Language: fr]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Type: Text/Plain;charset=utf-8]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Type: application/x-www-form-urlencoded]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Type: multipart/form-data]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Type: text/plain;charset=utf-8]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [GET] [Content-Type: text/plain]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [HEAD]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain [POST]`
+- `fetch/api/cors/cors-no-preflight.any.js :: Cross domain basic usage [GET]`
+- `fetch/api/cors/cors-origin.any.js :: CORS preflight [PUT] [origin OK]`
+- `fetch/api/cors/cors-origin.any.js :: Cross domain [HEAD] [origin OK]`
+- `fetch/api/cors/cors-origin.any.js :: Cross domain [POST] [origin OK]`
+- `fetch/api/cors/cors-origin.any.js :: Cross domain different subdomain [origin OK]`
+- `fetch/api/crashtests/huge-fetch.any.js :: fetching a huge cacheable file but not reading it should not crash`
+- `fetch/api/credentials/authentication-redirection.any.js :: getAuthorizationHeaderValue - no redirection`
+- `fetch/api/headers/header-values-normalize.any.js :: fetch() with value %09`
+- `fetch/api/headers/header-values-normalize.any.js :: fetch() with value %0A`
+- `fetch/api/headers/header-values-normalize.any.js :: fetch() with value %0D`
+- `fetch/api/headers/header-values-normalize.any.js :: fetch() with value %20`
+- `fetch/api/headers/headers-no-cors.any.js :: Loading data…`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 301 20 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 301 21 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 302 20 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 302 21 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 303 20 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 303 21 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 307 20 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 307 21 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 308 20 times`
+- `fetch/api/redirect/redirect-count.any.js :: Redirect 308 21 times`
+- `fetch/api/redirect/redirect-location-escape.tentative.any.js :: Redirect to escaped UTF-8`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 301 in "follow" mode with valid location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 301 in "follow" mode without location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 302 in "follow" mode with valid location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 302 in "follow" mode without location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 303 in "follow" mode with valid location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 303 in "follow" mode without location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 307 in "follow" mode with valid location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 307 in "follow" mode without location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 308 in "follow" mode with valid location`
+- `fetch/api/redirect/redirect-location.any.js :: Redirect 308 in "follow" mode without location`
+- `fetch/api/redirect/redirect-method.any.js :: Response.redirected should be false on not-redirected responses`
+- `fetch/api/redirect/redirect-mode.any.js :: cross-origin redirect 301 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: cross-origin redirect 302 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: cross-origin redirect 303 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: cross-origin redirect 307 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: cross-origin redirect 308 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 301 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 301 in follow redirect and no-cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 302 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 302 in follow redirect and no-cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 303 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 303 in follow redirect and no-cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 307 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 307 in follow redirect and no-cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 308 in follow redirect and cors mode`
+- `fetch/api/redirect/redirect-mode.any.js :: same-origin redirect 308 in follow redirect and no-cors mode`
+- `fetch/api/redirect/redirect-origin.any.js :: [GET] Redirect 301 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [GET] Redirect 302 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [GET] Redirect 303 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [GET] Redirect 307 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [GET] Redirect 308 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [POST] Redirect 301 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [POST] Redirect 302 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [POST] Redirect 303 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [POST] Redirect 307 Same origin to same origin`
+- `fetch/api/redirect/redirect-origin.any.js :: [POST] Redirect 308 Same origin to same origin`
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, no-referrer-when-downgrade redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, origin-when-cross-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, strict-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, strict-origin-when-cross-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer init, unsafe-url redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer-when-downgrade init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, no-referrer-when-downgrade init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, origin init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, origin-when-cross-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, origin-when-cross-origin init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, same-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, same-origin init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, strict-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, strict-origin init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, strict-origin-when-cross-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, strict-origin-when-cross-origin init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, unsafe-url init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Cross origin redirection, unsafe-url init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, no-referrer-when-downgrade redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, origin-when-cross-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, strict-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, strict-origin-when-cross-origin redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer init, unsafe-url redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, no-referrer-when-downgrade init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, origin-when-cross-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, same-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, strict-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, strict-origin-when-cross-origin init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer-override.any.js :: Same origin redirection, unsafe-url init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer.any.js :: Cross origin redirection, empty init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer.any.js :: Cross origin redirection, empty init, same-origin redirect header `
+- `fetch/api/redirect/redirect-referrer.any.js :: Cross origin redirection, empty redirect header, no-referrer init `
+- `fetch/api/redirect/redirect-referrer.any.js :: Cross origin redirection, empty redirect header, same-origin init `
+- `fetch/api/redirect/redirect-referrer.any.js :: Same origin redirection, empty init, no-referrer redirect header `
+- `fetch/api/redirect/redirect-referrer.any.js :: Same origin redirection, empty redirect header, no-referrer init `
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header (following a request without additional headers) is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header (following a request without additional headers) is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Match header is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header (following a request without additional headers) is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header (following a request without additional headers) is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Modified-Since header is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header (following a request without additional headers) is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header (following a request without additional headers) is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-None-Match header is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header (following a request without additional headers) is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header (following a request without additional headers) is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Range header is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header (following a request without additional headers) is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header (following a request without additional headers) is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header (following a request without additional headers) is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header is treated similarly to "no-store" with Etag and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header is treated similarly to "no-store" with Etag and stale response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header is treated similarly to "no-store" with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default-conditional.any.js :: RequestCache "default" mode with an If-Unmodified-Since header is treated similarly to "no-store" with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default.any.js :: RequestCache "default" mode checks the cache for previously cached content and goes to the network for stale responses with Etag and stale response`
+- `fetch/api/request/request-cache-default.any.js :: RequestCache "default" mode checks the cache for previously cached content and goes to the network for stale responses with Last-Modified and stale response`
+- `fetch/api/request/request-cache-default.any.js :: Responses with the "Cache-Control: no-store" header are not stored in the cache with Etag and fresh response`
+- `fetch/api/request/request-cache-default.any.js :: Responses with the "Cache-Control: no-store" header are not stored in the cache with Etag and stale response`
+- `fetch/api/request/request-cache-default.any.js :: Responses with the "Cache-Control: no-store" header are not stored in the cache with Last-Modified and fresh response`
+- `fetch/api/request/request-cache-default.any.js :: Responses with the "Cache-Control: no-store" header are not stored in the cache with Last-Modified and stale response`
+- `fetch/api/request/request-cache-force-cache.any.js :: RequestCache "force-cache" mode checks the cache for previously cached content and goes to the network if a cached response is not found with Etag and fresh response`
+- …and 159 more
