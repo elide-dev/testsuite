@@ -21,6 +21,22 @@
 # The C-accelerator variant of a module's tests where the runtime ships only the Python version
 # (the same case as the excluded "requires C version" skips, but these classes fail instead).
 "test_bisect.Test*C.*" = "tests CPython's _bisect C accelerator; the runtime ships the Python bisect"
+"datetimetester.CapiTest_Fast.*" = "CPython datetime C API (datetime_CAPI capsule, via _testcapi)"
+"test_call.TestPEP590.*" = "CPython vectorcall C API (via _testcapi)"
+"test_type_cache" = "CPython type-attribute cache internals (via _testinternalcapi)"
+"test_type_cache.*" = "CPython type-attribute cache internals (via _testinternalcapi)"
+"test_getpath" = "CPython's C startup path calculation (via _testinternalcapi)"
+"test_getpath.*" = "CPython's C startup path calculation (via _testinternalcapi)"
+# Refcounting: CPython frees an object the moment its last reference goes; a tracing GC does not.
+"*.test_free_after_iterating" = "asserts deallocation at refcount zero (CPython refcounting)"
+"test_descr.ClassPropertiesAndMethods.test_delete_hook" = "__del__ finalization timing; not run synchronously after del+gc.collect on GraalPy"
+"test_descr.ClassPropertiesAndMethods.test_slots" = "instance __del__ counting depends on refcount/GC finalization timing"
+"test_class.ClassTests.testDel" = "__del__ not run deterministically under JVM GC"
+"test_exceptions.ExceptionTests.test_3114" = "JVM finalization: object __del__ not run at refcount 0, sys.exception() sentinel never cleared"
+"test_exceptions.ExceptionTests.testExceptionCleanupState" = "weakref/refcount: exception-local object not deterministically freed under JVM GC"
+"test_weakref.FinalizeTestCase.test_all_freed" = "finalize/weakref timing: del+gc.collect does not free object under JVM GC"
+"test_weakref.FinalizeTestCase.test_finalize" = "finalize timing: del does not run finalizer under JVM GC"
+"test_weakref.FinalizeTestCase.test_order" = "finalizer ordering/timing at JVM GC differs from CPython refcount-0 ordering"
 
 [exclude-skipped]
 # CPython internals: C-level details and CPython-only test modules.
@@ -40,6 +56,12 @@
 "kqueue|devpoll" = "BSD/Solaris-only selector"
 "32-bit" = "32-bit platforms only"
 "case-insensitive filesystem" = "case-insensitive filesystems only"
+# Not provided by the harness: stock CPython skips these in the same container.
+"^not enough memory: " = "bigmem test; regrtest runs these only with -M"
+"^Hypothesis required" = "needs the third-party hypothesis package"
+"^Test needs Numpy" = "needs the third-party numpy package"
+"^No module named '_tkinter'" = "needs Tk"
+"tzdata not installed" = "needs the PyPI tzdata package"
 
 [skip]
 "test_re.ReTests.test_look_behind_overflow" = "Pathological large fixed-width lookbehind test is too slow under Elide Python"
@@ -57,48 +79,14 @@
 "test_unicodedata.UnicodeFunctionsTest.test_function_checksum" = "Full Unicode database checksum test hangs under Elide Python"
 "test_userstring.UserStringTest.test_adaptive_find" = "Pathological string-search complexity test hangs under Elide Python"
 "test_zipimport_support.ZipSupportTests.test_doctest_issue4197" = "Doctest zipimport integration test hangs under Elide Python"
-"test_hash.*HashRandomizationTests.*" = "Hash randomization checks launch child Python processes"
-"test_hashlib.HashLibTestCase.test_case_*" = "Digest vector helper exercises file_digest against temp files"
-"test_hashlib.HashLibTestCase.test_file_digest" = "File-backed digest coverage waits for sandboxed file I/O"
 "test_hashlib.HashLibTestCase.test_threaded_hashing" = "Threaded hashing coverage is tracked with later local threading coverage"
-"test_ntpath.NtCommonTest.*" = "Common path tests include file-backed genericpath behavior"
-"test_ntpath.PathLikeTests.*" = "PathLike tests create files; deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_con_device" = "Device filesystem probe deferred until sandboxed file I/O"
 "test_ntpath.TestNtpath.test_fast_paths_in_use" = "CPython implementation-detail fast-path check is not runtime API coverage"
-"test_ntpath.TestNtpath.test_isdevdrive*" = "Windows volume filesystem probing deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_isfile_*" = "Filesystem and pipe probes deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_isjunction" = "Junction creation/probing deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_ismount" = "Mount probing uses temp directories; deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_nt_helpers" = "Windows filesystem helper probing deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_realpath*" = "Realpath filesystem resolution deferred until sandboxed file I/O"
-"test_ntpath.TestNtpath.test_sameopenfile" = "Open-file descriptor comparison deferred until sandboxed file I/O"
-"test_pathlib.PathSubclassTest.*" = "Concrete pathlib filesystem behavior deferred until sandboxed file I/O"
-"test_pathlib.PathTest.*" = "Concrete pathlib filesystem behavior deferred until sandboxed file I/O"
-"test_pathlib.PosixPathTest.*" = "Concrete pathlib filesystem behavior deferred until sandboxed file I/O"
-"test_pathlib.WalkTests.*" = "Directory walking deferred until sandboxed file I/O"
-"test_pathlib.WindowsPathTest.*" = "Concrete pathlib filesystem behavior deferred until sandboxed file I/O"
 
 # --- Platform-limitation classifications (cpython-core triage 2026-07-17) ---
 # Subprocess / script_helper.assert_python_ok: Elide has no child_process/subprocess.
-"test_builtin.ShutdownTest.test_cleanup" = "Spawns a child interpreter via assert_python_ok; subprocess + interpreter-shutdown finalization unsupported"
 "test_exceptions.ExceptionTests.test_memory_error_in_subinterp" = "script_helper.assert_python_ok subprocess + _testcapi subinterpreters unsupported"
-"test_weakref.FinalizeTestCase.test_atexit" = "script_helper.assert_python_ok subprocess unsupported"
-"test_fstring.TestCase.test_filename_in_syntaxerror" = "assert_python_failure subprocess unsupported"
-"test_fstring.TestCase.test_syntax_warning_infinite_recursion_in_file" = "assert_python_ok subprocess + stderr line-count assertion unsupported"
-"test_json.test_tool.TestTool.test_broken_pipe_error" = "Spawns json.tool subprocess and asserts EPIPE returncode; subprocess/pipe unsupported"
-# GC / refcount / __del__ finalization timing: JVM GC is non-deterministic, no refcount-0 finalization.
-"test_descr.ClassPropertiesAndMethods.test_delete_hook" = "__del__ finalization timing; not run synchronously after del+gc.collect on GraalPy"
-"test_descr.ClassPropertiesAndMethods.test_slots" = "instance __del__ counting depends on refcount/GC finalization timing"
-"test_dict.DictTest.test_free_after_iterating" = "free-after-iterating requires __del__ to run immediately after iteration (refcount finalization)"
-"test_list.ListTest.test_free_after_iterating" = "free-after-iterating depends on refcount __del__; JVM GC non-deterministic"
+# Huge allocation.
 "test_list.ListTest.test_basic" = "MemoryError not raised on huge list(range(maxsize//2)) allocation under the JVM"
-"test_tuple.TupleTest.test_free_after_iterating" = "free-after-iterating depends on refcount __del__; JVM GC non-deterministic"
-"test_class.ClassTests.testDel" = "__del__ not run deterministically under JVM GC"
-"test_exceptions.ExceptionTests.test_3114" = "JVM finalization: object __del__ not run at refcount 0, sys.exception() sentinel never cleared"
-"test_exceptions.ExceptionTests.testExceptionCleanupState" = "weakref/refcount: exception-local object not deterministically freed under JVM GC"
-"test_weakref.FinalizeTestCase.test_all_freed" = "finalize/weakref timing: del+gc.collect does not free object under JVM GC"
-"test_weakref.FinalizeTestCase.test_finalize" = "finalize timing: del does not run finalizer under JVM GC"
-"test_weakref.FinalizeTestCase.test_order" = "finalizer ordering/timing at JVM GC differs from CPython refcount-0 ordering"
 # dict mutation-during-iteration guard: GraalPy detects size change only, not same-size structural mutation (no version/keys tag).
 "test_dict.DictTest.test_mutating_iteration_delete" = "same-size dict mutation during iteration needs version/keys-tag internals GraalPy lacks (size-change is detected)"
 "test_dict.DictTest.test_mutating_iteration_delete_over_values" = "same-size dict mutation during iteration needs version/keys-tag internals GraalPy lacks"
