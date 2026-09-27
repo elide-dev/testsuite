@@ -7,7 +7,7 @@ import { loadRegistry, type TargetName } from "./registry";
 import { resolveTargetIdentity } from "./target";
 import { loadExpectations, skipGlobs } from "./expectations/load";
 import type { Expectations } from "./expectations/load";
-import { compare, expectationKeysOf, expectedFor, passRatesOf } from "./expectations/compare";
+import { compare, exclusionOf, expectationKeysOf, expectedFor, passRatesOf } from "./expectations/compare";
 import { ratchetCandidates, writeRatchet, ratchetPath, loadRatchet, mergeRatchet } from "./expectations/ratchet";
 import { writeResults, readResults } from "./results/store";
 import { diffRuns, renderDiffMd, toRunResults, findPreviousRunDir, loadRunResultsFromDb } from "./analyze/diff";
@@ -330,8 +330,12 @@ export async function main(o: CliOptions): Promise<number> {
   // Per-version changelog vs the previous run of this workload.
   const prevDir = await findPreviousRunDir(o.reportsDir, wl.id, identity);
   if (prevDir) {
-    const prev = toRunResults(await readResults(prevDir));
-    const diff = diffRuns(prev, toRunResults({ meta, results: reportableResults }));
+    // Out-of-scope tests (`[exclude*]`) are in no rate, so they cannot regress or be fixed either.
+    const inScope = (r: { kind: string }) =>
+      r.kind !== "test" || exclusionOf(r as TestResult, exp) === undefined;
+    const prevRun = await readResults(prevDir);
+    const prev = toRunResults({ ...prevRun, results: prevRun.results.filter(inScope) });
+    const diff = diffRuns(prev, toRunResults({ meta, results: reportableResults.filter(inScope) }));
     await Bun.write(join(outDir, "changes.json"), JSON.stringify(diff, null, 2));
     await Bun.write(join(outDir, "changes.md"), renderDiffMd(diff));
   }

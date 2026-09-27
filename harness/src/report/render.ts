@@ -49,6 +49,13 @@ export function renderSuiteReport(meta: RunMeta, c: Comparison): string {
     if (c.observed.length > 200) lines.push(`- …and ${c.observed.length - 200} more`);
     lines.push("");
   }
+  const excluded = Object.entries(c.excludedByReason ?? {}).sort(([, a], [, b]) => b - a);
+  if (excluded.length) {
+    lines.push(`## Unsupported / out of scope (${c.counts.excluded}) — excluded from every rate`, "");
+    lines.push(`| tests | reason |`, `|---:|---|`);
+    for (const [reason, n] of excluded) lines.push(`| ${n} | ${reason} |`);
+    lines.push("");
+  }
   if (c.regressions.length) {
     lines.push(`## ❌ Regressions (${c.regressions.length})`, "");
     for (const r of c.regressions.slice(0, 200))

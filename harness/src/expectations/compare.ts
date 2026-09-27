@@ -8,6 +8,8 @@ export interface Comparison {
   observed: TestResult[]; // non-skipped tests seen during the run
   // `total` covers every in-scope test; `excluded` ones (out of scope for this runtime) are in no rate.
   counts: { pass: number; fail: number; skip: number; error: number; total: number; excluded: number };
+  // Out-of-scope tests by `[exclude*]` reason (e.g. "unsupported: CORS preflight (...)").
+  excludedByReason: Record<string, number>;
 }
 
 // Normalize result ids to the path segment used by expectation globs.
@@ -110,10 +112,13 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
     newPasses: [],
     observed: [],
     counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0, excluded: 0 },
+    excludedByReason: {},
   };
   for (const r of results) {
-    if (exclusionOf(r, exp, entries) !== undefined) {
+    const excludedFor = exclusionOf(r, exp, entries);
+    if (excludedFor !== undefined) {
       c.counts.excluded++;
+      c.excludedByReason[excludedFor] = (c.excludedByReason[excludedFor] ?? 0) + 1;
       continue;
     }
     c.counts.total++;

@@ -30,6 +30,14 @@
 [exclude-ids]
 '^url/toascii\.window\.js :: .* \(using <a(rea)?>(\.host(name)?)?\)$' = "browser-only: tests <a>/<area> element URL parsing"
 '^encoding/single-byte-decoder\.window\.js :: .* \((XMLHttpRequest|document\.characterSet and document\.inputEncoding)\)$' = "browser-only: XMLHttpRequest / document encoding variants"
+# CORS enforcement (the preflight protocol, and rejecting responses a server or CORP withholds) is
+# the browser's security model; server runtimes, Node and Deno included, do not enforce it. The
+# positive cross-origin tests stay in.
+'^fetch/api/cors/cors-(preflight[\w-]*|redirect-preflight)\.any\.js :: ' = "unsupported: CORS preflight (browser security model; not enforced by server runtimes)"
+'^fetch/api/cors/cors-(basic|keepalive)\.any\.js :: .*server forbid CORS' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/api/cors/cors-origin\.any\.js :: .*\[origin KO\]$' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/api/redirect/redirect-mode\.any\.js :: manual redirect with a CORS error should be rejected$' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/cross-origin-resource-policy/fetch\.any\.js :: .*Cross-Origin-Resource-Policy: same' = "unsupported: Cross-Origin-Resource-Policy enforcement (browser security model; not enforced by server runtimes)"
 
 [skip]
 # TLS / HTTP-2 -- unreachable transport. The wptserve sidecar is plain HTTP on loopback (no WPT-CA
