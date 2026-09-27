@@ -133,6 +133,19 @@ module.exports = {
 `);
   writeFileSync(join(shimsPath, "worker_threads.js"), `'use strict';
 
+// The runtime's own module when it has one: a stub reporting isMainThread everywhere sends workers
+// down main-thread paths (common's umask setup, for one). The stub covers a runtime without it.
+{
+  let real;
+  try {
+    real = require('node:worker_threads');
+  } catch {}
+  if (real && typeof real.Worker === 'function') {
+    module.exports = real;
+    return;
+  }
+}
+
 class Worker {
   constructor() {
     throw new Error('node-api worker_threads shim does not implement Worker');
