@@ -1,5 +1,8 @@
 import argparse
 import fnmatch
+import gc
+import re
+import signal
 import importlib
 import importlib.util
 import json
@@ -71,6 +74,17 @@ def install_tracemalloc_compat():
         tracemalloc.is_tracing = lambda: False
 
 
+def install_opcode_compat():
+    # CPython 3.13's test.support imports the C `_opcode` module at top level, only to read
+    # `ENABLE_SPECIALIZATION`; GraalPy has no `_opcode`. Tests of `_opcode` itself still fail.
+    try:
+        importlib.import_module("_opcode")
+    except ImportError:
+        stub = type(sys)("_opcode")
+        stub.ENABLE_SPECIALIZATION = False
+        sys.modules["_opcode"] = stub
+
+
 def emit(record):
     print(json.dumps(record, sort_keys=True), file=sys.__stdout__, flush=True)
 
@@ -101,15 +115,35 @@ def should_skip(test, patterns):
     )
 
 
-def filter_suite(suite, skip_patterns):
+def compile_match_patterns(patterns):
+    """`--match-re` regexes (from the harness's --filter globs); searched, case-insensitively."""
+    return [re.compile(pattern, re.IGNORECASE) for pattern in patterns]
+
+
+def is_selected(test, match_patterns):
+    """A case is selected when no --match-re was given, or one of them hits its case or module id."""
+    if not match_patterns:
+        return True
+    test_case_id = case_id(test)
+    test_module_id = module_id(test)
+    return any(
+        pattern.search(test_case_id) or pattern.search(test_module_id)
+        for pattern in match_patterns
+    )
+
+
+def filter_suite(suite, skip_patterns, match_patterns=()):
     filtered = unittest.TestSuite()
     skipped = 0
     for item in suite:
         if isinstance(item, unittest.TestSuite):
-            child_suite, child_skipped = filter_suite(item, skip_patterns)
+            child_suite, child_skipped = filter_suite(item, skip_patterns, match_patterns)
             skipped += child_skipped
             if child_suite.countTestCases() > 0:
                 filtered.addTest(child_suite)
+        elif not is_selected(item, match_patterns):
+            # Deselected by --filter: not a result at all (unlike a skip, which is reported).
+            continue
         elif should_skip(item, skip_patterns):
             emit({
                 "module": module_id(item),
@@ -126,6 +160,7 @@ def filter_suite(suite, skip_patterns):
 def install_cpython_test_package(cpython_root):
     sanitize_cpython_lib_from_sys_path(cpython_root)
     install_tracemalloc_compat()
+    install_opcode_compat()
     test_dir = os.path.realpath(os.path.abspath(os.path.join(cpython_root, "Lib", "test")))
     if not os.path.isdir(test_dir):
         raise FileNotFoundError("CPython test package not found: " + test_dir)
@@ -151,6 +186,19 @@ def install_cpython_test_package(cpython_root):
     spec.loader.exec_module(module)
 
 
+# CPython closes a dropped file the moment its last reference goes; a tracing GC closes it only when
+# it collects. A test that drops thousands (test_bz2's testOpenDel) would push later tests' fds past
+# select()'s FD_SETSIZE, so collect between tests once many are open, as regrtest does for PyPy.
+FD_COLLECT_THRESHOLD = 256
+
+
+def open_fd_count():
+    try:
+        return len(os.listdir("/proc/self/fd"))
+    except OSError:
+        return 0
+
+
 class JsonResult(unittest.TextTestResult):
     def _case_id(self, test):
         return case_id(test)
@@ -167,6 +215,11 @@ class JsonResult(unittest.TextTestResult):
     def startTest(self, test):
         self._emit(test, "running")
         super().startTest(test)
+
+    def stopTest(self, test):
+        super().stopTest(test)
+        if open_fd_count() > FD_COLLECT_THRESHOLD:
+            gc.collect()
 
     def addSuccess(self, test):
         super().addSuccess(test)
@@ -189,37 +242,66 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cpython-root", required=True)
     parser.add_argument("--skip", action="append", default=[])
+    parser.add_argument("--match-re", action="append", default=[], help="only run cases whose id matches (regex search)")
     parser.add_argument("--progress-stderr", action="store_true")
     parser.add_argument("modules", nargs="+")
     args = parser.parse_args()
     install_cpython_test_package(args.cpython_root)
+    match_patterns = compile_match_patterns(args.match_re)
 
     ok = True
     for module_name in args.modules:
-        started = time.monotonic()
-        try:
-            if args.progress_stderr:
-                emit_progress("importing " + module_name)
-            module = importlib.import_module("test." + module_name)
-            if args.progress_stderr:
-                emit_progress("loading " + module_name)
-            suite = unittest.defaultTestLoader.loadTestsFromModule(module)
-            if args.progress_stderr:
-                emit_progress("filtering " + module_name)
-            suite, _ = filter_suite(suite, args.skip)
-            if args.progress_stderr:
-                emit_progress("running " + module_name)
-            result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)
-            if args.progress_stderr:
-                emit_progress("done " + module_name)
-            ok = ok and result.wasSuccessful()
-        except unittest.SkipTest as exc:
-            emit({"module": module_name, "case": module_name, "status": "skip", "message": str(exc), "durationMs": int((time.monotonic() - started) * 1000)})
-        except BaseException as exc:
-            ok = False
-            emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        ok = run_module(module_name, args, match_patterns) and ok
+    # The harness reads a missing sentinel as an interpreter crash, not as failing tests.
+    emit({"driver": "complete"})
     return 0 if ok else 1
 
 
+def run_module(module_name, args, match_patterns, retries=1):
+    """Run one test module; False when it did not succeed.
+
+    A SIGINT a previous module sent itself (test_unittest's TestBreak, test_signal) can be delivered
+    late, while the next module imports; that module is retried once with the default handler back.
+    """
+    signal.signal(signal.SIGINT, signal.default_int_handler)
+    started = time.monotonic()
+    running = False
+    try:
+        if args.progress_stderr:
+            emit_progress("importing " + module_name)
+        module = importlib.import_module("test." + module_name)
+        if args.progress_stderr:
+            emit_progress("loading " + module_name)
+        suite = unittest.defaultTestLoader.loadTestsFromModule(module)
+        if args.progress_stderr:
+            emit_progress("filtering " + module_name)
+        suite, _ = filter_suite(suite, args.skip, match_patterns)
+        if args.progress_stderr:
+            emit_progress("running " + module_name)
+        running = True
+        result = unittest.TextTestRunner(stream=sys.stderr, resultclass=JsonResult, verbosity=0, buffer=True).run(suite)
+        if args.progress_stderr:
+            emit_progress("done " + module_name)
+        return result.wasSuccessful()
+    except unittest.SkipTest as exc:
+        emit({"module": module_name, "case": module_name, "status": "skip", "message": str(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return True
+    except KeyboardInterrupt as exc:
+        if retries > 0 and not running:
+            sys.modules.pop("test." + module_name, None)
+            return run_module(module_name, args, match_patterns, retries - 1)
+        emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return False
+    except BaseException as exc:
+        emit({"module": module_name, "case": module_name, "status": "error", "message": repr(exc), "durationMs": int((time.monotonic() - started) * 1000)})
+        return False
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    code = main()
+    # Leave without the interpreter's shutdown: it joins every non-daemon thread a test left behind,
+    # and one that never finishes would hold the shard until its whole budget runs out.
+    sys.stdout.flush()
+    sys.stderr.flush()
+    sys.__stdout__.flush()
+    os._exit(code)

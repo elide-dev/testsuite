@@ -278,7 +278,7 @@ test("prints pass percentage in the run summary", async () => {
     await writeHarnessFixture(root, adapterId, ["alpha"]);
 
     expect(await runFixtureWorkload(root, "alpha", adapterId)).toBe(0);
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0%)"));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("1/1 pass (100.0% overall, 100.0% vs expectations)"));
   } finally {
     logSpy.mockRestore();
     delete ADAPTERS[adapterId];
@@ -514,4 +514,17 @@ test("ad-hoc impact uses the requested workload from ingested runs", async () =>
   expect(output).toContain("beta-fail");
   expect(output).toContain("beta-feature");
   expect(output).not.toContain("test262-fail");
+});
+
+test("collects repeatable --filter / --test-filter patterns without comma-splitting", () => {
+  expect(parseArgs(["run", "test262"]).filter).toEqual([]);
+  const o = parseArgs(["run", "test262", "--filter", "*time*", "--test-filter", "{a,b}/**", "--filter", " ", "--threads", "2"]);
+  expect(o.filter).toEqual(["*time*", "{a,b}/**"]);
+  expect(o.threads).toBe(2);
+});
+
+test("buildAdapterContext passes --filter patterns through to the adapter", () => {
+  const o = parseArgs(["run", "test262", "--filter", "*Date*"]);
+  const ctx = buildAdapterContext(o, { id: "test262", path: "suites/test262", settings: {} }, { semver: "0", digest: "d" }, { entries: [], ratchet: new Set() });
+  expect(ctx.filter).toEqual(["*Date*"]);
 });

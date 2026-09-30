@@ -33,6 +33,8 @@ Counts are test executions (a file can run in both default and strict mode).
 bun run setup                       # once: deps + submodules
 # quick slice (seconds):
 bun run testsuite --elide nightly --suite test262 --include 'test/built-ins/Error/prototype/stack/**/*.js' --log
+# by name, any file whose path contains 'getTime' (case-insensitive glob, see docs/running.md 'Targeted runs'):
+bun run testsuite --elide nightly --log --filter 'test262:*gettime*'
 # full suite (~20 min):
 bun run testsuite --elide nightly --suite test262
 # after fixes land in an Elide nightly, re-baseline:
@@ -95,8 +97,10 @@ Signature view of the top clusters:
 
 - Fixes happen in the Elide runtime (GraalJS-based); this repo pins nightlies
   and measures. `--elide nightly` picks up a fresh build.
-- 10,587 skips are intentional (see `expectations/test262.toml`) and excluded
-  from the pass-rate denominator.
+- 10,587 skips are intentional (see `expectations/test262.toml`). They still
+  count against the overall pass rate (the headline is over every selected
+  test), but they are expected skips, so they do not count against the
+  "vs expectations" rate.
 - Some failing features are proposal-stage (immutable ArrayBuffer, source-
   phase imports). If Elide won't ship them yet, classify as `[skip]` with a
   comment rather than leaving them as permanent failures.

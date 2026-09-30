@@ -17,14 +17,19 @@ export function renderReadmeCompatSummary(index: { runs: IndexEntry[] }): string
     "",
     "![Latest compatibility pass rates](reports/pass-rate.svg)",
     "",
-    "| Suite | Version | Digest | Pass rate | Regressions |",
-    "|---|---|---|---:|---:|",
+    "| Suite | Version | Digest | Pass rate | vs expectations | Regressions | New passes |",
+    "|---|---|---|---:|---:|---:|---:|",
   ];
   for (const run of latest) {
     lines.push(
-      `| ${run.workload} | \`${run.semver}\` | \`${run.digest}\` | ${(run.passRate * 100).toFixed(1)}% | ${run.regressions} |`,
+      `| ${run.workload} | \`${run.semver}\` | \`${run.digest}\` | ${(run.passRate * 100).toFixed(1)}% | ${(run.expectedRate * 100).toFixed(1)}% | ${run.regressions} | ${run.newPasses} |`,
     );
   }
+  lines.push(
+    "",
+    "_Pass rate_ counts every test in the selection, including skipped/suppressed ones.",
+    "_vs expectations_ is the share of tests at or above the checked-in baseline (only regressions count against it).",
+  );
   lines.push("", END, "");
   return lines.join("\n");
 }

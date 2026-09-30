@@ -37,6 +37,8 @@ bun run setup                       # once: deps + submodules
 bun run testsuite --elide nightly --suite cpython-core --include 'test_json' --log
 # one module under investigation:
 bun run testsuite --elide nightly --suite cpython-core --include 'test_builtin' --log
+# by name, any module/case whose id contains 'time' (case-insensitive glob; 'test_ast.*literal_eval*' picks cases):
+bun run testsuite --elide nightly --log --filter 'cpython-core:*time*'
 # full suite (~90s):
 bun run testsuite --elide nightly --suite cpython-core
 # after fixes land in an Elide nightly, re-baseline:
@@ -96,8 +98,9 @@ Start with `test_builtin` (17), `test_descr`/`test_dict` (12), then
 
 - Runtime fixes happen in the Elide repo (GraalPy-based Python engine); this
   repo pins nightlies and measures.
-- 103 skips are already classified in `expectations/cpython-core.toml` and
-  excluded from the denominator; keep skip entries commented.
+- 103 skips are already classified in `expectations/cpython-core.toml`; keep
+  skip entries commented. Skips still count against the overall pass rate, but
+  not against the "vs expectations" rate.
 - The pass rate is already 95.9% — the value here is *classification honesty*
   (separating defects from platform limits) more than raw number movement.
 - After a fix lands: full run → check `changes.md` → `--ratchet` → commit.

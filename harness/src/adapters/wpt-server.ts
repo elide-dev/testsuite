@@ -15,7 +15,7 @@ import { join } from "node:path";
  * TLS-trust concern), and are gated in `expectations/wpt-wintertc.toml`.
  */
 export interface WptServer {
-  /** Same-origin base, e.g. `http://127.0.0.1:8123`. */
+  /** Same-origin base, e.g. `http://localhost:8123`. */
   origin: string;
   host: string;
   httpPort: number;
@@ -24,6 +24,10 @@ export interface WptServer {
 }
 
 const HOST = "127.0.0.1";
+// The document origin is `localhost` on the loopback-bound server, so `get-host-info` picks
+// `127.0.0.1` as the cross-origin host: the same server under another origin, as upstream wptrunner
+// does. The default `www1.<host>` would be `www1.127.0.0.1`, which is not a valid URL host.
+const DOCUMENT_HOST = "localhost";
 
 // wptserve tags each listener line "[<ts> <scheme> on port <port>] ...". Reading the bound port
 // from the log (rather than pre-allocating one) removes the bind-then-hope-it's-free TOCTOU race.
@@ -70,8 +74,8 @@ export async function startWptServer(
 
   // Override merged over wptserve's `_default` config: bind loopback explicitly (bind_address +
   // browser_host → 127.0.0.1, not 0.0.0.0), skip the subdomain check, auto-pick every port, and
-  // disable TLS (the pregenerated cert is for web-platform.test). The ssl-"none" https listeners
-  // fail to start and are logged-and-skipped; the http listener serves regardless.
+  // disable TLS (the pregenerated cert is for web-platform.test). TLS listeners get no ports at all:
+  // with ssl "none" they exit on start, and wptserve shuts every listener down when any child exits.
   const configDir = mkdtempSync(join(tmpdir(), "wpt-serve-"));
   const configPath = join(configDir, "config.json");
   const cleanupConfig = (): void => {
@@ -88,7 +92,15 @@ export async function startWptServer(
       bind_address: true,
       alternate_hosts: {},
       check_subdomains: false,
-      ports: { http: ["auto", "auto"], https: ["auto", "auto"] },
+      ports: {
+        http: ["auto", "auto"],
+        https: [],
+        "https-local": [],
+        "https-public": [],
+        wss: [],
+        h2: [],
+        "webtransport-h3": [],
+      },
       ssl: { type: "none" },
     }),
   );
@@ -166,7 +178,7 @@ export async function startWptServer(
     throw new Error(`wptserve did not report a bound HTTP port\n${capture.slice(-2000)}`);
   }
 
-  const origin = `http://${HOST}:${port}`;
+  const origin = `http://${DOCUMENT_HOST}:${port}`;
   const ready = await waitReady(origin, deadline);
   if (!ready) {
     stop();

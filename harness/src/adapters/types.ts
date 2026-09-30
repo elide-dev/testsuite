@@ -9,6 +9,7 @@ export interface AdapterContext {
   suitePath: string; // absolute path to the suite root (e.g. /work/suites/test262)
   include: string[]; // globs relative to suitePath, from registry
   skipGlobs: string[]; // file-path globs to exclude, from expectations [skip]
+  filter?: string[]; // --filter patterns (see filter.ts): narrow the include selection by id
   threads: number;
   log?: boolean;
   verbose?: boolean;

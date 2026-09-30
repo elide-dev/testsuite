@@ -2,17 +2,27 @@ import { test, expect } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseExpectations } from "./load";
-import { compare, passRate, scoredTotal } from "./compare";
+import { compare, expectationPassRate, overallPassRate, scoredTotal } from "./compare";
 import type { TestResult } from "../results/schema";
 
-test("scoredTotal and passRate exclude skipped tests", () => {
+test("scoredTotal excludes skipped tests; overallPassRate keeps them in the denominator", () => {
   const counts = { pass: 90, fail: 5, error: 5, skip: 100, total: 200 };
   expect(scoredTotal(counts)).toBe(100); // skip excluded
-  expect(passRate(counts)).toBeCloseTo(0.9, 5); // 90 / (90+5+5), not 90/200
+  expect(overallPassRate(counts)).toBeCloseTo(0.45, 5); // 90/200: muting never flatters the headline
 });
 
-test("passRate is 0 when nothing scored (everything skipped)", () => {
-  expect(passRate({ pass: 0, fail: 0, error: 0, skip: 12, total: 12 })).toBe(0);
+test("expectationPassRate only counts regressions against the run", () => {
+  const counts = { pass: 90, fail: 5, error: 5, skip: 100, total: 200 };
+  expect(expectationPassRate(counts, 0)).toBe(1); // every fail is baselined, every skip is expected
+  expect(expectationPassRate(counts, 4)).toBeCloseTo(196 / 200, 5);
+  expect(expectationPassRate(counts, 500)).toBe(0); // clamped
+});
+
+test("rates are 0 when the selection is empty", () => {
+  expect(overallPassRate({ pass: 0, fail: 0, error: 0, skip: 0, total: 0 })).toBe(0);
+  expect(expectationPassRate({ pass: 0, fail: 0, error: 0, skip: 0, total: 0 }, 0)).toBe(0);
+  // Older summaries lack `total`; fall back to scored + skip.
+  expect(overallPassRate({ pass: 1, fail: 0, error: 0, skip: 1 })).toBeCloseTo(0.5, 5);
 });
 
 const toml = `
@@ -118,33 +128,67 @@ test("CPython module-level skip expectations match upstreamPath metadata", () =>
   expect(c.counts.skip).toBe(1);
 });
 
-test("wpt-wintertc baseline skips unreachable tests but keeps window.js files that pass headless", () => {
+test("wpt-wintertc baseline skips unreachable transports and excludes browser-only tests", () => {
   const wpt = parseExpectations(
     readFileSync(join(import.meta.dir, "../../../expectations/wpt-wintertc.toml"), "utf8"),
   );
-  const mkWpt = (path: string, status: TestResult["status"]): TestResult =>
-    mk(`${path} :: t`, status, {
+  const mkWpt = (path: string, status: TestResult["status"], subtest = "t"): TestResult =>
+    mk(`${path} :: ${subtest}`, status, {
       suite: "wpt-wintertc",
       upstreamPath: path,
       runner: "wpt",
-      subtest: "t",
+      subtest,
     });
   const c = compare(
     [
-      mkWpt("url/toascii.window.js", "fail"), // browser-only, explicitly listed -> skip
+      mkWpt("url/toascii.window.js", "fail", "x (using <a>)"), // DOM-only subtest -> excluded
+      mkWpt("url/toascii.window.js", "pass", "x (using URL)"), // portable subtest of a mixed file -> scored
       mkWpt("fetch/api/cors/cors-basic.https.any.js", "fail"), // no TLS -> skip
       mkWpt("fetch/api/redirect/redirect-upload.h2.any.js", "fail"), // no HTTP/2 -> skip
-      mkWpt("fetch/fetch-later/basic.any.js", "fail"), // browser-only -> skip
-      // A .window.js file that passes headless is deliberately NOT skipped, so its pass counts.
-      mkWpt("encoding/single-byte-decoder.window.js", "pass"),
+      mkWpt("fetch/fetch-later/basic.any.js", "fail"), // browser-only -> excluded
       mkWpt("url/urlsearchparams-constructor.any.js", "pass"),
       // encodeInto is deliberately NOT skipped: its valid-destination branch passes, so it stays scored.
       mkWpt("encoding/encodeInto.any.js", "fail"),
     ],
     wpt,
   );
-  expect(c.counts.skip).toBe(4); // listed .window.js + .https + .h2 + fetch-later
-  expect(c.counts.pass).toBe(2); // the headless-passing .window.js keeper and the url test are scored
-  expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure, not skipped
-  expect(scoredTotal(c.counts)).toBe(3); // only the four unreachable tests leave the denominator
+  expect(c.counts.excluded).toBe(2); // the DOM subtest and fetchLater count nowhere
+  expect(c.counts.skip).toBe(2); // .https + .h2 stay in the denominator as skips
+  expect(c.counts.pass).toBe(2);
+  expect(c.counts.fail).toBe(1); // encodeInto stays a scored failure
+  expect(c.counts.total).toBe(5);
+});
+
+test("excluded tests leave every count and rate; excluded skips match only real skips", () => {
+  const exp = parseExpectations(`
+[exclude]
+"internal/*.js" = "out of scope"
+
+[exclude-skipped]
+"specific to cpython" = "CPython implementation detail"
+
+[exclude-ids]
+'^mixed\\.js :: .*\\(using <a>\\)$' = "DOM-only subtest"
+`);
+  const t = (id: string, status: TestResult["status"], message?: string): TestResult => ({
+    kind: "test",
+    id,
+    status,
+    message,
+  });
+  const c = compare(
+    [
+      t("a.js", "pass"),
+      t("internal/b.js", "fail"),
+      t("c.py", "skip", "implementation detail specific to CPython"),
+      t("d.py", "skip", "don't have recvmsg"),
+      t("e.py", "fail", "implementation detail specific to CPython"),
+      t("mixed.js :: x (using <a>)", "fail"),
+      t("mixed.js :: x (using URL)", "pass"),
+    ],
+    exp,
+  );
+  expect(c.counts).toEqual({ pass: 2, fail: 1, skip: 1, error: 0, total: 4, excluded: 3 });
+  expect(overallPassRate(c.counts)).toBeCloseTo(2 / 4);
+  expect(c.regressions.map((r) => r.id)).toEqual(["e.py"]);
 });

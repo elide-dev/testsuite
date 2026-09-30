@@ -1,7 +1,43 @@
 # WinterTC / WPT expectations baseline.
-# Keys are picomatch globs over WPT-relative test paths (no subtest suffix). Skipped tests leave the
-# pass-rate denominator (rate over run, not selection); ratcheted per-subtest failures are counted
-# but expected. Skip only what is structurally unreachable -- never a file with passing subtests.
+# Keys are picomatch globs over WPT-relative test paths (no subtest suffix). Skipped tests stay in the
+# pass-rate denominator; excluded ones (out of scope for a WinterTC runtime) leave it. Ratcheted
+# per-subtest failures are counted but expected. Skip only what is structurally unreachable --
+# never a file with passing subtests.
+
+# Out of scope: browser-only files (document, iframes, navigation, media elements, page
+# lifecycle). WinterTC runtimes have no DOM, so these count in no pass rate. Mixed files run, and
+# only their DOM subtests are excluded (`[exclude-ids]`). A new `.window.js` on re-vendor runs
+# until triaged here.
+[exclude]
+"fetch/fetch-later/**" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/streams/invalid-realm.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/streams/realms.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"encoding/unsupported-labels.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/api/basic/mediasource.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/api/request/multi-globals/construct-in-detached-frame.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/content-type/response.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/content-type/script.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/data-urls/navigate.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/h1-parsing/resources-with-0x00-in-header.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/local-network-access/navigate.tentative.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/nosniff/parsing-nosniff.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/origin/assorted.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"fetch/range/general.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/javascript-urls.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/percent-encoding.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+"url/url-setters-a-area.window.js" = "unsupported: browser-only — needs a DOM (document, iframe, navigation or media elements)"
+
+[exclude-ids]
+'^url/toascii\.window\.js :: .* \(using <a(rea)?>(\.host(name)?)?\)$' = "unsupported: browser-only — tests <a>/<area> element URL parsing"
+'^encoding/single-byte-decoder\.window\.js :: .* \((XMLHttpRequest|document\.characterSet and document\.inputEncoding)\)$' = "unsupported: browser-only — XMLHttpRequest / document encoding variants"
+# CORS enforcement (the preflight protocol, and rejecting responses a server or CORP withholds) is
+# the browser's security model; server runtimes, Node and Deno included, do not enforce it. The
+# positive cross-origin tests stay in.
+'^fetch/api/cors/cors-(preflight[\w-]*|redirect-preflight)\.any\.js :: ' = "unsupported: CORS preflight (browser security model; not enforced by server runtimes)"
+'^fetch/api/cors/cors-(basic|keepalive)\.any\.js :: .*server forbid CORS' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/api/cors/cors-origin\.any\.js :: .*\[origin KO\]$' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/api/redirect/redirect-mode\.any\.js :: manual redirect with a CORS error should be rejected$' = "unsupported: CORS enforcement (browser security model; not enforced by server runtimes)"
+'^fetch/cross-origin-resource-policy/fetch\.any\.js :: .*Cross-Origin-Resource-Policy: same' = "unsupported: Cross-Origin-Resource-Policy enforcement (browser security model; not enforced by server runtimes)"
 
 [skip]
 # TLS / HTTP-2 -- unreachable transport. The wptserve sidecar is plain HTTP on loopback (no WPT-CA
@@ -11,32 +47,6 @@
 # `.tentative.https.any.js`, `.https.window.js`, ...), so match it anywhere in the filename.
 "**/*.https.*" = "no TLS: HTTP-only server cut, no WPT-CA trust"
 "**/*.h2.*" = "no HTTP/2: server started with --no-h2"
-
-# Browser-only `.window.js` (no document / window / navigation). Only window-scoped files with ZERO
-# headless passes are skipped; those that DO pass headless (encoding/single-byte-decoder,
-# fetch/content-type/multipart, fetch/h1-parsing/{lone-cr,status-code}) stay in so their passes
-# count and failures ratchet -- same rule as encodeInto. On a re-vendor, a new `.window.js` runs
-# (failures show as regressions) until triaged here.
-"fetch/fetch-later/**" = "browser-only: fetchLater needs window / iframe / bfcache"
-"encoding/streams/invalid-realm.window.js" = "browser-only: window-scoped, no headless pass"
-"encoding/streams/realms.window.js" = "browser-only: window-scoped, no headless pass"
-"encoding/unsupported-labels.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/api/basic/mediasource.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/api/request/multi-globals/construct-in-detached-frame.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/content-length/parsing.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/content-length/too-long.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/content-type/response.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/content-type/script.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/data-urls/navigate.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/h1-parsing/resources-with-0x00-in-header.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/local-network-access/navigate.tentative.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/nosniff/parsing-nosniff.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/origin/assorted.window.js" = "browser-only: window-scoped, no headless pass"
-"fetch/range/general.window.js" = "browser-only: window-scoped, no headless pass"
-"url/javascript-urls.window.js" = "browser-only: window-scoped, no headless pass"
-"url/percent-encoding.window.js" = "browser-only: window-scoped, no headless pass"
-"url/toascii.window.js" = "browser-only: window-scoped, no headless pass"
-"url/url-setters-a-area.window.js" = "browser-only: window-scoped, no headless pass"
 
 # encoding/encodeInto.any.js is NOT skipped: its valid-destination subtests pass. Known failures
 # (ratcheted): the SharedArrayBuffer subtests (need WebAssembly.Memory) plus 12 non-SAB -- the

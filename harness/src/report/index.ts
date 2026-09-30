@@ -1,7 +1,7 @@
 import { join, relative } from "node:path";
 import { readdirSync, existsSync } from "node:fs";
 import type { RunMeta } from "../results/schema";
-import type { Comparison } from "../expectations/compare";
+import { passRatesOf, type Comparison } from "../expectations/compare";
 import { renderTopIndex, type RunSummary } from "./render";
 
 export async function writeSummaryJson(dir: string, meta: RunMeta, c: Comparison): Promise<void> {
@@ -16,7 +16,7 @@ export async function writeSummaryJson(dir: string, meta: RunMeta, c: Comparison
 
 export interface IndexEntry {
   workload: string; semver: string; digest: string;
-  pass: number; total: number; skip: number; regressions: number;
+  pass: number; total: number; skip: number; regressions: number; newPasses: number;
   finishedAt: string; reportDir: string;
 }
 
@@ -68,6 +68,7 @@ export async function buildIndexJson(reportsDir: string): Promise<{ runs: IndexE
       total: s.counts.total,
       skip: s.counts.skip ?? 0,
       regressions: s.regressions.length,
+      newPasses: s.newPasses?.length ?? 0,
       finishedAt: s.meta.finishedAt,
       reportDir: relative(reportsDir, run.dir),
     });
@@ -87,15 +88,19 @@ export function latestRunSummariesFromIndex(index: { runs: IndexEntry[] }): RunS
   const latest = new Map<string, RunSummary & { finishedAt: string }>();
   for (const run of index.runs) {
     if (SUMMARY_MUTED_WORKLOADS.has(run.workload)) continue;
-    // Exclude skipped/muted tests from the denominator. Older index entries
-    // predate the `skip` field; treat them as skip=0 (denominator == total).
-    const scored = run.total - (run.skip ?? 0);
+    // Skipped/suppressed tests stay in the denominator: `total` is the whole selection.
+    const rates = passRatesOf(
+      { pass: run.pass, fail: 0, error: 0, skip: run.skip ?? 0, total: run.total },
+      run.regressions,
+    );
     const cur: RunSummary & { finishedAt: string } = {
       workload: run.workload,
       semver: run.semver,
       digest: run.digest.slice(0, 12),
-      passRate: scored > 0 ? run.pass / scored : 0,
+      passRate: rates.overall,
+      expectedRate: rates.expected,
       regressions: run.regressions,
+      newPasses: run.newPasses ?? 0,
       finishedAt: run.finishedAt,
     };
     const prev = latest.get(run.workload);

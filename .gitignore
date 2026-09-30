@@ -9,3 +9,4 @@ artifacts/
 expectations/jdk-jtreg.reference.*.json
 !expectations/jdk-jtreg.reference.linux-x64.json
 diagnostics/
+__pycache__/

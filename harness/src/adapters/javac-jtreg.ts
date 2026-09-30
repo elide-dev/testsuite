@@ -4,6 +4,7 @@ import picomatch from "picomatch";
 import type { Adapter, AdapterContext } from "./types";
 import type { TestResult } from "../results/schema";
 import { loadManifest } from "../manifest";
+import { applyFilter, describeFilter } from "../filter";
 import { runProcess, type ProcessRunResult } from "./process";
 import { createJtregRunRoot, isJtregRunnerExit, jtregCommonArgs, jtregOutcome } from "./jtreg";
 
@@ -377,7 +378,10 @@ export async function* runJavacJtreg(ctx: AdapterContext): AsyncIterable<TestRes
   if (!manifestPath) throw new Error("javac-jtreg requires settings.manifest");
   const manifest = loadManifest(resolve(manifestPath));
   const langtoolsRoot = join(ctx.suitePath, "test/langtools");
-  const tests = manifest.groups.flatMap((group) => expandManifestIncludePaths(langtoolsRoot, group.include, ctx.include));
+  const included = manifest.groups.flatMap((group) => expandManifestIncludePaths(langtoolsRoot, group.include, ctx.include));
+  const tests = applyFilter(included, ctx.filter, (path) => path, (kept, total) =>
+    process.stderr.write(`${ctx.logPrefix ?? ""}${describeFilter(ctx.filter!, kept, total, "tests")}\n`),
+  );
   const skip = ctx.skipGlobs.map((glob) => picomatch(glob));
   if (tests.length === 0) {
     yield runnerErrorResult("javac-jtreg selected no tests");

@@ -135,6 +135,8 @@ function get_host_info() {
     HTTP_REMOTE_ORIGIN_WITH_DIFFERENT_PORT: 'http://' + REMOTE_HOST + HTTP_PORT2_ELIDED,
     HTTP_NOTSAMESITE_ORIGIN: 'http://' + NOTSAMESITE_HOST + HTTP_PORT_ELIDED,
     HTTPS_ORIGIN: 'https://' + ORIGINAL_HOST + HTTPS_PORT_ELIDED,
+    HTTPS_REMOTE_ORIGIN: 'https://' + REMOTE_HOST + HTTPS_PORT_ELIDED,
+    HTTPS_REMOTE_ORIGIN_WITH_DIFFERENT_PORT: 'https://' + REMOTE_HOST + ':' + HTTPS_PORT2,
     HTTPS_NOTSAMESITE_ORIGIN: 'https://' + NOTSAMESITE_HOST + HTTPS_PORT_ELIDED,
     REMOTE_ORIGIN: PROTOCOL + '//' + REMOTE_HOST + PORT_ELIDED,
     OTHER_ORIGIN: PROTOCOL + '//' + OTHER_HOST + PORT_ELIDED,
@@ -177,6 +179,22 @@ export function parseMetaScripts(source) {
   return scripts;
 }
 
+// Parse `// META: variant=...` directives; each variant runs as its own process with that
+// `location.search`, as wptrunner does. Files without variants run once with an empty search.
+export function parseMetaVariants(source) {
+  const variants = [];
+  for (const line of source.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (trimmed === "" || trimmed.startsWith("//")) {
+      const m = /^\/\/\s*META:\s*variant=(\S*)/.exec(trimmed);
+      if (m) variants.push(m[1]);
+      continue;
+    }
+    break;
+  }
+  return variants.length ? variants : [""];
+}
+
 // Resolve a META script path: `/`-rooted paths resolve against the wpt suite
 // root, relative paths against the test file's directory. Returns the pair of
 // filesystem path and suite-root-relative key (used for virtual shim lookup).
@@ -196,10 +214,11 @@ export function buildMetaPreamble(suiteRoot, testRel, source) {
     const { path, key } = resolveMetaScript(suiteRoot, testRel, script);
     if (seen.has(key)) continue;
     seen.add(key);
-    if (existsSync(path)) {
-      chunks.push(`// wintertc-runner: inlined META script ${script}\n${readFileSync(path, "utf8")}`);
-    } else if (VIRTUAL_SCRIPTS[key]) {
+    // Shims win over the checkout: upstream `.sub.js` files carry unsubstituted `{{…}}` templates.
+    if (VIRTUAL_SCRIPTS[key]) {
       chunks.push(`// wintertc-runner: shimmed META script ${script}\n${VIRTUAL_SCRIPTS[key]}`);
+    } else if (existsSync(path)) {
+      chunks.push(`// wintertc-runner: inlined META script ${script}\n${readFileSync(path, "utf8")}`);
     } else {
       chunks.push(`// wintertc-runner: missing META script ${script}`);
     }
@@ -210,7 +229,7 @@ export function buildMetaPreamble(suiteRoot, testRel, source) {
 // Synthetic browser-ish globals: a location rooted at the test's directory
 // under http://web-platform.test/, and (post-harness, so testharness still
 // selects its shell environment) a minimal document stub.
-export function buildEnvPreamble(testRel) {
+export function buildEnvPreamble(testRel, search = "") {
   const dir = posix.dirname(testRel);
   const pathname = dir === "." ? "/" : `/${dir}/`;
   // When a WPT server is running (fetch tests, WPT_SERVER_ORIGIN set by the adapter), root the
@@ -220,14 +239,14 @@ export function buildEnvPreamble(testRel) {
   const u = serverOrigin ? new URL(serverOrigin) : null;
   const origin = u ? u.origin : "http://web-platform.test";
   const location = {
-    href: origin + pathname,
+    href: origin + pathname + search,
     protocol: u ? u.protocol : "http:",
     host: u ? u.host : "web-platform.test",
     hostname: u ? u.hostname : "web-platform.test",
     port: u ? u.port : "",
     pathname,
     origin,
-    search: "",
+    search,
     hash: "",
   };
   return `
@@ -268,10 +287,13 @@ function main() {
 
   const harness = readFileSync(join(suite, "resources/testharness.js"), "utf8");
   const source = readFileSync(join(suite, test), "utf8");
-  const out = join(mkdtempSync(join(tmpdir(), "wpt-elide-")), "case.js");
+  const dir = mkdtempSync(join(tmpdir(), "wpt-elide-"));
 
-  writeFileSync(out, `
-${buildEnvPreamble(test)}
+  let status = 0;
+  parseMetaVariants(source).forEach((variant, index) => {
+    const out = join(dir, `case-${index}.js`);
+    writeFileSync(out, `
+${buildEnvPreamble(test, variant)}
 ${harness}
 ${DOCUMENT_STUB}
 const TEST_STATUS = ${JSON.stringify(TEST_STATUS)};
@@ -293,13 +315,14 @@ ${buildMetaPreamble(suite, test, source)}
 ${source}
 done();
 `);
-
-  const child = spawnSync(elide, ["run", "--quiet", out], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
-  if (child.stdout) process.stdout.write(child.stdout);
-  if (child.stderr) process.stderr.write(child.stderr);
+    const child = spawnSync(elide, ["run", "--quiet", out], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+    if (child.stdout) process.stdout.write(child.stdout);
+    if (child.stderr) process.stderr.write(child.stderr);
+    status ||= child.status ?? 1;
+  });
   // process.exit() would drop un-drained pipe output (truncates large results at 64KiB);
   // set exitCode and let stdout flush naturally.
-  process.exitCode = child.status ?? 1;
+  process.exitCode = status;
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {

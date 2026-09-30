@@ -6,7 +6,10 @@ export interface Comparison {
   regressions: TestResult[]; // expected pass, actual fail/error
   newPasses: TestResult[]; // expected fail, actual pass
   observed: TestResult[]; // non-skipped tests seen during the run
-  counts: { pass: number; fail: number; skip: number; error: number; total: number };
+  // `total` covers every in-scope test; `excluded` ones (out of scope for this runtime) are in no rate.
+  counts: { pass: number; fail: number; skip: number; error: number; total: number; excluded: number };
+  // Out-of-scope tests by `[exclude*]` reason (e.g. "unsupported: CORS preflight (...)").
+  excludedByReason: Record<string, number>;
 }
 
 // Normalize result ids to the path segment used by expectation globs.
@@ -47,21 +50,59 @@ export function expectedFor(exp: Expectations, filePathOrKeys: string | string[]
   return expectedForEntries(compile(exp), keys);
 }
 
-/**
- * Tests that count toward the pass rate. Skipped/muted tests are deliberately
- * excluded: muting a known-unsupported area should not drag the denominator,
- * matching the Test262/WPT convention (rate over run, not over selection).
- */
 export type ScoredCounts = { pass: number; fail: number; error: number; skip?: number; total?: number };
 
+/** Number of non-skipped tests (pass + fail + error). */
 export function scoredTotal(counts: ScoredCounts): number {
   return counts.pass + counts.fail + counts.error;
 }
 
-/** Pass rate over scored (non-skipped) tests, in 0..1. Returns 0 when nothing scored. */
-export function passRate(counts: ScoredCounts): number {
-  const denom = scoredTotal(counts);
+/** Number of tests in the selection, including skipped/suppressed ones. */
+export function selectionTotal(counts: ScoredCounts): number {
+  return counts.total ?? scoredTotal(counts) + (counts.skip ?? 0);
+}
+
+/**
+ * Overall pass rate, in 0..1: passes over EVERY test in the selection. Skipped
+ * and expectation-suppressed tests stay in the denominator, so muting an area
+ * never makes the number look better. Returns 0 when the selection is empty.
+ */
+export function overallPassRate(counts: ScoredCounts): number {
+  const denom = selectionTotal(counts);
   return denom ? counts.pass / denom : 0;
+}
+
+/**
+ * Pass rate against the checked-in expectations, in 0..1: the share of tests
+ * whose outcome is at least as good as the baseline says. Suppressed tests are
+ * expected skips, baselined failures are expected fails, and new passes beat
+ * expectations, so only regressions count against it. 100% means the run is
+ * on (or above) the floor; the gap is exactly what still needs a ratchet.
+ */
+export function expectationPassRate(counts: ScoredCounts, regressions: number): number {
+  const denom = selectionTotal(counts);
+  return denom ? Math.max(0, denom - regressions) / denom : 0;
+}
+
+export interface PassRates {
+  overall: number; // 0..1, passes over all tests incl. skipped/suppressed
+  expected: number; // 0..1, non-regressions over all tests
+}
+
+export function passRatesOf(counts: ScoredCounts, regressions: number): PassRates {
+  return { overall: overallPassRate(counts), expected: expectationPassRate(counts, regressions) };
+}
+
+/** Why `r` is out of scope (never counted), or undefined when it is in scope. */
+export function exclusionOf(r: TestResult, exp: Expectations, entries = compile(exp)): string | undefined {
+  const byId = exp.excludedIds?.find((x) => x.pattern.test(r.id));
+  if (byId) return byId.reason;
+  const keys = expectationKeysOf(r);
+  const entry = entries.find((e) => keys.some((key) => e.isMatch(key)));
+  if (entry?.expected === "exclude") return entry.reason;
+  if (r.status !== "skip") return undefined;
+  const message = String(r.message ?? "");
+  return exp.excludedSkips?.find((x) => x.pattern.test(message))?.reason;
 }
 
 export function compare(results: TestResult[], exp: Expectations): Comparison {
@@ -70,16 +111,23 @@ export function compare(results: TestResult[], exp: Expectations): Comparison {
     regressions: [],
     newPasses: [],
     observed: [],
-    counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0 },
+    counts: { pass: 0, fail: 0, skip: 0, error: 0, total: 0, excluded: 0 },
+    excludedByReason: {},
   };
   for (const r of results) {
+    const excludedFor = exclusionOf(r, exp, entries);
+    if (excludedFor !== undefined) {
+      c.counts.excluded++;
+      c.excludedByReason[excludedFor] = (c.excludedByReason[excludedFor] ?? 0) + 1;
+      continue;
+    }
     c.counts.total++;
     if (r.status === "skip") {
       c.counts.skip++;
       continue;
     }
     const globExpected = expectedForEntries(entries, expectationKeysOf(r));
-    if (globExpected === "skip") {
+    if (globExpected === "skip" || globExpected === "exclude") {
       c.counts.skip++;
       continue;
     }
