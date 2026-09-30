@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "workload": "javac-jtreg",
+    "kind": "test",
+    "elide": {
+      "semver": "1.6.0+b8edacc63",
+      "digest": "7aa30129531a1dc5e6197a4ee68996eefe03c4b338406f80a7cdf57542684d83"
+    },
+    "target": {
+      "name": "elide",
+      "version": "1.6.0+b8edacc63",
+      "artifactDigest": "7aa30129531a1dc5e6197a4ee68996eefe03c4b338406f80a7cdf57542684d83",
+      "platform": "linux-x64"
+    },
+    "startedAt": "2026-09-30T17:09:48.809Z",
+    "finishedAt": "2026-09-30T17:24:28.772Z",
+    "suiteVersion": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
+  },
+  "counts": {
+    "pass": 3660,
+    "fail": 0,
+    "skip": 274,
+    "error": 0,
+    "total": 3934,
+    "excluded": 0
+  },
+  "regressions": [],
+  "newPasses": []
+}

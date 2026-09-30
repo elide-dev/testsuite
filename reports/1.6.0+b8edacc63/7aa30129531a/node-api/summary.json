@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "workload": "node-api",
+    "kind": "test",
+    "elide": {
+      "semver": "1.6.0+b8edacc63",
+      "digest": "7aa30129531a1dc5e6197a4ee68996eefe03c4b338406f80a7cdf57542684d83"
+    },
+    "target": {
+      "name": "elide",
+      "version": "1.6.0+b8edacc63",
+      "artifactDigest": "7aa30129531a1dc5e6197a4ee68996eefe03c4b338406f80a7cdf57542684d83",
+      "platform": "linux-x64"
+    },
+    "startedAt": "2026-09-30T17:09:49.454Z",
+    "finishedAt": "2026-09-30T17:12:19.334Z",
+    "suiteVersion": "ed33ae74ad100a38df41edf56f6935c78821e779"
+  },
+  "counts": {
+    "pass": 1193,
+    "fail": 172,
+    "skip": 83,
+    "error": 10,
+    "total": 1458,
+    "excluded": 105
+  },
+  "regressions": [],
+  "newPasses": []
+}

@@ -1,0 +1,1482 @@
+{
+  "bySignature": [
+    {
+      "signature": "Error: Cannot find module <str> Require stack: - <loc> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 23,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-http2-client-stream-body-multiple-buffers-and-strings.js",
+        "test/parallel/test-diagnostics-channel-http2-client-stream-body-multiple-buffers.js",
+        "test/parallel/test-diagnostics-channel-http2-client-stream-body-no-chunks.js",
+        "test/parallel/test-diagnostics-channel-http2-client-stream-body-single-buffer.js",
+        "test/parallel/test-diagnostics-channel-http2-client-stream-close-error.js"
+      ],
+      "samples": [
+        "Error: Cannot find module 'http2' Require stack: - /work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-http2-client-stream-body-multiple-buffers-and-strings.js\n    at :anonymous (test-diagnostics-channel-http2-client-stream-body-multiple-buffers-and-strings.js:14:15)\n    at :program (test-diagnostics-channel-http2-client-stream-body-multiple-buffers-and-strings.js:1:1)",
+        "Error: Cannot find module 'http2' Require stack: - /work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-http2-client-stream-body-multiple-buffers.js\n    at :anonymous (test-diagnostics-channel-http2-client-stream-body-multiple-buffers.js:14:15)\n    at :program (test-diagnostics-channel-http2-client-stream-body-multiple-buffers.js:1:1)",
+        "Error: Cannot find module 'http2' Require stack: - /work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-http2-client-stream-body-no-chunks.js\n    at :anonymous (test-diagnostics-channel-http2-client-stream-body-no-chunks.js:14:15)\n    at :program (test-diagnostics-channel-http2-client-stream-body-no-chunks.js:1:1)",
+        "Error: Cannot find module 'http2' Require stack: - /work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-http2-client-stream-body-single-buffer.js\n    at :anonymous (test-diagnostics-channel-http2-client-stream-body-single-buffer.js:14:15)\n    at :program (test-diagnostics-channel-http2-client-stream-body-single-buffer.js:1:1)",
+        "Error: Cannot find module 'http2' Require stack: - /work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-http2-client-stream-close-error.js\n    at :anonymous (test-diagnostics-channel-http2-client-stream-close-error.js:13:15)\n    at :program (test-diagnostics-channel-http2-client-stream-close-error.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Node API test timed out",
+      "count": 10,
+      "exampleIds": [
+        "test/parallel/test-async-hooks-http-parser-destroy.js",
+        "test/parallel/test-event-capture-rejections.js",
+        "test/parallel/test-fs-promises-watch.js",
+        "test/parallel/test-stream3-pause-then-read.js",
+        "test/parallel/test-util-inspect-long-running.js"
+      ],
+      "samples": [
+        "Node API test timed out"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 4,
+      "exampleIds": [
+        "test/parallel/test-eventsource.js",
+        "test/parallel/test-util-format.js",
+        "test/parallel/test-util-inspect-getters-accessing-this.js",
+        "test/parallel/test-vm-function-declaration.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal: + actual - expected  + 'undefined' - 'function'\n    at :anonymous (test-eventsource.js:7:1)\n    at :program (test-eventsource.js:1:1)",
+        "AssertionError: Expected values to be strictly equal: + actual - expected  + '118059162071741140000 118059162071741140000 123123123' - '118_059_162_071_741_140_000 118_059_162_071_741_140_000 123_123_123'\n    at :anonymous (test-util-format.js:86:3)\n    at :program (test-util-format.js:1:1)",
+        "AssertionError: Expected values to be strictly equal: + actual - expected  + 'X { _y: 123 }' - 'X { _y: 123, [y]: [Getter: 123] }'\n    at :anonymous (test-util-inspect-getters-accessing-this.js:28:3)\n    at :program (test-util-inspect-getters-accessing-this.js:1:1)",
+        "AssertionError: Expected values to be strictly equal: + actual - expected  + 'undefined' - 'function'\n    at :anonymous (test-vm-function-declaration.js:42:1)\n    at :program (test-vm-function-declaration.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Missing expected exception. at :anonymous (<loc>) at :program (<loc>)",
+      "count": 4,
+      "exampleIds": [
+        "test/parallel/test-crypto-pqc-key-objects-ml-kem.js",
+        "test/parallel/test-crypto-pqc-keygen-ml-kem.js",
+        "test/parallel/test-dns-setserver-when-querying.js",
+        "test/parallel/test-whatwg-url-custom-parsing.js"
+      ],
+      "samples": [
+        "AssertionError: Missing expected exception.\n    at :anonymous (test-crypto-pqc-key-objects-ml-kem.js:115:5)\n    at :program (test-crypto-pqc-key-objects-ml-kem.js:1:1)",
+        "AssertionError: Missing expected exception.\n    at :anonymous (test-crypto-pqc-keygen-ml-kem.js:76:3)\n    at :program (test-crypto-pqc-keygen-ml-kem.js:1:1)",
+        "AssertionError: Missing expected exception.\n    at :anonymous (test-dns-setserver-when-querying.js:17:5)\n    at :program (test-dns-setserver-when-querying.js:1:1)",
+        "AssertionError: Missing expected exception.\n    at :anonymous (test-whatwg-url-custom-parsing.js:54:3)\n    at :program (test-whatwg-url-custom-parsing.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Mismatched <anonymous> function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at Object.<anonymous> (<loc>) at <loc>",
+      "count": 3,
+      "exampleIds": [
+        "test/parallel/test-stream-readable-to-web-termination-byob.js",
+        "test/parallel/test-timers-timeout-to-interval.js",
+        "test/parallel/test-timers-unenroll-unref-interval.js"
+      ],
+      "samples": [
+        "Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-stream-readable-to-web-termination-byob.js:12:47)\n    at test-stream-readable-to-web-termination-byob.js:17:4",
+        "Mismatched <anonymous> function calls. Expected exactly 2, actual 1.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-timers-timeout-to-interval.js:7:29)\n    at test-timers-timeout-to-interval.js:14:4",
+        "Mismatched <anonymous> function calls. Expected exactly 1, actual 75.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-timers-unenroll-unref-interval.js:24:39)\n    at test-timers-unenroll-unref-interval.js:50:4"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + message: <str>, - message: <str>, name: <str> } at :anonymous (<lo",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-vm-basic.js",
+        "test/parallel/test-vm-global-setter.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: '<function>:1:0 Expected eof but found }\\n});\\n^', -   message: \"Unexpected token '}'\",     name: 'SyntaxError'   }\n    at :anonymous (test-vm-basic.js:149:3)\n    at :program (test-vm-basic.js:1:1)",
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: \"Cannot assign to read only property 'nonWritableProp' of {getSetPropReceivingFunction: accessor, getSetPropReceivingNumber: accessor, propReceivingNumber: 144, getSetPropThrowing: accessor, nonWritableProp: 51, globalProxy: (this), unknownPropReceivingNumber: 145, Symbol(sym-1): accessor, Symbol(sym-2): accessor, Symbol(sym-3): 148, Symbol(sym-4): 149}\", -   message: 'Cannot redefine property: nonWritableProp',     name: 'TypeError'   }\n    at :anonymous (test-vm-global-setter.js:115:1)\n    at :program (test-vm-global-setter.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: <n> !== <n> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-module-run-main-monkey-patch.js",
+        "test/parallel/test-util-callbackify.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:  2 !== 0\n    at :anonymous (test-module-run-main-monkey-patch.js:17:1)\n    at :program (test-module-run-main-monkey-patch.js:1:1)",
+        "AssertionError: Expected values to be strictly equal:  0 !== 1\n    at :anonymous (test-util-callbackify.js:74:5)\n    at :program (test-util-callbackify.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: <n> !== <n> at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (nati",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-require-symlink.js",
+        "test/parallel/test-worker-data-url.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n\n2 !== 0\n\n    at EventEmitter.<anonymous> (test-require-symlink.js:80:12)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)",
+        "AssertionError: Expected values to be strictly equal:\n\n0 !== 13\n\n    at EventEmitter.<anonymous> (test-worker-data-url.js:24:44)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)"
+      ]
+    },
+    {
+      "signature": "Mismatched noop function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at Object.<anonymous> (<loc>) at <loc>",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-fs-watchfile.js",
+        "test/parallel/test-stream-readable-error-end.js"
+      ],
+      "samples": [
+        "Mismatched noop function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-watchfile.js:87:27)\n    at test-fs-watchfile.js:116:4",
+        "Mismatched noop function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-stream-readable-error-end.js:10:23)\n    at test-stream-readable-error-end.js:17:4"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str>",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-worker-message-port-transfer-fake-js-transferable-internal.js",
+        "test/parallel/test-worker-message-port-transfer-fake-js-transferable.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Object'\n- 'FileHandle'"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) NotSupportedError: Unrecognized algorithm name",
+      "count": 2,
+      "exampleIds": [
+        "test/parallel/test-webcrypto-sign-verify-ml-dsa.js",
+        "test/parallel/test-webcrypto-digest-turboshake-rfc.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) NotSupportedError: Unrecognized algorithm name"
+      ]
+    },
+    {
+      "signature": "(node:<n>) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Bu",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-constructor-outside-node-modules.js"
+      ],
+      "samples": [
+        "(node:1127) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\nAssertionError: DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n    at Object.<anonymous> (/a/node_modules/b:1:1)\n    at Object.<anonymous> (test-buffer-constructor-outside-node-modules.js:21:4)\n    at test-buffer-constructor-outside-node-modules.js:31:4\n    at AssertionError.get stack (native)\n    at ok (native)\n    at process.<anonymous> (test-buffer-constructor-outside-node-modules.js:18:3)\n    at process._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) AssertionError: Expected values to be s",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-module-dynamic-import.js"
+      ],
+      "samples": [
+        "(node:13560) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [Object: null prototype] {}\n- [Object: null prototype] {\n-   key: 'value'\n- }"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) Error: Expected promise to be rejected ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-module-dynamic-import-promise.js"
+      ],
+      "samples": [
+        "(node:13551) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) Error: Expected promise to be rejected with \"import failed\""
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) ReferenceError: a is not defined",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-util-inspect-namespace.js"
+      ],
+      "samples": [
+        "(node:12990) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) ReferenceError: a is not defined"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) ReferenceError: foo is not defined",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-module-basic.js"
+      ],
+      "samples": [
+        "(node:13535) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) ReferenceError: foo is not defined"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) ReferenceError: inner is not defined Un",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-module-after-evaluate.js"
+      ],
+      "samples": [
+        "(node:13527) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) ReferenceError: inner is not defined\nUncaught (in promise) ReferenceError: inner is not defined"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) ReferenceError: loop is not defined Unc",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-timeout-escape-promise-module.js"
+      ],
+      "samples": [
+        "(node:13955) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) ReferenceError: loop is not defined\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   message: 'loop is not defined'\n-   code: 'ERR_SCRIPT_EXECUTION_TIMEOUT',\n-   message: 'Script execution timed out after 5ms'\n  }"
+      ]
+    },
+    {
+      "signature": "(node:<n>) ExperimentalWarning: VM Modules is an experimental feature and might change at any time Uncaught (in promise) TypeError: An asynchronous importModule",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-module-dynamic-namespace.js"
+      ],
+      "samples": [
+        "(node:13564) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\nUncaught (in promise) TypeError: An asynchronous importModuleDynamically result is not supported"
+      ]
+    },
+    {
+      "signature": "(node:<n>) TimeoutOverflowWarning: <n> does not fit into a <n>-bit signed integer. Timeout duration was set to <n>.",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-timers-max-duration-warning.js"
+      ],
+      "samples": [
+        "(node:12213) TimeoutOverflowWarning: 2147483648 does not fit into a 32-bit signed integer.\nTimeout duration was set to 1."
+      ]
+    },
+    {
+      "signature": "[process <n>]: --- stderr --- (node:<n>) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-constructor-node-modules.js"
+      ],
+      "samples": [
+        "[process 1197]: --- stderr ---\n(node:1197) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n\n[process 1197]: --- stdout ---\n\n[process 1197]: status = 0, signal = null\nError: - stderr did not match ''\n    at logAndThrow (child_process.js:111:5)\n    at expectSyncExit (child_process.js:135:5)\n    at spawnSyncAndAssert (child_process.js:155:10)\n    at :anonymous (test-buffer-constructor-node-modules.js:10:1)\n    at :program (test-buffer-constructor-node-modules.js:1:1)"
+      ]
+    },
+    {
+      "signature": "[process <n>]: --- stderr --- AssertionError: Expected values to be strictly equal: <str> !== <str> at :anonymous (<loc>) at :program (<loc>) [process <n>]: ---",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-node-options.js"
+      ],
+      "samples": [
+        "[process 15037]: --- stderr ---\nAssertionError: Expected values to be strictly equal:  'elide' !== 'foo'\n    at :anonymous (spawn-worker-with-copied-env.js:6:3)\n    at :program (spawn-worker-with-copied-env.js:1:1)\n\n[process 15037]: --- stdout ---\n\n[process 15037]: status = 1, signal = null\nError: - process terminated with status 1, expected 0\n    at logAndThrow (child_process.js:111:5)\n    at expectSyncExit (child_process.js:117:5)\n    at spawnSyncAndExitWithoutError (child_process.js:147:10)\n    at :anonymous (test-worker-node-options.js:14:1)\n    at :program (test-worker-node-options.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: { resultHasOwn: { onSelf: true, onSelfGetter: true, onSelfIndexed: true, onOuterProto: false, onOuterProtoGetter: false, … }, resultDesc: { onSe",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-global-property-prototype.js"
+      ],
+      "samples": [
+        "AssertionError: { resultHasOwn: { onSelf: true, onSelfGetter: true, onSelfIndexed: true, onOuterProto: false, onOuterProtoGetter: false, … }, resultDesc: { onSelf: { value: 'onSelf', writable: true, enumerable: true, configurable: true }, onSelfGetter: { get: {}, set: undefined, enumerable: false, configurable: false }, onSelfIndexed: { value: 'onSelfIndexed', writable: false, enumerable: false, configurable: true }, onOuterProto: undefined, onOuterProtoGetter: undefined, … }, resultIn: { onSelf: true, onSelfGetter: true, onSelfIndexed: true, onOuterProto: true, onOuterProtoGetter: true, … }, resultValue: { onSelf: 'onSelf', onSelfGetter: 'onSelfGetter', onSelfIndexed: 'onSelfIndexed', onOuterProto: 'onOuterProto', onOuterProtoGetter: 'onOuterProtoGetter', … } } deepEqual { resultHasOwn: { onSelf: true, onSelfGetter: true, onSelfIndexed: true, onOuterProto: false, onOuterProtoGetter: false, … }, resultDesc: { onSelf: { value: 'onSelf', writable: true, enumerable: true, configurable: true }, onSelfGetter: { get: {}, set: undefined, enumerable: false, configurable: false }, onSelfIndexed: { value: 'onSelfIndexed', writable: false, enumerable: false, configurable: true }, onOuterProto: undefined, onOuterProtoGetter: undefined, … }, resultIn: { onSelf: true, onSelfGetter: true, onSelfIndexed: true, onOuterProto: false, onOuterProtoGetter: false, … }, resultValue: { onSelf: 'onSelf', onSelfGetter: 'onSelfGetter', onSelfIndexed: 'onSelfIndexed', onOuterProto: 'onOuterProto', onOuterProtoGetter: 'onOuterProtoGetter', … } }\n    at :anonymous (test-vm-global-property-prototype.js:164:1)\n    at :program (test-vm-global-property-prototype.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: /a/ failed + actual - expected + <str> - <str> at expectColored (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-util-inspect-regexp.js"
+      ],
+      "samples": [
+        "AssertionError: /a/ failed + actual - expected  + '/a/' - '\\x1b[32m/\\x1b[39m\\x1b[33ma\\x1b[39m\\x1b[32m/\\x1b[39m'\n    at expectColored (test-util-inspect-regexp.js:18:5)\n    at :anonymous (test-util-inspect-regexp.js:112:3)\n    at :program (test-util-inspect-regexp.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: before=<n> after=<n> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-dh-leak.js"
+      ],
+      "samples": [
+        "AssertionError: before=147128320 after=205803520\n    at :anonymous (test-crypto-dh-leak.js:30:1)\n    at :program (test-crypto-dh-leak.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: error: unexpected argument <str> found tip: to pass <str> as a value, use <str> Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND] For m",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-util-getcallsites-sourcemap.js"
+      ],
+      "samples": [
+        "AssertionError: error: unexpected argument '--enable-source-maps' found    tip: to pass '--enable-source-maps' as a value, use '-- --enable-source-maps'  Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]  For more information, try '--help'.   2 !== 0\n    at :anonymous (test-util-getcallsites-sourcemap.js:30:3)\n    at :program (test-util-getcallsites-sourcemap.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected <str> not to be reference-equal to <str>: [Function: Proxy] at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-proxies.js"
+      ],
+      "samples": [
+        "AssertionError: Expected \"actual\" not to be reference-equal to \"expected\":  [Function: Proxy]\n    at :anonymous (test-vm-proxies.js:12:1)\n    at :program (test-vm-proxies.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected <str> not to be reference-equal to <str>: [Function: Symbol] at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-harmony-symbols.js"
+      ],
+      "samples": [
+        "AssertionError: Expected \"actual\" not to be reference-equal to \"expected\":  [Function: Symbol]\n    at :anonymous (test-vm-harmony-symbols.js:31:1)\n    at :program (test-vm-harmony-symbols.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected <str> not to be reference-equal to <str>: ArrayBuffer {} at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-subtle-cross-realm.js"
+      ],
+      "samples": [
+        "AssertionError: Expected \"actual\" not to be reference-equal to \"expected\":  ArrayBuffer {}\n    at :anonymous (test-crypto-subtle-cross-realm.js:27:3)\n    at :program (test-crypto-subtle-cross-realm.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected <str> to be reference-equal to <str>: + actual - expected + Immediate { + _argv: undefined, + _destroyed: false, + _idleNext: null, + _",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-hooks-top-level-clearimmediate.js"
+      ],
+      "samples": [
+        "AssertionError: Expected \"actual\" to be reference-equal to \"expected\": + actual - expected  + Immediate { +   _argv: undefined, +   _destroyed: false, +   _idleNext: null, +   _idlePrev: null, +   _onImmediate: [Function: mustNotCall] - { -   type: 'Immediate'   }\n    at :anonymous (test-async-hooks-top-level-clearimmediate.js:31:1)\n    at :program (test-async-hooks-top-level-clearimmediate.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected <str> to be strictly unequal to: undefined at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-write.js"
+      ],
+      "samples": [
+        "AssertionError: Expected \"actual\" to be strictly unequal to:  undefined\n    at :anonymous (test-fs-write.js:45:1)\n    at :program (test-fs-write.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected + Comparison {} - Comparison { - code: <str> - } at :anonymous (<loc>) at :progra",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-readable-compose.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected  + Comparison {} - Comparison { -   code: 'ERR_INVALID_ARG_VALUE' - }\n    at :anonymous (test-stream-readable-compose.js:160:3)\n    at :program (test-stream-readable-compose.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + code: <str> - code: <str> } at :anonymous (<loc>) at :program (<lo",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-pqc-key-objects-slh-dsa.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   code: 'ERR_OSSL_PEM_NO_START_LINE' -   code: 'ERR_OSSL_EVP_UNSUPPORTED_ALGORITHM'   }\n    at :anonymous (test-crypto-pqc-key-objects-slh-dsa.js:103:5)\n    at :program (test-crypto-pqc-key-objects-slh-dsa.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + code: <str>, + message: <str> + + <str> + + <str> - code: <str>, -",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-resource-limits.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   code: 'ERR_ASSERTION',\n+   message: 'The expression evaluated to a falsy value:\\n' +\n+     '\\n' +\n+     '  assert(usedMB < maxReservedSize)\\n'\n-   code: 'ERR_WORKER_OUT_OF_MEMORY',\n-   message: 'Worker terminated due to reaching memory limit: JS heap out of memory'\n  }\n\n    at EventEmitter.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:808:12)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + message: <str> - code: <str>, - message: /The <str> argument must ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-encap-decap.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: 'crypto.encapsulate is not a function' -   code: 'ERR_INVALID_ARG_TYPE', -   message: /The \"key\" argument must be of type/   }\n    at :anonymous (test-crypto-encap-decap.js:19:1)\n    at :program (test-crypto-encap-decap.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + message: <str> - message: <str> } at :anonymous (<loc>) at :progra",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-alloc.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: 'index is too large' -   message: 'Invalid typed array length: 9007199254740992'   }\n    at :anonymous (test-buffer-alloc.js:14:1)\n    at :program (test-buffer-alloc.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + message: <str>, - code: <str>, - message: <str>, name: <str> } at ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-indexof.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: 'function lastIndexOf() { [native code] } is not a constructor', -   code: 'ERR_INVALID_ARG_TYPE', -   message: 'The \"buffer\" argument must be an instance of Buffer, TypedArray, or DataView. Received an instance of lastIndexOf',     name: 'TypeError'   }\n    at :anonymous (test-buffer-indexof.js:625:3)\n    at :program (test-buffer-indexof.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected ... Skipped lines <str> + <str> + <str> + <str> + <str> + ... <str> + + <str> + - <str",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-whatwg-url-custom-inspect.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal: + actual - expected ... Skipped lines    'URL {\\n' +     \"  href: 'https://username:password@host.name:8080/path/name/?que=ry#hash',\\n\" +     \"  origin: 'https://host.name:8080',\\n\" +     \"  protocol: 'https:',\\n\" +     \"  username: 'username',\\n\" + ...     \"  searchParams: URLSearchParams { 'que' => 'ry' },\\n\" + +   \"  hash: '#hash'\\n\" + -   \"  hash: '#hash',\\n\" + -   '  Symbol(context): URLContext {\\n' + -   \"    href: 'https://username:password@host.name:8080/path/name/?que=ry#hash',\\n\" + -   '    protocol_end: 6,\\n' + -   '    username_end: 16,\\n' + -   '    host_start: 25,\\n' + -   '    host_end: 35,\\n' + -   '    pathname_start: 40,\\n' + -   '    search_start: 51,\\n' + -   '    hash_start: 58,\\n' + -   '    port: 8080,\\n' + -   '    scheme_type: 2,\\n' + -   '    [hasPort]: [Getter],\\n' + -   '    [hasSearch]: [Getter],\\n' + -   '    [hasHash]: [Getter]\\n' + -   '  }\\n' +     '}'\n    at :anonymous (test-whatwg-url-custom-inspect.js:33:1)\n    at :program (test-whatwg-url-custom-inspect.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str> at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-cleanup-handles.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'undefined'\n- 'number'\n\n    at EventEmitter.<anonymous> (test-worker-cleanup-handles.js:13:12)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str> at process.<anonymous> (<loc>) at process._return (<loc>) at process.e",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-pipeline-uncaught.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'The \"iterable\" argument must be an instance of Iterable. Received object'\n- 'error'\n\n    at process.<anonymous> (test-stream-pipeline-uncaught.js:11:10)\n    at process._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at process.emit (native)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + <str> - <str> at test (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-constructor-node-modules-paths.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal: + actual - expected  + \"Error: Usage: 'elide <script>' or 'elide run <script>'; see --help\" - ''\n    at test (test-buffer-constructor-node-modules-paths.js:20:5)\n    at :anonymous (test-buffer-constructor-node-modules-paths.js:23:1)\n    at :program (test-buffer-constructor-node-modules-paths.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + <str> + + <str> + + <str> - <str> at process.<anonymous> (<loc>) at process._return ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-pipeline-listeners.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'The expression evaluated to a falsy value:\\n' +\n+   '\\n' +\n+   \"  assert(a.listenerCount('error') > 0)\\n\"\n- 'no way'\n\n    at process.<anonymous> (test-stream-pipeline-listeners.js:8:10)\n    at process._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'The expression evaluated to a falsy value:\\n' +\n+   '\\n' +\n+   \"  assert(c.listenerCount('error') > 0)\\n\"\n- 'no way'\n\n    at process.<anonymous> (test-stream-pipeline-listeners.js:8:10)\n    at process._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'The expression evaluated to a falsy value:\\n' +\n+   '\\n' +\n+   \"  assert(e.listenerCount('error') > 0)\\n\"\n- 'no way'\n\n    at process.<anonymous> (test-stream-pipeline-listeners.js:8:10)\n    at process._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: + actual - expected + undefined - <str> at Writable.<anonymous> (<loc>) at Writable._return (<loc>) at Wri",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-local-storage-http-agent.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- 'first'\n\n    at Writable.<anonymous> (test-async-local-storage-http-agent.js:39:14)\n    at Writable._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at Writable.emit (native)\n    at Duplex.push (native)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: <str> !== <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-title-cli.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:  'elide' !== 'foo'\n    at :anonymous (test-process-title-cli.js:16:1)\n    at :program (test-process-title-cli.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: false !== true at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-duplex-from.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:  false !== true\n    at :anonymous (test-stream-duplex-from.js:114:3)\n    at :program (test-stream-duplex-from.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: null !== <str> at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (n",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-remove-all-signal-listeners.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n\nnull !== 'SIGINT'\n\n    at EventEmitter.<anonymous> (test-process-remove-all-signal-listeners.js:17:12)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: true !== false at Readable.<anonymous> (<loc>) at Readable._return (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream2-readable-wrap-error.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n\ntrue !== false\n\n    at Readable.<anonymous> (test-stream2-readable-wrap-error.js:34:14)\n    at Readable._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Expected values to be strictly equal: undefined !== <str> at MessagePort.<anonymous> (<loc>) at MessagePort._return (<loc>) AssertionError: Expe",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-process-env-shared.js"
+      ],
+      "samples": [
+        "AssertionError: Expected values to be strictly equal:\n\nundefined !== 'set'\n\n    at MessagePort.<anonymous> (test-worker-process-env-shared.js:30:12)\n    at MessagePort._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: Expected values to be strictly equal:\n\nundefined !== 'set'\n\n    at MessagePort.<anonymous> (test-worker-process-env-shared.js:30:12)\n    at MessagePort._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: flag should be in set: --perf_basic_prof false !== true at :=> (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-env-allowed-flags.js"
+      ],
+      "samples": [
+        "AssertionError: flag should be in set: --perf_basic_prof  false !== true\n    at :=> (test-process-env-allowed-flags.js:35:5)\n    at :anonymous (test-process-env-allowed-flags.js:34:3)\n    at :program (test-process-env-allowed-flags.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: function should not have been called at <loc> at Readable.mustNotCall (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-readable-next-no-null.js"
+      ],
+      "samples": [
+        "AssertionError: function should not have been called at test-stream-readable-next-no-null.js:19\n    at Readable.mustNotCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:633:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: function should not have been called at <loc> at Readable.mustNotCall (<loc>) AssertionError: Expected values to be strictly equal: false !== tr",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream2-basic.js"
+      ],
+      "samples": [
+        "AssertionError: function should not have been called at test-stream2-basic.js:292\n    at Readable.mustNotCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:633:12)\nAssertionError: Expected values to be strictly equal:\n\nfalse !== true\n\n    at Readable.end (test-stream2-basic.js:365:12)\n    at Readable._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: function should not have been called at <loc> called with arguments: Error at Object.<anonymous> (<loc>) at <loc>, [ CallSite {}, CallSite {} ] ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-util-getcallsites-preparestacktrace.js"
+      ],
+      "samples": [
+        "AssertionError: function should not have been called at test-util-getcallsites-preparestacktrace.js:10 called with arguments: Error     at Object.<anonymous> (test-util-getcallsites-preparestacktrace.js:12:15)     at test-util-getcallsites-preparestacktrace.js:16:4, [ CallSite {}, CallSite {} ]\n    at mustNotCall (index.js:633:5)\n    at :anonymous (test-util-getcallsites-preparestacktrace.js:12:15)\n    at :program (test-util-getcallsites-preparestacktrace.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: ifError got unwanted exception: Unsupported JWK Key Type. at Object.<anonymous> (<loc>) at Object._return (<loc>) AssertionError: ifError got un",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-pqc-keygen-ml-dsa.js"
+      ],
+      "samples": [
+        "AssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\nAssertionError: ifError got unwanted exception: Unsupported JWK Key Type.\n    at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:538:12)\n    at Object._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: init <n> !== <n> at main (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-hooks-fatal-error.js"
+      ],
+      "samples": [
+        "AssertionError: init  0 !== 1\n    at main (test-async-hooks-fatal-error.js:48:7)\n    at :anonymous (test-async-hooks-fatal-error.js:10:3)\n    at :program (test-async-hooks-fatal-error.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Missing expected exception (TypeError). at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-readable-async-iterators.js"
+      ],
+      "samples": [
+        "AssertionError: Missing expected exception (TypeError).\n    at :anonymous (test-stream-readable-async-iterators.js:774:5)\n    at :program (test-stream-readable-async-iterators.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: process.execve should not have been allowed. at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-execve-permission-fail.js"
+      ],
+      "samples": [
+        "AssertionError: process.execve should not have been allowed.\n    at :anonymous (test-process-execve-permission-fail.js:16:3)\n    at :program (test-process-execve-permission-fail.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The error is expected to be an instance of <str>. Received <str> Error message: x is not defined at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-codegen.js"
+      ],
+      "samples": [
+        "AssertionError: The error is expected to be an instance of \"EvalError\". Received \"ReferenceError\"  Error message:  x is not defined\n    at :anonymous (test-vm-codegen.js:29:3)\n    at :program (test-vm-codegen.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The expression evaluated to a falsy value: assert.ok(destroyedIds.has(asyncId)) at Immediate.<anonymous> (<loc>) at Immediate._return (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-hooks-destroy-on-gc.js"
+      ],
+      "samples": [
+        "AssertionError: The expression evaluated to a falsy value:\n\n  assert.ok(destroyedIds.has(asyncId))\n\n    at Immediate.<anonymous> (test-async-hooks-destroy-on-gc.js:26:45)\n    at Immediate._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The expression evaluated to a falsy value: assert(e.toString().match(/Error: Cannot find module/)) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-module-main-preserve-symlinks-fail.js"
+      ],
+      "samples": [
+        "AssertionError: The expression evaluated to a falsy value:    assert(e.toString().match(/Error: Cannot find module/))\n    at :anonymous (test-module-main-preserve-symlinks-fail.js:15:7)\n    at :program (test-module-main-preserve-symlinks-fail.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The input did not match the regular expression /^\\s+\\^/m. Input: <str> at AssertionError.get stack (native) at Function.match (native) at Readab",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-syntax-error-stderr.js"
+      ],
+      "samples": [
+        "AssertionError: The input did not match the regular expression /^\\s+\\^/m. Input:\n\n'SyntaxError: rsa_cert.crt:1:4 Invalid left hand side for assignment -----BEGIN CERTIFICATE-----     ^\n    at :program (<snippet>:1:1)\n'\n\n    at AssertionError.get stack (native)\n    at Function.match (native)\n    at Readable.<anonymous> (test-vm-syntax-error-stderr.js:23:10)\n    at Readable._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The input did not match the regular expression /AtomicsLoad/. Input: <str> at Object.<anonymous> (<loc>) at <loc>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-process-cwd.js"
+      ],
+      "samples": [
+        "AssertionError: The input did not match the regular expression /AtomicsLoad/. Input:\n\n'function cwd() { [native code] }'\n\n    at Object.<anonymous> (test-worker-process-cwd.js:35:10)\n    at test-worker-process-cwd.js:69:4"
+      ]
+    },
+    {
+      "signature": "AssertionError: The input did not match the regular expression /Cannot delete property <str> of #<process>/. Input: <str> at :anonymous (<loc>) at :program (<lo",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-exit-code-validation.js"
+      ],
+      "samples": [
+        "AssertionError: The input did not match the regular expression /Cannot delete property 'exitCode' of #<process>/. Input:  'TypeError: \"exitCode\" is not a configurable property'\n    at :anonymous (test-process-exit-code-validation.js:121:3)\n    at :program (test-process-exit-code-validation.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The input did not match the regular expression /Cannot find module <str>/. Input: <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-module-loading-globalpaths.js"
+      ],
+      "samples": [
+        "AssertionError: The input did not match the regular expression /Cannot find module '\\x66oo'/. Input:  'Error: Command failed: /work/.harness/work/node-api/node-api-overlay/test/.tmp.783/install/bin/elide'\n    at :anonymous (test-module-loading-globalpaths.js:52:3)\n    at :program (test-module-loading-globalpaths.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The input did not match the regular expression /MODULE_NOT_FOUND/. Input: <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-module-main-fail.js"
+      ],
+      "samples": [
+        "AssertionError: The input did not match the regular expression /MODULE_NOT_FOUND/. Input:  'Error: Command failed: /opt/elide/bin/elide'\n    at :anonymous (test-module-main-fail.js:14:5)\n    at :program (test-module-main-fail.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: The validation function is expected to return <str>. Received false Caught error: TypeError: notcontext.setOptions is not a function at :anonymo",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto.js"
+      ],
+      "samples": [
+        "AssertionError: The validation function is expected to return \"true\". Received false  Caught error:  TypeError: notcontext.setOptions is not a function\n    at :anonymous (test-crypto.js:39:1)\n    at :program (test-crypto.js:1:1)"
+      ]
+    },
+    {
+      "signature": "AssertionError: Values have same structure but are not reference-equal: ArrayBuffer { [Uint8Contents]: <<n> <n> 6c 6c 6f <n> <n> 6f <n> 6c <n>>, [byteLength]: <",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-buffer-pool-untransferable.js"
+      ],
+      "samples": [
+        "AssertionError: Values have same structure but are not reference-equal:  ArrayBuffer {   [Uint8Contents]: <68 65 6c 6c 6f 20 77 6f 72 6c 64>,   [byteLength]: 11 }\n    at :anonymous (test-buffer-pool-untransferable.js:12:1)\n    at :program (test-buffer-pool-untransferable.js:1:1)"
+      ]
+    },
+    {
+      "signature": "CompileError: Invalid limits prefix (expected <n>, <n>, <n>, or <n>, got <n>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-message-port-wasm-threads.js"
+      ],
+      "samples": [
+        "CompileError: Invalid limits prefix (expected 0x00, 0x01, 0x04, or 0x05, got 0x03)\n    at :anonymous (test-worker-message-port-wasm-threads.js:11:20)\n    at :program (test-worker-message-port-wasm-threads.js:1:1)"
+      ]
+    },
+    {
+      "signature": "DOMException at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-message-port-wasm-module.js"
+      ],
+      "samples": [
+        "DOMException\n    at :anonymous (test-worker-message-port-wasm-module.js:18:1)\n    at :program (test-worker-message-port-wasm-module.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: EEXIST: file already exists, open <str> at Error.get stack (native)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-stream-construct-compat-error-write.js"
+      ],
+      "samples": [
+        "Error: EEXIST: file already exists, open '/work/.harness/work/node-api/node-api-overlay/test/.tmp.635/dummy'\n    at Error.get stack (native)"
+      ]
+    },
+    {
+      "signature": "Error: ENOENT: no such file or directory, access <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-dlopen-error-message-crash.js"
+      ],
+      "samples": [
+        "Error: ENOENT: no such file or directory, access 'test/addons/not-a-binding'\n    at :anonymous (test-process-dlopen-error-message-crash.js:31:1)\n    at :program (test-process-dlopen-error-message-crash.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: ENOENT: no such file or directory, mkdir <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-symlink-dir.js"
+      ],
+      "samples": [
+        "Error: ENOENT: no such file or directory, mkdir '/work/.harness/work/node-api/node-api-overlay/test/.tmp.645/work/.harness/work/node-api/node-api-overlay/test/.tmp.645/absolute-target'\n    at :anonymous (test-fs-symlink-dir.js:46:3)\n    at :program (test-fs-symlink-dir.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: ENOENT: no such file or directory, open <str> at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-env-allowed-flags-are-documented.js"
+      ],
+      "samples": [
+        "Error: ENOENT: no such file or directory, open '/work/.harness/work/node-api/node-api-overlay/doc/api/cli.md'\n    at :anonymous (test-process-env-allowed-flags-are-documented.js:12:17)\n    at :program (test-process-env-allowed-flags-are-documented.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: ENOENT: no such file or directory, open <str> at Error.get stack (native)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-stream-construct-compat-error-read.js"
+      ],
+      "samples": [
+        "Error: ENOENT: no such file or directory, open '/doesnotexist'\n    at Error.get stack (native)"
+      ]
+    },
+    {
+      "signature": "Error: fail at Readable.read (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-auto-destroy.js"
+      ],
+      "samples": [
+        "Error: fail\n    at Readable.read (test-stream-auto-destroy.js:89:24)"
+      ]
+    },
+    {
+      "signature": "Error: fhqwhgads at :=> (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-util-primordial-monkeypatching.js"
+      ],
+      "samples": [
+        "Error: fhqwhgads\n    at :=> (test-util-primordial-monkeypatching.js:10:29)\n    at :anonymous (test-util-primordial-monkeypatching.js:11:20)\n    at :program (test-util-primordial-monkeypatching.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: Initiated Worker with invalid execArgv flags: -- at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-exec-argv.js"
+      ],
+      "samples": [
+        "Error: Initiated Worker with invalid execArgv flags: --\n    at :anonymous (test-process-exec-argv.js:44:19)\n    at :program (test-process-exec-argv.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: node:worker_threads: moveMessagePortToContext is not implemented yet in Elide at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-message-port-move.js"
+      ],
+      "samples": [
+        "Error: node:worker_threads: moveMessagePortToContext is not implemented yet in Elide\n    at :anonymous (test-worker-message-port-move.js:12:16)\n    at :program (test-worker-message-port-move.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: read ECONNRESET",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-destroy.js"
+      ],
+      "samples": [
+        "Error: read ECONNRESET"
+      ]
+    },
+    {
+      "signature": "Error: tls.createServer is not supported by this runtime at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-net-client-socket-tls.js"
+      ],
+      "samples": [
+        "Error: tls.createServer is not supported by this runtime\n    at :anonymous (test-diagnostics-channel-net-client-socket-tls.js:24:16)\n    at :program (test-diagnostics-channel-net-client-socket-tls.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Error: Unsupported JWK Key Type. at assertPublicKey (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-pqc-key-objects-ml-dsa.js"
+      ],
+      "samples": [
+        "Error: Unsupported JWK Key Type.\n    at assertPublicKey (test-crypto-pqc-key-objects-ml-dsa.js:62:17)\n    at :anonymous (test-crypto-pqc-key-objects-ml-dsa.js:115:5)\n    at :program (test-crypto-pqc-key-objects-ml-dsa.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Mismatched <anonymous> function calls. Expected exactly <n>, actual <n>. at mustCall (<loc>) at _expectWarning (<loc>) at <loc> at Array.forEach (native) at Pro",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-stat.js"
+      ],
+      "samples": [
+        "Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at _expectWarning (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:752:10)\n    at /work/.harness/work/node-api/node-api-overlay/test/common/index.js:791:28\n    at Array.forEach (native)\n    at Proxy.expectWarning (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:790:28)\n    at Object.<anonymous> (test-fs-stat.js:175:10)\n    at test-fs-stat.js:234:4"
+      ]
+    },
+    {
+      "signature": "Mismatched <anonymous> function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-net.js"
+      ],
+      "samples": [
+        "Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at EventEmitter.<anonymous> (test-diagnostics-channel-net.js:77:28)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at EventEmitter.<anonymous> (test-diagnostics-channel-net.js:83:23)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)"
+      ]
+    },
+    {
+      "signature": "Mismatched <anonymous> function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at Object.<anonymous> (<loc>) at <loc> Mismatched <anonymous>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-stream-construct-compat-old-node.js"
+      ],
+      "samples": [
+        "Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:20:38)\n    at test-fs-stream-construct-compat-old-node.js:99:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:39:25)\n    at test-fs-stream-construct-compat-old-node.js:99:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:45:24)\n    at test-fs-stream-construct-compat-old-node.js:99:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:64:39)\n    at test-fs-stream-construct-compat-old-node.js:99:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:83:25)\n    at test-fs-stream-construct-compat-old-node.js:99:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-old-node.js:89:24)\n    at test-fs-stream-construct-compat-old-node.js:99:4"
+      ]
+    },
+    {
+      "signature": "Mismatched noop function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at Object.<anonymous> (<loc>) at <loc> Mismatched <anonymous> functi",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-hooks-enable-recursive.js"
+      ],
+      "samples": [
+        "Mismatched noop function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-async-hooks-enable-recursive.js:8:16)\n    at test-async-hooks-enable-recursive.js:21:4\nMismatched <anonymous> function calls. Expected exactly 2, actual 4.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-async-hooks-enable-recursive.js:12:16)\n    at test-async-hooks-enable-recursive.js:21:4"
+      ]
+    },
+    {
+      "signature": "Mismatched ReadStream$open function calls. Expected exactly <n>, actual <n>. at Proxy.mustCall (<loc>) at Object.<anonymous> (<loc>) at <loc> Mismatched <anonym",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-stream-construct-compat-graceful-fs.js"
+      ],
+      "samples": [
+        "Mismatched ReadStream$open function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-graceful-fs.js:20:38)\n    at test-fs-stream-construct-compat-graceful-fs.js:72:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-graceful-fs.js:37:24)\n    at test-fs-stream-construct-compat-graceful-fs.js:72:4\nMismatched WriteStream$open function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-graceful-fs.js:52:39)\n    at test-fs-stream-construct-compat-graceful-fs.js:72:4\nMismatched <anonymous> function calls. Expected exactly 1, actual 0.\n    at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n    at Object.<anonymous> (test-fs-stream-construct-compat-graceful-fs.js:66:24)\n    at test-fs-stream-construct-compat-graceful-fs.js:72:4"
+      ]
+    },
+    {
+      "signature": "Mismatched writev function calls. Expected at least <n>, actual <n>. at Proxy.mustCallAtLeast (<loc>) at Object.<anonymous> (<loc>) at <loc>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-write-stream-fs.js"
+      ],
+      "samples": [
+        "Mismatched writev function calls. Expected at least 1, actual 0.\n    at Proxy.mustCallAtLeast (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:545:10)\n    at Object.<anonymous> (test-fs-write-stream-fs.js:28:22)\n    at test-fs-write-stream-fs.js:39:4"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: Assert class destructuring behavior - diff option not ok <n> - Assert class destructuring behavior - diff option --- message: <str>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert-class-destructuring.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: Assert class destructuring behavior - diff option\nnot ok 1 - Assert class destructuring behavior - diff option\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class-destructuring.js:17:30)\n  ...\n# start 2: Assert class destructuring behavior - strict option\nnot ok 2 - Assert class destructuring behavior - strict option\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class-destructuring.js:69:35)\n  ...\n# start 3: Assert class destructuring behavior - comprehensive methods\nnot ok 3 - Assert class destructuring behavior - comprehensive methods\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class-destructuring.js:90:20)\n  ...\n1..3"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: Assert constructor requires new not ok <n> - Assert constructor requires new --- message: <str> severity: <str> detail: | Assertion",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert-class.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: Assert constructor requires new\nnot ok 1 - Assert constructor requires new\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n-   code: 'ERR_CONSTRUCT_CALL_REQUIRED',\\n    name: 'TypeError'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \t-   code: 'ERR_CONSTRUCT_CALL_REQUIRED',\n    \tname: 'TypeError'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:18:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {},\n    \t  expected: {\"code\":\"ERR_CONSTRUCT_CALL_REQUIRED\",\"name\":\"TypeError\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 2: Assert class non strict\nnot ok 2 - Assert class non strict\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:25:26)\n  ...\n# start 3: Assert class strict\nnot ok 3 - Assert class strict\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:139:26)\n  ...\n# start 4: Assert class with invalid diff option\nnot ok 4 - Assert class with invalid diff option\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n+   message: 'Assert is not a constructor',\\n-   code: 'ERR_INVALID_ARG_VALUE',\\n-   message: \\\"The property 'options.diff' must be one of: 'simple', 'full'. Received 'invalid'\\\",\\n    name: 'TypeError'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \t+   message: 'Assert is not a constructor',\n    \t-   code: 'ERR_INVALID_ARG_VALUE',\n    \t-   message: \"The property 'options.diff' must be one of: 'simple', 'full'. Received 'invalid'\",\n    \tname: 'TypeError'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:154:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {},\n    \t  expected: {\"code\":\"ERR_INVALID_ARG_VALUE\",\"name\":\"TypeError\",\"message\":\"The property 'options.diff' must be one of: 'simple', 'full'. Received 'invalid'\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 5: Assert class non strict with full diff\nnot ok 5 - Assert class non strict with full diff\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:172:26)\n  ...\n# start 6: Assert class non strict with simple diff\nnot ok 6 - Assert class non strict with simple diff\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:326:26)\n  ...\n# start 7: Assert class strict with skipPrototype\nnot ok 7 - Assert class strict with skipPrototype\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:512:28)\n  ...\n# start 8: Assert class non strict with skipPrototype\nnot ok 8 - Assert class non strict with skipPrototype\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:540:28)\n  ...\n# start 9: Assert class skipPrototype with complex objects\nnot ok 9 - Assert class skipPrototype with complex objects\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:552:28)\n  ...\n# start 10: Assert class skipPrototype with arrays and special objects\nnot ok 10 - Assert class skipPrototype with arrays and special objects\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:587:28)\n  ...\n# start 11: Assert class skipPrototype with notDeepStrictEqual\nnot ok 11 - Assert class skipPrototype with notDeepStrictEqual\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:609:28)\n  ...\n# start 12: Assert class skipPrototype with mixed types\nnot ok 12 - Assert class skipPrototype with mixed types\n  ---\n  message: \"Assert is not a constructor\"\n  detail: |\n    \tTypeError: Assert is not a constructor\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-class.js:624:28)\n  ...\n1..12"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: CJS: --experimental-package-map > basic resolution > resolves require() through package map not ok <n> - CJS: --experimental-packag",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-require-package-map.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: CJS: --experimental-package-map > basic resolution > resolves require() through package map\nnot ok 1 - CJS: --experimental-package-map > basic resolution > resolves require() through package map\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:46:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 2: CJS: --experimental-package-map > basic resolution > resolves subpath require()\nnot ok 2 - CJS: --experimental-package-map > basic resolution > resolves subpath require()\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:62:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 3: CJS: --experimental-package-map > basic resolution > resolves transitive dependencies\nnot ok 3 - CJS: --experimental-package-map > basic resolution > resolves transitive dependencies\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:78:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 4: CJS: --experimental-package-map > resolution boundaries > falls back for builtin modules\nnot ok 4 - CJS: --experimental-package-map > resolution boundaries > falls back for builtin modules\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:96:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 5: CJS: --experimental-package-map > resolution boundaries > throws when parent not in map\nnot ok 5 - CJS: --experimental-package-map > resolution boundaries > throws when parent not in map\n  ---\n  message: \"The input did not match the regular expression /ERR_PACKAGE_MAP_EXTERNAL_FILE/. Input:\\n\\n'error: unexpected argument '--no-warnings' found\\n\\n  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /ERR_PACKAGE_MAP_EXTERNAL_FILE/. Input:\n    \t'error: unexpected argument '--no-warnings' found\n    \ttip: to pass '--no-warnings' as a value, use '-- --no-warnings'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:112:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 6: CJS: --experimental-package-map > error handling > throws for invalid JSON\nnot ok 6 - CJS: --experimental-package-map > error handling > throws for invalid JSON\n  ---\n  message: \"The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\\n\\n'error: unexpected argument '--no-warnings' found\\n\\n  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\n    \t'error: unexpected argument '--no-warnings' found\n    \ttip: to pass '--no-warnings' as a value, use '-- --no-warnings'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:130:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 7: CJS: --experimental-package-map > error handling > throws for missing packages field\nnot ok 7 - CJS: --experimental-package-map > error handling > throws for missing packages field\n  ---\n  message: \"The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\\n\\n'error: unexpected argument '--no-warnings' found\\n\\n  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\n    \t'error: unexpected argument '--no-warnings' found\n    \ttip: to pass '--no-warnings' as a value, use '-- --no-warnings'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:146:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 8: CJS: --experimental-package-map > error handling > throws for unsupported URL scheme in url\nnot ok 8 - CJS: --experimental-package-map > error handling > throws for unsupported URL scheme in url\n  ---\n  message: \"The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\\n\\n'error: unexpected argument '--experimental-package-map' found\\n\\n  tip: to pass '--experimental-package-map' as a value, use '-- --experimental-package-map'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\n    \t'error: unexpected argument '--experimental-package-map' found\n    \ttip: to pass '--experimental-package-map' as a value, use '-- --experimental-package-map'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:161:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--experimental-package-map\\' found\n    \t\n    \t  tip: to pass \\'--experimental-package-map\\' as a value, use \\'-- --experimental-package-map\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 9: CJS: --experimental-package-map > error handling > accepts file:// URLs in url\nnot ok 9 - CJS: --experimental-package-map > error handling > accepts file:// URLs in url\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:178:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 10: CJS: --experimental-package-map > error handling > throws for duplicate package URLs\nnot ok 10 - CJS: --experimental-package-map > error handling > throws for duplicate package URLs\n  ---\n  message: \"The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\\n\\n'error: unexpected argument '--no-warnings' found\\n\\n  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /ERR_PACKAGE_MAP_INVALID/. Input:\n    \t'error: unexpected argument '--no-warnings' found\n    \ttip: to pass '--no-warnings' as a value, use '-- --no-warnings'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:195:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 11: CJS: --experimental-package-map > conditional exports > respects require condition in exports\nnot ok 11 - CJS: --experimental-package-map > conditional exports > respects require condition in exports\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:214:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 12: CJS: --experimental-package-map > disabled by default > has no impact when flag not set\nnot ok 12 - CJS: --experimental-package-map > disabled by default > has no impact when flag not set\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:230:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 13: CJS: --experimental-package-map > path containment edge cases > does not match pkg-other as being inside pkg\nnot ok 13 - CJS: --experimental-package-map > path containment edge cases > does not match pkg-other as being inside pkg\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:252:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 14: CJS: --experimental-package-map > external package paths > resolves packages outside the package map directory via relative paths\nnot ok 14 - CJS: --experimental-package-map > external package paths > resolves packages outside the package map directory via relative paths\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:271:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 15: CJS: --experimental-package-map > same request resolves to different versions > resolves the same bare specifier to different packages depending on the importer\nnot ok 15 - CJS: --experimental-package-map > same request resolves to different versions > resolves the same bare specifier to different packages depending on the importer\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:293:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 16: CJS: --experimental-package-map > longest path wins > resolves nested package using its own dependencies, not the parent\nnot ok 16 - CJS: --experimental-package-map > longest path wins > resolves nested package using its own dependencies, not the parent\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:317:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n# start 17: CJS: --experimental-package-map > longest path wins > falls back for undeclared dependency in nested package parent\nnot ok 17 - CJS: --experimental-package-map > longest path wins > falls back for undeclared dependency in nested package parent\n  ---\n  message: \"The input did not match the regular expression /Cannot find module/. Input:\\n\\n'error: unexpected argument '--no-warnings' found\\n\\n  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /Cannot find module/. Input:\n    \t'error: unexpected argument '--no-warnings' found\n    \ttip: to pass '--no-warnings' as a value, use '-- --no-warnings'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:335:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 18: CJS: --experimental-package-map > symlink in ancestor of package map > resolves through a symlinked ancestor directory\nnot ok 18 - CJS: --experimental-package-map > symlink in ancestor of package map > resolves through a symlinked ancestor directory\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--no-warnings' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--no-warnings' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: to pass '--no-warnings' as a value, use '-- --no-warnings'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-require-package-map.js:358:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--no-warnings\\' found\n    \t\n    \t  tip: to pass \\'--no-warnings\\' as a value, use \\'-- --no-warnings\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n1..18"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: deepEqual ok <n> - deepEqual # start <n>: loose deepEqual not ok <n> - loose deepEqual --- message: <str> severity: <str> detail: |",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert-deep.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: deepEqual\nok 1 - deepEqual\n# start 2: loose deepEqual\nnot ok 2 - loose deepEqual\n  ---\n  message: \"Expected values to be loosely deep-equal:\\n\\n[\\n  null,\\n  undefined,\\n  undefined\\n]\\n\\nshould loosely deep-equal\\n\\n[\\n  null,\\n  undefined,\\n  null\\n]\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be loosely deep-equal:\n    \t[\n    \tnull,\n    \tundefined,\n    \tundefined\n    \t]\n    \tshould loosely deep-equal\n    \t[\n    \tnull,\n    \tundefined,\n    \tnull\n    \t]\n    \t\tat assertOnlyDeepEqual (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-deep.js:243:10)\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-deep.js:130:3)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: [null,null,null],\n    \t  expected: [null,null,null],\n    \t  operator: 'deepEqual'\n    \t}\n  ...\n# start 3: date\nok 3 - date\n# start 4: regexp\nok 4 - regexp\n# start 5: deepEqual should pass for these weird cases\nok 5 - deepEqual should pass for these weird cases\n# start 6: es6 Maps and Sets\nok 6 - es6 Maps and Sets\n# start 7: GH-6416. Make sure circular refs do not throw\nok 7 - GH-6416. Make sure circular refs do not throw\n# start 8: GH-14441. Circular structures should be consistent\nok 8 - GH-14441. Circular structures should be consistent\n# start 9: deepStrictEqual handles shared expected array elements after cycle detection\nok 9 - deepStrictEqual handles shared expected array elements after cycle detection\n# start 10: deepStrictEqual handles cross-root aliases after cycle detection\nok 10 - deepStrictEqual handles cross-root aliases after cycle detection\n# start 11: Ensure reflexivity of deepEqual with `arguments` objects.\nok 11 - Ensure reflexivity of deepEqual with `arguments` objects.\n# start 12: More checking that arguments objects are handled correctly\nok 12 - More checking that arguments objects are handled correctly\n# start 13: Handle sparse arrays\nok 13 - Handle sparse arrays\n# start 14: Handle sets and maps with mixed keys\nok 14 - Handle sets and maps with mixed keys\n# start 15: Handle different error messages\nok 15 - Handle different error messages\n# start 16: Handle NaN\nok 16 - Handle NaN\n# start 17: Handle boxed primitives\nok 17 - Handle boxed primitives\n# start 18: Minus zero\nok 18 - Minus zero\n# start 19: Handle symbols (enumerable only)\nok 19 - Handle symbols (enumerable only)\n# start 20: Additional tests\nok 20 - Additional tests\n# start 21: Having the same number of owned properties && the same set of keys\nok 21 - Having the same number of owned properties && the same set of keys\n# start 22: Having an identical prototype property\nok 22 - Having an identical prototype property\n# start 23: Primitives\nok 23 - Primitives\n# start 24: Additional tests\nok 24 - Additional tests\n# start 25: Having the same number of owned properties && the same set of keys\nok 25 - Having the same number of owned properties && the same set of keys\n# start 26: Prototype check\nok 26 - Prototype check\n# start 27: Check extra properties on errors\nok 27 - Check extra properties on errors\n# start 28: Check proxies\nnot ok 28 - Check proxies\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n    message: 'Expected values to be strictly deep-equal:\\\\n' +\\n      '+ actual - expected\\\\n' +\\n      '\\\\n' +\\n+     '  [\\\\n' +\\n-     '+ Proxy([\\\\n' +\\n-     '- [\\\\n' +\\n      '    1,\\\\n' +\\n      '    2,\\\\n' +\\n-     '+ ])\\\\n' +\\n      '-   3\\\\n' +\\n+     '  ]\\\\n'\\n-     '- ]\\\\n'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \tmessage: 'Expected values to be strictly deep-equal:\\n' +\n    \t'+ actual - expected\\n' +\n    \t'\\n' +\n    \t+     '  [\\n' +\n    \t-     '+ Proxy([\\n' +\n    \t-     '- [\\n' +\n    \t'    1,\\n' +\n    \t'    2,\\n' +\n    \t-     '+ ])\\n' +\n    \t'-   3\\n' +\n    \t+     '  ]\\n'\n    \t-     '- ]\\n'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-deep.js:1144:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":[1,2],\"expected\":[1,2,3],\"operator\":\"deepStrictEqual\",\"generatedMessage\":true},\n    \t  expected: {\"message\":\"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n+ Proxy([\\n- [\\n    1,\\n    2,\\n+ ])\\n-   3\\n- ]\\n\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 29: Strict equal with identical objects that are not identical by reference and longer than 50 elements\nok 29 - Strict equal with identical objects that are not identical by reference and longer than 50 elements\n# start 30: Basic valueOf check\nok 30 - Basic valueOf check\n# start 31: Basic array out of bounds check\nok 31 - Basic array out of bounds check\n# start 32: Verify that manipulating the `getTime()` function has no impact on the time verification.\nok 32 - Verify that manipulating the `getTime()` function has no impact on the time verification.\n# start 33: Verify that an array and the equivalent fake array object are correctly compared\nok 33 - Verify that an array and the equivalent fake array object are correctly compared\n# start 34: Verify that extra keys will be tested for when using fake arrays\nok 34 - Verify that extra keys will be tested for when using fake arrays\n# start 35: Verify that changed tags will still check for the error message\nok 35 - Verify that changed tags will still check for the error message\n# start 36: Check for non-native errors\nok 36 - Check for non-native errors\n# start 37: Check for Errors with cause property\nok 37 - Check for Errors with cause property\n# start 38: Check for AggregateError\nok 38 - Check for AggregateError\n# start 39: Verify that `valueOf` is not called for boxed primitives\nok 39 - Verify that `valueOf` is not called for boxed primitives\n# start 40: Check getters\nok 40 - Check getters\n# start 41: Verify object types being identical on both sides\nok 41 - Verify object types being identical on both sides\n# start 42: Verify commutativity\nok 42 - Verify commutativity\n# start 43: Crypto\nok 43 - Crypto\n# start 44: Comparing two identical WeakMap instances\nok 44 - Comparing two identical WeakMap instances\n# start 45: Comparing two different WeakMap instances\nok 45 - Comparing two different WeakMap instances\n# start 46: Comparing two identical WeakSet instances\nok 46 - Comparing two identical WeakSet instances\n# start 47: Comparing two different WeakSet instances\nok 47 - Comparing two different WeakSet instances\n# start 48: Comparing two arrays nested inside object, with overlapping elements\nok 48 - Comparing two arrays nested inside object, with overlapping elements\n# start 49: Comparing two arrays nested inside object, with overlapping elements, swapping keys\nok 49 - Comparing two arrays nested inside object, with overlapping elements, swapping keys\n# start 50: Detects differences in deeply nested arrays instead of seeing a new object\nok 50 - Detects differences in deeply nested arrays instead of seeing a new object\n# start 51: URLs\nok 51 - URLs\n# start 52: Own property constructor properties should check against the original prototype\nok 52 - Own property constructor properties should check against the original prototype\n# start 53: Inherited null prototype without own constructor properties should check the correct prototype\nok 53 - Inherited null prototype without own constructor properties should check the correct prototype\n# start 54: Promises should fail deepEqual\nok 54 - Promises should fail deepEqual\n1..54"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: ensure the assert.ok throwing similar error messages for esm and cjs files > should return code <n> for each command not ok <n> - e",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert-esm-cjs-message-verify.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: ensure the assert.ok throwing similar error messages for esm and cjs files > should return code 1 for each command\nnot ok 1 - ensure the assert.ok throwing similar error messages for esm and cjs files > should return code 1 for each command\n  ---\n  message: \"Expected values to be strictly equal:\\n\\n2 !== 1\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t2 !== 1\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert-esm-cjs-message-verify.js:22:14)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 2,\n    \t  expected: 1,\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n1..1"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: process.loadEnvFile() > supports passing path ok <n> - process.loadEnvFile() > supports passing path # start <n>: process.loadEnvFi",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-process-load-env-file.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: process.loadEnvFile() > supports passing path\nok 1 - process.loadEnvFile() > supports passing path\n# start 2: process.loadEnvFile() > supports not-passing a path\nok 2 - process.loadEnvFile() > supports not-passing a path\n# start 3: process.loadEnvFile() > should throw when file does not exist\nok 3 - process.loadEnvFile() > should throw when file does not exist\n# start 4: process.loadEnvFile() > should throw when `.env` does not exist\nnot ok 4 - process.loadEnvFile() > should throw when `.env` does not exist\n  ---\n  message: \"ENOENT: no such file or directory, chdir '/work/.harness/work/node-api/node-api-overlay' -> '/work/.harness/work/node-api/node-api-overlay/lib'\"\n  severity: \"ENOENT\"\n  detail: |\n    \tError: ENOENT: no such file or directory, chdir '/work/.harness/work/node-api/node-api-overlay' -> '/work/.harness/work/node-api/node-api-overlay/lib'\n    \t\tat process.chdir (native)\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-process-load-env-file.js:63:17)\n    \t{\n    \t  code: 'ENOENT'\n    \t}\n  ...\n# start 5: process.loadEnvFile() > should check for permissions\nnot ok 5 - process.loadEnvFile() > should check for permissions\n  ---\n  message: \"The input did not match the regular expression /Error: Access to this API has been restricted/. Input:\\n\\n'error: unexpected argument '--permission' found\\n\\n  tip: a similar argument exists: '--version'\\n  tip: to pass '--permission' as a value, use '-- --permission'\\n\\nUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n\\nFor more information, try '--help'.\\n'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /Error: Access to this API has been restricted/. Input:\n    \t'error: unexpected argument '--permission' found\n    \ttip: a similar argument exists: '--version'\n    \ttip: to pass '--permission' as a value, use '-- --permission'\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \tFor more information, try '--help'.\n    \t'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-process-load-env-file.js:85:12)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--permission\\' found\n    \t\n    \t  tip: a similar argument exists: \\'--version\\'\n    \t  tip: to pass \\'--permission\\' as a value, use \\'-- --permission\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: {},\n    \t  operator: 'match'\n    \t}\n  ...\n# start 6: process.loadEnvFile() > loadEnvFile does not mutate --env-file output\nnot ok 6 - process.loadEnvFile() > loadEnvFile does not mutate --env-file output\n  ---\n  message: \"Expected values to be strictly equal:\\n+ actual - expected\\n\\n+ \\\"error: unexpected argument '--env-file' found\\\\n\\\" +\\n+   '\\\\n' +\\n+   \\\"  tip: a similar argument exists: '--eval'\\\\n\\\" +\\n+   \\\"  tip: to pass '--env-file' as a value, use '-- --env-file'\\\\n\\\" +\\n+   '\\\\n' +\\n+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\\\n' +\\n+   '\\\\n' +\\n+   \\\"For more information, try '--help'.\\\\n\\\"\\n- ''\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly equal:\n    \t+ actual - expected\n    \t+ \"error: unexpected argument '--env-file' found\\n\" +\n    \t+   '\\n' +\n    \t+   \"  tip: a similar argument exists: '--eval'\\n\" +\n    \t+   \"  tip: to pass '--env-file' as a value, use '-- --env-file'\\n\" +\n    \t+   '\\n' +\n    \t+   'Usage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\\n' +\n    \t+   '\\n' +\n    \t+   \"For more information, try '--help'.\\n\"\n    \t- ''\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-process-load-env-file.js:109:12)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: 'error: unexpected argument \\'--env-file\\' found\n    \t\n    \t  tip: a similar argument exists: \\'--eval\\'\n    \t  tip: to pass \\'--env-file\\' as a value, use \\'-- --env-file\\'\n    \t\n    \tUsage: elide [FLAGS] [FILE] [-- SCRIPT_ARGS]… [SUBCOMMAND]\n    \t\n    \tFor more information, try \\'--help\\'.\n    \t',\n    \t  expected: '',\n    \t  operator: 'strictEqual'\n    \t}\n  ...\n1..6"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: some basics ok <n> - some basics # start <n>: Throw message if the message is instanceof Error ok <n> - Throw message if the messag",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: some basics\nok 1 - some basics\n# start 2: Throw message if the message is instanceof Error\nok 2 - Throw message if the message is instanceof Error\n# start 3: Errors created in different contexts are handled as any other custom error\nok 3 - Errors created in different contexts are handled as any other custom error\n# start 4: assert.throws()\nok 4 - assert.throws()\n# start 5: Check messages from assert.throws()\nok 5 - Check messages from assert.throws()\n# start 6: Test assertion messages\nok 6 - Test assertion messages\n# start 7: Custom errors\nok 7 - Custom errors\n# start 8: Verify that throws() and doesNotThrow() throw on non-functions\nok 8 - Verify that throws() and doesNotThrow() throw on non-functions\n# start 9: https://github.com/nodejs/node/issues/3275\nok 9 - https://github.com/nodejs/node/issues/3275\n# start 10: Long values should be truncated for display\nok 10 - Long values should be truncated for display\n# start 11: Output that extends beyond 10 lines should also be truncated for display\nok 11 - Output that extends beyond 10 lines should also be truncated for display\n# start 12: Bad args to AssertionError constructor should throw TypeError.\nok 12 - Bad args to AssertionError constructor should throw TypeError.\n# start 13: NaN is handled correctly\nok 13 - NaN is handled correctly\n# start 14: Test strict assert\nnot ok 14 - Test strict assert\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n    generatedMessage: true,\\n+   message: 'The expression evaluated to a falsy value:\\\\n\\\\n  strict(...[])\\\\n',\\n-   message: 'No value argument passed to `assert.ok()`',\\n    name: 'AssertionError'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \tgeneratedMessage: true,\n    \t+   message: 'The expression evaluated to a falsy value:\\n\\n  strict(...[])\\n',\n    \t-   message: 'No value argument passed to `assert.ok()`',\n    \tname: 'AssertionError'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:599:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"expected\":true,\"operator\":\"==\",\"generatedMessage\":true},\n    \t  expected: {\"message\":\"No value argument passed to `assert.ok()`\",\"name\":\"AssertionError\",\"generatedMessage\":true},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 15: Additional asserts\nnot ok 15 - Additional asserts\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n+ AssertionError {\\n+   code: 'ERR_ASSERTION',\\n+   constructor: [Function: AssertionError],\\n+   message: 'Symbol(foo)'\\n- TypeError {\\n-   code: 'ERR_INVALID_ARG_TYPE',\\n-   constructor: [Function: TypeError],\\n-   message: /\\\"message\\\" argument.+Symbol\\\\(foo\\\\)/\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \t+ AssertionError {\n    \t+   code: 'ERR_ASSERTION',\n    \t+   constructor: [Function: AssertionError],\n    \t+   message: 'Symbol(foo)'\n    \t- TypeError {\n    \t-   code: 'ERR_INVALID_ARG_TYPE',\n    \t-   constructor: [Function: TypeError],\n    \t-   message: /\"message\" argument.+Symbol\\(foo\\)/\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:905:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":false,\"expected\":true,\"operator\":\"==\",\"generatedMessage\":false},\n    \t  expected: {\"code\":\"ERR_INVALID_ARG_TYPE\",\"message\":{}},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 16: Throws accepts objects\nnot ok 16 - Throws accepts objects\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n+   message: '',\\n+   name: 'Error'\\n-   code: 'ERR_INVALID_ARG_TYPE',\\n-   message: 'The \\\"expected\\\" argument must be of type function or an instance of RegExp. Received an instance of Object',\\n-   name: 'TypeError'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \t+   message: '',\n    \t+   name: 'Error'\n    \t-   code: 'ERR_INVALID_ARG_TYPE',\n    \t-   message: 'The \"expected\" argument must be of type function or an instance of RegExp. Received an instance of Object',\n    \t-   name: 'TypeError'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1130:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {},\n    \t  expected: {\"name\":\"TypeError\",\"code\":\"ERR_INVALID_ARG_TYPE\",\"message\":\"The \\\"expected\\\" argument must be of type function or an instance of RegExp. Received an instance of Object\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 17: Additional assert\nnot ok 17 - Additional assert\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n    actual: 'foobar',\\n    generatedMessage: false,\\n+   message: 'message',\\n-   message: \\\"message\\\\n+ actual - expected\\\\n\\\\n+ 'foobar'\\\\n- {\\\\n-   message: 'foobar'\\\\n- }\\\\n\\\",\\n    operator: 'throws'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \tactual: 'foobar',\n    \tgeneratedMessage: false,\n    \t+   message: 'message',\n    \t-   message: \"message\\n+ actual - expected\\n\\n+ 'foobar'\\n- {\\n-   message: 'foobar'\\n- }\\n\",\n    \toperator: 'throws'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1287:12)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":\"foobar\",\"expected\":{\"message\":\"foobar\"},\"operator\":\"throws\",\"generatedMessage\":false},\n    \t  expected: {\"actual\":\"foobar\",\"message\":\"message\\n+ actual - expected\\n\\n+ 'foobar'\\n- {\\n-   message: 'foobar'\\n- }\\n\",\"operator\":\"throws\",\"generatedMessage\":false},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 18: assert/strict exists\nok 18 - assert/strict exists\n# start 19: Printf-like format strings as error message\nnot ok 19 - Printf-like format strings as error message\n  ---\n  message: \"The input did not match the regular expression /The answer to all questions is 42/. Input:\\n\\n'AssertionError: The answer to all questions is %i'\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: The input did not match the regular expression /The answer to all questions is 42/. Input:\n    \t'AssertionError: The answer to all questions is %i'\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1600:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":1,\"expected\":2,\"operator\":\"==\",\"generatedMessage\":false},\n    \t  expected: {},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 20: Functions as error message\nnot ok 20 - Functions as error message\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n+   message: 'function errorMessage(actual, expected) {\\\\n' +\\n+     '    return `Nice message including ${actual} and ${expected}`;\\\\n' +\\n+     '  }'\\n-   message: 'Nice message including 1 and 2'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \t+   message: 'function errorMessage(actual, expected) {\\n' +\n    \t+     '    return `Nice message including ${actual} and ${expected}`;\\n' +\n    \t+     '  }'\n    \t-   message: 'Nice message including 1 and 2'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1660:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":1,\"expected\":2,\"operator\":\"==\",\"generatedMessage\":false},\n    \t  expected: {\"message\":\"Nice message including 1 and 2\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 21: Ambiguous error messages fail\nnot ok 21 - Ambiguous error messages fail\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n+   code: 'ERR_ASSERTION',\\n-   code: 'ERR_AMBIGUOUS_ARGUMENT',\\n    message: 'function errorMessage(actual, expected) {\\\\n' +\\n      '    return `Nice message including ${actual} and ${expected}`;\\\\n' +\\n      '  }'\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \t+   code: 'ERR_ASSERTION',\n    \t-   code: 'ERR_AMBIGUOUS_ARGUMENT',\n    \tmessage: 'function errorMessage(actual, expected) {\\n' +\n    \t'    return `Nice message including ${actual} and ${expected}`;\\n' +\n    \t'  }'\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1725:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":\"foo\",\"expected\":{},\"operator\":\"doesNotMatch\",\"generatedMessage\":false},\n    \t  expected: {\"code\":\"ERR_AMBIGUOUS_ARGUMENT\",\"message\":{}},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 22: Faulty message functions\nnot ok 22 - Faulty message functions\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n    code: 'ERR_ASSERTION',\\n+   message: '(a, b) => 123'\\n-   message: \\\"'foo' doesNotMatch /foo/\\\"\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \tcode: 'ERR_ASSERTION',\n    \t+   message: '(a, b) => 123'\n    \t-   message: \"'foo' doesNotMatch /foo/\"\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1743:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":\"foo\",\"expected\":{},\"operator\":\"doesNotMatch\",\"generatedMessage\":false},\n    \t  expected: {\"code\":\"ERR_ASSERTION\",\"message\":\"'foo' doesNotMatch /foo/\"},\n    \t  operator: 'throws'\n    \t}\n  ...\n# start 23: Functions as error message\nnot ok 23 - Functions as error message\n  ---\n  message: \"Expected values to be strictly deep-equal:\\n+ actual - expected\\n\\n  Comparison {\\n    code: 'ERR_ASSERTION',\\n+   message: 'function errorMessage(actual, expected) {\\\\n' +\\n+     '    return `Nice message including ${actual} and ${expected}`;\\\\n' +\\n+     '  }'\\n-   message: /Nice message including foo and bar/\\n  }\\n\"\n  severity: \"ERR_ASSERTION\"\n  detail: |\n    \tAssertionError: Expected values to be strictly deep-equal:\n    \t+ actual - expected\n    \tComparison {\n    \tcode: 'ERR_ASSERTION',\n    \t+   message: 'function errorMessage(actual, expected) {\\n' +\n    \t+     '    return `Nice message including ${actual} and ${expected}`;\\n' +\n    \t+     '  }'\n    \t-   message: /Nice message including foo and bar/\n    \t}\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-assert.js:1765:10)\n    \t{\n    \t  code: 'ERR_ASSERTION',\n    \t  actual: {\"actual\":\"foo\",\"expected\":\"bar\",\"operator\":\"==\",\"generatedMessage\":false},\n    \t  expected: {\"code\":\"ERR_ASSERTION\",\"message\":{}},\n    \t  operator: 'throws'\n    \t}\n  ...\n1..23"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: validation ok <n> - validation # start <n>: performs flush not ok <n> - <loc> --- message: <str> detail: | The test run in <loc> di",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-write-stream-flush.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: validation\nok 1 - validation\n# start 2: performs flush\nnot ok 2 - __elide_node_test__test__parallel__test-fs-write-stream-flush.js\n  ---\n  message: \"The test run in __elide_node_test__test__parallel__test-fs-write-stream-flush.js did not complete\"\n  detail: |\n    \tThe test run in __elide_node_test__test__parallel__test-fs-write-stream-flush.js did not complete\n  ...\n1..2"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: Web Locks diagnostics channel > emits start, grant, and end on success not ok <n> - Web Locks diagnostics channel > emits start, gr",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-web-locks.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: Web Locks diagnostics channel > emits start, grant, and end on success\nnot ok 1 - Web Locks diagnostics channel > emits start, grant, and end on success\n  ---\n  message: \"Cannot read property 'request' of undefined\"\n  detail: |\n    \tTypeError: Cannot read property 'request' of undefined\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:33:28)\n  ...\n# start 2: Web Locks diagnostics channel > emits start, miss, and end when lock is unavailable\nnot ok 2 - Web Locks diagnostics channel > emits start, miss, and end when lock is unavailable\n  ---\n  message: \"Cannot read property 'request' of undefined\"\n  detail: |\n    \tTypeError: Cannot read property 'request' of undefined\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:43:11)\n  ...\n# start 3: Web Locks diagnostics channel > queued lock request emits start, grant, and end without miss\nnot ok 3 - Web Locks diagnostics channel > queued lock request emits start, grant, and end without miss\n  ---\n  message: \"Cannot read property 'request' of undefined\"\n  detail: |\n    \tTypeError: Cannot read property 'request' of undefined\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:81:33)\n  ...\n# start 4: Web Locks diagnostics channel > reports callback error in end event\nnot ok 4 - Web Locks diagnostics channel > reports callback error in end event\n  ---\n  message: \"Cannot read property 'request' of undefined\"\n  detail: |\n    \tTypeError: Cannot read property 'request' of undefined\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:118:9)\n  ...\n# start 5: Web Locks diagnostics channel > stolen lock ends original request with AbortError\nnot ok 5 - Web Locks diagnostics channel > stolen lock ends original request with AbortError\n  ---\n  message: \"Cannot read property 'request' of undefined\"\n  detail: |\n    \tTypeError: Cannot read property 'request' of undefined\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:144:9)\n  ...\n# out: Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:26:21)\n# out: Mismatched noop function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:27:21)\n# out: Mismatched noop function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:29:19)\n# out: Mismatched <anonymous> function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:72:21)\n# out: Mismatched noop function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:73:21)\n# out: Mismatched noop function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:75:19)\n# out: Mismatched noop function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:110:21)\n# out: Mismatched noop function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:111:21)\n# out: Mismatched <anonymous> function calls. Expected exactly 1, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:113:19)\n# out: Mismatched noop function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:133:21)\n# out: Mismatched noop function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:134:21)\n# out: Mismatched <anonymous> function calls. Expected exactly 2, actual 0.\n# out:     at Proxy.mustCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:533:10)\n# out:     at Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-web-locks.js:136:19)\nnot ok 6 - __elide_node_test__test__parallel__test-diagnostics-channel-web-locks.js\n  ---\n  message: \"Exit was called with exit code 1.\"\n  detail: |\n    \tExit was called with exit code 1.\n    \t\tat <js> runCallChecks(test/common/index.js:529:17387-17401)\n    \t\tat <js> :=>(__elide_node_test__test__parallel__test-diagnostics-channel-web-locks.js:4:166-208)\n    \t\tat org.graalvm.polyglot.Value.execute(Value.java:1098)\n    \t\tat dev.elide.tooling.testing.js.NodeTestHarness$Installed.signalIdle-impl(SourceFile:66)\n    \t\tat dev.elide.tooling.testing.js.TestJsTask.runFile(SourceFile:244)\n    \t\tat dev.elide.tooling.testing.js.TestJsTask.execute$lambda$2$0(SourceFile:113)\n    \t\tat dev.elide.tooling.testing.js.TestJsTask.schedule(SourceFile:159)\n    \t\tat dev.elide.tooling.testing.js.TestJsTask.execute(SourceFile:112)\n    \t\tat dev.elide.tooling.build.DefaultBuildDriver.maybeExecuteTask(SourceFile:590)\n    \t\tat dev.elide.tooling.build.DefaultBuildDriver.access$maybeExecuteTask(SourceFile:56)\n    \t\tat dev.elide.tooling.build.DefaultBuildDriver$build$buildJob$1$1$1.invokeSuspend(SourceFile:470)\n    \t\tat dev.elide.tooling.build.DefaultBuildDriver$build$buildJob$1$1$1.invoke(Unknown)\n    \t\tat dev.elide.tooling.build.DefaultBuildDriver$build$buildJob$1$1$1.invoke(Unknown)\n    \t\tat dev.elide.tooling.build.tasks.DefaultTaskGraph$DefaultExecutableTaskGraph$execute$launchTask$1.invokeSuspend(SourceFile:67)\n    \t\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n    \t\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n    \t\tat kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)\n    \t\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:798)\n    \t\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)\n    \t\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)\n  ...\n1..6"
+      ]
+    },
+    {
+      "signature": "TAP version <n> # start <n>: Worker eval module typescript without input-type ok <n> - Worker eval module typescript without input-type # SKIP # start <n>: Work",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-eval-typescript.js"
+      ],
+      "samples": [
+        "TAP version 13\n# start 1: Worker eval module typescript without input-type\nok 1 - Worker eval module typescript without input-type # SKIP\n# start 2: Worker eval module typescript with --input-type=module-typescript\nok 2 - Worker eval module typescript with --input-type=module-typescript # SKIP\n# start 3: Worker eval module typescript with --input-type=commonjs-typescript\nok 3 - Worker eval module typescript with --input-type=commonjs-typescript # SKIP\n# start 4: Worker eval module typescript with --input-type=module\nnot ok 4 - Worker eval module typescript with --input-type=module\n  ---\n  message: \"Initiated Worker with invalid execArgv flags: --disable-warning=ExperimentalWarning\"\n  severity: \"ERR_WORKER_INVALID_EXEC_ARGV\"\n  detail: |\n    \tError: Initiated Worker with invalid execArgv flags: --disable-warning=ExperimentalWarning\n    \t\tat Object.<anonymous> (/work/.harness/work/node-api/node-api-overlay/test/parallel/test-worker-eval-typescript.js:45:13)\n    \t{\n    \t  code: 'ERR_WORKER_INVALID_EXEC_ARGV'\n    \t}\n  ...\n# start 5: Worker eval commonjs typescript without input-type\nok 5 - Worker eval commonjs typescript without input-type # SKIP\n# start 6: Worker eval commonjs typescript with --input-type=commonjs-typescript\nok 6 - Worker eval commonjs typescript with --input-type=commonjs-typescript # SKIP\n# start 7: Worker eval commonjs typescript with --input-type=module-typescript\nok 7 - Worker eval commonjs typescript with --input-type=module-typescript # SKIP\n1..7"
+      ]
+    },
+    {
+      "signature": "TypeError: Cannot read property <str> of undefined at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-pipe-same-destination-twice.js"
+      ],
+      "samples": [
+        "TypeError: Cannot read property 'length' of undefined\n    at :anonymous (test-stream-pipe-same-destination-twice.js:22:22)\n    at :program (test-stream-pipe-same-destination-twice.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: Cannot read property <str> of undefined at Writable.<anonymous> (<loc>) at Writable._return (<loc>) at Writable.emit (native) at Duplex.push (native)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-local-storage-http-multiclients.js"
+      ],
+      "samples": [
+        "TypeError: Cannot read property 'set' of undefined\n    at Writable.<anonymous> (test-async-local-storage-http-multiclients.js:36:9)\n    at Writable._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at Writable.emit (native)\n    at Duplex.push (native)"
+      ]
+    },
+    {
+      "signature": "TypeError: Cannot set property <str> of undefined at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-dns-get-server.js"
+      ],
+      "samples": [
+        "TypeError: Cannot set property 'getServers' of undefined\n    at :anonymous (test-dns-get-server.js:10:1)\n    at :program (test-dns-get-server.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: Certificate is not a constructor at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-certificate.js"
+      ],
+      "samples": [
+        "TypeError: Certificate is not a constructor\n    at :anonymous (test-crypto-certificate.js:98:16)\n    at :program (test-crypto-certificate.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: Detached buffer at new Uint8Array (native) at TypeError.get stack (native) Uncaught (in promise) AssertionError: Expected values to be strictly deep-",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-duplex.js"
+      ],
+      "samples": [
+        "TypeError: Detached buffer\n    at new Uint8Array (native)\n    at TypeError.get stack (native)\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ Buffer(5) [Uint8Array] [\n+   104,\n+   101,\n+   108,\n+   108,\n+   111\n+ ]\n- Buffer(0) [Uint8Array] []\n\nTypeError: Cannot construct a BYOB reader for a stream that is not a byte stream\n    at :anonymous (test-stream-duplex.js:159:3)\n    at :program (test-stream-duplex.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: fs.openAsBlob is not a function at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vfs-fs-openAsBlob.js"
+      ],
+      "samples": [
+        "TypeError: fs.openAsBlob is not a function\n    at :anonymous (test-vfs-fs-openAsBlob.js:18:1)\n    at :program (test-vfs-fs-openAsBlob.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: getHeapSnapshot is not a function at EventEmitter.<anonymous> (<loc>) at EventEmitter._return (<loc>) at EventEmitter.emit (native) at TypeError.get ",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-exit-heapsnapshot.js"
+      ],
+      "samples": [
+        "TypeError: getHeapSnapshot is not a function\n    at EventEmitter.<anonymous> (test-worker-exit-heapsnapshot.js:15:5)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)\n    at TypeError.get stack (native)"
+      ]
+    },
+    {
+      "signature": "TypeError: Invalid JWK data at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-pqc-encrypted-pkcs8.js"
+      ],
+      "samples": [
+        "TypeError: Invalid JWK data\n    at :anonymous (test-crypto-pqc-encrypted-pkcs8.js:102:18)\n    at :program (test-crypto-pqc-encrypted-pkcs8.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: parsers.alloc is not a function at :=> (<loc>) at _return (<loc>) at test (<loc>) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-local-storage-http-parser-leak.js"
+      ],
+      "samples": [
+        "TypeError: parsers.alloc is not a function\n    at :=> (test-async-local-storage-http-parser-leak.js:19:14)\n    at _return (index.js:575:12)\n    at test (test-async-local-storage-http-parser-leak.js:18:3)\n    at :anonymous (test-async-local-storage-http-parser-leak.js:25:1)\n    at :program (test-async-local-storage-http-parser-leak.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: pipeline: every link must be a Readable on the left and a Writable on the right at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-pipeline.js"
+      ],
+      "samples": [
+        "TypeError: pipeline: every link must be a Readable on the left and a Writable on the right\n    at :anonymous (test-stream-pipeline.js:390:3)\n    at :program (test-stream-pipeline.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: proxy has been revoked at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-console-issue-43095.js"
+      ],
+      "samples": [
+        "TypeError: proxy has been revoked\n    at :anonymous (test-console-issue-43095.js:9:1)\n    at :program (test-console-issue-43095.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: The <str> argument must be an instance of Iterable. Received object at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-compose.js"
+      ],
+      "samples": [
+        "TypeError: The \"iterable\" argument must be an instance of Iterable. Received object\n    at :anonymous (test-stream-compose.js:145:3)\n    at :program (test-stream-compose.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: The <str> argument must be of type object. Received type symbol (Symbol(DONT_CONTEXTIFY)) at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-vm-context-dont-contextify.js"
+      ],
+      "samples": [
+        "TypeError: The \"object\" argument must be of type object. Received type symbol (Symbol(DONT_CONTEXTIFY))\n    at :anonymous (test-vm-context-dont-contextify.js:13:19)\n    at :program (test-vm-context-dont-contextify.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: tls.Server is not a function at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-verify-failure.js"
+      ],
+      "samples": [
+        "TypeError: tls.Server is not a function\n    at :anonymous (test-crypto-verify-failure.js:39:16)\n    at :program (test-crypto-verify-failure.js:1:1)"
+      ]
+    },
+    {
+      "signature": "TypeError: v8.queryObjects is not a function at <loc> at _return (<loc>) at Timeout.<anonymous> (<loc>) at TypeError.get stack (native)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-local-storage-weak-asyncwrap-leak.js"
+      ],
+      "samples": [
+        "TypeError: v8.queryObjects is not a function\n    at test-async-local-storage-weak-asyncwrap-leak.js:41:25\n    at _return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at Timeout.<anonymous> (test-async-local-storage-weak-asyncwrap-leak.js:47:5)\n    at TypeError.get stack (native)"
+      ]
+    },
+    {
+      "signature": "TypeError: X509Certificate is not a constructor at :anonymous (<loc>) at :program (<loc>)",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-keyobject-hidden-slots.js"
+      ],
+      "samples": [
+        "TypeError: X509Certificate is not a constructor\n    at :anonymous (test-crypto-keyobject-hidden-slots.js:183:18)\n    at :program (test-crypto-keyobject-hidden-slots.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal: + actual - expected + [] - [ - { - name: <str>, - parentURL: <str>, - url: <str",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-module-import.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ []\n- [\n-   {\n-     name: 'start',\n-     parentURL: 'file:///work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-module-import.js',\n-     url: 'http'\n-   },\n-   {\n-     name: 'end',\n-     parentURL: 'file:///work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-module-import.js',\n-     url: 'http'\n-   },\n-   {\n-     name: 'asyncStart',\n-     parentURL: 'file:///work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-module-import.js',\n-     result: [Object: null prototype] {\n-       Agent: [Function: Agent],\n-       ClientRequest: [Function: ClientRequest],\n-       IncomingMessage: [Function: IncomingMessage],\n-       METHODS: [\n-         'ACL',\n-         'BIND',\n-         'CHECKOUT',\n-         'CONNECT',\n-         'COPY',\n-         'DELETE',\n-         'GET',\n-         'HEAD',\n-         'LINK',\n-         'LOCK',\n-         'M-SEARCH',\n-         'MERGE',\n-         'MKACTIVITY',\n-         'MKCALENDAR',\n-         'MKCOL',\n-         'MOVE',\n-         'NOTIFY',\n-         'OPTIONS',\n-         'PATCH',\n-         'POST',\n-         'PROPFIND',\n-         'PROPPATCH',\n-         'PURGE',\n-         'PUT',\n-         'QUERY',\n-         'REBIND',\n-         'REPORT',\n-         'SEARCH',\n-         'SOURCE',\n-         'SUBSCRIBE',\n-         'TRACE',\n-         'UNBIND',\n-         'UNLINK',\n-         'UNLOCK',\n-         'UNSUBSCRIBE'\n-       ],\n-       OutgoingMessage: [Function: OutgoingMessage],\n-       STATUS_CODES: {\n-         '100': 'Continue',\n-         '101': 'Switching Protocols',\n-         '102': 'Processing',\n-         '103': 'Early Hints',\n-         '200': 'OK',\n-         '201': 'Created',\n-         '202': 'Accepted',\n-         '203': 'Non-Authoritative Information',\n-         '204': 'No Content',\n-         '205': 'Reset Content',\n-         '206': 'Partial Content',\n-         '207': 'Multi-Status',\n-         '208': 'Already Reported',\n-         '226': 'IM Used',\n-         '300': 'Multiple Choices',\n-         '301': 'Moved Permanently',\n-         '302': 'Found',\n-         '303': 'See Other',\n-         '304': 'Not Modified',\n-         '305': 'Use Proxy',\n-         '307': 'Temporary Redirect',\n-         '308': 'Permanent Redirect',\n-         '400': 'Bad Request',\n-         '401': 'Unauthorized',\n-         '402': 'Payment Required',\n-         '403': 'Forbidden',\n-         '404': 'Not Found',\n-         '405': 'Method Not Allowed',\n-         '406': 'Not Acceptable',\n-         '407': 'Proxy Authentication Required',\n-         '408': 'Request Timeout',\n-         '409': 'Conflict',\n-         '410': 'Gone',\n-         '411': 'Length Required',\n-         '412': 'Precondition Failed',\n-         '413': 'Payload Too Large',\n-         '414': 'URI Too Long',\n-         '415': 'Unsupported Media Type',\n-         '416': 'Range Not Satisfiable',\n-         '417': 'Expectation Failed',\n-         '418': \"I'm a Teapot\",\n-         '421': 'Misdirected Request',\n-         '422': 'Unprocessable Entity',\n-         '423': 'Locked',\n-         '424': 'Failed Dependency',\n-         '425': 'Too Early',\n-         '426': 'Upgrade Required',\n-         '428': 'Precondition Required',\n-         '429': 'Too Many Requests',\n-         '431': 'Request Header Fields Too Large',\n-         '451': 'Unavailable For Legal Reasons',\n-         '500': 'Internal Server Error',\n-         '501': 'Not Implemented',\n-         '502': 'Bad Gateway',\n-         '503': 'Service Unavailable',\n-         '504': 'Gateway Timeout',\n-         '505': 'HTTP Version Not Supported',\n-         '506': 'Variant Also Negotiates',\n-         '507': 'Insufficient Storage',\n-         '508': 'Loop Detected',\n-         '509': 'Bandwidth Limit Exceeded',\n-         '510': 'Not Extended',\n-         '511': 'Network Authentication Required'\n-       },\n-       Server: [Function: Server],\n-       ServerResponse: [Function: ServerResponse],\n-       _checkInvalidHeaderChar: [Function: _checkInvalidHeaderChar],\n-       _checkIsHttpToken: [Function: _checkIsHttpToken],\n-       _createEngine: [Function: createEngine],\n-       createServer: [Function: createServer],\n-       default: {\n-         Agent: [Function: Agent],\n-         ClientRequest: [Function: ClientRequest],\n-         IncomingMessage: [Function: IncomingMessage],\n-         METHODS: [\n-           'ACL',\n-           'BIND',\n-           'CHECKOUT',\n-           'CONNECT',\n-           'COPY',\n-           'DELETE',\n-           'GET',\n-           'HEAD',\n-           'LINK',\n-           'LOCK',\n-           'M-SEARCH',\n-           'MERGE',\n-           'MKACTIVITY',\n-           'MKCALENDAR',\n-           'MKCOL',\n-           'MOVE',\n-           'NOTIFY',\n-           'OPTIONS',\n-           'PATCH',\n-           'POST',\n-           'PROPFIND',\n-           'PROPPATCH',\n-           'PURGE',\n-           'PUT',\n-           'QUERY',\n-           'REBIND',\n-           'REPORT',\n-           'SEARCH',\n-           'SOURCE',\n-           'SUBSCRIBE',\n-           'TRACE',\n-           'UNBIND',\n-           'UNLINK',\n-           'UNLOCK',\n-           'UNSUBSCRIBE'\n-         ],\n-         OutgoingMessage: [Function: OutgoingMessage],\n-         STATUS_CODES: {\n-           '100': 'Continue',\n-           '101': 'Switching Protocols',\n-           '102': 'Processing',\n-           '103': 'Early Hints',\n-           '200': 'OK',\n-           '201': 'Created',\n-           '202': 'Accepted',\n-           '203': 'Non-Authoritative Information',\n-           '204': 'No Content',\n-           '205': 'Reset Content',\n-           '206': 'Partial Content',\n-           '207': 'Multi-Status',\n-           '208': 'Already Reported',\n-           '226': 'IM Used',\n-           '300': 'Multiple Choices',\n-           '301': 'Moved Permanently',\n-           '302': 'Found',\n-           '303': 'See Other',\n-           '304': 'Not Modified',\n-           '305': 'Use Proxy',\n-           '307': 'Temporary Redirect',\n-           '308': 'Permanent Redirect',\n-           '400': 'Bad Request',\n-           '401': 'Unauthorized',\n-           '402': 'Payment Required',\n-           '403': 'Forbidden',\n-           '404': 'Not Found',\n-           '405': 'Method Not Allowed',\n-           '406': 'Not Acceptable',\n-           '407': 'Proxy Authentication Required',\n-           '408': 'Request Timeout',\n-           '409': 'Conflict',\n-           '410': 'Gone',\n-           '411': 'Length Required',\n-           '412': 'Precondition Failed',\n-           '413': 'Payload Too Large',\n-           '414': 'URI Too Long',\n-           '415': 'Unsupported Media Type',\n-           '416': 'Range Not Satisfiable',\n-           '417': 'Expectation Failed',\n-           '418': \"I'm a Teapot\",\n-           '421': 'Misdirected Request',\n-           '422': 'Unprocessable Entity',\n-           '423': 'Locked',\n-           '424': 'Failed Dependency',\n-           '425': 'Too Early',\n-           '426': 'Upgrade Required',\n-           '428': 'Precondition Required',\n-           '429': 'Too Many Requests',\n-           '431': 'Request Header Fields Too Large',\n-           '451': 'Unavailable For Legal Reasons',\n-           '500': 'Internal Server Error',\n-           '501': 'Not Implemented',\n-           '502': 'Bad Gateway',\n-           '503': 'Service Unavailable',\n-           '504': 'Gateway Timeout',\n-           '505': 'HTTP Version Not Supported',\n-           '506': 'Variant Also Negotiates',\n-           '507': 'Insufficient Storage',\n-           '508': 'Loop Detected',\n-           '509': 'Bandwidth Limit Exceeded',\n-           '510': 'Not Extended',\n-           '511': 'Network Authentication Required'\n-         },\n-         Server: [Function: Server],\n-         ServerResponse: [Function: ServerResponse],\n-         _checkInvalidHeaderChar: [Function: _checkInvalidHeaderChar],\n-         _checkIsHttpToken: [Function: _checkIsHttpToken],\n-         createServer: [Function: createServer],\n-         get: [Function: get],\n-         globalAgent: Agent [EventEmitter] {\n-           agentKeepAliveTimeoutBuffer: 1000,\n-           defaultPort: 80,\n-           freeSockets: [Object: null prototype] {},\n-           keepAlive: true,\n-           keepAliveMsecs: 1000,\n-           maxFreeSockets: 256,\n-           maxSockets: Infinity,\n-           maxTotalSockets: Infinity,\n-           options: {\n-             keepAlive: true,\n-             noDelay: true,\n-             scheduling: 'lifo'\n-           },\n-           protocol: 'http:',\n-           requests: [Object: null prototype] {},\n-           scheduling: 'lifo',\n-           sockets: [Object: null prototype] {}\n-         },\n-         kConnectionsCheckingInterval: Symbol(nodejs.http.connectionsCheckingInterval),\n-         kHighWaterMark: Symbol(nodejs.http.highWaterMark),\n-         kOutHeaders: Symbol(nodejs.http.outHeaders),\n-         kServerResponse: Symbol(http.ServerResponse),\n-         maxHeaderSize: 16384,\n-         parsers: {\n-           max: 1000\n-         },\n-         request: [Function: request],\n-         setMaxIdleHTTPParsers: [Function: setMaxIdleHTTPParsers],\n-         validateHeaderName: [Function: validateHeaderName],\n-         validateHeaderValue: [Function: validateHeaderValue]\n-       },\n-       get: [Function: get],\n-       globalAgent: Agent [EventEmitter] {\n-         agentKeepAliveTimeoutBuffer: 1000,\n-         defaultPort: 80,\n-         freeSockets: [Object: null prototype] {},\n-         keepAlive: true,\n-         keepAliveMsecs: 1000,\n-         maxFreeSockets: 256,\n-         maxSockets: Infinity,\n-         maxTotalSockets: Infinity,\n-         options: {\n-           keepAlive: true,\n-           noDelay: true,\n-           scheduling: 'lifo'\n-         },\n-         protocol: 'http:',\n-         requests: [Object: null prototype] {},\n-         scheduling: 'lifo',\n-         sockets: [Object: null prototype] {}\n-       },\n-       kConnectionsCheckingInterval: Symbol(nodejs.http.connectionsCheckingInterval),\n-       kHighWaterMark: Symbol(nodejs.http.highWaterMark),\n-       kOutHeaders: Symbol(nodejs.http.outHeaders),\n-       kServerResponse: Symbol(http.ServerResponse),\n-       maxHeaderSize: 16384,\n-       parsers: {\n-         max: 1000\n-       },\n-       request: [Function: request],\n-       setMaxIdleHTTPParsers: [Function: setMaxIdleHTTPParsers],\n-       validateHeaderName: [Function: validateHeaderName],\n-       validateHeaderValue: [Function: validateHeaderValue]\n-     },\n-     url: 'http'\n-   },\n-   {\n-     name: 'asyncEnd',\n-     parentURL: 'file:///work/.harness/work/node-api/node-api-overlay/test/parallel/test-diagnostics-channel-module-import.js',\n-     result: [Object: null prototype] {\n-       Agent: [Function: Agent],\n-       ClientRequest: [Function: ClientRequest],\n-       IncomingMessage: [Function: IncomingMessage],\n-       METHODS: [\n-         'ACL',\n-         'BIND',\n-         'CHECKOUT',\n-         'CONNECT',\n-         'COPY',\n-         'DELETE',\n-         'GET',\n-         'HEAD',\n-         'LINK',\n-         'LOCK',\n-         'M-SEARCH',\n-         'MERGE',\n-         'MKACTIVITY',\n-         'MKCALENDAR',\n-         'MKCOL',\n-         'MOVE',\n-         'NOTIFY',\n-         'OPTIONS',\n-         'PATCH',\n-         'POST',\n-         'PROPFIND',\n-         'PROPPATCH',\n-         'PURGE',\n-         'PUT',\n-         'QUERY',\n-         'REBIND',\n-         'REPORT',\n-         'SEARCH',\n-         'SOURCE',\n-         'SUBSCRIBE',\n-         'TRACE',\n-         'UNBIND',\n-         'UNLINK',\n-         'UNLOCK',\n-         'UNSUBSCRIBE'\n-       ],\n-       OutgoingMessage: [Function: OutgoingMessage],\n-       STATUS_CODES: {\n-         '100': 'Continue',\n-         '101': 'Switching Protocols',\n-         '102': 'Processing',\n-         '103': 'Early Hints',\n-         '200': 'OK',\n-         '201': 'Created',\n-         '202': 'Accepted',\n-         '203': 'Non-Authoritative Information',\n-         '204': 'No Content',\n-         '205': 'Reset Content',\n-         '206': 'Partial Content',\n-         '207': 'Multi-Status',\n-         '208': 'Already Reported',\n-         '226': 'IM Used',\n-         '300': 'Multiple Choices',\n-         '301': 'Moved Permanently',\n-         '302': 'Found',\n-         '303': 'See Other',\n-         '304': 'Not Modified',\n-         '305': 'Use Proxy',\n-         '307': 'Temporary Redirect',\n-         '308': 'Permanent Redirect',\n-         '400': 'Bad Request',\n-         '401': 'Unauthorized',\n-         '402': 'Payment Required',\n-         '403': 'Forbidden',\n-         '404': 'Not Found',\n-         '405': 'Method Not Allowed',\n-         '406': 'Not Acceptable',\n-         '407': 'Proxy Authentication Required',\n-         '408': 'Request Timeout',\n-         '409': 'Conflict',\n-         '410': 'Gone',\n-         '411': 'Length Required',\n-         '412': 'Precondition Failed',\n-         '413': 'Payload Too Large',\n-         '414': 'URI Too Long',\n-         '415': 'Unsupported Media Type',\n-         '416': 'Range Not Satisfiable',\n-         '417': 'Expectation Failed',\n-         '418': \"I'm a Teapot\",\n-         '421': 'Misdirected Request',\n-         '422': 'Unprocessable Entity',\n-         '423': 'Locked',\n-         '424': 'Failed Dependency',\n-         '425': 'Too Early',\n-         '426': 'Upgrade Required',\n-         '428': 'Precondition Required',\n-         '429': 'Too Many Requests',\n-         '431': 'Request Header Fields Too Large',\n-         '451': 'Unavailable For Legal Reasons',\n-         '500': 'Internal Server Error',\n-         '501': 'Not Implemented',\n-         '502': 'Bad Gateway',\n-         '503': 'Service Unavailable',\n-         '504': 'Gateway Timeout',\n-         '505': 'HTTP Version Not Supported',\n-         '506': 'Variant Also Negotiates',\n-         '507': 'Insufficient Storage',\n-         '508': 'Loop Detected',\n-         '509': 'Bandwidth Limit Exceeded',\n-         '510': 'Not Extended',\n-         '511': 'Network Authentication Required'\n-       },\n-       Server: [Function: Server],\n-       ServerResponse: [Function: ServerResponse],\n-       _checkInvalidHeaderChar: [Function: _checkInvalidHeaderChar],\n-       _checkIsHttpToken: [Function: _checkIsHttpToken],\n-       _createEngine: [Function: createEngine],\n-       createServer: [Function: createServer],\n-       default: {\n-         Agent: [Function: Agent],\n-         ClientRequest: [Function: ClientRequest],\n-         IncomingMessage: [Function: IncomingMessage],\n-         METHODS: [\n-           'ACL',\n-           'BIND',\n-           'CHECKOUT',\n-           'CONNECT',\n-           'COPY',\n-           'DELETE',\n-           'GET',\n-           'HEAD',\n-           'LINK',\n-           'LOCK',\n-           'M-SEARCH',\n-           'MERGE',\n-           'MKACTIVITY',\n-           'MKCALENDAR',\n-           'MKCOL',\n-           'MOVE',\n-           'NOTIFY',\n-           'OPTIONS',\n-           'PATCH',\n-           'POST',\n-           'PROPFIND',\n-           'PROPPATCH',\n-           'PURGE',\n-           'PUT',\n-           'QUERY',\n-           'REBIND',\n-           'REPORT',\n-           'SEARCH',\n-           'SOURCE',\n-           'SUBSCRIBE',\n-           'TRACE',\n-           'UNBIND',\n-           'UNLINK',\n-           'UNLOCK',\n-           'UNSUBSCRIBE'\n-         ],\n-         OutgoingMessage: [Function: OutgoingMessage],\n-         STATUS_CODES: {\n-           '100': 'Continue',\n-           '101': 'Switching Protocols',\n-           '102': 'Processing',\n-           '103': 'Early Hints',\n-           '200': 'OK',\n-           '201': 'Created',\n-           '202': 'Accepted',\n-           '203': 'Non-Authoritative Information',\n-           '204': 'No Content',\n-           '205': 'Reset Content',\n-           '206': 'Partial Content',\n-           '207': 'Multi-Status',\n-           '208': 'Already Reported',\n-           '226': 'IM Used',\n-           '300': 'Multiple Choices',\n-           '301': 'Moved Permanently',\n-           '302': 'Found',\n-           '303': 'See Other',\n-           '304': 'Not Modified',\n-           '305': 'Use Proxy',\n-           '307': 'Temporary Redirect',\n-           '308': 'Permanent Redirect',\n-           '400': 'Bad Request',\n-           '401': 'Unauthorized',\n-           '402': 'Payment Required',\n-           '403': 'Forbidden',\n-           '404': 'Not Found',\n-           '405': 'Method Not Allowed',\n-           '406': 'Not Acceptable',\n-           '407': 'Proxy Authentication Required',\n-           '408': 'Request Timeout',\n-           '409': 'Conflict',\n-           '410': 'Gone',\n-           '411': 'Length Required',\n-           '412': 'Precondition Failed',\n-           '413': 'Payload Too Large',\n-           '414': 'URI Too Long',\n-           '415': 'Unsupported Media Type',\n-           '416': 'Range Not Satisfiable',\n-           '417': 'Expectation Failed',\n-           '418': \"I'm a Teapot\",\n-           '421': 'Misdirected Request',\n-           '422': 'Unprocessable Entity',\n-           '423': 'Locked',\n-           '424': 'Failed Dependency',\n-           '425': 'Too Early',\n-           '426': 'Upgrade Required',\n-           '428': 'Precondition Required',\n-           '429': 'Too Many Requests',\n-           '431': 'Request Header Fields Too Large',\n-           '451': 'Unavailable For Legal Reasons',\n-           '500': 'Internal Server Error',\n-           '501': 'Not Implemented',\n-           '502': 'Bad Gateway',\n-           '503': 'Service Unavailable',\n-           '504': 'Gateway Timeout',\n-           '505': 'HTTP Version Not Supported',\n-           '506': 'Variant Also Negotiates',\n-           '507': 'Insufficient Storage',\n-           '508': 'Loop Detected',\n-           '509': 'Bandwidth Limit Exceeded',\n-           '510': 'Not Extended',\n-           '511': 'Network Authentication Required'\n-         },\n-         Server: [Function: Server],\n-         ServerResponse: [Function: ServerResponse],\n-         _checkInvalidHeaderChar: [Function: _checkInvalidHeaderChar],\n-         _checkIsHttpToken: [Function: _checkIsHttpToken],\n-         createServer: [Function: createServer],\n-         get: [Function: get],\n-         globalAgent: Agent [EventEmitter] {\n-           agentKeepAliveTimeoutBuffer: 1000,\n-           defaultPort: 80,\n-           freeSockets: [Object: null prototype] {},\n-           keepAlive: true,\n-           keepAliveMsecs: 1000,\n-           maxFreeSockets: 256,\n-           maxSockets: Infinity,\n-           maxTotalSockets: Infinity,\n-           options: {\n-             keepAlive: true,\n-             noDelay: true,\n-             scheduling: 'lifo'\n-           },\n-           protocol: 'http:',\n-           requests: [Object: null prototype] {},\n-           scheduling: 'lifo',\n-           sockets: [Object: null prototype] {}\n-         },\n-         kConnectionsCheckingInterval: Symbol(nodejs.http.connectionsCheckingInterval),\n-         kHighWaterMark: Symbol(nodejs.http.highWaterMark),\n-         kOutHeaders: Symbol(nodejs.http.outHeaders),\n-         kServerResponse: Symbol(http.ServerResponse),\n-         maxHeaderSize: 16384,\n-         parsers: {\n-           max: 1000\n-         },\n-         request: [Function: request],\n-         setMaxIdleHTTPParsers: [Function: setMaxIdleHTTPParsers],\n-         validateHeaderName: [Function: validateHeaderName],\n-         validateHeaderValue: [Function: validateHeaderValue]\n-       },\n-       get: [Function: get],\n-       globalAgent: Agent [EventEmitter] {\n-         agentKeepAliveTimeoutBuffer: 1000,\n-         defaultPort: 80,\n-         freeSockets: [Object: null prototype] {},\n-         keepAlive: true,\n-         keepAliveMsecs: 1000,\n-         maxFreeSockets: 256,\n-         maxSockets: Infinity,\n-         maxTotalSockets: Infinity,\n-         options: {\n-           keepAlive: true,\n-           noDelay: true,\n-           scheduling: 'lifo'\n-         },\n-         protocol: 'http:',\n-         requests: [Object: null prototype] {},\n-         scheduling: 'lifo',\n-         sockets: [Object: null prototype] {}\n-       },\n-       kConnectionsCheckingInterval: Symbol(nodejs.http.connectionsCheckingInterval),\n-       kHighWaterMark: Symbol(nodejs.http.highWaterMark),\n-       kOutHeaders: Symbol(nodejs.http.outHeaders),\n-       kServerResponse: Symbol(http.ServerResponse),\n-       maxHeaderSize: 16384,\n-       parsers: {\n-         max: 1000\n-       },\n-       request: [Function: request],\n-       setMaxIdleHTTPParsers: [Function: setMaxIdleHTTPParsers],\n-       validateHeaderName: [Function: validateHeaderName],\n-       validateHeaderValue: [Function: validateHeaderValue]\n-     },\n-     url: 'http'\n-   }\n- ]"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal: + actual - expected + undefined - { - foo: <str> - }",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-tracing-channel-promise-run-stores.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ undefined\n- {\n-   foo: 'bar'\n- }"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { + code: <str>, - code: <str>, name: <str> }",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-iter-transform-errors.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   code: 'Z_DATA_ERROR',\n-   code: 'ERR__ERROR_FORMAT_PADDING_2',\n    name: 'Error'\n  }"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal: + actual - expected Comparison { code: <str>, message: <str>, name: <str>, + st",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-promises.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n    code: 'ENOENT',\n    message: \"ENOENT: no such file or directory, access 'this file does not exist'\",\n    name: 'Error',\n+   stack: \"Error: ENOENT: no such file or directory, access 'this file does not exist'\"\n-   stack: /at async assert\\.rejects/\n  }\n\nUncaught (in promise) TypeError: The \"buffer\" argument must be an instance of Buffer, TypedArray, or DataView. Received null"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly equal: + actual - expected + <str> - undefined",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-async-local-storage-enter-with.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'inside then'\n- undefined"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly equal: + actual - expected + undefined - Foo [EventEmitter] { - Symbol(nodejs.eventemitter.",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-eventemitter-asyncresource.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- Foo [EventEmitter] {\n-   Symbol(nodejs.eventemitter.asyncresource): AsyncResource {\n-     _asyncId: 2,\n-     _destroyed: false,\n-     _triggerAsyncId: 1,\n-     type: 'Foo'\n-   }\n- }\n\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ Set(0) {}\n- Set(1) {\n-   [\n-     {\n-       name: 'init',\n-       resource: AsyncResource {\n-         _asyncId: 6,\n-         _destroyed: false,\n-         _triggerAsyncId: 1,\n-         type: 'Foo'\n-       },\n-       triggerAsyncId: 1,\n-       type: 'ResourceName'\n-     }\n-   ]\n- }\n\nAssertionError: Expected values to be strictly deep-equal: + actual - expected    Comparison { +   message: \"Cannot read property 'runInAsyncScope' of undefined\", -   message: /Cannot read private member/,     name: 'TypeError'   }\n    at :anonymous (test-eventemitter-asyncresource.js:131:1)\n    at :program (test-eventemitter-asyncresource.js:1:1)"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Expected values to be strictly equal: <n> !== <n>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-iter-readable-interop-disabled.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Expected values to be strictly equal:\n\n2 !== 0"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: get %Object.prototype%.exports at <loc>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-module-prototype-mutation.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: get %Object.prototype%.exports at test-module-prototype-mutation.js:35"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: Missing expected exception (Error). Uncaught (in promise) AssertionError: Missing expected exception (TypeError). Assertio",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-read-stream-file-handle.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: Missing expected exception (Error).\nUncaught (in promise) AssertionError: Missing expected exception (TypeError).\nAssertionError: function should not have been called at test-fs-read-stream-file-handle.js:31\ncalled with arguments: <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64>\n    at Readable.mustNotCall (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:633:12)"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: The <str> validation function is expected to return <str>. Received false Caught error: AssertionError: Expected values to",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-assert-async.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: The \"bound \" validation function is expected to return \"true\". Received false\n\nCaught error:\n\nAssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ null\n- {\n-   code: 'FOO'\n- }"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: The input did not match the regular expression /No such built-in module: node:stream\\/iter/. Input: <str>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-iter-disabled.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: The input did not match the regular expression /No such built-in module: node:stream\\/iter/. Input:\n\n''"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) AssertionError: The validation function is expected to return <str>. Received false Caught error: TypeError: Module not found: <str>",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-module-import-error.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) AssertionError: The validation function is expected to return \"true\". Received false\n\nCaught error:\n\nTypeError: Module not found: 'does-not-exist'"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) DataCloneError: Found invalid value in transferList Uncaught (in promise) DataCloneError: Found invalid value in transferList Uncaught (in",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-message-port-transfer-filehandle.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) DataCloneError: Found invalid value in transferList\nUncaught (in promise) DataCloneError: Found invalid value in transferList\nUncaught (in promise) Error: node:worker_threads: moveMessagePortToContext is not implemented yet in Elide\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   message: 'Found invalid value in transferList',\n-   message: 'Cannot transfer FileHandle while in use',\n    name: 'DataCloneError'\n  }\n\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   message: 'Found invalid value in transferList',\n-   message: 'Cannot transfer FileHandle while in use',\n    name: 'DataCloneError'\n  }"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) DataCloneError: function read() { [native code] } could not be cloned.",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-promises-file-handle-read-worker.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) DataCloneError: function read() { [native code] } could not be cloned."
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) Error: node:worker_threads: moveMessagePortToContext is not implemented yet in Elide",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-crypto-key-objects-messageport.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) Error: node:worker_threads: moveMessagePortToContext is not implemented yet in Elide"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) NotSupportedError: Unrecognized algorithm name Uncaught (in promise) AssertionError: Expected values to be strictly deep-equal: + actual -",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-webcrypto-digest-turboshake.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) NotSupportedError: Unrecognized algorithm name\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   message: 'Unrecognized algorithm name',\n+   name: 'NotSupportedError'\n-   message: 'Invalid TurboShakeParams outputLength',\n-   name: 'OperationError'\n  }\n\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   message: 'Unrecognized algorithm name',\n+   name: 'NotSupportedError'\n-   message: 'Invalid TurboShakeParams outputLength',\n-   name: 'OperationError'\n  }\n\nUncaught (in promise) NotSupportedError: Unrecognized algorithm name\nUncaught (in promise) AssertionError: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  Comparison {\n+   name: 'NotSupportedError'\n-   name: 'OperationError'\n  }\n\nUncaught (in promise) NotSupportedError: Unrecognized algorithm name"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) SyntaxError: Variable <str> has already been declared",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-worker-track-unmanaged-fds.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) SyntaxError: Variable \"__filename\" has already been declared"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: fh.pull is not a function",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-promises-file-handle-pull.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: fh.pull is not a function"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: fh.pullSync is not a function",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-promises-file-handle-pullsync.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: fh.pullSync is not a function"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: fh.writer is not a function",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-fs-promises-file-handle-writer.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: fh.writer is not a function"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: pipeline: every link must be a Readable on the left and a Writable on the right",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream3-pipeline-async-iterator.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: pipeline: every link must be a Readable on the left and a Writable on the right"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: queryObjects is not a function",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-diagnostics-channel-memory-leak.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: queryObjects is not a function"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: receiver is not an EventEmitter",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-events-once.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: receiver is not an EventEmitter"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: The argument <str> must be a non-empty string. Received <str> Uncaught (in promise) TypeError: The argument <str> must be a non",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-dns.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received ''\nUncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received null\nUncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received undefined\nUncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received 0\nUncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received NaN\nUncaught (in promise) TypeError: The argument 'hostname' must be a non-empty string. Received ''\nTypeError: c-ares failed to set servers: \"There are pending queries.\" [127.0.0.1:45690]\n    at EventEmitter.<anonymous> (test-dns.js:470:9)\n    at EventEmitter._return (/work/.harness/work/node-api/node-api-overlay/test/common/index.js:575:12)\n    at EventEmitter.emit (native)\n    at TypeError.get stack (native)"
+      ]
+    },
+    {
+      "signature": "Uncaught (in promise) TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received und",
+      "count": 1,
+      "exampleIds": [
+        "test/parallel/test-stream-consumers.js"
+      ],
+      "samples": [
+        "Uncaught (in promise) TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined\nUncaught (in promise) TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined\nUncaught (in promise) TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined\nUncaught (in promise) TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined"
+      ]
+    }
+  ],
+  "byFeature": [
+    {
+      "feature": "node:diagnostics-channel",
+      "count": 25
+    },
+    {
+      "feature": "node:streams",
+      "count": 23
+    },
+    {
+      "feature": "node:worker-threads",
+      "count": 23
+    },
+    {
+      "feature": "node:fs",
+      "count": 18
+    },
+    {
+      "feature": "node:crypto",
+      "count": 17
+    },
+    {
+      "feature": "node:vm",
+      "count": 15
+    },
+    {
+      "feature": "node:async-hooks",
+      "count": 10
+    },
+    {
+      "feature": "node:process",
+      "count": 10
+    },
+    {
+      "feature": "node:util",
+      "count": 9
+    },
+    {
+      "feature": "node:module-loading",
+      "count": 7
+    },
+    {
+      "feature": "node:assert",
+      "count": 6
+    },
+    {
+      "feature": "node:buffer",
+      "count": 6
+    },
+    {
+      "feature": "node:events",
+      "count": 4
+    },
+    {
+      "feature": "node:dns",
+      "count": 3
+    },
+    {
+      "feature": "node:timers",
+      "count": 3
+    },
+    {
+      "feature": "node:url",
+      "count": 2
+    },
+    {
+      "feature": "node:console",
+      "count": 1
+    }
+  ]
+}
