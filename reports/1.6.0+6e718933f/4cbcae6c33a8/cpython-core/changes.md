@@ -1,0 +1,32 @@
+# Changes — `1.6.0+b8edacc63` → `1.6.0+6e718933f`
+
+- From: `1.6.0+b8edacc63` (`7aa30129531a1dc5e6197a4ee68996eefe03c4b338406f80a7cdf57542684d83`)
+- To: `1.6.0+6e718933f` (`4cbcae6c33a8b98c3c3ba5241fc17c8e61a74ab2b92e83320d78cd0bc5181738`)
+
+| regressed | fixed | added | removed | still failing |
+|---:|---:|---:|---:|---:|
+| 2 | 16 | 1633 | 417 | 1971 |
+
+## ❌ Regressed (2)
+
+- `test_buffer.TestBufferProtocol.test_memoryview_cast_1D_ND`
+- `test_weakref.MappingTestCase.test_weak_keyed_len_cycles`
+
+## ✅ Fixed (16)
+
+- `test_bytes.ByteArrayAsStringTest.test_index`
+- `test_compileall.CommandLineTestsNoSourceEpoch.test_d_runtime_error`
+- `test_compileall.CommandLineTestsWithSourceEpoch.test_d_runtime_error`
+- `test_eof.EOFTestCase.test_EOFS_with_file`
+- `test_fstring.TestCase.test_filename_in_syntaxerror`
+- `test_json.test_recursion.TestPyRecursion.test_endless_recursion`
+- `test_queue.CSimpleQueueTest.test_references`
+- `test_source_encoding.FileSourceEncodingTest.test_nul_in_first_coding_line`
+- `test_source_encoding.FileSourceEncodingTest.test_nul_in_second_coding_line`
+- `test_source_encoding.FileSourceEncodingTest.test_utf8_non_utf8_comment_line_error`
+- `test_subprocess.POSIXProcessTestCase.test_pipe_cloexec`
+- `test_unparse.DirectoryTestCase.test_files`
+- `test_userstring.UserStringTest.test_find_many_lengths`
+- `test_xml_etree_c.BadElementTest.test_deeply_nested_deepcopy`
+- `test_zipfile.test_core.PyZipFileTests.test_write_filtered_python_package`
+- `test_zipimport.CompressedZipImportTestCase.testZip64LargeFile`

@@ -2,6 +2,66 @@
   "runs": [
     {
       "workload": "test262",
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8",
+      "pass": 96235,
+      "total": 103361,
+      "skip": 7032,
+      "regressions": 0,
+      "newPasses": 0,
+      "finishedAt": "2026-10-09T08:39:51.063Z",
+      "reportDir": "1.6.0+6e718933f/4cbcae6c33a8/test262"
+    },
+    {
+      "workload": "cpython-core",
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8",
+      "pass": 31404,
+      "total": 34947,
+      "skip": 1453,
+      "regressions": 0,
+      "newPasses": 0,
+      "finishedAt": "2026-10-09T08:39:32.796Z",
+      "reportDir": "1.6.0+6e718933f/4cbcae6c33a8/cpython-core"
+    },
+    {
+      "workload": "javac-jtreg",
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8",
+      "pass": 3925,
+      "total": 3934,
+      "skip": 6,
+      "regressions": 0,
+      "newPasses": 0,
+      "finishedAt": "2026-10-09T08:33:02.450Z",
+      "reportDir": "1.6.0+6e718933f/4cbcae6c33a8/javac-jtreg"
+    },
+    {
+      "workload": "node-api",
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8",
+      "pass": 1194,
+      "total": 1458,
+      "skip": 83,
+      "regressions": 0,
+      "newPasses": 0,
+      "finishedAt": "2026-10-09T08:28:16.026Z",
+      "reportDir": "1.6.0+6e718933f/4cbcae6c33a8/node-api"
+    },
+    {
+      "workload": "wpt-wintertc",
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8",
+      "pass": 24065,
+      "total": 25163,
+      "skip": 75,
+      "regressions": 0,
+      "newPasses": 0,
+      "finishedAt": "2026-10-09T08:27:54.285Z",
+      "reportDir": "1.6.0+6e718933f/4cbcae6c33a8/wpt-wintertc"
+    },
+    {
+      "workload": "test262",
       "semver": "1.6.0+b8edacc63",
       "digest": "7aa30129531a",
       "pass": 96080,

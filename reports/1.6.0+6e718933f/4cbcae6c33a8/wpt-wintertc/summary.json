@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "workload": "wpt-wintertc",
+    "kind": "test",
+    "elide": {
+      "semver": "1.6.0+6e718933f",
+      "digest": "4cbcae6c33a8b98c3c3ba5241fc17c8e61a74ab2b92e83320d78cd0bc5181738"
+    },
+    "target": {
+      "name": "elide",
+      "version": "1.6.0+6e718933f",
+      "artifactDigest": "4cbcae6c33a8b98c3c3ba5241fc17c8e61a74ab2b92e83320d78cd0bc5181738",
+      "platform": "linux-x64"
+    },
+    "startedAt": "2026-10-09T08:26:33.832Z",
+    "finishedAt": "2026-10-09T08:27:54.285Z",
+    "suiteVersion": "1eb456f600fedad07c8cd6439796fb81db54faff"
+  },
+  "counts": {
+    "pass": 24065,
+    "fail": 1018,
+    "skip": 75,
+    "error": 5,
+    "total": 25163,
+    "excluded": 3640
+  },
+  "regressions": [],
+  "newPasses": []
+}

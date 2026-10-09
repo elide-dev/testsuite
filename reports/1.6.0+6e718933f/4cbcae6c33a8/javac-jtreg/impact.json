@@ -1,0 +1,26 @@
+{
+  "bySignature": [
+    {
+      "signature": "system error (exit code <n>)",
+      "count": 2,
+      "exampleIds": [
+        "tools/javac/processing/environment/round/TestContext.java",
+        "tools/javac/processing/model/type/MirroredTypeEx/OverEager.java"
+      ],
+      "samples": [
+        "system error (exit code 3)"
+      ]
+    },
+    {
+      "signature": "Compilation failed: Compilation failed",
+      "count": 1,
+      "exampleIds": [
+        "tools/javac/processing/6499119/ClassProcessor.java"
+      ],
+      "samples": [
+        "Compilation failed: Compilation failed"
+      ]
+    }
+  ],
+  "byFeature": []
+}
