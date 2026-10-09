@@ -31,16 +31,16 @@ outside stock Node, CPython, or a browser. They are not Elide bugs hidden from
 the results. Ordinary failures are ratcheted (tracked under `[fail]`), not
 skipped.
 
-**node-api** (115 entries)
+**node-api** (80 entries)
 
 | Reason | Entries |
 |---|---:|
 | Imports Node's private `internal/*` modules (needs `--expose-internals`) | 40 |
-| Uses `node:vfs`, an experimental Node subsystem | 37 |
 | Requires `internal/test/binding` (Node's C++ bindings) | 36 |
+| Requires `node:cluster`, which Elide does not implement | 2 |
 | Hangs: `test-vm-sigint*` children spin forever without vm `breakOnSigint` | 2 |
 
-Two thirds of these skips test Node's own implementation, not its public API.
+Almost all of these skips test Node's own implementation, not its public API.
 
 **wpt-wintertc** (22 entries, ~125 of 313 manifest files)
 
@@ -54,12 +54,12 @@ Only tests that are structurally unreachable are skipped. A file with any
 passing subtest stays in and is scored. Cross-origin fetch subtests are
 ratcheted, not skipped.
 
-**cpython-core** (~82 entries, some globbing whole test classes)
+**cpython-core** (~74 entries, some globbing whole test classes)
 
 | Reason | Entries |
 |---|---:|
 | Filesystem-backed tests (pathlib, ntpath probes, hashlib file digests), deferred until sandboxed file I/O | ~17 |
-| Pathological stress tests that hang or run too long (string-search complexity, context-cycle, recursion) | 15 |
+| Pathological stress tests that hang or run too long (string-search complexity, context-cycle, recursion) | 11 |
 | CPython implementation details (exact hash values, tuple identity reuse, `gc.get_objects`, `dis`, locale) | ~13 |
 | Refcount-0 `__del__` / weakref finalization timing (the JVM GC is non-deterministic) | 12 |
 | Spawns a child interpreter (`assert_python_ok`/`_failure`) | 7 |
